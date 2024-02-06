@@ -31,7 +31,7 @@ $arrtabledata= array(
     ,array("type"=>"numeric", "title"=> "DOWN 0 & NOT OH", "width"=>"130", "maxlength"=>1)
     ,array("type"=>"text", "title"=> "On Hand Repair", "width"=>"100")
     ,array("type"=>"numeric", "title"=> "Labour", "width"=>"100","mask"=>"0")
-    ,array("type"=>"text", "title"=> "Status Validation", "width"=>"130", "readOnly"=>true)
+    ,array("type"=>"checkbox", "title"=> "Status Validation", "width"=>"130")
     ,array("type"=>"hidden", "title"=> "bg", "width"=>"100")
     ,array("type"=>"hidden", "title"=> "bg", "width"=>"100")
     ,array("type"=>"hidden", "title"=> "bg", "width"=>"100")

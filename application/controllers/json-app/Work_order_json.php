@@ -673,7 +673,38 @@ class Work_order_json extends CI_Controller
 
 		$reqArrValue=json_decode($reqArrValue);
 		$reqArrValueBefore=json_decode($reqArrValueBefore);
+		$reqArrValueCheck=$reqArrValue;
 		// print_r($reqArrValue);exit;
+		$checkstatus="";
+		$baris="";
+		foreach ($reqArrValue as $key => $value) {
+			$reqJumlahLabor=$value[10];
+			$reqOnHandRepair = explode("-", $value[9])[0];
+
+			// var_dump($reqOnHandRepair);
+			$baris=$key+1;
+			if(!is_numeric($value[7]))
+			{
+				echo "xxx***Kolom Validation Downtime Baris ".$baris." Wajib diisi";exit;
+			}
+
+			if(!is_numeric($value[8]))
+			{
+				echo "xxx***Kolom DOWN 0 & NOT OH Baris ".$baris." Wajib diisi";exit;
+			}
+
+			if(!is_numeric($reqOnHandRepair))
+			{
+				echo "xxx***Kolom On Hand Repair Baris ".$baris." Wajib diisi";exit;
+			}
+
+			if(!is_numeric($reqJumlahLabor))
+			{
+				echo "xxx***Kolom Labor Baris ".$baris." Wajib diisi";exit;
+			}
+			
+		}
+
 
 		foreach ($reqArrValue as $key => $value) {
 			$set = new WorkOrder();
@@ -691,8 +722,23 @@ class Work_order_json extends CI_Controller
 			{
 				$reqJumlahLabor="";
 			}
+			if($value[11]==true)
+			{
+				$checkstatus="1";
+			}
+
+			if($value[11]==true)
+			{
+				$reqApprovalStatus="1";
+			}
+			else
+			{
+				$reqApprovalStatus="";
+			}
+			// var_dump($value[11]);
+
 			$set->setField("JUMLAH_LABOR", valToNullDB($reqJumlahLabor));
-			$set->setField("APPROVAL_STATUS", "1");
+			$set->setField("APPROVAL_STATUS", ValToNullDB($reqApprovalStatus));
 
 			$set->setField("LAST_UPDATE_USER", $this->appusernama);
 			$set->setField("LAST_UPDATE_DATE", 'NOW()');
@@ -721,7 +767,7 @@ class Work_order_json extends CI_Controller
 			$setcheck->firstRow();
 			$reqWoCr= $setcheck->getField("WO_CR");
 
-			if($reqSimpan==1 && $reqWoCr =="f")
+			if($reqSimpan==1 && $checkstatus && $reqWoCr =="f")
 			{
 				$set = new WorkOrder();
 				$set->setField("WO_CR", 'true');

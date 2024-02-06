@@ -485,7 +485,7 @@ unset($set);
         var arrvalue = values.split(',');
         infodetilparaf= "<ol id='SortMe'>";
         $.each(arrvalue , function(index, val) { 
-            infodetilparaf+= "<li class='ListItem'>"+val+"</li>";
+            infodetilparaf+= "<li class='ListItem'>"+val+" <a id='open'><i class='fa fa-trash fa-lg deleteli' aria-hidden='true'></i> </a></li>";
 
         });
         infodetilparaf+= "</ol>";
@@ -494,6 +494,11 @@ unset($set);
         $('#listasset').append(infodetilparaf);
         $('#reqAssetNum').val(values);
     }
+
+    $(document).on('click','.deleteli', function () {
+       // console.log('delete');
+       $(this).closest("li").remove();
+   });
 
 
     $('#btnCari').on('click', function () {
@@ -591,7 +596,15 @@ unset($set);
         } );
 
         $('#'+infotableid+' tbody').on( 'dblclick', 'tr', function () {
-            $("#btnEdit").click();
+            // console.log(valinfogroup);return false;
+            if(valinfogroup=="Valid")
+            {
+                $('#btnValid').click();
+            }
+            else
+            {
+                $("#btnEdit").click();
+            }
         });
 
         $('#button').click( function () {

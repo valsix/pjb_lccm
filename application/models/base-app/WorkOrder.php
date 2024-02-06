@@ -104,13 +104,13 @@
 		, STATUS_NOT_OH_NOT_DOWNTIME=".$this->getField("STATUS_NOT_OH_NOT_DOWNTIME")."
 		, ON_HAND_REPAIR=".$this->getField("ON_HAND_REPAIR")."
 		, JUMLAH_LABOR=".$this->getField("JUMLAH_LABOR")."
-		, APPROVAL_STATUS='".$this->getField("APPROVAL_STATUS")."'
+		, APPROVAL_STATUS=".$this->getField("APPROVAL_STATUS")."
 		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
 		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
 		WHERE  date_part('year', REPORTDATE)='".$this->getField("TAHUN")."'  AND WONUM = '".$this->getField("WONUM")."' AND SITEID = '".$this->getField("SITEID")."' AND ASSETNUM = '".$this->getField("ASSETNUMOLD")."'
 		"; 
 		$this->query = $str;
-		// echo $str;
+		// echo $str;exit;
 		return $this->execQuery($str);
 	}
 
