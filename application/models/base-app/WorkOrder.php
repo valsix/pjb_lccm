@@ -268,7 +268,9 @@
     function jumlahwo($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="")
 	{
 		$str = "
-		SELECT COUNT(1) JUMLAH FROM T_WORKORDER A WHERE 1=1
+		SELECT COUNT(1) JUMLAH FROM T_WORKORDER A
+		left join m_asset_lccm b on trim(b.assetnum) = trim(a.assetnum)
+		 WHERE 1=1
 
 		"; 
 		
@@ -287,7 +289,7 @@
 	{
 		$str = "
 		SELECT COUNT(1) JUMLAH FROM m_asset a
-		left join m_asset_lccm b on b.assetnum = a.assetnum
+		left join m_asset_lccm b on trim(b.assetnum) = trim(a.assetnum)
 		WHERE 1=1
 
 		"; 
@@ -308,7 +310,7 @@
 		$str = "
 		SELECT COUNT(1) JUMLAH 
 		FROM m_asset a
-		inner join m_asset_lccm b on b.assetnum = a.assetnum
+		inner join m_asset_lccm b on trim(b.assetnum) = trim(a.assetnum)
 		WHERE 1=1
 
 		"; 
@@ -329,7 +331,7 @@
 		$str = "
 		SELECT COUNT(1) JUMLAH 
 		FROM T_WORKORDER a
-		inner join m_asset_lccm b on b.assetnum = a.assetnum
+		inner join m_asset_lccm b on trim(b.assetnum) = trim(a.assetnum)
 		WHERE 1=1
 
 		"; 

@@ -605,20 +605,20 @@ class Work_order_json extends CI_Controller
 		$arrResult=array();
 
 		
-		// if(!empty($reqDistrikId))
-		// {
-		// 	$statement .= " AND B.KODE_DISTRIK='".$reqDistrikId."'";
-		// }
+		if(!empty($reqDistrikId))
+		{
+			$statement .= " AND B.KODE_DISTRIK='".$reqDistrikId."'";
+		}
 
-		// if(!empty($reqBlokId))
-		// {
-		// 	$statement .= " AND B.KODE_BLOK='".$reqBlokId."'";
-		// }
+		if(!empty($reqBlokId))
+		{
+			$statement .= " AND B.KODE_BLOK='".$reqBlokId."'";
+		}
 
-		// if(!empty($reqUnitMesinId))
-		// {
-		// 	$statement .= " AND B.KODE_UNIT_M='".$reqUnitMesinId."'";
-		// }
+		if(!empty($reqUnitMesinId))
+		{
+			$statement .= " AND B.KODE_UNIT_M='".$reqUnitMesinId."'";
+		}
 
 		
 
@@ -627,6 +627,30 @@ class Work_order_json extends CI_Controller
 		// echo $set->query;exit;
 		$set->firstRow();
 		$reqJmlAsset= $set->getField("JUMLAH");
+		unset($set);
+
+		$set= new WorkOrder();
+
+		$statement=" AND WOSTATUS IS NULL";
+
+		if(!empty($reqDistrikId))
+		{
+			$statement .= " AND B.KODE_DISTRIK='".$reqDistrikId."'";
+		}
+
+		if(!empty($reqBlokId))
+		{
+			$statement .= " AND B.KODE_BLOK='".$reqBlokId."'";
+		}
+
+		if(!empty($reqUnitMesinId))
+		{
+			$statement .= " AND B.KODE_UNIT_M='".$reqUnitMesinId."'";
+		}
+		$set->jumlahwo(array(), -1, -1, $statement);
+		// echo $set->query;exit;
+		$set->firstRow();
+		$reqJmlNon= $set->getField("JUMLAH");
 		unset($set);
 
 		
@@ -652,8 +676,35 @@ class Work_order_json extends CI_Controller
 		$reqJmlAssetWo= $set->getField("JUMLAH");
 		unset($set);
 
+		$set= new WorkOrder();
+		$statement=" ";
+
+		if(!empty($reqDistrikId))
+		{
+			$statement .= " AND B.KODE_DISTRIK='".$reqDistrikId."'";
+		}
+
+		if(!empty($reqBlokId))
+		{
+			$statement .= " AND B.KODE_BLOK='".$reqBlokId."'";
+		}
+
+		if(!empty($reqUnitMesinId))
+		{
+			$statement .= " AND B.KODE_UNIT_M='".$reqUnitMesinId."'";
+		}
+
+		$set->jumlahassetlccm(array(), -1, -1, $statement);
+		// echo $set->query;exit;
+		$set->firstRow();
+		$reqJmlAssetLccm= $set->getField("JUMLAH");
+		unset($set);
+
+
 		$arrResult["reqJmlAsset"] =$reqJmlAsset;
 		$arrResult["reqJmlAssetWo"] =$reqJmlAssetWo;
+		$arrResult["reqJmlNon"] =$reqJmlNon;
+		$arrResult["reqJmlAssetLccm"] =$reqJmlAssetLccm;
 
 		// print_r($arrResult);exit;
 

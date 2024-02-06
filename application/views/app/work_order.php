@@ -155,7 +155,7 @@ unset($set);
                                <div class='col-md-6'>
                                     <div class='form-group'>
                                         <div class='col-md-11'  id="unit">
-                                            <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
+                                            <select class="form-control jscaribasicmultiple "  <?=$readonly?> <?=$readonlyfilter?> id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
                                                 <option value="" >Pilih Unit Mesin</option>
                                                
                                             </select>
@@ -353,10 +353,17 @@ unset($set);
             // console.log(data);
             $("#reqUnitMesinId option").remove();
             $("#reqUnitMesinId").attr("readonly", false); 
+            $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
             jQuery(data).each(function(i, item){
                 $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
             });
         });
+     rekapwo();
+
+    });
+
+
+    $('#reqUnitMesinId').on('change', function() {
      rekapwo();
 
     });
@@ -395,19 +402,23 @@ unset($set);
     {
         var reqDistrikId=$('#reqDistrikId').val();
         var reqBlokId= $("#reqBlokId").val();
-        var reqUnitMesinId= $("#reqUnitMesinId").val();
+        var reqUnitMesin= $("#reqUnitMesinId").val();
 
-        if (reqUnitMesinId=='undefined'||reqUnitMesinId==null) 
+        if (reqUnitMesin=='undefined'||reqUnitMesin==null) 
         {
-            reqUnitMesinId="";
+            reqUnitMesin="";
         }
 
-        $.getJSON("json-app/work_order_json/rekapwo?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId,
+        console.log(reqUnitMesin);
+
+        $.getJSON("json-app/work_order_json/rekapwo?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesin,
         function(data)
         {
 
             $("#reqJmlAsset").text(data.reqJmlAsset);
             $("#reqJmlAssetWo").text(data.reqJmlAssetWo);
+            $("#reqJmlNon").text(data.reqJmlNon);
+            $("#reqJmlAssetLccm").text(data.reqJmlAssetLccm);
            
         });
     }
