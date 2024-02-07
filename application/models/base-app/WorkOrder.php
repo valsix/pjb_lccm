@@ -312,6 +312,7 @@
 		FROM m_asset a
 		inner join m_asset_lccm b on trim(b.assetnum) = trim(a.assetnum)
 		WHERE 1=1
+		and asset_lccm is true
 
 		"; 
 		
