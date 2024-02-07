@@ -22,6 +22,7 @@ class Pdm_json extends CI_Controller
 		$this->appusernama= $this->session->userdata("appusernama");
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
+		$this->appblokunitid= $this->session->userdata("appblokunitid");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -76,6 +77,12 @@ class Pdm_json extends CI_Controller
 		if(!empty($reqGroupPm))
 		{
 			$statement .= " AND B.GROUP_PM='".$reqGroupPm."'";
+		}
+
+
+		if(!empty($this->appblokunitid))
+		{
+			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
 		}
 
 		$sOrder = " ORDER BY A.PDM_YEAR ASC ";
@@ -244,6 +251,12 @@ class Pdm_json extends CI_Controller
 		if(!empty($reqGroupPm))
 		{
 			$statement .= " AND B.GROUP_PM='".$reqGroupPm."'";
+		}
+
+
+		if(!empty($this->appblokunitid))
+		{
+			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
 		}
 
 		$sOrder = " ORDER BY A.PDM_YEAR ASC ";

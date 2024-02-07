@@ -22,6 +22,7 @@ class Schedule_oh_json extends CI_Controller
 		$this->appusernama= $this->session->userdata("appusernama");
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
+		$this->appblokunitid= $this->session->userdata("appblokunitid");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -70,6 +71,11 @@ class Schedule_oh_json extends CI_Controller
 		if(!empty($reqTahun))
 		{
 			$statement .= " AND A.OH_YEAR='".$reqTahun."'";
+		}
+
+		if(!empty($this->appblokunitid))
+		{
+			$statement.= " AND C.BLOK_UNIT_ID = ".$this->appblokunitid;
 		}
 		
 
