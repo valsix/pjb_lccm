@@ -221,7 +221,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
     $('#reqElecCostH').on('input',function(e){
         var reqEfficencyLoss= $("#reqEfficencyLoss").val();
-        $.getJSON("json-app/operation_json/hitung?reqTahun=<?=$reqTahun?>&reqElecCostH="+this.value+"&reqEfficencyLoss="+reqEfficencyLoss,
+        $.getJSON("json-app/operation_json/hitung?reqTahun=<?=$reqTahun?>&reqAssetNum=<?=$reqAssetNum?>&reqElecCostH="+this.value+"&reqEfficencyLoss="+reqEfficencyLoss,
         function(data){
             
             var reqEffCost=parseFloat(data.reqEffCost);
@@ -238,7 +238,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
     $('#reqEfficencyLoss').on('input',function(e){
         var reqElecCostH= $("#reqElecCostH").val();
-        $.getJSON("json-app/operation_json/hitung?reqTahun=<?=$reqTahun?>&reqEfficencyLoss="+this.value+"&reqElecCostH="+reqElecCostH,
+        $.getJSON("json-app/operation_json/hitung?reqTahun=<?=$reqTahun?>&reqAssetNum=<?=$reqAssetNum?>&reqEfficencyLoss="+this.value+"&reqElecCostH="+reqElecCostH,
         function(data){
             // console.log(data.reqEffCost);
             var reqEffCost=parseFloat(data.reqEffCost);

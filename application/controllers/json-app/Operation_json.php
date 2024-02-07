@@ -589,6 +589,7 @@ class Operation_json extends CI_Controller
 		$reqMode= $this->input->post("reqMode");
 
 		$reqTahun= $this->input->get("reqTahun");
+		$reqAssetNum= $this->input->get("reqAssetNum");
 		$reqElecCostH= $this->input->get("reqElecCostH");
 		$reqEfficencyLoss= $this->input->get("reqEfficencyLoss");
 
@@ -606,8 +607,9 @@ class Operation_json extends CI_Controller
 
 			$reqSimpan= "";
 			$sethitung = new Operation();
-			$statement = " AND A.OPR_YEAR='".$reqTahun."'";
+			$statement = " AND A.OPR_YEAR='".$reqTahun."' AND A.ASSETNUM='".$reqAssetNum."'";
 			$sethitung->selectByParamsHitung(array(), -1,-1,$statement,$reqEfficencyLoss,$reqElecCostH);
+			// echo $sethitung->query;exit;
 			$sethitung->firstRow();
 
 			$reqEmploySalary=$sethitung->getField("EMPLOY_SALARY_INFO");
