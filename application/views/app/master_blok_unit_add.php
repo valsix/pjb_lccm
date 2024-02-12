@@ -114,7 +114,7 @@ unset($set);
                         <div class='col-md-8'>
                             <div class='form-group'>
                                 <div class='col-md-11'>
-                                     <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqKode"  id="reqKode" value="<?=$reqKode?>"  <?=$disabled?> data-options="required:true" style="width:100%" />
+                                     <input autocomplete="off" class="easyui-validatebox textbox form-control" placeholder="Kode Harus unik dan tidak boleh ada spasi dan maksimal 10 character" maxlength="10" type="text" name="reqKode"  id="reqKode" value="<?=$reqKode?>"  <?=$disabled?> data-options="required:true" style="width:100%" />
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@ unset($set);
                         <div class='col-md-8'>
                             <div class='form-group'>
                                 <div class='col-md-11'>
-                                     <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNama"  id="reqNama" value="<?=$reqNama?>"  <?=$disabled?> data-options="required:true" style="width:100%" />
+                                     <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNama"  placeholder="Maksimal 500 character" maxlength="500"  id="reqNama" value="<?=$reqNama?>"  <?=$disabled?> data-options="required:true" style="width:100%" />
                                 </div>
                             </div>
                         </div>

@@ -117,8 +117,8 @@ unset($set);
                         <label class="control-label col-md-2">Kode Perusahaan </label>
                         <div class='col-md-8'>
                             <div class='form-group'>
-                                <div class='col-md-11'>
-                                   <input autocomplete="off" placeholder="Kode Harus unik dan tidak boleh ada spasi" class="easyui-validatebox textbox form-control" type="text" name="reqKode"  id="reqKode" value="<?=$reqKode?>" <?=$disabled?> data-options="required:true" style="width:100%" />
+                                <div class='col-md-6'>
+                                   <input autocomplete="off" placeholder="Kode Harus unik dan tidak boleh ada spasi dan maksimal 10 character" class="easyui-validatebox textbox form-control" type="text" name="reqKode"  id="reqKode" value="<?=$reqKode?>" <?=$disabled?> data-options="required:true"  maxlength="10" style="width:100%" />
                                </div>
                            </div>
                        </div>
@@ -129,7 +129,7 @@ unset($set);
                         <div class='col-md-8'>
                             <div class='form-group'>
                                 <div class='col-md-11'>
-                                     <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNama"  id="reqNama" value="<?=$reqNama?>" <?=$disabled?> data-options="required:true" style="width:100%" />
+                                     <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNama" placeholder="Maksimal 500 character" maxlength="500"  id="reqNama" value="<?=$reqNama?>" <?=$disabled?> data-options="required:true" style="width:100%" />
                                 </div>
                             </div>
                         </div>
