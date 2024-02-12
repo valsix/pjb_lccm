@@ -419,7 +419,7 @@ $(document).ready(function() {
 
 	jQuery(document).ready(function() {
 		var jsonurl= "json-app/energi_price_json/json";
-	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',5);
+	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',6);
 	});
 
 	function calltriggercari()
