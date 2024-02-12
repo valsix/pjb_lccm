@@ -33,7 +33,7 @@ unset($set);
         </div>
     </div>
    
-    <label class="control-label col-md-4">
+    <!-- <label class="control-label col-md-4">
         Kode Eam Unit Mesin
     </label>
     <div class='col-md-6'>
@@ -42,12 +42,12 @@ unset($set);
                 <input autocomplete="off" class="easyui-validatebox textbox form-control " type="text" name="reqKodeEam[]" style="width:100%" />
             </div>
         </div>
-    </div>
+    </div> -->
+    <!-- <br>
     <br>
     <br>
     <br>
-    <br>
-    <br>
+    <br> -->
   
     <label class="control-label col-md-4">Nama Unit Mesin</label>
     <div class='col-md-6'>
@@ -61,7 +61,7 @@ unset($set);
         </div>
     </div>
 
-    <div class="form-group" >  
+    <div class="form-group" style="display: none">  
             <label class="control-label col-md-4">Jenis Eam</label>
             <div class='col-md-8'>
                 <div class='form-group'>
@@ -92,10 +92,10 @@ unset($set);
             </div>
         </div>
 
-        <label class="control-label col-md-4">
+        <label class="control-label col-md-4" style="display: none">
             Url
-        </label>
-        <div class='col-md-8'>
+        </label >
+        <div class='col-md-8' style="display: none">
             <div class='form-group'>
                 <div class='col-md-11'>
                     <input autocomplete="off" class="easyui-validatebox textbox form-control " type="text" name="reqUrlDinamis[]"  style="width:100%" />

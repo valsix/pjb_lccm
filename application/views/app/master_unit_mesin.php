@@ -19,10 +19,10 @@ $arrtabledata= array(
     , array("label"=>"Distrik ", "field"=> "DISTRIK_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Blok Unit ", "field"=> "UNIT_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Kode ", "field"=> "KODE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Kode Eam ", "field"=> "KODE_EAM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Kode Eam ", "field"=> "KODE_EAM", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Nama ", "field"=> "NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Jenis Eam ", "field"=> "EAM_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Url ", "field"=> "URL", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Jenis Eam ", "field"=> "EAM_NAMA", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Url ", "field"=> "URL", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     
     // , array("label"=>"Jenis Pembangkit ", "field"=> "JENIS_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Status", "field"=> "STATUS_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")

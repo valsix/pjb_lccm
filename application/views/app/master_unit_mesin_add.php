@@ -136,7 +136,7 @@ unset($set);
                 </div>
 
 
-                <div class="form-group">  
+                <div class="form-group" >  
                     <label class="control-label col-md-2">Kode</label>
                     <div class='col-md-8'>
                         <div class='form-group'>
@@ -147,7 +147,7 @@ unset($set);
                     </div>
                 </div>
 
-                <div class="form-group">  
+                <div class="form-group" style="display: none">  
                     <label class="control-label col-md-2">Kode Eam</label>
                     <div class='col-md-8'>
                         <div class='form-group'>
@@ -169,7 +169,7 @@ unset($set);
                     </div>
                 </div>
 
-                <div class="form-group">  
+                <div class="form-group" style="display: none">  
                     <label class="control-label col-md-2">Jenis Eam</label>
                     <div class='col-md-8'>
                         <div class='form-group'>
@@ -198,7 +198,7 @@ unset($set);
                     </div>
                 </div>
 
-                <div class="form-group">  
+                <div class="form-group" style="display: none">  
                     <label class="control-label col-md-2">Url</label>
                     <div class='col-md-8'>
                         <div class='form-group'>
