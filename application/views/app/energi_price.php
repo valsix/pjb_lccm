@@ -14,13 +14,13 @@ $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 
 $arrtabledata= array(
-    array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
+    array("label"=>"Pilih", "field"=> "CHECK", "display"=>"",  "width"=>"5", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Distrik", "field"=> "DISTRIK_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Blok Unit", "field"=> "BLOK_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Tahun", "field"=> "PRICE_YEAR", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Energi Price", "field"=> "ENERGY_PRICE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Status", "field"=> "STATUS_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-
    
     , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "PRICE_YEAR", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
@@ -227,7 +227,7 @@ $(document).ready(function() {
 
         <div class="area-filter"></div>
 
-            
+        <input type="hidden" id="reqGlobalValidasiCheck" />
         <table id="example" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -300,6 +300,10 @@ $(document).ready(function() {
 
     var datainfostatesave=1;
 
+    // kalau multicheck
+    var infoglobalarrid= [];
+    var arrChecked = [];
+
 	infoscrolly= 50;
 
 	$("#btnAdd, #btnEdit").on("click", function () {
@@ -365,7 +369,8 @@ $(document).ready(function() {
     });
 
      $('#btnDeleteNew').on('click', function () {
-        if(valinfoid == "" )
+        reqGlobalValidasiCheck= $("#reqGlobalValidasiCheck").val();
+        if(reqGlobalValidasiCheck == "" )
         {
             $.messager.alert('Info', "Pilih salah satu data terlebih dahulu.", 'warning');
             return false;
@@ -375,10 +380,12 @@ $(document).ready(function() {
 
         $.messager.confirm('Konfirmasi',pesan,function(r){
             if (r){
-                $.getJSON("json-app/energi_price_json/delete/?reqId="+valinfoid,
+                $.getJSON("json-app/energi_price_json/deletetahunkodeblok/?reqId="+reqGlobalValidasiCheck,
                     function(data){
+                        // console.log(data);
                         $.messager.alert('Info', data.PESAN, 'info');
                         valinfoid= "";
+                        $("#reqGlobalValidasiCheck").val("");
                         setCariInfo();
                     });
 

@@ -52,6 +52,8 @@ class Energi_price_Json extends CI_Controller
 		$reqTahun= $this->input->get("reqTahun");
 		$reqDistrikId= $this->input->get("reqDistrikId");
 		$reqBlokId= $this->input->get("reqBlokId");
+		$reqGlobalValidasiCheck= $this->input->get("reqGlobalValidasiCheck");
+		$arrGlobalValidasiCheck= explode(",", $reqGlobalValidasiCheck);
 		$searchJson= "";
 
 		$statement="";
@@ -98,6 +100,7 @@ class Energi_price_Json extends CI_Controller
 		$infonomor= 0;
 		while ($set->nextRow()) 
 		{
+			$infocheckid= $set->getField("PRICE_YEAR")."_".$set->getField("KODE_BLOK");
 			$infonomor++;
 
 			$row= [];
@@ -106,6 +109,16 @@ class Energi_price_Json extends CI_Controller
 				if ($valkey == "SORDERDEFAULT")
 				{
 					$row[$valkey]= $set->getField("NAMA");
+				}
+				else if ($valkey == "CHECK")
+				{
+					$checked= "";
+					if (in_array($infocheckid, $arrGlobalValidasiCheck))
+					{
+						$checked= "checked";
+					}
+
+					$row[$valkey]= "<input type='checkbox' $checked onclick='setglobalklikcheck()' class='editor-active' id='reqPilihCheck".$infocheckid."' value='".$infocheckid."' /><label for='reqPilihCheck".$infocheckid."'></label>";
 				}
 				else if ($valkey == "NO")
 				{
@@ -389,6 +402,42 @@ class Energi_price_Json extends CI_Controller
 				
 	}
 
+	function deletetahunkodeblok()
+	{
+		$this->load->model("base-app/T_Energy_Price_Lccm");
+		
+		$statement= $statemendetil= "";
+		$reqId= $this->input->get('reqId');
+		$arrId= explode(",", $reqId);
+		foreach ($arrId as $key => $value)
+		{
+			$v= explode("_", $value);
+
+			$statemendetil= getconcatseparator($statemendetil, " (PRICE_YEAR= '".$v[0]."' AND KODE_BLOK = '".$v[1]."')", " OR");
+		}
+		// echo $statemendetil;exit;
+
+		if(!empty($statemendetil))
+		{
+			$statement= "AND (".$statemendetil.")";
+			$set= new T_Energy_Price_Lccm();
+			$set->setField("STATEMENT", $statement);
+			if($set->deletetahunkodeblok())
+			{
+				$arrJson["PESAN"] = "Data berhasil dihapus.";
+			}
+			else
+			{
+				$arrJson["PESAN"] = "Data gagal dihapus.";	
+			}
+		}
+		else
+		{
+			$arrJson["PESAN"] = "Data gagal dihapus.";	
+		}
+
+		echo json_encode( $arrJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
+	}
 
 	function delete()
 	{

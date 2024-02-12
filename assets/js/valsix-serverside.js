@@ -510,26 +510,35 @@ var ajaxserverselectsingle = function() {
                         // Set the header cell to contain the input element
                         var cell = $('.filters th').eq($(api.column(colIdx).header()).index());
                         var title = $(cell).text();
-                        if ($(api.column(colIdx).header()).index() >= 0) {
+
+                        if(title !== "Pilih")
+                        {
+                            if ($(api.column(colIdx).header()).index() >= 0) {
                                $(cell).html('<input type="text" style="color: #000000;" placeholder="' + title + '"/>');
                             }
-                        // On every keypress in this input
-                        $('input', $('.filters th').eq($(api.column(colIdx).header()).index()) )
-                            .off('keyup change')
-                            .on('keyup change', function (e) {
-                                e.stopPropagation();
-                                // Get the search value
-                                $(this).attr('title', $(this).val());
-                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
-                                var cursorPosition = this.selectionStart;
-                                // Search the column for that value
-                                api
+                            // On every keypress in this input
+                            $('input', $('.filters th').eq($(api.column(colIdx).header()).index()) )
+                                .off('keyup change')
+                                .on('keyup change', function (e) {
+                                    e.stopPropagation();
+                                    // Get the search value
+                                    $(this).attr('title', $(this).val());
+                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
+                                    var cursorPosition = this.selectionStart;
+                                    // Search the column for that value
+                                    api
                                     .column(colIdx)
                                     .search((this.value != "") ? regexr.replace('{search}', '((('+this.value+')))') : "", this.value != "", this.value == "")
                                     .draw();
                                 $(this).focus()[0].setSelectionRange(cursorPosition, cursorPosition);
                             });
+                        }
+                        else
+                        {
+                            $(cell).html('');
+                        }
                     });
+
                     if(valstatus!=''){
                         api.columns().columns(valstatus).each(function(colIdx) {
                             // Set the header cell to contain the input element

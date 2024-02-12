@@ -16,7 +16,9 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
             <!-- <span><a id="btnAdd"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Tambah</a></span>
             <span><a id="btnImport"><i class="fa fa-file-excel-o  fa-lg" aria-hidden="true"></i> Import Parent Eksternal</a></span>
             <span><a id="btnGenerate"><i class="fa fa-refresh  fa-lg" aria-hidden="true"></i> Generate</a></span> -->
-            <span><a id="btnRefresh"><i class="fa fa-refresh  fa-lg" aria-hidden="true"></i> Refresh</a></span>
+            <span><a id="btnRefresh"><i class="fa fa-refresh fa-lg" aria-hidden="true"></i> Refresh</a></span>
+            <span><a id="btnExpandAll"><i class="fa fa-expand fa-lg" aria-hidden="true"></i> Expand All</a></span>
+            <span><a id="btnCollapsedAll"><i class="fa fa-expand fa-lg" aria-hidden="true"></i> Collapsed All</a></span>
 
         </div>
 
@@ -72,6 +74,17 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 var reloadunit= "";
 $(function(){
 
+    $.extend($.fn.tree.methods,{
+        getAllData: function(jq){
+            var data = [];
+            var roots = jq.tree('getRoots');
+            for(var i=0; i<roots.length; i++){
+                data.push(jq.tree('getData', roots[i].target))
+            }
+            return data;
+        }
+    })
+
     $('#btnRefresh').on('click', function () {
 
         $('#tt').treegrid({
@@ -89,6 +102,18 @@ $(function(){
                 if (!row) {
                     param.id = 0;
                 }
+            }
+        });
+    });
+
+    $('#btnCollapsedAll').on('click', function () {
+        $('#tt').treegrid('collapseAll');
+    });
+
+    $('#btnExpandAll').on('click', function () {
+        $('#tt').treegrid({
+            onLoadSuccess: function(row, data){
+                $('#tt').treegrid('expandAll');
             }
         });
     });

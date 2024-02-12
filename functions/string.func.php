@@ -796,7 +796,18 @@ function unserialized($serialized)
 	return unserialize($arrSerialized);
 }
 
+function getconcatseparator($var, $vadd, $separator=",")
+{
+	$vreturn= "";
+	if(empty($var))
+		$vreturn = $vadd;
+	else
+	{
+		$vreturn = $var.$separator.$vadd;
+	}
 
+	return $vreturn;
+}
 
 function translate($id, $en)
 {

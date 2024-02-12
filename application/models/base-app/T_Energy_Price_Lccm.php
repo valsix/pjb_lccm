@@ -51,7 +51,18 @@
 		return $this->execQuery($str);
 	}
 
-   
+   	function deletetahunkodeblok()
+	{
+		$str = "
+		DELETE FROM t_energy_price_lccm
+		WHERE 1=1
+		".$this->getField("STATEMENT");
+
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 	function delete()
 	{
 		$str = "
