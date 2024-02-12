@@ -9,8 +9,8 @@ $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 
 $arrtabledata= array(
-    array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Ref Modul", "field"=> "MENU_MODUL", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
+    array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Ref Modul", "field"=> "MENU_MODUL", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Ref Deskripsi", "field"=> "REF_DESK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
     , array("label"=>"fieldid", "field"=> "FLOW_ID", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")

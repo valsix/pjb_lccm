@@ -9,8 +9,8 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("setting_", "", $pgtitle)));
 
 $arrtabledata= array(
     array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"10", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Kode Hak", "field"=> "KODE_HAK", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Nama Hak", "field"=> "NAMA_HAK", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Kode Hak", "field"=> "KODE_HAK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Nama Hak", "field"=> "NAMA_HAK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Deskripsi", "field"=> "DESKRIPSI", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
     , array("label"=>"fieldid", "field"=> "PENGGUNA_HAK_ID", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")

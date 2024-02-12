@@ -8,8 +8,8 @@ $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("setting_", "", $pgtitle)));
 
 $arrtabledata= array(
-    array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"10", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Nama Role", "field"=> "ROLE_NAMA", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
+    array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Nama Role", "field"=> "ROLE_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Deskripsi", "field"=> "ROLE_DESK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Created At", "field"=> "CREATED_AT", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Updated At", "field"=> "UPDATED_AT", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
