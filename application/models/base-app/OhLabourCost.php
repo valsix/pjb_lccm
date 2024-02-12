@@ -66,6 +66,18 @@
 		return $this->execQuery($str);
 	}
 
+	function deletetahunkodeblok()
+	{
+		$str = "
+		DELETE FROM m_oh_labour_lccm
+		WHERE 1=1
+		".$this->getField("STATEMENT");
+
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 
     function selectByParams($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="")
 	{

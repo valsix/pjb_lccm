@@ -14,7 +14,8 @@ $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 
 $arrtabledata= array(
-    array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
+    array("label"=>"Pilih", "field"=> "CHECK", "display"=>"",  "width"=>"5", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"Unit Mesin", "field"=> "DISTRIK_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Asset No", "field"=> "ASSETNUM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Oh Type", "field"=> "OH_TYPE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
@@ -169,7 +170,7 @@ $(document).ready(function() {
 
         <div class="area-filter"></div>
 
-            
+        <input type="hidden" id="reqGlobalValidasiCheck" />   
         <table id="example" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -228,6 +229,11 @@ $(document).ready(function() {
     var datainfostatesave=1;
 
     infoscrolly= 50;
+
+        // kalau multicheck
+    var infoglobalarrid= [];
+    var arrChecked = [];
+
 
     $("#btnAdd, #btnEdit").on("click", function () {
         btnid= $(this).attr('id');
@@ -293,8 +299,31 @@ $(document).ready(function() {
         }); 
     });
 
-     $('#btnDeleteNew').on('click', function () {
-        if(valinfoid == "" )
+    //  $('#btnDeleteNew').on('click', function () {
+    //     if(valinfoid == "" )
+    //     {
+    //         $.messager.alert('Info', "Pilih salah satu data terlebih dahulu.", 'warning');
+    //         return false;
+    //     }
+
+    //      var pesan='Apakah anda yakin untuk hapus data terpilih?';
+
+    //     $.messager.confirm('Konfirmasi',pesan,function(r){
+    //         if (r){
+    //             $.getJSON("json-app/oh_labour_cost_json/delete?reqId="+valinfoid+"&reqOh="+valinfooh+"&reqAssetNum="+valinfoassetnum,
+    //                 function(data){
+    //                     $.messager.alert('Info', data.PESAN, 'info');
+    //                     valinfoid= "";
+    //                     location.reload();
+    //                 });
+
+    //         }
+    //     }); 
+    // });
+
+    $('#btnDeleteNew').on('click', function () {
+        reqGlobalValidasiCheck= $("#reqGlobalValidasiCheck").val();
+        if(reqGlobalValidasiCheck == "" )
         {
             $.messager.alert('Info', "Pilih salah satu data terlebih dahulu.", 'warning');
             return false;
@@ -304,11 +333,13 @@ $(document).ready(function() {
 
         $.messager.confirm('Konfirmasi',pesan,function(r){
             if (r){
-                $.getJSON("json-app/oh_labour_cost_json/delete?reqId="+valinfoid+"&reqOh="+valinfooh+"&reqAssetNum="+valinfoassetnum,
+                $.getJSON("json-app/oh_labour_cost_json/deletetahunkodeblok/?reqId="+reqGlobalValidasiCheck,
                     function(data){
+                        // console.log(data);
                         $.messager.alert('Info', data.PESAN, 'info');
                         valinfoid= "";
-                        location.reload();
+                        $("#reqGlobalValidasiCheck").val("");
+                        setCariInfo();
                     });
 
             }

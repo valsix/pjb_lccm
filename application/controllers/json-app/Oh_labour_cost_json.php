@@ -51,6 +51,9 @@ class oh_labour_cost_json extends CI_Controller
 
 		$reqPencarian= $this->input->get("reqPencarian");
 		$reqOhType= $this->input->get("reqOhType");
+		$reqGlobalValidasiCheck= $this->input->get("reqGlobalValidasiCheck");
+		$arrGlobalValidasiCheck= explode(",", $reqGlobalValidasiCheck);
+
 		$searchJson= "";
 		
 
@@ -75,6 +78,7 @@ class oh_labour_cost_json extends CI_Controller
 		$infonomor= 0;
 		while ($set->nextRow()) 
 		{
+			$infocheckid= $set->getField("OH_TYPE")."_".$set->getField("ASSETNUM");
 			$infonomor++;
 
 			$row= [];
@@ -87,6 +91,16 @@ class oh_labour_cost_json extends CI_Controller
 				else if ($valkey == "NO")
 				{
 					$row[$valkey]= $infonomor;
+				}
+				else if ($valkey == "CHECK")
+				{
+					$checked= "";
+					if (in_array($infocheckid, $arrGlobalValidasiCheck))
+					{
+						$checked= "checked";
+					}
+
+					$row[$valkey]= "<input type='checkbox' $checked onclick='setglobalklikcheck()' class='editor-active' id='reqPilihCheck".$infocheckid."' value='".$infocheckid."' /><label for='reqPilihCheck".$infocheckid."'></label>";
 				}
 				else
 					$row[$valkey]= $set->getField($valkey);
@@ -283,6 +297,43 @@ class oh_labour_cost_json extends CI_Controller
 		else
 		{
 			$arrJson["PESAN"] = "Data gagal dihapus";	
+		}
+
+		echo json_encode( $arrJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
+	}
+
+	function deletetahunkodeblok()
+	{
+		$this->load->model("base-app/OhLabourCost");
+		
+		$statement= $statemendetil= "";
+		$reqId= $this->input->get('reqId');
+		$arrId= explode(",", $reqId);
+		foreach ($arrId as $key => $value)
+		{
+			$v= explode("_", $value);
+
+			$statemendetil= getconcatseparator($statemendetil, " (OH_TYPE= '".$v[0]."' AND ASSETNUM = '".$v[1]."')", " OR");
+		}
+		// echo $statemendetil;exit;
+
+		if(!empty($statemendetil))
+		{
+			$statement= "AND (".$statemendetil.")";
+			$set= new OhLabourCost();
+			$set->setField("STATEMENT", $statement);
+			if($set->deletetahunkodeblok())
+			{
+				$arrJson["PESAN"] = "Data berhasil dihapus.";
+			}
+			else
+			{
+				$arrJson["PESAN"] = "Data gagal dihapus.";	
+			}
+		}
+		else
+		{
+			$arrJson["PESAN"] = "Data gagal dihapus.";	
 		}
 
 		echo json_encode( $arrJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
