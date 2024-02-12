@@ -29,6 +29,7 @@ var ajaxserverselectsingle = function() {
         valarrdata.forEach(function (item, index) {
             infofield= item["field"];
             infodisplay= item["display"];
+            infowidth= item["width"];
 
             infocolumnsdef.push(infofield);
 
@@ -39,9 +40,16 @@ var ajaxserverselectsingle = function() {
                 setdisplay= false;
             }
 
+
+
             var infodetil= {};
             infodetil.data= infofield;
             infodetil.visible= setdisplay;
+            if(infowidth)
+            {
+               infodetil.width= infowidth;
+            }
+           
             infocolumns.push(infodetil);
         });
         infogroupfield= valarrdata[0]["field"];
