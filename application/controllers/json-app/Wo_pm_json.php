@@ -86,7 +86,7 @@ class Wo_pm_json extends CI_Controller
 
 
 		$sOrder = " ORDER BY A.PM_YEAR ASC ";
-		$set->selectByParams(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
+		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];

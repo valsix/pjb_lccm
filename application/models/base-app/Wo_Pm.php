@@ -108,6 +108,43 @@
     }
 
 
+    function selectByParamsTahun($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.PM_YEAR ASC")
+	{
+		$str = "
+		SELECT
+			PC.WO_PM
+			, CASE WHEN PC.WO_PM = TRUE THEN 'Valid' WHEN PC.WO_PM = FALSE THEN 'Tidak Valid' ELSE '-' END INFO_NAMA
+			, A.*
+		FROM
+		(
+			SELECT 
+			B.KODE_BLOK,A.PM_YEAR,B.GROUP_PM, A.TOTAL_PM TOTAL_TAHUN
+			FROM t_total_wopm_lccm A 
+			LEFT JOIN DISTRIK C ON C.KODE = A.KODE_DISTRIK
+			LEFT JOIN BLOK_UNIT D ON D.KODE = A.KODE_BLOK AND D.DISTRIK_ID = C.DISTRIK_ID
+			LEFT JOIN UNIT_MESIN E ON E.KODE = A.KODE_UNIT_M AND E.BLOK_UNIT_ID = D.BLOK_UNIT_ID AND E.DISTRIK_ID = C.DISTRIK_ID
+			LEFT JOIN m_group_pm__lccm B ON B.KODE_DISTRIK = C.KODE AND B.KODE_BLOK = D.KODE AND B.KODE_UNIT = E.KODE
+			WHERE 1=1
+			
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." GROUP BY A.PM_YEAR, B.GROUP_PM,b.KODE_BLOK,A.TOTAL_PM
+		) A
+		LEFT JOIN t_preperation_lccm PC ON PC.YEAR_LCCM = A.PM_YEAR AND PC.KODE_BLOK = A.KODE_BLOK
+		WHERE 1=1
+		".$sOrder;
+		$this->query = $str;
+		// echo $str;exit;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
+
     function selectByParamsDetail($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.ASSETNUM ASC")
 	{
 		$str = "
