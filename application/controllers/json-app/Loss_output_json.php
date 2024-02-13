@@ -384,6 +384,7 @@ class Loss_output_json extends CI_Controller
 		$reqAssetNumOld= $this->input->post("reqAssetNumOld");
 		$reqStartOld= $this->input->post("reqStartOld");
 		$reqEndOld= $this->input->post("reqEndOld");
+		$reqStatusBaru= $this->input->post("reqStatusBaru");
 
 
 		$set = new LossOutput();
@@ -396,7 +397,15 @@ class Loss_output_json extends CI_Controller
 		$set->setField("DURATION_HOURS", ValToNullDB(str_replace(',', '.', $reqDuration)));
 		$set->setField("LOAD_DERATING", ValToNullDB($reqLoadDerating));
 		$set->setField("LO_YEAR", $reqTahun);
-		$set->setField("STATUS", $reqStatus);
+		if($reqStatus)
+		{
+			$set->setField("STATUS", $reqStatus);
+		}
+		else
+		{
+			$set->setField("STATUS", $reqStatusBaru);
+		}
+		
 
 		$statement=" AND A.ASSETNUM =  '".$reqAssetNum."' ";
 		$check = new Asset_Lccm();

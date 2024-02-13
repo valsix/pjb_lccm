@@ -73,24 +73,19 @@ if($reqLihat ==1)
 
 
 
-$set= new M_Group_Pm_Lccm();
-$arrgroup= [];
-$statement="";
-if(!empty($reqId))
-{
-   // $statement=" AND A.KODE_UNIT= '".$reqSiteId."' AND A.DISTRIK_KODE= '".$reqDistrikId."'  ";
-}
-
-
-$set->selectByParams(array(), -1,-1,$statement);
+$set= new LossOutput();
+$arrstatus= [];
+$statement=" AND A.STATUS IS NOT NULL AND A.STATUS <> '' ";
+$set->selectByParamsStatus(array(), -1,-1,$statement);
         // echo $set->query;exit;
 while($set->nextRow())
 {
     $arrdata= array();
-    $arrdata["text"]= $set->getField("GROUP_PM");
-    array_push($arrgroup, $arrdata);
+    $arrdata["text"]= $set->getField("STATUS");
+    array_push($arrstatus, $arrdata);
 }
 unset($set);
+
 
 
 
@@ -260,12 +255,35 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                     <label class="control-label col-md-2">Loss Output Status</label>
                     <div class='col-md-4'>
                         <div class='form-group'>
-                            <div class='col-md-11'>
-                                <select class="easyui-validatebox textbox form-control"  name="reqStatus">
-                                    <option value="" >Pilih Status</option>
-                                    <option value="FO" <? if ($reqStatus=="FO") echo 'selected'?>>FO</option>
-                                    <option value="PO" <? if ($reqStatus=="PO") echo 'selected'?>>PO</option>
-                                </select>
+                            <div class='col-md-5'>
+                                <div id="baru_status" style="display:none">
+                                     <input type="text" style="width:225px;"  name="reqStatusBaru" maxlength="4"  placeholder=" Max 4 Character"  id="reqStatusBaru" <?=$read?> value="<?=$reqStatus?>" />
+                                </div>
+                                <div id="select_status" >
+                                    <select class="easyui-validatebox textbox form-control"  name="reqStatus"  id="reqStatus">
+                                        <option value="" >Pilih Status</option>
+                                        <?
+                                        foreach($arrstatus as $item) 
+                                        {
+                                            $selectvaltext= $item["text"];
+
+                                            $selected="";
+                                            if($selectvaltext == $reqStatus)
+                                            {
+                                                $selected="selected";
+                                            }
+                                            ?>
+                                            <option value="<?=$selectvaltext?>" <?=$selected?>><?=$selectvaltext?></option>
+                                            <?
+                                        }
+                                        ?>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-md-1" id="select_button">
+                                <img src="images/add.png" style="cursor:pointer" title="Tambah Data" id="image_add" height="15" width="15" onclick="ShowHiddenId('baru')">
+                                <img src="images/button_cancel.png" style="cursor:pointer;display:none"   id="image_cancel" onclick="ShowHiddenId('')">
                             </div>
                        </div>
                    </div>
@@ -306,6 +324,24 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 </div>
 
 <script>
+
+    function ShowHiddenId(status){
+        if(status=='baru'){
+            document.getElementById('baru_status').style.display = '';
+            document.getElementById('image_cancel').style.display = '';
+            document.getElementById('select_status').style.display = 'none';
+            document.getElementById('image_add').style.display = 'none';
+            $('#reqStatusBaru').val('');
+            $('#reqStatus').val('');
+        }else{
+            document.getElementById('baru_status').style.display = 'none';
+            document.getElementById('image_cancel').style.display = 'none';
+            document.getElementById('select_status').style.display = '';
+            document.getElementById('image_add').style.display = '';
+
+        }
+        // document.getElementById('reqStatusPejabatPenetap').value = status;
+    }
 
     function openEquipment()
     {
