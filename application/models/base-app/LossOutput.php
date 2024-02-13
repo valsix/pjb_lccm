@@ -109,6 +109,33 @@
     }
 
 
+    function selectByParamsTahun($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.YEAR_LCCM ASC ")
+	{
+		$str = "
+			SELECT 
+				A.YEAR_LCCM,A.KODE_DISTRIK, C.NAMA NAMA_DISTRIK,A.KODE_BLOK,D.NAMA NAMA_BLOK,A.KODE_UNIT_M,E.NAMA NAMA_UNIT_MESIN
+			FROM t_preperation_lccm A 
+			LEFT JOIN DISTRIK C ON C.KODE = A.KODE_DISTRIK
+			LEFT JOIN BLOK_UNIT D ON D.KODE = A.KODE_BLOK AND D.DISTRIK_ID = C.DISTRIK_ID
+			LEFT JOIN UNIT_MESIN E ON E.KODE = A.KODE_UNIT_M AND E.BLOK_UNIT_ID = D.BLOK_UNIT_ID AND E.DISTRIK_ID = C.DISTRIK_ID
+			WHERE 1=1
+				
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement."
+		
+		".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
+
     function selectByParamsDetail($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.ASSETNUM ASC")
 	{
 		$str = "
@@ -132,6 +159,40 @@
 		$this->query = $str;
 				
 		return $this->selectLimit($str,$limit,$from); 
+    }
+
+
+    function selectByParamsStatus($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.STATUS ASC")
+	{
+		$str = "
+		SELECT A.STATUS
+		FROM t_loss_output_lccm A
+		where 1=1
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." GROUP BY STATUS ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+    function getCountByParamsStatus($paramsArray=array())
+	{
+		$str = "SELECT COUNT(1) AS ROWCOUNT FROM t_loss_output_lccm A "; 
+		while(list($key,$val)=each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$this->select($str); 
+		if($this->firstRow()) 
+			return $this->getField("ROWCOUNT"); 
+		else 
+			return 0; 
     }
 
     
