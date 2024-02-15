@@ -110,6 +110,23 @@
 		return $this->execQuery($str);
 	}
 
+
+	function updatestanding()
+	{
+		$str = "
+		UPDATE t_preperation_lccm
+		SET
+		 WO_STANDING= ".$this->getField("WO_STANDING")."
+		, LAST_UPDATE_USER= '".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE= ".$this->getField("LAST_UPDATE_DATE")."
+		WHERE YEAR_LCCM = '".$this->getField("YEAR_LCCM")."' AND SITEID = '".$this->getField("SITEID")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
+
 	function updatedyna()
 	{
 		$str = "
