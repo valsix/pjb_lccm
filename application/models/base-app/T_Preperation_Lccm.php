@@ -43,6 +43,43 @@
 		return $this->execQuery($str);
 	}
 
+
+	function insertnew()
+    {
+    	// $this->setField("UNIT_MESIN_ID", $this->getNextId("UNIT_MESIN_ID","unit_mesin"));
+
+    	$str = "
+    	INSERT INTO t_preperation_lccm
+    	(
+    		KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M,SITEID, YEAR_LCCM, WO_CR, WO_STANDING, WO_PM, WO_PDM, WO_OH, PRK, LOSS_OUTPUT, ENERGY_PRICE, OPERATION, STATUS_COMPLETE, LAST_CREATE_USER, LAST_CREATE_DATE
+    	)
+    	VALUES 
+    	(
+    		'".$this->getField("KODE_DISTRIK")."'
+    		,'".$this->getField("KODE_BLOK")."'
+    		,'".$this->getField("KODE_UNIT_M")."'
+	    	,'".$this->getField("SITEID")."'
+	    	, ".$this->getField("YEAR_LCCM")."
+	    	, ".$this->getField("WO_CR")."
+	    	, ".$this->getField("WO_STANDING")."
+	    	, ".$this->getField("WO_PM")."
+	    	, ".$this->getField("WO_PDM")."
+	    	, ".$this->getField("WO_OH")."
+	    	, ".$this->getField("PRK")."
+	    	, ".$this->getField("LOSS_OUTPUT")."
+	    	, ".$this->getField("ENERGY_PRICE")."
+	    	, ".$this->getField("OPERATION")."
+	    	, ".$this->getField("STATUS_COMPLETE")."
+	    	, '".$this->getField("LAST_CREATE_USER")."'
+	    	, ".$this->getField("LAST_CREATE_DATE")."
+	    )"; 
+
+		// $this->id= $this->getField("UNIT_MESIN_ID");
+		$this->query= $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 	function update()
 	{
 		$str = "
@@ -52,6 +89,21 @@
 		, LAST_UPDATE_USER= '".$this->getField("LAST_UPDATE_USER")."'
 		, LAST_UPDATE_DATE= ".$this->getField("LAST_UPDATE_DATE")."
 		WHERE YEAR_LCCM = '".$this->getField("YEAR_LCCM")."' AND SITEID = '".$this->getField("SITEID")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
+	function updateoh()
+	{
+		$str = "
+		UPDATE t_preperation_lccm
+		SET
+		 WO_OH= ".$this->getField("WO_OH")."
+		, LAST_UPDATE_USER= '".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE= ".$this->getField("LAST_UPDATE_DATE")."
+		WHERE YEAR_LCCM = '".$this->getField("YEAR_LCCM")."' AND SITEID = '".$this->getField("SITEID")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."'
 		"; 
 		$this->query = $str;
 		// echo $str;exit;

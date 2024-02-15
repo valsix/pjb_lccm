@@ -194,6 +194,7 @@ class Schedule_oh_json extends CI_Controller
 		$this->load->model("base-app/ScheduleOh");
 		$this->load->model("base-app/BlokUnit");
 		$this->load->model("base-app/T_Preperation_Lccm");
+		$this->load->model("base-app/OhLabourCost");
 
 		$reqId= $this->input->post("reqId");
 		$reqMode= $this->input->post("reqMode");
@@ -249,6 +250,7 @@ class Schedule_oh_json extends CI_Controller
 				$reqSimpan= 1;
 				$reqId = $set->id;
 			}
+			
 
 			unset($set);
 			
@@ -279,10 +281,77 @@ class Schedule_oh_json extends CI_Controller
 				$reqSimpan= 1;
 			}
 
-			unset($set);
-			
 
 		}
+
+
+		if($reqSimpan == 1 )
+		{
+			$statement=" AND B.KODE_DISTRIK =  '".$reqDistrikId."' AND B.KODE_BLOK =  '".$reqBlokId."' AND B.KODE_UNIT_M =  '".$reqUnitMesinId."' AND A.OH_TYPE =  '".$reqOhType."' ";
+			$check = new OhLabourCost();
+			$check->selectByParams(array(), -1, -1, $statement);
+				// echo $check->query;exit;
+			$check->firstRow();
+			$checkKode= $check->getField("ASSETNUM");
+
+			unset($check);
+
+			if(!empty($checkKode))
+			{
+				$reqSimpan="";
+				$statement=" AND A.KODE_DISTRIK =  '".$reqDistrikId."' AND A.KODE_BLOK =  '".$reqBlokId."' AND A.KODE_UNIT_M =  '".$reqUnitMesinId."' AND A.YEAR_LCCM =  '".$reqTahun."' ";
+				$check = new T_Preperation_Lccm();
+				$check->selectByParams(array(), -1, -1, $statement);
+					// echo $check->query;exit;
+				$check->firstRow();
+				$checkKode= $check->getField("YEAR_LCCM");
+
+				$set = new T_Preperation_Lccm();
+				$set->setField("KODE_DISTRIK", $reqDistrikId);
+				$set->setField("KODE_BLOK", $reqBlokId);
+				$set->setField("KODE_UNIT_M", $reqUnitMesinId);
+				$set->setField("SITEID", $reqBlokId);
+				$set->setField("YEAR_LCCM", $reqTahun);
+				$set->setField("WO_CR", 'false' );
+				$set->setField("WO_STANDING", 'false' );
+				$set->setField("WO_PM", 'false' );
+				$set->setField("WO_PDM", 'false' );
+				$set->setField("WO_OH", 'true');
+				$set->setField("PRK", 'false' );
+				$set->setField("LOSS_OUTPUT", 'false' );
+				$set->setField("OPERATION", 'false' );
+				$set->setField("ENERGY_PRICE", 'false' );
+				$set->setField("STATUS_COMPLETE", 'false' );
+
+				if(!empty($checkKode))
+				{
+
+					$set->setField("LAST_UPDATE_USER", $this->appusernama);
+					$set->setField("LAST_UPDATE_DATE", 'NOW()');
+					if($set->updateoh())
+					{
+						$reqSimpan= 1;
+					}
+
+				}
+				else
+				{
+					$set->setField("LAST_CREATE_USER", $this->appusernama);
+					$set->setField("LAST_CREATE_DATE", 'NOW()');
+
+					if($set->insertnew())
+					{
+						$reqSimpan= 1;
+					}
+
+				}
+
+				unset($check);
+				
+			}
+		}
+
+		unset($set);
 
 				
 
