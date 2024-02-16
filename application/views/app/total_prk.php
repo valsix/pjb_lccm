@@ -18,11 +18,15 @@ $arrtabledata= array(
     // array("label"=>"No", "field"=> "NO", "display"=>"1",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"Unit Mesin", "field"=> "DISTRIK_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     array("label"=>"PRK Year", "field"=> "PRK_YEAR", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"SITE", "field"=> "SITEID", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Distrik", "field"=> "NAMA_DISTRIK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Blok", "field"=> "NAMA_BLOK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Unit Mesin", "field"=> "NAMA_UNIT_MESIN", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Status", "field"=> "INFO_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"Group Pm", "field"=> "GROUP_PM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"Total Wo PM", "field"=> "TOTAL_TAHUN", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-
+    , array("label"=>"fieldid", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_UNIT_M", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "PRK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "GROUP_PM", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "PRK_YEAR", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
@@ -247,6 +251,7 @@ $(document).ready(function() {
     var infotableid= "example";
     var carijenis= "";
     var arrdata= <?php echo json_encode($arrtabledata); ?>;
+    // console.log(arrdata);
     var indexfieldid= arrdata.length - 1;
     var indexfieldgroup= arrdata.length - 2;
     // var indexfielddistrik= arrdata.length - 3;
@@ -433,7 +438,7 @@ $(document).ready(function() {
 
                 fieldinfostatus= arrdata[indexfieldstatus]["field"];
                 valinfostatus= dataselected[fieldinfostatus];
-                // console.log(fieldinfostatus);
+                // console.log(valinfostatus);
 
                 $("#spanValid, #spanNotValid").hide();
                 if(valinfostatus == "t")
@@ -461,7 +466,9 @@ $(document).ready(function() {
 
             // console.log(dataselected);
             vtahun= dataselected['PRK_YEAR'];
-            vsite= dataselected['SITEID'];
+            vdistrik= dataselected['KODE_DISTRIK'];
+            vblok= dataselected['KODE_BLOK'];
+            vunit= dataselected['KODE_UNIT_M'];
             vinfo= "";
             if(btnid=="btnValid")
             {
@@ -476,7 +483,7 @@ $(document).ready(function() {
 
             $.messager.confirm('Konfirmasi',vinfo,function(r){
                 if (r){
-                    $.getJSON("json-app/general_json/preperation_lccm_prk_loss_output?m=PRK&t="+vtahun+"&s="+vsite+"&value="+value,
+                    $.getJSON("json-app/general_json/preperation_lccm_prk_loss_output?m=PRK&t="+vtahun+"&vdistrik="+vdistrik+"&vblok="+vblok+"&vunit="+vunit+"&value="+value,
                         function(data){
                             $.messager.alert('Info', data.PESAN, 'info');
                             valinfoid= "";

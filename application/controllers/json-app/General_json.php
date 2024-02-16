@@ -77,15 +77,22 @@ class General_json extends CI_Controller
 	function preperation_lccm_prk_loss_output()
 	{
 		$t= $this->input->get('t');
+		$vdistrik= $this->input->get('vdistrik');
+		$vblok= $this->input->get('vblok');
+		$vunit= $this->input->get('vunit');
 		$m= $this->input->get('m');
-		$s= $this->input->get('s');
 		$value= $this->input->get('value');
 
-		if(!empty($t) && !empty($m) && !empty($s))
+		if(!empty($t) && !empty($m) && !empty($vdistrik)  && !empty($vblok) )
 		{
 			$this->load->model("base-app/T_Preperation_Lccm");
 
-			$statement= " AND A.YEAR_LCCM = '".$t."' AND A.SITEID = '".$s."'";
+
+			$statement= " AND A.YEAR_LCCM = '".$t."' AND A.KODE_DISTRIK = '".$vdistrik."' AND A.KODE_BLOK = '".$vblok."' ";
+			if(!empty($vunit))
+			{
+				$statement.= " AND A.KODE_UNIT_M = '".$vunit."'";
+			}
 			$set= new T_Preperation_Lccm();
 			$set->selectByParams(array(), -1,-1, $statement);
 			$vmode= "insert";
@@ -100,7 +107,9 @@ class General_json extends CI_Controller
 				$setdetil= new T_Preperation_Lccm();
 				$setdetil->setField("YEAR_LCCM", $t);
 				$setdetil->setField("FIELD", $m);
-				$setdetil->setField("SITEID", $s);
+				$setdetil->setField("KODE_DISTRIK", $vdistrik);
+				$setdetil->setField("KODE_BLOK", $vblok);
+				$setdetil->setField("KODE_UNIT_M", $vunit);
 				$setdetil->setField("FIELD_VALUE", ValToNullBollDB($value));
 				$setdetil->setField("LAST_UPDATE_USER", $this->appusernama);
 				$setdetil->setField("LAST_UPDATE_DATE", 'NOW()');
