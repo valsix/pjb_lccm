@@ -25,6 +25,9 @@ $arrtabledata= array(
     // , array("label"=>"Group Pm", "field"=> "GROUP_PM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"Total Wo PM", "field"=> "TOTAL_TAHUN", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
+    , array("label"=>"fieldid", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_UNIT_M", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "LOSS_OUTPUT", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "GROUP_PM", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "YEAR_LCCM", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
@@ -457,7 +460,7 @@ $(document).ready(function() {
                 {
                     $("#spanValid").show();
                 }
-                $(".labeltahun").text(dataselected['LO_YEAR']);
+                $(".labeltahun").text(dataselected['YEAR_LCCM']);
             }
         } );
 
@@ -473,8 +476,10 @@ $(document).ready(function() {
             btnid= $(this).attr('id');
 
             // console.log(dataselected);
-            vtahun= dataselected['LO_YEAR'];
-            vsite= dataselected['SITEID'];
+            vtahun= dataselected['YEAR_LCCM'];
+            vdistrik= dataselected['KODE_DISTRIK'];
+            vblok= dataselected['KODE_BLOK'];
+            vunit= dataselected['KODE_UNIT_M'];
             vinfo= "";
             if(btnid=="btnValid")
             {
@@ -489,7 +494,7 @@ $(document).ready(function() {
 
             $.messager.confirm('Konfirmasi',vinfo,function(r){
                 if (r){
-                    $.getJSON("json-app/general_json/preperation_lccm_prk_loss_output?m=LOSS_OUTPUT&t="+vtahun+"&s="+vsite+"&value="+value,
+                    $.getJSON("json-app/general_json/preperation_lccm_prk_loss_output?m=LOSS_OUTPUT&t="+vtahun+"&vdistrik="+vdistrik+"&vblok="+vblok+"&vunit="+vunit+"&value="+value,
                         function(data){
                             $.messager.alert('Info', data.PESAN, 'info');
                             valinfoid= "";
@@ -498,6 +503,32 @@ $(document).ready(function() {
 
                 }
             });
+
+            // vtahun= dataselected['YEAR_LCCM'];
+            // vsite= dataselected['SITEID'];
+            // vinfo= "";
+            // if(btnid=="btnValid")
+            // {
+            //     value= 1;
+            //     vinfo= "Apakah Anda yakin validasi semua data pada tahun "+vtahun+" ?";
+            // }
+            // else if(btnid=="btnNotValid")
+            // {
+            //     value= 0;
+            //     vinfo= "Apakah Anda yakin non validasi semua data pada tahun "+vtahun+" ?";
+            // }
+
+            // $.messager.confirm('Konfirmasi',vinfo,function(r){
+            //     if (r){
+            //         $.getJSON("json-app/general_json/preperation_lccm_prk_loss_output?m=LOSS_OUTPUT&t="+vtahun+"&s="+vsite+"&value="+value,
+            //             function(data){
+            //                 $.messager.alert('Info', data.PESAN, 'info');
+            //                 valinfoid= "";
+            //                 setCariInfo();
+            //         });
+
+            //     }
+            // });
 
         });
     } );
