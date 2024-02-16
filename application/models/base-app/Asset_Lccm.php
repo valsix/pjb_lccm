@@ -102,9 +102,12 @@
 		, PARENT='".$this->getField("PARENT")."'
 		, GROUP_PM='".$this->getField("GROUP_PM")."'
 		, ASSET_OH=".$this->getField("ASSET_OH")."
+		, KODE_DISTRIK='".$this->getField("KODE_DISTRIK")."'
+		, KODE_UNIT_M='".$this->getField("KODE_UNIT_M")."'
+		, KODE_BLOK='".$this->getField("KODE_BLOK")."'
 		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
 		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
-		WHERE ASSETNUM = '".$this->getField("ASSETNUM")."'
+		WHERE ASSETNUM = '".$this->getField("ASSETNUM")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."'
 		"; 
 		$this->query = $str;
 		// echo $str;exit;

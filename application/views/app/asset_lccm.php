@@ -34,7 +34,8 @@ $arrtabledata= array(
     , array("label"=>"Capital", "field"=> "CAPITAL", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
     , array("label"=>"fieldid", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"fieldid", "field"=> "KODE_UNIT", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_UNIT_M", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "ASSETNUM", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 );
 
@@ -131,6 +132,8 @@ $(document).ready(function() {
             if($reqCreate ==1)
             {
             ?>
+            <span><a id="btnTemplate"><i class="fa fa-download"></i> Template</a></span>
+            <span><a id="btnImport"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true"></i> Import</a></span>
             <!-- <span><a id="btnImport"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true"></i> Import</a></span> -->
             <?
             }
@@ -284,9 +287,10 @@ $(document).ready(function() {
 	var carijenis= "";
 	var arrdata= <?php echo json_encode($arrtabledata); ?>;
 	var indexfieldid= arrdata.length - 1;
-    var indexfieldblok= arrdata.length - 2;
-    var indexfielddistrik= arrdata.length - 3;
-    var valinfoid= valinforowid= valinfoblok= valinfodistrik='';
+    var indexfieldblok= arrdata.length - 3;
+    var indexfielddistrik= arrdata.length - 4;
+    var indexfieldunit= arrdata.length - 2;
+    var valinfoid= valinforowid= valinfoblok= valinfodistrik= valinfounit='';
 	var datainforesponsive= "1";
 	var datainfoscrollx= "";
 
@@ -310,7 +314,7 @@ $(document).ready(function() {
             }
         }
 
-        varurl= "app/index/asset_lccm_add?reqId="+valinfoid;
+        varurl= "app/index/asset_lccm_add?reqId="+valinfoid+"&reqDistrikId="+valinfodistrik+"&reqBlokId="+valinfoblok+"&reqUnitMesinId="+valinfounit;
         document.location.href = varurl;
     });
 
@@ -330,6 +334,10 @@ $(document).ready(function() {
 
     $('#btnImport').on('click', function () {
         openAdd("app/index/asset_lccm_import");
+    });
+
+    $('#btnTemplate').on('click', function () {
+        openAdd("iframe/index/asset_lccm_download_template");
     });
 
     $('#btnDelete').on('click', function () {
@@ -443,9 +451,11 @@ $(document).ready(function() {
                 fieldinfoid= arrdata[indexfieldid]["field"];
                 fieldinfoblok= arrdata[indexfieldblok]["field"];
                 fieldinfodistrik= arrdata[indexfielddistrik]["field"];
+                fieldinfodunit= arrdata[indexfieldunit]["field"];
                 valinfoid= dataselected[fieldinfoid];
                 valinfoblok= dataselected[fieldinfoblok];
                 valinfodistrik= dataselected[fieldinfodistrik];
+                valinfounit= dataselected[fieldinfodunit];
 
                 
             }

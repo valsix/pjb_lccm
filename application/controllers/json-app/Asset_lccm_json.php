@@ -259,6 +259,9 @@ class Asset_lccm_json extends CI_Controller
 		$reqParentChild= $this->input->post("reqParentChild");
 		$reqGroupPm= $this->input->post("reqGroupPm");
 		$reqAssetOh= $this->input->post("reqAssetOh");
+		$reqDistrikIdOld= $this->input->post("reqDistrikIdOld");
+		$reqBlokIdOld= $this->input->post("reqBlokIdOld");
+		$reqUnitMesinIdOld= $this->input->post("reqUnitMesinIdOld");
 
 		$set = new Asset_Lccm();
 		$set->setField("ASSETNUM", $reqAssetNum);
@@ -270,6 +273,9 @@ class Asset_lccm_json extends CI_Controller
 		$set->setField("PARENT_CHILD", $reqParentChild);
 		$set->setField("GROUP_PM", $reqGroupPm);
 		$set->setField("ASSET_OH", $reqAssetOh);
+		$set->setField("KODE_DISTRIK_OLD", $reqDistrikIdOld);
+		$set->setField("KODE_BLOK_OLD", $reqBlokIdOld);
+		$set->setField("KODE_UNIT_M_OLD", $reqUnitMesinIdOld);
 
 
 		$reqSimpan= "";

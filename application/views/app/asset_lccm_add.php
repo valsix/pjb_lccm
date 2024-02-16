@@ -19,6 +19,8 @@ $reqId = $this->input->get("reqId");
 $reqLihat = $this->input->get("reqLihat");
 $reqBlokId = $this->input->get("reqBlokId");
 $reqDistrikId = $this->input->get("reqDistrikId");
+$reqUnitMesinId = $this->input->get("reqUnitMesinId");
+
 
 $reqSiteId = $this->input->get("reqBlokId");
 
@@ -35,7 +37,7 @@ else
 {
     $reqMode = "update";
 
-    $statement = " AND A1.ASSETNUM = '".$reqId."'  ";
+    $statement = " AND A1.ASSETNUM = '".$reqId."' AND A1.KODE_DISTRIK = '".$reqDistrikId."' AND A1.KODE_BLOK = '".$reqBlokId."' AND A1.KODE_UNIT_M = '".$reqUnitMesinId."'   ";
     $set->selectByParams(array(), -1, -1, $statement);
     // echo $set->query;exit;
     $set->firstRow();
@@ -46,7 +48,7 @@ else
     $reqParentAsset= $set->getField("M_PARENT");
     $reqDistrikId= $set->getField("KODE_DISTRIK");
     $reqDistrikIdInfo= $set->getField("DISTRIK_ID");
-    $reqBlokId= $set->getField("SITEID");
+    $reqBlokId= $set->getField("KODE_BLOK");
     $reqBlokIdInfo= $set->getField("BLOK_UNIT_ID");
     $reqUnitMesinId= $set->getField("KODE_UNIT_M");
     $reqIsAsset= $set->getField("ASSET_LCCM");
@@ -543,6 +545,9 @@ input.combo-text[disabled]{
        <input type="hidden" name="reqMode" value="<?=$reqMode?>" />
        <input type="hidden" name="reqSiteId" value="<?=$reqSiteId?>" />
        <input type="hidden" name="reqAssetNumOld" value="<?=$reqAssetNum?>" />
+       <input type="hidden" name="reqDistrikIdOld" value="<?=$reqDistrikId?>" />
+       <input type="hidden" name="reqBlokIdOld" value="<?=$reqBlokId?>" />
+       <input type="hidden" name="reqUnitMesinIdOld" value="<?=$reqUnitMesinId?>" />
        <input type="hidden" name="reqCapitalDateOld" value="<?=$reqCapitalDate?>" />
 
 

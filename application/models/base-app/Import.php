@@ -831,6 +831,113 @@
 		return $this->execQuery($str);
 	}
 
+
+	function insertassetlccm()
+    {
+
+    	$str = "
+    	INSERT INTO m_asset_lccm
+    	(
+    		KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M,SITEID, ASSETNUM, ASSET_LCCM, PARENT_CHILD, PARENT, GROUP_PM, ASSET_OH, LAST_CREATE_USER, LAST_CREATE_DATE
+
+
+    	)
+    	VALUES 
+    	(
+    		 '".$this->getField("KODE_DISTRIK")."'
+    		, '".$this->getField("KODE_BLOK")."'
+	    	, '".$this->getField("KODE_UNIT_M")."'
+	    	, '".$this->getField("KODE_BLOK")."'
+	    	, '".$this->getField("ASSETNUM")."'
+	    	, ".$this->getField("ASSET_LCCM")."
+	    	, '".$this->getField("PARENT_CHILD")."'
+	    	, '".$this->getField("PARENT")."'
+	    	, '".$this->getField("GROUP_PM")."'
+	    	, ".$this->getField("ASSET_OH")."
+	    	, '".$this->getField("LAST_CREATE_USER")."'
+	    	, ".$this->getField("LAST_CREATE_DATE")."
+	    )"; 
+
+		// $this->id= $this->getField("PENGGUNA_EXTERNAL_ID");
+		$this->query= $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
+	function updateassetlccm()
+	{
+		$str = "
+		UPDATE m_asset_lccm
+		SET
+		 ASSETNUM='".$this->getField("ASSETNUM")."'
+		, ASSET_LCCM=".$this->getField("ASSET_LCCM")."
+		, PARENT_CHILD='".$this->getField("PARENT_CHILD")."'
+		, PARENT='".$this->getField("PARENT")."'
+		, GROUP_PM='".$this->getField("GROUP_PM")."'
+		, ASSET_OH=".$this->getField("ASSET_OH")."
+		, KODE_DISTRIK='".$this->getField("KODE_DISTRIK")."'
+		, KODE_UNIT_M='".$this->getField("KODE_UNIT_M")."'
+		, KODE_BLOK='".$this->getField("KODE_BLOK")."'
+		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
+		WHERE ASSETNUM = '".$this->getField("ASSETNUM")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
+
+	function insertcapital()
+    {
+
+    	$str = "
+    	INSERT INTO m_capital_lccm
+    	(
+    		SITEID,ASSETNUM, STATUS, CAPITAL, CAPITAL_DATE, LAST_CREATE_USER, LAST_CREATE_DATE,KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M
+
+    	)
+    	VALUES 
+    	(
+	    	 '".$this->getField("KODE_BLOK")."'
+	    	, '".$this->getField("ASSETNUM")."'
+	    	, ".$this->getField("STATUS")."
+	    	, ".$this->getField("CAPITAL")."
+	    	, ".$this->getField("CAPITAL_DATE")."
+	    	, '".$this->getField("LAST_CREATE_USER")."'
+	    	, ".$this->getField("LAST_CREATE_DATE")."
+	    	, '".$this->getField("KODE_DISTRIK")."'
+	    	, '".$this->getField("KODE_BLOK")."'
+	    	, '".$this->getField("KODE_UNIT_M")."'
+	    )"; 
+
+		// $this->id= $this->getField("PENGGUNA_EXTERNAL_ID");
+		$this->query= $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
+	function updatecapital()
+	{
+		$str = "
+		UPDATE m_capital_lccm
+		SET
+		 ASSETNUM= '".$this->getField("ASSETNUM")."'
+		, STATUS=".$this->getField("STATUS")."
+		, CAPITAL=".$this->getField("CAPITAL")."
+		, CAPITAL_DATE=".$this->getField("CAPITAL_DATE")."
+		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
+		, KODE_DISTRIK='".$this->getField("KODE_DISTRIK")."'
+		, KODE_BLOK='".$this->getField("KODE_BLOK")."'
+		, KODE_UNIT_M='".$this->getField("KODE_UNIT_M")."'
+		WHERE ASSETNUM = '".$this->getField("ASSETNUM")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."' AND CAPITAL_DATE = '".$this->getField("CAPITAL_DATE_UP")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 	function selectByParamsOhLabor($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="")
 	{
 		$str = "
@@ -1098,7 +1205,28 @@
 		return $this->selectLimit($str,$limit,$from); 
     }
 
+    function selectByParamsCapital($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.ASSETNUM ASC")
+	{
+		$str = "
+		SELECT 
+			A.*
+		
 
+		FROM M_CAPITAL_LCCM A 
+	
+		WHERE 1=1
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,10,$from); 
+    }
 
 
 
