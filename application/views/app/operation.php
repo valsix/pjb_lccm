@@ -18,11 +18,15 @@ $arrtabledata= array(
     // array("label"=>"No", "field"=> "NO", "display"=>"1",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"Unit Mesin", "field"=> "DISTRIK_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     array("label"=>"Opr Year", "field"=> "OPR_YEAR", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"SITE", "field"=> "SITEID", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Distrik", "field"=> "NAMA_DISTRIK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Blok", "field"=> "NAMA_BLOK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Unit Mesin", "field"=> "NAMA_UNIT_MESIN", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Status", "field"=> "INFO_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"Group Pm", "field"=> "GROUP_PM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"Total Wo PM", "field"=> "TOTAL_TAHUN", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-
+    , array("label"=>"fieldid", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_UNIT_M", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "OPERATION", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "OPR_YEAR", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 );
@@ -460,7 +464,9 @@ $(document).ready(function() {
 
             // console.log(dataselected);
             vtahun= dataselected['OPR_YEAR'];
-            vsite= dataselected['SITEID'];
+            vdistrik= dataselected['KODE_DISTRIK'];
+            vblok= dataselected['KODE_BLOK'];
+            vunit= dataselected['KODE_UNIT_M'];
             vinfo= "";
             if(btnid=="btnValid")
             {
@@ -475,7 +481,7 @@ $(document).ready(function() {
 
             $.messager.confirm('Konfirmasi',vinfo,function(r){
                 if (r){
-                    $.getJSON("json-app/general_json/preperation_lccm_prk_loss_output?m=OPERATION&t="+vtahun+"&s="+vsite+"&value="+value,
+                    $.getJSON("json-app/general_json/preperation_lccm_prk_loss_output?m=OPERATION&t="+vtahun+"&vdistrik="+vdistrik+"&vblok="+vblok+"&vunit="+vunit+"&value="+value,
                         function(data){
                             $.messager.alert('Info', data.PESAN, 'info');
                             valinfoid= "";
