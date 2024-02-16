@@ -223,6 +223,11 @@ class CI_Input {
 			return NULL;
 		}
 
+		if($xss_clean==true)
+		{
+			$value=strip_tags($value);
+		}
+
 		return ($xss_clean === TRUE)
 			? $this->security->xss_clean($value)
 			: $value;
