@@ -17,6 +17,9 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 
 $arrtabledata= array(
     array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Distrik", "field"=> "NAMA_DISTRIK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Blok", "field"=> "BLOK_UNIT_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Unit", "field"=> "UNIT_MESIN_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Year Lccm ", "field"=> "YEAR_LCCM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Wo Cr", "field"=> "WO_CR_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Wo Standing", "field"=> "WO_STANDING_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
