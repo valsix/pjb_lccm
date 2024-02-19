@@ -551,6 +551,7 @@ class Work_order_json extends CI_Controller
 
 			$arrdata= array();
 			$arrdata["ASSETNUM"]= $set->getField("ASSETNUM");
+			$arrdata["EQUIPMENT_DESC"]= $set->getField("EQUIPMENT_DESC");
 			$arrdata["WONUM"]= $set->getField("WONUM");
 			$arrdata["WO_DESC"]= $set->getField("WO_DESC");
 			$arrdata["WORKTYPE"]= $set->getField("WORKTYPE");

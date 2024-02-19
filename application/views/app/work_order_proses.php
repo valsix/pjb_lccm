@@ -21,6 +21,7 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 
 $arrtabledata= array(
     array("type"=>"text", "title"=> "Asset Num", "width"=>"200")
+    ,array("type"=>"text", "title"=> "Asset Desc", "width"=>"100", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "Work Order", "width"=>"100", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "WO Description", "width"=>"200", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "Work Type", "width"=>"100", "readOnly"=>true)
@@ -340,7 +341,7 @@ function jexcelcall(reqStatus)
         var cellName = jexcel.getColumnNameFromId([x,y]);
 
 
-        if(x==7 || x==8 || x==9)
+        if(x==8 || x==9 || x==10)
         {
             if(txt==1 || txt==0)
             {
@@ -400,10 +401,10 @@ function jexcelcall(reqStatus)
         txta = cellVal;
        
 
-        if(x1==7 || x1==8 || x1==9)
+        if(x1==8 || x1==9 || x1==10)
         {
 
-            if (x1 == 9)
+            if (x1 == 10)
             {
                
                 // txtcheck=txtcheck[1];
@@ -473,20 +474,20 @@ function jexcelcall(reqStatus)
         onselection: selectionActive,
         onload: loaded,
         oncreateeditor: function(el, cell, x, y) {
-           if (x == 7 || x == 8) {
+           if (x == 8 || x == 9) {
             var config = el.jexcel.options.columns[x].maxlength;
             cell.children[0].setAttribute('maxlength' , config);
          }
        },
         updateTable:function(instance, cell, col, row, val, label, cellName) {
             // Number formating
-            // console.log(changecheck);
+            // console.log(col+' - '+cellName);
 
             if(changecheck==1)
             {}
             else
             {
-                if (col == 7) {
+                if (col == 8) {
                     // Get text
                     txt = cell.innerText;
                     var numtxt=txt.replace(/[^0-1]/g, '');
@@ -504,7 +505,7 @@ function jexcelcall(reqStatus)
                    // cell.innerHTML = null;
                 }
 
-                if (col == 8)
+                if (col == 9)
                 {
                     // Get text
                     txt = cell.innerText;
@@ -523,7 +524,7 @@ function jexcelcall(reqStatus)
                     // cell.innerHTML = null;
                 }
 
-                if (col == 9)
+                if (col == 10)
                 {
                     txt = cell.innerText;
                     txtcheck = txt.split('-');
@@ -537,7 +538,7 @@ function jexcelcall(reqStatus)
                     cell.innerHTML = txt0;
                 }
 
-                if (col == 10)
+                if (col == 11)
                 {
                     txt = cell.innerText;
                     if(txt=="xxx")
