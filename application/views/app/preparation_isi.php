@@ -250,7 +250,7 @@ while($set->nextRow())
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <div class="title">Operation</div>
-                    <div class="status  <?=$statuscheckedstatus?>"><span>Status : </span><?=$OPERATION?></div>
+                    <div class="status  <?=$statuscheckedoperation?>"><span>Status : </span><?=$OPERATION?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
