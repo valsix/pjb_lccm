@@ -5882,3 +5882,109 @@ table#example.dataTable tbody tr:hover > .sorting_1 {
 thead input {
 	width: 100%;
 }
+
+/****/
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-xs-5ths {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+
+/****/
+.area-preparation-dashboard {
+	border: 1px solid #235A81;
+
+	-webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+
+    margin: 15px;
+    padding-bottom: 5px;
+
+    
+}
+.area-preparation-dashboard .filter {
+	background-color: #235A81;
+	/*-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;*/
+
+    -webkit-border-radius: 10px;
+	-webkit-border-bottom-right-radius: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	-moz-border-radius: 10px;
+	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-radius: 10px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+
+    margin-bottom: 20px;
+    padding: 0 30px;
+}
+.area-preparation-dashboard .filter label {
+	color: #FFFFFF;
+}
+.area-preparation-dashboard .inner {
+	padding-left: 30px;
+	padding-right: 30px;
+} 
+.area-preparation-dashboard .item {
+	/*border: 1px solid red;*/
+	margin-bottom: 15px;
+
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+.area-preparation-dashboard .item .title {
+	background-color: #20bdf0;
+	color: #FFFFFF;
+	font-family: 'avenir-next-bold';
+	padding: 10px 15px;
+}
+.area-preparation-dashboard .item .status {
+	background-color: #f5f647;
+	padding: 10px 15px;
+}
+.area-preparation-dashboard .item .status.status-checked {
+	background-color: #43f642;
+}
+.area-preparation-dashboard .item .status span {
+	display: inline-block;
+	width: 120px;
+}

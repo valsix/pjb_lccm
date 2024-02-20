@@ -49,7 +49,25 @@ class preparation_json extends CI_Controller
 		$arrinfodata= [];
 
 		$reqPencarian= $this->input->get("reqPencarian");
+		$reqDistrikId= $this->input->get("reqDistrikId");
+		$reqBlokId= $this->input->get("reqBlokId");
+		$reqUnitMesinId= $this->input->get("reqUnitMesinId");
 		$searchJson= "";
+
+		if(!empty($reqDistrikId))
+		{
+			$statement .= " AND A.KODE_DISTRIK='".$reqDistrikId."'";
+		}
+
+		if(!empty($reqBlokId))
+		{
+			$statement .= " AND A.KODE_BLOK='".$reqBlokId."'";
+		}
+
+		if(!empty($reqUnitMesinId))
+		{
+			$statement .= " AND A.KODE_UNIT_M='".$reqUnitMesinId."'";
+		}
 		
 
 		// $statement= " AND A.DISTRIK_ID=".$reqDistrikId;

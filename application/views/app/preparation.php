@@ -5,6 +5,11 @@ $this->load->model("base-app/Crud");
 $this->load->model("base-app/PerusahaanEksternal");
 $this->load->model("base-app/Distrik");
 $this->load->model("base-app/T_Energy_Price_Lccm");
+$this->load->model("base-app/BlokUnit");
+$this->load->model("base-app/UnitMesin");
+$this->load->model("base-app/T_Preperation_Lccm");
+
+
 
 
 
@@ -50,6 +55,22 @@ $reqRead= $set->getField("MODUL_R");
 $reqUpdate= $set->getField("MODUL_U");
 $reqDelete= $set->getField("MODUL_D");
 
+$set= new T_Preperation_Lccm();
+$arrtahun= [];
+$statement="  ";
+$set->selectByParamsTahun(array(), -1,-1,$statement);
+// echo $set->query;exit;
+while($set->nextRow())
+{
+    $arrdata= array();
+    $arrdata["id"]= $set->getField("YEAR_LCCM");
+    $arrdata["text"]= $set->getField("YEAR_LCCM");
+    array_push($arrtahun, $arrdata);
+}
+unset($set);
+
+
+
 $set= new Distrik();
 $arrdistrik= [];
 $statement="  ";
@@ -65,11 +86,63 @@ while($set->nextRow())
 }
 unset($set);
 
+$set= new BlokUnit();
+$arrblok= [];
+
+if(empty($reqSiteId))
+{
+    if(empty($reqParent))
+    {
+        $statement=" AND 1=2 ";
+    }
+    else
+    {
+         $statement=" AND A.KODE <> '' ";
+    }
+    
+}
+else
+{
+    $statement="  AND A.KODE <> '' ";
+}
+
+if($reqMode=="update")
+{
+
+    if($reqParent=="parent")
+    {
+       $statement=" AND B.KODE= '".$reqDistrikId."'  ";
+    }
+    else
+    {
+        $statement="  AND B.KODE= '".$reqDistrikId."'  ";
+    }
+
+}
+else
+{
+    $statement=" AND A.KODE= '".$reqSiteId."' AND B.KODE= '".$reqDistrikId."'  ";
+}
+
+
+
+$set->selectByParams(array(), -1,-1,$statement);
+    // echo $set->query;exit;
+while($set->nextRow())
+{
+    $arrdata= array();
+    $arrdata["id"]= $set->getField("BLOK_UNIT_ID");
+    $arrdata["text"]= $set->getField("KODE")." - ".$set->getField("NAMA");
+    $arrdata["KODE"]= $set->getField("KODE");
+    array_push($arrblok, $arrdata);
+}
+unset($set);
+
 
 
 
 ?>
-<script type="text/javascript" language="javascript" class="init">	
+<script type="text/javascript" language="javascript" class="init">  
 </script> 
 
 <!-- FIXED AKSI AREA WHEN SCROLLING -->
@@ -78,144 +151,193 @@ unset($set);
 <script>
 $(document).ready(function() {
     var s = $("#bluemenu");
-	
+    
     var pos = s.position();
     $(window).scroll(function() {
         var windowpos = $(window).scrollTop();
         if (windowpos >= pos.top) {
             s.addClass("stick");
-			$('#example thead').addClass('stick-datatable');
+            $('#example thead').addClass('stick-datatable');
         } else {
-			s.removeClass("stick");
-			$('#example thead').removeClass('stick-datatable');
+            s.removeClass("stick");
+            $('#example thead').removeClass('stick-datatable');
         }
     });
 });
 </script>
 
+<style type="text/css">
+    .select-css {
+        /*display: block;*/
+        font-size: 16px;
+        font-family: 'Verdana', sans-serif;
+        font-weight: 400;
+        color: #444;
+        line-height: 1.3;
+        padding: .4em 1.4em .3em .8em;
+        width: 100px;
+        max-width: 100%; 
+        box-sizing: border-box;
+     margin: 20px auto;
+        border: 1px solid #aaa;
+        box-shadow: 0 1px 0 1px rgba(0,0,0,.03);
+        border-radius: .3em;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: #fff;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+          linear-gradient(to bottom, #ffffff 0%,#f7f7f7 100%);
+        background-repeat: no-repeat, repeat;
+        background-position: right .7em top 50%, 0 0;
+        background-size: .65em auto, 100%;
+    }
+    .select-css::-ms-expand {
+        display: none;
+    }
+    .select-css:hover {
+        border-color: #888;
+    }
+    .select-css:focus {
+        border-color: #aaa;
+        box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+        box-shadow: 0 0 0 3px -moz-mac-focusring;
+        color: #222; 
+        outline: none;
+    }
+    .select-css option {
+        font-weight:normal;
+    }
+
+
+    .classOfElementToColor:hover {background-color:red; color:black}
+
+    .select-css option[selected] {
+        background-color: orange;
+    }
+
+
+    /* OTROS ESTILOS*/
+    .styled-select { width: 240px; height: 34px; overflow: hidden; background: url(new_arrow.png) no-repeat right #ddd; border: 1px solid #ccc; }
+
+     
+
+    .sidebar-box select{
+    display:block;
+    padding: 5px 10px;
+    height:42px;
+    margin:10px auto;
+    min-width: 225px;
+    -webkit-appearance: none;
+    height: 34px;
+    /* background-color: #ffffff; */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+          linear-gradient(to bottom, #ffffff 0%,#f7f7f7 100%);
+        background-repeat: no-repeat, repeat;
+        background-position: right .7em top 50%, 0 0;
+        background-size: .65em auto, 100%;}
+</style>
+
 <style>
-	thead.stick-datatable th:nth-child(1){	width:440px !important; *border:1px solid cyan;}
-	thead.stick-datatable ~ tbody td:nth-child(1){	width:440px !important; *border:1px solid yellow;}
+    thead.stick-datatable th:nth-child(1){  width:440px !important; *border:1px solid cyan;}
+    thead.stick-datatable ~ tbody td:nth-child(1){  width:440px !important; *border:1px solid yellow;}
 </style>
 
 <div class="col-md-12">
-    <div class="judul-halaman"> Data Preparation</div>
+    <div class="judul-halaman"> Dashboard Preparation</div>
     <div class="konten-area">
-    	<div id="bluemenu" class="aksi-area" style="display: none">
-           <?
-            if($reqCreate ==1)
-            {
-            ?>
-            <span><a id="btnAdd"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Tambah</a></span>
-            <?   
-            }
-            if($reqUpdate ==1)
-            {
-            ?>
-            <span><a id="btnEdit"><i class="fa fa-check-square fa-lg" aria-hidden="true"></i> Edit</a></span>
-            <?
-            }
-            if($reqRead ==1)
-            {
-            ?>
-            <span><a id="btnLihat"><i class="fa fa-eye fa-lg" aria-hidden="true"></i> Lihat</a></span>
-            <?
-            }
-            if($reqDelete ==1)
-            {
-            ?>            
-            <!-- <span><a id="btnDelete"><i class="fa fa-times-rectangle fa-lg" aria-hidden="true"></i>Non Aktifkan</a></span> -->
-            <span><a id="btnDeleteNew"><i class="fa fa-times-rectangle fa-lg" aria-hidden="true"></i>Hapus</a></span>
-            <?
-            }
-            if($reqCreate ==1)
-            {
-            ?>
-            <!-- <span><a id="btnImport"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true"></i> Import</a></span> -->
-            <?
-            }
-            ?>
-
-        </div>
-       <!--  <br>
-        <br>
-        <br> -->
-
-        <div  style=" border: none;  padding: 4px 5px; top: 90px;
-        z-index: 10;clear: both;display: none">
-            <div class="col-md-12" style="margin-bottom: 20px; border: none;">
-                <button id="btnfilter" class="filter btn btn-default pull-left">Filter <i class="fa fa-caret-down" aria-hidden="true"></i></button>
-            </div>
-            <div class="divfilter filterbaru"  >
-                <div class="col-md-12" style="margin-bottom: 20px;" >
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-1 control-label">Distrik</label>
-                        <div class="col-sm-4">
-                            <select class="form-control jscaribasicmultiple"  <?=$readonly?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
-                                    <option value="" >Pilih Distrik</option>
-                                    <?
-                                    foreach($arrdistrik as $item) 
-                                    {
-                                        $selectvalid= $item["id"];
-                                        $selectvaltext= $item["text"];
-                                        $selectvalkode= $item["KODE"];
-
-                                        $selected="";
-
-                                        ?>
-                                        <option value="<?=$selectvalkode?>" <?=$selected?>><?=$selectvaltext?></option>
-                                        <?
-                                    }
-                                    ?>
-                            </select>
-                        </div>
-                        <label for="inputEmail3" class="col-sm-1 control-label">Blok Unit</label>
-                        <div class="col-sm-4">
-                                <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
-                                    <option value="" >Pilih Blok Unit</option>
-                                    
-                                </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center ">
-                  <button class="btn btn-primary btn-sm" onclick="setCariInfo()" ><i class="fas fa-search"></i> Cari</button>
-                </div>
-                <br>
-            </div>
-        </div>
-
-
-        <div class="area-filter"></div>
-
-            
-        <table id="example" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <?php
-                    foreach($arrtabledata as $valkey => $valitem) 
-                    {
-                    	$infotablelabel= $valitem["label"];
-                    	$infotablecolspan= $valitem["colspan"];
-                    	$infotablerowspan= $valitem["rowspan"];
-
-                    	$infowidth= "";
-                    	if(!empty($infotablecolspan))
-                    	{
-                    	}
-
-                    	if(!empty($infotablelabel))
-                    	{
-                    ?>
-                        <th style="text-align:center; width: <?=$infowidth?>%" colspan='<?=$infotablecolspan?>' rowspan='<?=$infotablerowspan?>'><?=$infotablelabel?></th>
+        <div class="area-preparation-dashboard">
+            <div class="filter">
+                
+                <label>Distrik :</label>
+                <select class="select-css " style="width: 15%" id="reqDistrikId"  name="reqDistrikId">
+                    <option value="" >Pilih Distrik</option>
                     <?
-                    	}
+                    foreach($arrdistrik as $item) 
+                    {
+                        $selectvalid= $item["id"];
+                        $selectvaltext= $item["text"];
+                        $selectvalkode= $item["KODE"];
+
+                        $selected="";
+                        if($selectvalkode == $reqDistrikId)
+                        {
+                            $selected="selected";
+                        }
+                        ?>
+                        <option value="<?=$selectvalkode?>" <?=$selected?>><?=$selectvaltext?></option>
+                        <?
                     }
                     ?>
-                </tr>
-             </thead>
-        </table>
-        
+                </select>
+                <label>Blok :</label>
+                <select class="select-css" style="width: 15%"  id="reqBlokId"   name="reqBlokId" >
+                    <option value="" >Pilih Blok Unit</option>
+                    <?
+                    foreach($arrblok as $item) 
+                    {
+                        $selectvalid= $item["id"];
+                        $selectvaltext= $item["text"];
+                        $selectvalkode= $item["KODE"];
+                        $selected="";
+                        if($selectvalkode==$reqBlokId)
+                        {
+                            $selected="selected";
+                        }
+
+                        ?>
+                        <option value="<?=$selectvalkode?>" <?=$selected?>><?=$selectvaltext?></option>
+
+                        <?
+                    }
+                    ?>
+                </select>
+                <label>Unit :</label>
+                <select class="select-css" style="width: 15%" id="reqUnitMesinId"  name="reqUnitMesinId">
+                    <option value="" >Pilih Unit Mesin</option>
+                    <?
+                    foreach($arrunitmesin as $item) 
+                    {
+                        $selectvalid= $item["id"];
+                        $selectvaltext= $item["text"];
+                        $selectvalkode= $item["KODE"];
+                        $selected="";
+                        if($selectvalkode == $reqUnitMesinId)
+                        {
+                            $selected="selected";
+                        }
+
+                        ?>
+                        <option value="<?=$selectvalkode?>" <?=$selected?>><?=$selectvaltext?></option>
+
+                        <?
+                    }
+                    ?>
+                </select>
+                <label>Year LCCM :</label>
+                <select class="select-css " style="width: 10%" id="reqTahun">
+                    <option value="">Pilih Tahun</option>
+                    <?
+                    foreach($arrtahun as $item) 
+                    {
+                        $selectvalid= $item["id"];
+                        $selectvaltext= $item["text"];
+
+                        $selected="";
+                        
+                        ?>
+                        <option value="<?=$selectvalid?>" <?=$selected?>><?=$selectvaltext?></option>
+                        <?
+                    }
+                    ?>
+                </select>
+                  <button class="btn btn-success btn-sm" style="margin-left: 50px;margin-top: -10px" onclick="setCariInfo()" ><i class="fas fa-search"></i> Cari</button>
+            </div>
+            <div class="inner row" id="isi">
+                
+            </div>
+        </div>
+       
     </div>
 </div>
 
@@ -225,212 +347,126 @@ $(document).ready(function() {
 <script type="text/javascript">
 
     $('#reqDistrikId').on('change', function() {
-        var reqDistrikId= this.value;
+    // $("#blok").empty();
+    var reqDistrikId= this.value;
 
-        $.getJSON("json-app/preparation_json/filter_blok?reqDistrikId="+reqDistrikId,
+    $.getJSON("json-app/blok_unit_json/filter_blok?reqDistrikId="+reqDistrikId,
+        function(data)
+        {
+            // console.log(data);
+            $("#reqBlokId option").remove();
+            $("#reqUnitMesinId option").remove();
+            $("#reqGroupPm option").remove();
+            $("#reqBlokId").attr("readonly", false); 
+            $("#reqBlokId").append('<option value="" >Pilih Blok Unit</option>');
+            $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+            $("#reqGroupPm").append('<option value="" >Pilih Group Pm</option>');
+            jQuery(data).each(function(i, item){
+                $("#reqBlokId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+            });
+        });
+    
+    });
+
+    $('#reqBlokId').on('change', function() {
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= this.value;
+
+        if(reqBlokId)
+        {
+
+            $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
             function(data)
             {
-                $("#reqBlokId option").remove();
+                // console.log(data);
                 $("#reqUnitMesinId option").remove();
-                $("#reqBlokId").attr("readonly", false); 
-                $("#reqBlokId").append('<option value="" >Pilih Blok Unit</option>');
+                $("#reqUnitMesinId").attr("readonly", false); 
+                $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
                 jQuery(data).each(function(i, item){
-                    $("#reqBlokId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
                 });
             });
 
-    });
+            $.getJSON("json-app/group_pm_json/filter_group?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+            function(data)
+            {
+                $("#reqGroupPm option").remove();
+                $("#reqGroupPm").attr("readonly", false); 
+                $("#reqGroupPm").append('<option value="" >Pilih Group Pm</option>');
+                jQuery(data).each(function(i, item){
+                    $("#reqGroupPm").append('<option value="'+item.text+'" >'+item.text+'</option>');
+                });            
+            });
 
-    $(document).ready(function(){
-        $(".divfilter").hide();
-        $("#btnfilter").click(function(){
-           $(".divfilter").toggle();
-       });
-    });
-
-
-	var datanewtable;
-	var infotableid= "example";
-	var carijenis= "";
-	var arrdata= <?php echo json_encode($arrtabledata); ?>;
-	var indexfieldid= arrdata.length - 1;
-    var indexfieldblok= arrdata.length - 4;
-    var indexfielddistrik= arrdata.length - 3;
-    var indexfieldunit= arrdata.length - 2;
-    var valinfoid= valinforowid= valinfoblok= valinfodistrik= valinfounit='';
-	var datainforesponsive= "1";
-	var datainfoscrollx= 100;
-
-    var datainfostatesave=1;
-    var infocolor=1;
-
-	infoscrolly= 50;
-
-	$("#btnAdd, #btnEdit").on("click", function () {
-        btnid= $(this).attr('id');
-
-        // if(btnid=="btnAdd")
-        // {
-        //     valinfoid="";
-        // }
-        // else
-        // {
-        //     if(valinfoid == "" )
-        //     {
-        //         $.messager.alert('Info', "Pilih salah satu data terlebih dahulu.", 'warning');
-        //         return false;
-        //     }
-        // }
-
-        // varurl= "app/index/group_pm_add?reqId="+valinfoid+"&reqBlokId="+valinfoblok+"&reqDistrikId="+valinfodistrik+"&reqUnitId="+valinfounit;
-        // document.location.href = varurl;
-    });
-
-    $("#btnLihat").on("click", function () {
-        btnid= $(this).attr('id');
-
-        if(valinfoid == "" )
-        {
-            $.messager.alert('Info', "Pilih salah satu data terlebih dahulu.", 'warning');
-            return false;
-        }
-        
-
-        varurl= "app/index/group_pm_add?reqId="+valinfoid+"&reqLihat=1";
-        document.location.href = varurl;
-    });
-
-    $('#btnImport').on('click', function () {
-        openAdd("app/index/group_pm_import");
-    });
-
-    $('#btnDelete').on('click', function () {
-        if(valinfoid == "" )
-        {
-            $.messager.alert('Info', "Pilih salah satu data terlebih dahulu.", 'warning');
-            return false;
-        }
-
-        // if(valinfostatus=='' || valinfostatus==null )
-        // {
-        //     var reqStatus=1;
-        //     var pesan='Non Aktifkan data terpilih?';
-        // }
-        // else
-        // {
-        //     var reqStatus='';
-        //     var pesan='Aktifkan data terpilih?';
-        // }  
-
-        $.messager.confirm('Konfirmasi',pesan,function(r){
-            if (r){
-                $.getJSON("json-app/preparation_json/update_status/?reqId="+valinfoid+"&reqStatus="+reqStatus,
-                    function(data){
-                        $.messager.alert('Info', data.PESAN, 'info');
-                        valinfoid= "";
-                        setCariInfo();
-                    });
-
-            }
-        }); 
-    });
-
-     $('#btnDeleteNew').on('click', function () {
-        if(valinfoid == "" )
-        {
-            $.messager.alert('Info', "Pilih salah satu data terlebih dahulu.", 'warning');
-            return false;
-        }
-
-         var pesan='Apakah anda yakin untuk hapus data terpilih?';
-
-        $.messager.confirm('Konfirmasi',pesan,function(r){
-            if (r){
-                $.getJSON("json-app/preparation_json/delete?reqId="+valinfoid+"&reqBlokId="+valinfoblok+"&reqDistrikId="+valinfodistrik+"&reqUnitMesinId="+valinfounit,
-                    function(data){
-                        $.messager.alert('Info', data.PESAN, 'info');
-                        valinfoid= "";
-                        setCariInfo();
-                    });
-
-            }
-        }); 
-    });
-
-	$('#btnCari').on('click', function () {
-		reqPencarian= $('#example_filter input').val();
-        reqKode='';
-        reqTahun=$('#reqTahun').val();
-        var reqDistrikId=$('#reqDistrikId').val();
-
-        var reqBlokId= $("#reqBlokId").val();
-
-        jsonurl= "json-app/preparation_json/json?reqPencarian="+reqPencarian+"&reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId;
-        datanewtable.DataTable().ajax.url(jsonurl).load();
-	});
-
-	$("#triggercari").on("click", function () {
-        if(carijenis == "1")
-        {
-            pencarian= $('#'+infotableid+'_filter input').val();
-            datanewtable.DataTable().search( pencarian ).draw();
         }
         else
         {
-            
+            $("#reqUnitMesinId option").remove();
+            $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+            $("#reqGroupPm option").remove();
+            $("#reqGroupPm").append('<option value="" >Pilih Group Pm</option>');
         }
+
+       
     });
 
-	jQuery(document).ready(function() {
-		var jsonurl= "json-app/preparation_json/json";
-	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata);
-	});
+    $('#reqUnitMesinId').on('change', function() {
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId=  $("#reqBlokId").val();
+        var reqUnitMesinId= this.value;
 
-	function calltriggercari()
-	{
-	    $(document).ready( function () {
-	      $("#triggercari").click();      
-	    });
-	}
+        $.getJSON("json-app/group_pm_json/filter_group?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId,
+            function(data)
+            {
+                $("#reqGroupPm option").remove();
+                $("#reqGroupPm").attr("readonly", false); 
+                $("#reqGroupPm").append('<option value="" >Pilih Group Pm</option>');
+                jQuery(data).each(function(i, item){
+                    $("#reqGroupPm").append('<option value="'+item.text+'" >'+item.text+'</option>');
+                });            
+            });
+    });
 
-	function setCariInfo()
-	{
-		$(document).ready( function () {
-			$("#btnCari").click();
-		});
-	}
 
-    $(document).ready(function() {
-        var table = $('#example').DataTable();
 
-        $('#example tbody').on( 'click', 'tr', function () {
-            if ( $(this).hasClass('selected') ) {
-                $(this).removeClass('selected');
-            }
-            else {
-                table.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
+    $('#btnCari').on('click', function () {
+        reqPencarian= $('#example_filter input').val();
+        reqKode='';
+        reqTahun=$('#reqTahun').val();
+        var reqDistrikId=$('#reqDistrikId').val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
+        // console.log('xxx');
+        $("#isi").empty();
 
-                var dataselected= datanewtable.DataTable().row(this).data();
-                fieldinfoid= arrdata[indexfieldid]["field"];
-                fieldinfoblok= arrdata[indexfieldblok]["field"];
-                fieldinfodistrik= arrdata[indexfielddistrik]["field"];
-                fieldinfounit= arrdata[indexfieldunit]["field"];
-                valinfoid= dataselected[fieldinfoid];
-                valinfoblok= dataselected[fieldinfoblok];
-                valinfodistrik= dataselected[fieldinfodistrik];
-                valinfounit= dataselected[fieldinfounit];
+        $('#isi').load("app/loadUrl/app/preparation_isi?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId+"&reqTahun="+reqTahun);
 
-                
-            }
-        } );
+        // $.getJSON("json-app/preparation_json/json?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId+"&reqTahun="+reqTahun,
+        //     function(data)
+        //     {
 
-        $('#'+infotableid+' tbody').on( 'dblclick', 'tr', function () {
-            $("#btnEdit").click();
+        //         $("#isi").append(data);
+        //         // // console.log(data);
+        //         // $("#reqUnitMesinId option").remove();
+        //         // $("#reqUnitMesinId").attr("readonly", false); 
+        //         // $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+        //         // jQuery(data).each(function(i, item){
+        //         //     $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+        //         // });
+        //     });
+
+    });
+
+    $(document).ready( function () {
+        setCariInfo();
+    });
+
+    function setCariInfo()
+    {
+        $(document).ready( function () {
+            $("#btnCari").click();
         });
+    }
 
-        $('#button').click( function () {
-            table.row('.selected').remove().draw( false );
-        } );
-    } );
+   
 </script>

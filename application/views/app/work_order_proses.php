@@ -68,11 +68,6 @@ while($set->nextRow())
 unset($set);
 
 
-
-
-
-
-
 ?>
 <script type="text/javascript" language="javascript" class="init">  
 </script> 
@@ -215,6 +210,17 @@ unset($set);
       }
     }
   </style>
+    <style type="text/css">
+        .konten-area  .jexcel_container .jexcel_content {
+            /*border: 2px solid red;*/
+            max-width: 100%;
+            width: 100% !important;
+        }
+        table.jexcel.jexcel_overflow {
+            width: 100% !important;
+        }
+    </style>
+
 
 
 <!-- FIXED AKSI AREA WHEN SCROLLING -->
