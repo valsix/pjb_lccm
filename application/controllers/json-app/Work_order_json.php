@@ -632,7 +632,7 @@ class Work_order_json extends CI_Controller
 
 		$set= new WorkOrder();
 
-		$statement=" AND WOSTATUS IS NULL";
+		$statement=" AND APPROVAL_STATUS IS NULL";
 
 		if(!empty($reqDistrikId))
 		{

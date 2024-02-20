@@ -59,7 +59,7 @@ unset($set);
 
 $set= new WorkOrder();
 
-$statement=" AND WOSTATUS IS NULL";
+$statement=" AND APPROVAL_STATUS IS NULL";
 $set->jumlahwo(array(), -1, -1, $statement);
 // echo $set->query;exit;
 $set->firstRow();
