@@ -17,13 +17,15 @@
     	$str = "
     	INSERT INTO perusahaan_eksternal
     	(
-    		PERUSAHAAN_EKSTERNAL_ID, NAMA, KODE
+    		PERUSAHAAN_EKSTERNAL_ID, NAMA, KODE,LAST_CREATE_USER,LAST_CREATE_DATE
     	)
     	VALUES 
     	(
 	    	'".$this->getField("PERUSAHAAN_EKSTERNAL_ID")."'
 	    	, '".$this->getField("NAMA")."'
 	    	, '".$this->getField("KODE")."'
+	    	, '".$this->getField("LAST_CREATE_USER")."'
+	    	, ".$this->getField("LAST_CREATE_DATE")."
 	    )"; 
 
 		$this->id= $this->getField("PERUSAHAAN_EKSTERNAL_ID");
@@ -61,6 +63,8 @@
 		SET
 		NAMA= '".$this->getField("NAMA")."'
 		, KODE= '".$this->getField("KODE")."'
+		, LAST_UPDATE_USER= '".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE= ".$this->getField("LAST_UPDATE_DATE")."
 		WHERE PERUSAHAAN_EKSTERNAL_ID = '".$this->getField("PERUSAHAAN_EKSTERNAL_ID")."'
 		"; 
 		$this->query = $str;
