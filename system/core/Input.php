@@ -225,7 +225,12 @@ class CI_Input {
 
 		if($xss_clean==true)
 		{
-			$value=strip_tags($value);
+			if(is_array($value))
+			{}
+			else
+			{
+				$value=strip_tags($value);
+			}
 		}
 
 		return ($xss_clean === TRUE)
