@@ -17,7 +17,7 @@
     	$str = "
     	INSERT INTO unit_mesin
     	(
-    		UNIT_MESIN_ID, NAMA, DISTRIK_ID,BLOK_UNIT_ID,KODE,KODE_EAM,EAM_ID,URL
+    		UNIT_MESIN_ID, NAMA, DISTRIK_ID,BLOK_UNIT_ID,KODE,KODE_EAM,EAM_ID,URL,LAST_CREATE_USER,LAST_CREATE_DATE
     	)
     	VALUES 
     	(
@@ -29,6 +29,8 @@
 	    	, '".$this->getField("KODE_EAM")."'
 	    	, ".$this->getField("EAM_ID")."
 	    	, '".$this->getField("URL")."'
+	    	, '".$this->getField("LAST_CREATE_USER")."'
+	    	, ".$this->getField("LAST_CREATE_DATE")."
 	    )"; 
 
 		$this->id= $this->getField("UNIT_MESIN_ID");
@@ -49,6 +51,8 @@
 		, KODE_EAM= '".$this->getField("KODE_EAM")."'
 		, EAM_ID= ".$this->getField("EAM_ID")."
 		, URL= '".$this->getField("URL")."'
+		, LAST_UPDATE_USER= '".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE= ".$this->getField("LAST_UPDATE_DATE")."
 		WHERE UNIT_MESIN_ID = '".$this->getField("UNIT_MESIN_ID")."'
 		"; 
 		$this->query = $str;

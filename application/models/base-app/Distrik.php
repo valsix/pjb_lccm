@@ -17,7 +17,7 @@
     	$str = "
     	INSERT INTO distrik
     	(
-    		DISTRIK_ID, KODE_SITE, NAMA, KODE, WILAYAH_ID, PERUSAHAAN_EKSTERNAL_ID, LOCATION_ID,DIREKTORAT_ID
+    		DISTRIK_ID, KODE_SITE, NAMA, KODE, WILAYAH_ID, PERUSAHAAN_EKSTERNAL_ID, LOCATION_ID,DIREKTORAT_ID,LAST_CREATE_USER,LAST_CREATE_DATE
     	)
     	VALUES 
     	(
@@ -29,6 +29,8 @@
 	    	, ".$this->getField("PERUSAHAAN_EKSTERNAL_ID")."
 	    	, ".$this->getField("LOCATION_ID")."
 	    	, ".$this->getField("DIREKTORAT_ID")."
+	    	, '".$this->getField("LAST_CREATE_USER")."'
+	    	, ".$this->getField("LAST_CREATE_DATE")."
 	    )"; 
 
 		$this->id= $this->getField("DISTRIK_ID");
@@ -71,6 +73,8 @@
 		, PERUSAHAAN_EKSTERNAL_ID= ".$this->getField("PERUSAHAAN_EKSTERNAL_ID")."
 		, LOCATION_ID= ".$this->getField("LOCATION_ID")."
 		, DIREKTORAT_ID= ".$this->getField("DIREKTORAT_ID")."
+		, LAST_UPDATE_USER= '".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE= ".$this->getField("LAST_UPDATE_DATE")."
 		WHERE DISTRIK_ID = '".$this->getField("DISTRIK_ID")."'
 		"; 
 		$this->query = $str;
@@ -155,8 +159,6 @@
 			A.*,B.NAMA WILAYAH_NAMA,
 				CASE WHEN A.STATUS = 1 THEN 'Tidak  Aktif' ELSE 'Aktif' END STATUS_INFO
 				, C.NAMA DIREKTORAT_NAMA
-				
-				
 		FROM distrik A
 		LEFT JOIN WILAYAH B ON B.WILAYAH_ID = A.WILAYAH_ID
 		LEFT JOIN DIREKTORAT C ON C.DIREKTORAT_ID = A.DIREKTORAT_ID
@@ -182,7 +184,6 @@
 			A.*,B.NAMA WILAYAH_NAMA,
 				CASE WHEN A.STATUS = 1 THEN 'Tidak  Aktif' ELSE 'Aktif' END STATUS_INFO
 				, C.NAMA DIREKTORAT_NAMA
-				
 				, F.BLOK_INFO
 				
 		FROM distrik A
