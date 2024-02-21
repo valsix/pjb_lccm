@@ -17,7 +17,7 @@
     	$str = "
     	INSERT INTO t_schedule_oh_lccm
     	(
-    		KODE_BLOK, OH_YEAR, OH_TYPE,KODE_DISTRIK,KODE_UNIT_M
+    		KODE_BLOK, OH_YEAR, OH_TYPE,KODE_DISTRIK,KODE_UNIT_M, LAST_CREATE_USER, LAST_CREATE_DATE
     	)
     	VALUES 
     	(
@@ -26,6 +26,8 @@
 	    	, '".$this->getField("OH_TYPE")."'
 	    	, '".$this->getField("KODE_DISTRIK")."'
 	    	, '".$this->getField("KODE_UNIT_M")."'
+	    	, '".$this->getField("LAST_CREATE_USER")."'
+	    	, ".$this->getField("LAST_CREATE_DATE")."
 	    )"; 
 
 		// $this->id= $this->getField("KODE_UNIT_M");
@@ -44,6 +46,8 @@
 		, KODE_DISTRIK= '".$this->getField("KODE_DISTRIK")."'
 		, OH_YEAR= ".$this->getField("OH_YEAR")."
 		, KODE_UNIT_M= '".$this->getField("KODE_UNIT_M")."'
+		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
 		WHERE OH_YEAR = '".$this->getField("OH_YEAR_OLD")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK_OLD")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK_OLD")."' AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M_OLD")."'
 		"; 
 		$this->query = $str;
