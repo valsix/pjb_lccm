@@ -17,7 +17,7 @@
     	$str = "
     	INSERT INTO t_energy_price_lccm
     	(
-    		KODE_BLOK, PRICE_YEAR, ENERGY_PRICE,KODE_DISTRIK,STATUS
+    		KODE_BLOK, PRICE_YEAR, ENERGY_PRICE,KODE_DISTRIK,STATUS,LAST_CREATE_USER,LAST_CREATE_DATE
     	)
     	VALUES 
     	(
@@ -26,6 +26,8 @@
 	    	, ".$this->getField("ENERGY_PRICE")."
 	    	, '".$this->getField("KODE_DISTRIK")."'
 	    	, '".$this->getField("STATUS")."'
+	    	, '".$this->getField("LAST_CREATE_USER")."'
+	    	, ".$this->getField("LAST_CREATE_DATE")."
 	    )"; 
 
 		// $this->id= $this->getField("KODE_UNIT_M");
@@ -44,6 +46,8 @@
 		, KODE_DISTRIK= '".$this->getField("KODE_DISTRIK")."'
 		, PRICE_YEAR= ".$this->getField("PRICE_YEAR")."
 		, STATUS= '".$this->getField("STATUS")."'
+		, LAST_UPDATE_USER= '".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE= ".$this->getField("LAST_UPDATE_DATE")."
 		WHERE PRICE_YEAR = '".$this->getField("PRICE_YEAR")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."'
 		"; 
 		$this->query = $str;

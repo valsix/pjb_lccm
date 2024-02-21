@@ -281,19 +281,20 @@ class Energi_price_Json extends CI_Controller
 						$statusprep=0;
 					}
 
-					$statement=" AND A.SITEID =  '".$reqBlokId."' AND A.YEAR_LCCM =  '".$reqTahun."' ";
+					$statement=" AND A.KODE_DISTRIK =  '".$reqDistrikId."' AND A.KODE_BLOK =  '".$reqBlokId."' AND A.YEAR_LCCM =  '".$reqTahun."' ";
 					$check = new T_Preperation_Lccm();
 					$check->selectByParams(array(), -1, -1, $statement);
 					// echo $check->query;exit;
 					$check->firstRow();
-					$checkKode= $check->getField("SITEID");
+					$checkKode= $check->getField("KODE_BLOK");
 
 					if(!empty($checkKode))
 					{
 						$reqSimpan="";
 						$set = new T_Preperation_Lccm();
 						$set->setField("ENERGY_PRICE", $statusprep);
-						$set->setField("SITEID", $reqBlokId);
+						$set->setField("KODE_DISTRIK", $reqDistrikId);
+						$set->setField("KODE_BLOK", $reqBlokId);
 						$set->setField("YEAR_LCCM", $reqTahun);
 						$set->setField("LAST_UPDATE_USER", $this->appusernama);
 						$set->setField("LAST_UPDATE_DATE", 'NOW()');
@@ -303,32 +304,6 @@ class Energi_price_Json extends CI_Controller
 						}
 					}
 
-					else
-					{
-
-						$reqSimpan="";
-						$valf='n';
-						$set = new T_Preperation_Lccm();
-						
-						$set->setField("SITEID", $reqBlokId);
-						$set->setField("YEAR_LCCM", $reqTahun);
-						$set->setField("WO_CR", $valf);
-						$set->setField("WO_STANDING", $valf);
-						$set->setField("WO_PM", $valf);
-						$set->setField("WO_PDM", $valf);
-						$set->setField("WO_OH", $valf);
-						$set->setField("PRK", $valf);
-						$set->setField("LOSS_OUTPUT", $valf);
-						$set->setField("ENERGY_PRICE", $statusprep);
-						$set->setField("OPERATION", $valf);
-						$set->setField("STATUS_COMPLETE", $valf);
-						$set->setField("LAST_CREATE_USER", $this->appusernama);
-						$set->setField("LAST_CREATE_DATE", 'NOW()');
-						if($set->insert())
-						{
-							$reqSimpan= 1;
-						}
-					}
 
 					
 				}
@@ -361,7 +336,7 @@ class Energi_price_Json extends CI_Controller
 						$statusprep=0;
 					}
 
-					$statement=" AND A.SITEID =  '".$reqBlokId."' AND A.YEAR_LCCM =  '".$reqTahun."' ";
+					$statement=" AND A.KODE_DISTRIK =  '".$reqDistrikId."' AND A.KODE_BLOK =  '".$reqBlokId."' AND A.YEAR_LCCM =  '".$reqTahun."' ";
 					$check = new T_Preperation_Lccm();
 					$check->selectByParams(array(), -1, -1, $statement);
 					// echo $check->query;exit;
@@ -373,7 +348,8 @@ class Energi_price_Json extends CI_Controller
 						$reqSimpan="";
 						$set = new T_Preperation_Lccm();
 						$set->setField("ENERGY_PRICE", $statusprep);
-						$set->setField("SITEID", $reqBlokId);
+						$set->setField("KODE_DISTRIK", $reqDistrikId);
+						$set->setField("KODE_BLOK", $reqBlokId);
 						$set->setField("YEAR_LCCM", $reqTahun);
 						$set->setField("LAST_UPDATE_USER", $this->appusernama);
 						$set->setField("LAST_UPDATE_DATE", 'NOW()');
