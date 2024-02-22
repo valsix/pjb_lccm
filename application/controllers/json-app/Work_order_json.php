@@ -549,7 +549,7 @@ class Work_order_json extends CI_Controller
 
 			// print_r($ON_HAND_REPAIR);exit;
 
-			if($VALIDATION_DOWNTIME_KON=="1" && ($JUMLAH_LABOR = 0   OR  empty($JUMLAH_LABOR)))
+			if($VALIDATION_DOWNTIME_KON=="1" && ($JUMLAH_LABOR == 0   ||  empty($JUMLAH_LABOR)))
 			{
 				$JUMLAH_LABOR=$JUMLAH_LABOR;
 			}
@@ -573,6 +573,7 @@ class Work_order_json extends CI_Controller
 			$arrdata["KODE_DISTRIK"]= $set->getField("KODE_DISTRIK");
 			$arrdata["KODE_BLOK"]= $set->getField("KODE_BLOK");
 			$arrdata["KODE_UNIT_M"]= $set->getField("KODE_UNIT_M");
+			$arrdata["JPNUM"]= $set->getField("JPNUM");
 
 
 

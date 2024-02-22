@@ -37,6 +37,7 @@ $arrtabledata= array(
     ,array("type"=>"hidden", "title"=> "bg", "width"=>"100")
     ,array("type"=>"hidden", "title"=> "bg", "width"=>"100")
     ,array("type"=>"hidden", "title"=> "bg", "width"=>"100")
+    ,array("type"=>"hidden", "title"=> "bg", "width"=>"100")
 );
 
 
@@ -345,9 +346,17 @@ function jexcelcall(reqStatus)
         txt = cell.innerText;
 
         var cellName = jexcel.getColumnNameFromId([x,y]);
+        var setdown0 = jexcel.getColumnNameFromId([9,y]);
+        var setlabor = jexcel.getColumnNameFromId([11,y]);
+        var validdowntime =table1.getValueFromCoords([8], [y]);
+        var worktype =table1.getValueFromCoords([4], [y]);
+        var jpnum =table1.getValueFromCoords([17], [y]);
+        var down0 =table1.getValueFromCoords([9], [y]);
+        var labor =table1.getValueFromCoords([11], [y]);
+         
 
 
-        if(x==8 || x==9 || x==10)
+        if(x==8 || x==9 || x==10 || x==11)
         {
             if(txt==1 || txt==0)
             {
@@ -363,6 +372,67 @@ function jexcelcall(reqStatus)
                 table1.setValue(cellName, '');
                 table1.ignoreEvents = false;
             } 
+
+                // console.log();
+                // rumus down 0 not start
+                status_not_oh_not="";
+                if(validdowntime=="0" && worktype=="OH" && jpnum=="")
+                {
+                    status_not_oh_not="0-1";
+                }
+                else if(validdowntime=="0" && worktype!=="OH" )
+                {
+                    status_not_oh_not="1-1";
+                }
+                else 
+                {
+                    
+                    table1.ignoreEvents = true;
+                    table1.setStyle(setdown0, 'background-color', 'white');
+                    table1.ignoreEvents = false;
+                }
+
+
+                txtcheck = status_not_oh_not.split('-');
+                txt0=txtcheck[0];
+                txt1=txtcheck[1];
+                table1.ignoreEvents = true;
+                
+                if(txt1==1)
+                {
+                   table1.setStyle(setdown0, 'background-color', '#35f82f');
+                }
+                if(txt1=="0")
+                {
+                    table1.setStyle(setdown0, 'background-color', '#35f82f');
+                }
+                // console.log(txt0);
+                // console.log(labor);
+                table1.setValue(setdown0, txt0);
+                table1.ignoreEvents = false;
+                // rumus down 0 not end
+               
+                if(validdowntime=="1" && (labor == "0"   ||  labor==""))
+                {
+
+                    table1.ignoreEvents = true;
+                    if( txt>="0")
+                    {}
+                    {
+                        table1.setValue(setlabor, labor);
+                    }
+                    table1.setStyle(setlabor, 'background-color', '#f5f82f');
+                    
+                    table1.ignoreEvents = false;
+                }
+                else
+                {
+                    table1.ignoreEvents = true;
+                    table1.setStyle(setlabor, 'background-color', 'white');
+                    table1.ignoreEvents = false;
+
+                }
+            
         }
 
          changecheck=1;
@@ -410,7 +480,7 @@ function jexcelcall(reqStatus)
         if(x1==8 || x1==9 || x1==10)
         {
 
-            if (x1 == 10)
+            if (x1 == 8 || x1 == 9 || x1 == 10)
             {
                
                 // txtcheck=txtcheck[1];
@@ -557,7 +627,7 @@ function jexcelcall(reqStatus)
                 if (col == 11)
                 {
                     txt = cell.innerText;
-                    console.log(txt);
+                    // console.log(txt);
                     if(txt=="xxx" || txt=="" || txt=="0" )
                     {
                         if( txt>="0"){}
