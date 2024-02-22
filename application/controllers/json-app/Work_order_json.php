@@ -467,7 +467,7 @@ class Work_order_json extends CI_Controller
 			$WORKTYPE=$set->getField("WORKTYPE");
 			$NEEDDOWNTIME=$set->getField("NEEDDOWNTIME");
 			$JPNUM=$set->getField("JPNUM");
-			$VALIDATION_DOWNTIME=$set->getField("VALIDATION_DOWNTIME");
+			$VALIDATION_DOWNTIME="";
 			$STATUS_NOT_OH_NOT_DOWNTIME=$set->getField("STATUS_NOT_OH_NOT_DOWNTIME");
 			$REPORT_DOWN_TIME=$set->getField("REPORT_DOWN_TIME");
 			$JUMLAH_LABOR=$set->getField("JUMLAH_LABOR");
@@ -481,48 +481,47 @@ class Work_order_json extends CI_Controller
 			{
 				if($NEEDDOWNTIME=='1' && $REPORT_DOWN_TIME =="DOWN")
 				{
-					$VALIDATION_DOWNTIME='1';
+					$VALIDATION_DOWNTIME='1-1';
 				}
 				else if($NEEDDOWNTIME=='0' && $REPORT_DOWN_TIME =="DOWN")
 				{
-					$VALIDATION_DOWNTIME='1';
+					$VALIDATION_DOWNTIME='1-1';
 				}
 				else if($NEEDDOWNTIME=='1' && $REPORT_DOWN_TIME =="")
 				{
-					$VALIDATION_DOWNTIME='0';
+					$VALIDATION_DOWNTIME='0-0';
 				}
 			}
 			else if($WORKTYPE=="PM" || $WORKTYPE=="OH" || $WORKTYPE=="PDM")
 			{
 				if(!empty($JPNUM))
 				{
-					$VALIDATION_DOWNTIME='1';
+					$VALIDATION_DOWNTIME='0-1';
 				}
 				else 
 				{
-					$VALIDATION_DOWNTIME='0';
+					$VALIDATION_DOWNTIME='0-0';
 				}
 			}
 			else
 			{
-				$VALIDATION_DOWNTIME='0';
-
+				$VALIDATION_DOWNTIME='0-1';
 			}
 
-			if($VALIDATION_DOWNTIME=="0" && $WORKTYPE=="OH" && empty($JPNUM))
+			$VALIDATION_DOWNTIME_KON=explode('-', $VALIDATION_DOWNTIME);
+			$VALIDATION_DOWNTIME_KON=$VALIDATION_DOWNTIME[0];
+			// print_r($VALIDATION_DOWNTIME_KON);exit;
+
+			if($VALIDATION_DOWNTIME_KON=="0" && $WORKTYPE=="OH" && empty($JPNUM))
 			{
-				$STATUS_NOT_OH_NOT_DOWNTIME="0";
+				$STATUS_NOT_OH_NOT_DOWNTIME="0-1";
 			}
-			else if($VALIDATION_DOWNTIME=="0" &&  $WORKTYPE!=="OH")
+			else if($VALIDATION_DOWNTIME_KON=="0" &&  $WORKTYPE!=="OH")
 			{
-				$STATUS_NOT_OH_NOT_DOWNTIME="1";
+				$STATUS_NOT_OH_NOT_DOWNTIME="1-1";
 			}
 
-			if($VALIDATION_DOWNTIME=="1" && ($JUMLAH_LABOR = 0   OR  empty($JUMLAH_LABOR)))
-			{
-				$JUMLAH_LABOR="xxx";
-			}
-
+			
 			// $checkbgk=3;
 			if(empty($ON_HAND_REPAIR))
 			{
@@ -546,6 +545,13 @@ class Work_order_json extends CI_Controller
 					$ON_HAND_REPAIR."-1";
 				}
 				// $checkbgk=1;
+			}
+
+			// print_r($ON_HAND_REPAIR);exit;
+
+			if($VALIDATION_DOWNTIME_KON=="1" && ($JUMLAH_LABOR = 0   OR  empty($JUMLAH_LABOR)))
+			{
+				$JUMLAH_LABOR=$JUMLAH_LABOR;
 			}
 			
 

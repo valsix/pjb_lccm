@@ -177,20 +177,8 @@
 	{
 		$str = "
 		SELECT A.*
-		, 
-		 B.KODE_DISTRIK, B.KODE_BLOK,B.KODE_UNIT_M
+		, B.KODE_DISTRIK, B.KODE_BLOK,B.KODE_UNIT_M
 		, CASE 
-		 WHEN on_hand_repair is null 
-		 THEN 
-			 case
-			 WHEN actual_repair_time is not null
-			 THEN 
-			 on_hand_repair = actual_repair_time
-			 else
-			 on_hand_repair::text = to_char(actstart-actfinish, 'DD/MM/YYYY')
-			 end
-		 ELSE on_hand_repair >= 72 END ON_HAND_INFO
-		 , CASE 
 		 WHEN APPROVAL_STATUS is null 
 		 THEN 
 		 'X'

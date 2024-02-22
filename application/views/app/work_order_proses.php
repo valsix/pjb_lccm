@@ -496,19 +496,24 @@ function jexcelcall(reqStatus)
                 if (col == 8) {
                     // Get text
                     txt = cell.innerText;
+                    // console.log(txt);
                     var numtxt=txt.replace(/[^0-1]/g, '');
                     $(cell).html(numtxt);
-                    // console.log(txt);
-                    if(txt==1)
+                   
+                    txtcheck = txt.split('-');
+                    txt0=txtcheck[0];
+                    txt1=txtcheck[1];
+                   
+                    if(txt1==1)
                     {
                         cell.style.backgroundColor = '#35f82f';
                     }
-                    if(txt=="0")
+                    if(txt1=="0")
                     {
                        cell.style.backgroundColor = '#f5f82f';
                     }
 
-                   // cell.innerHTML = null;
+                    cell.innerHTML = txt0;
                 }
 
                 if (col == 9)
@@ -517,15 +522,20 @@ function jexcelcall(reqStatus)
                     txt = cell.innerText;
                     var numtxt=txt.replace(/[^0-1]/g, '');
                     $(cell).html(numtxt);
+                    txtcheck = txt.split('-');
+                    txt0=txtcheck[0];
+                    txt1=txtcheck[1];
+                    // console.log(txt1);
                     // console.log(txt);
-                    if(txt==1)
+                    if(txt1==1)
                     {
                         cell.style.backgroundColor = '#35f82f';
                     }
-                    if(txt=="0")
+                    if(txt1=="0")
                     {
                          cell.style.backgroundColor = '#35f82f';
                     }
+                    cell.innerHTML = txt0;
 
                     // cell.innerHTML = null;
                 }
@@ -547,9 +557,15 @@ function jexcelcall(reqStatus)
                 if (col == 11)
                 {
                     txt = cell.innerText;
-                    if(txt=="xxx")
+                    console.log(txt);
+                    if(txt=="xxx" || txt=="" || txt=="0" )
                     {
-                        cell.innerHTML = '';
+                        if( txt>="0"){}
+                        else
+                        {
+                                 cell.innerHTML = '';
+                        }
+                       
                         cell.style.backgroundColor = '#f5f82f';
                     }
                 }
