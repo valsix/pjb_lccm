@@ -353,10 +353,12 @@ function jexcelcall(reqStatus)
         var jpnum =table1.getValueFromCoords([17], [y]);
         var down0 =table1.getValueFromCoords([9], [y]);
         var labor =table1.getValueFromCoords([11], [y]);
+
+        var txt0="";
          
 
 
-        if(x==8 || x==9 || x==10 || x==11)
+        if(x==8 )
         {
             if(txt==1 || txt==0)
             {
@@ -397,18 +399,21 @@ function jexcelcall(reqStatus)
                 txt0=txtcheck[0];
                 txt1=txtcheck[1];
                 table1.ignoreEvents = true;
-                
-                if(txt1==1)
+
+                if(txt0)
                 {
-                   table1.setStyle(setdown0, 'background-color', '#35f82f');
+                    if(txt1==1)
+                    {
+                       table1.setStyle(setdown0, 'background-color', '#35f82f');
+                    }
+                    if(txt1=="0")
+                    {
+                        table1.setStyle(setdown0, 'background-color', '#35f82f');
+                    }
+                    console.log(txt0);
+                    table1.setValue(setdown0, txt0);
                 }
-                if(txt1=="0")
-                {
-                    table1.setStyle(setdown0, 'background-color', '#35f82f');
-                }
-                // console.log(txt0);
-                // console.log(labor);
-                table1.setValue(setdown0, txt0);
+               
                 table1.ignoreEvents = false;
                 // rumus down 0 not end
                

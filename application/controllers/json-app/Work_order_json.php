@@ -737,17 +737,19 @@ class Work_order_json extends CI_Controller
 		$checkstatus="";
 		$baris="";
 		foreach ($reqArrValue as $key => $value) {
-			$reqJumlahLabor=$value[10];
-			$reqOnHandRepair = explode("-", $value[9])[0];
+			$reqJumlahLabor=$value[11];
+			$reqOnHandRepair = explode("-", $value[11])[0];
+			$reqDown0 = explode("-", $value[9])[0];
+			$reqDownTime = explode("-", $value[8])[0];
 
-			// var_dump($reqOnHandRepair);
+			// var_dump($reqDownTime);
 			$baris=$key+1;
-			if(!is_numeric($value[7]))
+			if(!is_numeric($reqDownTime))
 			{
 				echo "xxx***Kolom Validation Downtime Baris ".$baris." Wajib diisi";exit;
 			}
 
-			if(!is_numeric($value[8]))
+			if(!is_numeric($reqDown0))
 			{
 				echo "xxx***Kolom DOWN 0 & NOT OH Baris ".$baris." Wajib diisi";exit;
 			}
@@ -767,26 +769,28 @@ class Work_order_json extends CI_Controller
 
 		foreach ($reqArrValue as $key => $value) {
 			$set = new WorkOrder();
-			$reqJumlahLabor=$value[10];
-			$reqOnHandRepair = explode("-", $value[9])[0];
+			$reqJumlahLabor=$value[11];
+			$reqOnHandRepair = explode("-", $value[11])[0];
+			$reqDown0 = explode("-", $value[9])[0];
+			$reqDownTime = explode("-", $value[8])[0];
 			$set->setField("ASSETNUMOLD", $reqArrValueBefore[$key][0]);
 			$set->setField("ASSETNUM", $value[0]);
-			$set->setField("WONUM", $value[1]);
+			$set->setField("WONUM", $value[2]);
 			$set->setField("TAHUN", $reqTahun);
-			$set->setField("VALIDATION_DOWNTIME", valToNullDB($value[7]));
-			$set->setField("STATUS_NOT_OH_NOT_DOWNTIME", valToNullDB($value[8]));
+			$set->setField("VALIDATION_DOWNTIME", valToNullDB($reqDownTime));
+			$set->setField("STATUS_NOT_OH_NOT_DOWNTIME", valToNullDB($reqDown0));
 			$set->setField("ON_HAND_REPAIR", valToNullDB($reqOnHandRepair));
-			$set->setField("SITEID", $value[12]);
-			if($value[10]=='xxx')
+			$set->setField("SITEID", $value[13]);
+			if($reqJumlahLabor=='xxx')
 			{
 				$reqJumlahLabor="";
 			}
-			if($value[11]==true)
+			if($value[12]==true)
 			{
 				$checkstatus="1";
 			}
 
-			if($value[11]==true)
+			if($value[12]==true)
 			{
 				$reqApprovalStatus="1";
 			}
@@ -813,10 +817,10 @@ class Work_order_json extends CI_Controller
 		foreach ($reqArrValue as $key => $value) {
 			// $setcheck = new WorkOrder();
 			$reqAssetNum=$value[0];
-			$reqSiteId=$value[12];
-			$reqKodeDistrik=$value[13];
-			$reqKodeBlok=$value[14];
-			$reqKodeUnit=$value[15];
+			$reqSiteId=$value[13];
+			$reqKodeDistrik=$value[14];
+			$reqKodeBlok=$value[15];
+			$reqKodeUnit=$value[16];
 
 			$setcheck = new WorkOrder();
 
