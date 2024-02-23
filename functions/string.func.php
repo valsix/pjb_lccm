@@ -17,6 +17,7 @@ DESCRIPTION			: Functions to handle string operation
  * $minusToBracket = beri tanda kurung pada nilai negatif, default : true
  */
 
+
 function makedirs($dirpath, $mode=0777)
 {
     return is_dir($dirpath) || mkdir($dirpath, $mode, true);
@@ -1676,5 +1677,22 @@ function toThousandNew($num2)
 {
 	return number_format( $num2, 2, ',', '.' );
 }
+
+function decimalHours($time,$mode)
+{
+	$hms = explode(":", $time);
+	if($mode==1)
+	{
+		$hasil=$hms[0] + ($hms[1]/60) + ($hms[2]/3600);
+		$hasil= number_format((float)$hasil, 3, '.', '');
+	}
+	else
+	{
+		$hasil=$hms[0] + ($hms[1]/60) + ($hms[2]/3600);
+	}
+	
+	return $hasil;
+}
+
 
 ?>

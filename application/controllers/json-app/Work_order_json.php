@@ -383,6 +383,7 @@ class Work_order_json extends CI_Controller
 	}
 
 
+
 	function jsonjexcel()
 	{
 		ini_set('max_execution_time', 500);
@@ -491,6 +492,10 @@ class Work_order_json extends CI_Controller
 				{
 					$VALIDATION_DOWNTIME='0-0';
 				}
+				else
+				{
+					$VALIDATION_DOWNTIME='0-0';
+				}
 			}
 			else if($WORKTYPE=="PM" || $WORKTYPE=="OH" || $WORKTYPE=="PDM")
 			{
@@ -528,12 +533,17 @@ class Work_order_json extends CI_Controller
 				if(!empty($ACTUAL_REPAIR_TIME))
 				{
 					// $checkbgk=1;
-					$ON_HAND_REPAIR=$ACTUAL_REPAIR_TIME."-1";
+
+					$ON_HAND_REPAIR=$ACTUAL_REPAIR_TIME."-0";
 				}
 				else
 				{
-					$ON_HAND_REPAIR = $ACTSTART-$ACTFINISH."-1";
-					// $checkbgk=1;
+					$dteStart = new DateTime($ACTFINISH); 
+					$dteEnd   = new DateTime($ACTSTART); 
+					$dteDiff  = $dteStart->diff($dteEnd); 
+					// print_r($dteDiff);exit;
+					$ON_HAND_REPAIR=decimalHours($dteDiff->format("%H:%I:%S"),1);
+					$ON_HAND_REPAIR=$ON_HAND_REPAIR."-0";
 				}
 			}
 			else
@@ -542,12 +552,15 @@ class Work_order_json extends CI_Controller
 
 				if($ON_HAND_REPAIR >= 72)
 				{
-					$ON_HAND_REPAIR."-1";
+					$ON_HAND_REPAIR=$ON_HAND_REPAIR."-0";
+				}
+				else
+				{
+					$ON_HAND_REPAIR=$ON_HAND_REPAIR."-0";
 				}
 				// $checkbgk=1;
 			}
 
-			// print_r($ON_HAND_REPAIR);exit;
 
 			if($VALIDATION_DOWNTIME_KON=="1" && ($JUMLAH_LABOR == 0   ||  empty($JUMLAH_LABOR)))
 			{
@@ -585,6 +598,8 @@ class Work_order_json extends CI_Controller
 		header('Content-Type: application/json');
 		echo json_encode( $arrResult, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
 	}
+
+	
 
 	function rekapwo()
 	{

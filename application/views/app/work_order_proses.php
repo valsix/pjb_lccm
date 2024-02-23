@@ -29,8 +29,8 @@ $arrtabledata= array(
     ,array("type"=>"text", "title"=> "Need Downtime", "width"=>"100", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "Reported Date", "width"=>"110", "readOnly"=>true)
     ,array("type"=>"numeric", "title"=> "Downtime", "width"=>"100",  "maxlength"=>1)
-    ,array("type"=>"numeric", "title"=> "DOWN 0 & NOT OH", "width"=>"130", "maxlength"=>1)
-    ,array("type"=>"text", "title"=> "On Hand Repair", "width"=>"100")
+    ,array("type"=>"numeric", "title"=> "DOWN 0 & NOT OH", "width"=>"150", "maxlength"=>1)
+    ,array("type"=>"text", "title"=> "On Hand Repair", "width"=>"140")
     ,array("type"=>"numeric", "title"=> "Labour", "width"=>"100","mask"=>"0")
     ,array("type"=>"checkbox", "title"=> "Status Validation", "width"=>"130")
     ,array("type"=>"hidden", "title"=> "bg", "width"=>"100")
@@ -618,10 +618,17 @@ function jexcelcall(reqStatus)
                 if (col == 10)
                 {
                     txt = cell.innerText;
+                   
                     txtcheck = txt.split('-');
                     txt0=txtcheck[0];
                     txt1=txtcheck[1];
-                    if(txt1==1)
+                    console.log(txt1);
+
+                    if(txt==1)
+                    {
+                         cell.style.backgroundColor = '#f5f82f';
+                    }
+                    if(txt1=="0")
                     {
                          cell.style.backgroundColor = '#f5f82f';
                     }
