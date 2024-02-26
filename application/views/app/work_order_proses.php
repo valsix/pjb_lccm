@@ -410,7 +410,7 @@ function jexcelcall(reqStatus)
                     {
                         table1.setStyle(setdown0, 'background-color', '#35f82f');
                     }
-                    console.log(txt0);
+                    // console.log(txt0);
                     table1.setValue(setdown0, txt0);
                 }
                
@@ -622,7 +622,7 @@ function jexcelcall(reqStatus)
                     txtcheck = txt.split('-');
                     txt0=txtcheck[0];
                     txt1=txtcheck[1];
-                    console.log(txt1);
+                    // console.log(txt1);
 
                     if(txt==1)
                     {
