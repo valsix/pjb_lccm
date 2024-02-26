@@ -80,6 +80,33 @@
 		return $this->execQuery($str);
 	}
 
+	function insertApi()
+    {
+    	// $this->setField("UNIT_MESIN_ID", $this->getNextId("UNIT_MESIN_ID","unit_mesin"));
+
+    	$str = "
+    	INSERT INTO t_preperation_lccm (KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M,SITEID, YEAR_LCCM, WO_CR, WO_STANDING
+    	, WO_PM, WO_PDM, WO_OH, PRK, LOSS_OUTPUT, ENERGY_PRICE, OPERATION
+    	, STATUS_COMPLETE, LAST_CREATE_USER, LAST_CREATE_DATE)
+    	SELECT A.KODE,B.KODE,C.KODE, B.KODE, date_part('year', CURRENT_DATE) - 1
+    	, false, false, false, false, false, false, false, false, false, false,'SYSTEM',CURRENT_DATE
+    	FROM DISTRIK A
+    	INNER JOIN BLOK_UNIT B ON B.DISTRIK_ID = A.DISTRIK_ID
+    	INNER JOIN UNIT_MESIN C ON C.BLOK_UNIT_ID = B.BLOK_UNIT_ID
+    	WHERE  NOT EXISTS
+    	(
+	    	SELECT KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M FROM t_preperation_lccm X WHERE X.KODE_DISTRIK = A.KODE 
+	    	AND X.YEAR_LCCM = date_part('year', CURRENT_DATE) - 1
+    	)
+    	GROUP BY A.KODE,B.KODE,C.KODE
+    	"; 
+
+		// $this->id= $this->getField("UNIT_MESIN_ID");
+		$this->query= $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 	function update()
 	{
 		$str = "
