@@ -82,7 +82,7 @@
 
 	function insertApi()
     {
-    	// $this->setField("UNIT_MESIN_ID", $this->getNextId("UNIT_MESIN_ID","unit_mesin"));
+    	$this->setField("log_generate_id", $this->getNextId("log_generate_id","log_generate"));
 
     	$str = "
     	INSERT INTO t_preperation_lccm (KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M,SITEID, YEAR_LCCM, WO_CR, WO_STANDING
@@ -99,7 +99,23 @@
 	    	AND X.YEAR_LCCM = date_part('year', CURRENT_DATE) - 1
     	)
     	GROUP BY A.KODE,B.KODE,C.KODE
-    	"; 
+    	;";
+
+    	$str .= "
+    	INSERT INTO log_generate 
+    	( 
+    		log_generate_id,table_generate,user_generate,date_generate, tahun
+    	)
+    	VALUES 
+    	(
+    		".$this->getField("log_generate_id")."
+    		,'t_preperation_lccm'
+    		,'SYSTEM'
+	    	, CURRENT_DATE
+	    	, date_part('year', CURRENT_DATE) - 1
+	    	
+	    )
+    	;";
 
 		// $this->id= $this->getField("UNIT_MESIN_ID");
 		$this->query= $str;
