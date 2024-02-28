@@ -5988,3 +5988,11 @@ thead input {
 	display: inline-block;
 	width: 120px;
 }
+
+table.dataTable tbody tr td {
+
+	word-wrap: break-word;
+
+	white-space: break-spaces;
+
+}
