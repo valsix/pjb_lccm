@@ -622,11 +622,11 @@ function jexcelcall(reqStatus)
                     txtcheck = txt.split('-');
                     txt0=txtcheck[0];
                     txt1=txtcheck[1];
-                    // console.log(txt1);
+                    // console.log(txtcheck);
 
-                    if(txt==1)
+                    if(txt1=="1")
                     {
-                         cell.style.backgroundColor = '#f5f82f';
+                         cell.style.backgroundColor = '#35f82f';
                     }
                     if(txt1=="0")
                     {

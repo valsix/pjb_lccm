@@ -556,7 +556,7 @@ class Work_order_json extends CI_Controller
 				}
 				else
 				{
-					$ON_HAND_REPAIR=$ON_HAND_REPAIR."-0";
+					$ON_HAND_REPAIR=$ON_HAND_REPAIR."-1";
 				}
 				// $checkbgk=1;
 			}
