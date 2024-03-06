@@ -257,7 +257,7 @@
 	{
 		$str = "
 		SELECT COUNT(1) JUMLAH FROM T_WORKORDER A
-		left join m_asset_lccm b on trim(b.assetnum) = trim(a.assetnum)
+		left join m_asset_lccm b on trim(b.assetnum) = trim(a.assetnum) and b.SITEID=a.SITEID
 		LEFT JOIN DISTRIK D ON D.KODE = B.KODE_DISTRIK
 		LEFT JOIN BLOK_UNIT E ON E.KODE = B.KODE_BLOK AND E.DISTRIK_ID = D.DISTRIK_ID
 		LEFT JOIN UNIT_MESIN F ON F.KODE = B.KODE_UNIT_M AND F.BLOK_UNIT_ID = E.BLOK_UNIT_ID AND F.DISTRIK_ID = D.DISTRIK_ID
