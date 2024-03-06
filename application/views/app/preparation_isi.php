@@ -207,19 +207,19 @@ while($set->nextRow())
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <div class="title">Wo Standing</div>
-                    <div class="status <?=$statuscheckedwostanding?>"><span>Status : </span><?=$WO_STANDING?></i></div>
-                </div>
+                   <a href="app/index/wo_standing"><div class="title">Wo Standing</div></a>
+                   <div class="status <?=$statuscheckedwostanding?>"><span>Status : </span><?=$WO_STANDING?></i></div>
+               </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <div class="title">Wo PM</div>
+                    <a href="app/index/total_wo_pm"><div class="title">Wo PM</div></a>
                     <div class="status  <?=$statuscheckedwopm?>"><span>Status : </span><?=$WO_PM?></i></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <div class="title">Wo PDM</div>
+                    <a href="app/index/total_pdm"><div class="title">Wo PDM</div></a>
                     <div class="status  <?=$statuscheckedwopdm?>"><span>Status : </span><?=$WO_PDM?></i></div>
                 </div>
             </div>
@@ -231,25 +231,25 @@ while($set->nextRow())
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <div class="title">PRK</div>
+                    <a href="app/index/total_prk"><div class="title">PRK</div></a>
                     <div class="status  <?=$statuscheckedprk?>"><span>Status : </span><?=$PRK?></i></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <div class="title">Loss Output</div>
-                    <div class="status  <?=$statuscheckedlossoutput?>"><span>Status : </span><?=$LOSS_OUTPUT?></div>
+                   <a href="app/index/total_output"><div class="title">Loss Output</div></a>
+                   <div class="status  <?=$statuscheckedlossoutput?>"><span>Status : </span><?=$LOSS_OUTPUT?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <div class="title">Energy Price</div>
+                    <a href="app/index/energi_price"><div class="title">Energy Price</div></a>
                     <div class="status  <?=$statuscheckedenergy?>"><span>Status : </span><?=$ENERGY_PRICE?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <div class="title">Operation</div>
+                    <a href="app/index/operation"><div class="title">Operation</div> </a>
                     <div class="status  <?=$statuscheckedoperation?>"><span>Status : </span><?=$OPERATION?></div>
                 </div>
             </div>
