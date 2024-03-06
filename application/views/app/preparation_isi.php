@@ -175,7 +175,7 @@ while($set->nextRow())
 ?>
         <div style="border:1px solid black;">
             <br>
-            <div class="col-md-2ths col-xs-6">
+            <!-- <div class="col-md-2ths col-xs-6">
                 <div class="item" >
                     <div class="title" style="background-color:green">Distrik</div>
                     <div class="status "> <?=$NAMA_DISTRIK?></div>
@@ -198,7 +198,7 @@ while($set->nextRow())
                     <div class="title" style="background-color:#11af9c ">Tahun</div>
                     <div class="status "> <?=$YEAR_LCCM?></div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <div class="title">Wo Cr</div>

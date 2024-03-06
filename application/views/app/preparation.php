@@ -154,14 +154,14 @@ $(document).ready(function() {
     
     var pos = s.position();
     $(window).scroll(function() {
-        var windowpos = $(window).scrollTop();
-        if (windowpos >= pos.top) {
-            s.addClass("stick");
-            $('#example thead').addClass('stick-datatable');
-        } else {
-            s.removeClass("stick");
-            $('#example thead').removeClass('stick-datatable');
-        }
+        // var windowpos = $(window).scrollTop();
+        // if (windowpos >= pos.top) {
+        //     s.addClass("stick");
+        //     $('#example thead').addClass('stick-datatable');
+        // } else {
+        //     s.removeClass("stick");
+        //     $('#example thead').removeClass('stick-datatable');
+        // }
     });
 });
 </script>
