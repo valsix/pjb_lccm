@@ -315,7 +315,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>Year LCCM :</label>
-                <select class="select-css " style="width: 10%" id="reqTahun">
+                <select class="select-css " style="width: 10%" id="reqTahunAwal">
                     <option value="">Pilih Tahun</option>
                     <?
                     foreach($arrtahun as $item) 
@@ -331,7 +331,31 @@ $(document).ready(function() {
                     }
                     ?>
                 </select>
-                  <button class="btn btn-success btn-sm" style="margin-left: 50px;margin-top: -10px" onclick="setCariInfo()" ><i class="fas fa-search"></i> Cari</button>
+                <label>S.d</label>
+                <select class="select-css " style="width: 10%" id="reqTahunAkhir">
+                    <option value="">Pilih Tahun</option>
+                    <?
+                    foreach($arrtahun as $item) 
+                    {
+                        $selectvalid= $item["id"];
+                        $selectvaltext= $item["text"];
+
+                        $tahunskg= date('Y');
+                        $selected="";
+                        if($selectvalid==$tahunskg-1)
+                        {
+                             $selected="selected";
+                        }
+
+                       
+                        
+                        ?>
+                        <option value="<?=$selectvalid?>" <?=$selected?>><?=$selectvaltext?></option>
+                        <?
+                    }
+                    ?>
+                </select>
+                <button class="btn btn-success btn-sm" style="margin-left: 50px;margin-top: -10px" onclick="setCariInfo()" ><i class="fas fa-search"></i> Cari</button>
             </div>
             <div class="inner row" id="isi">
                 
@@ -345,7 +369,6 @@ $(document).ready(function() {
 <a href="#" id="btnCari" style="display: none;" title="Cari"></a>
 
 <script type="text/javascript">
-
     $('#reqDistrikId').on('change', function() {
     // $("#blok").empty();
     var reqDistrikId= this.value;
@@ -432,14 +455,15 @@ $(document).ready(function() {
     $('#btnCari').on('click', function () {
         reqPencarian= $('#example_filter input').val();
         reqKode='';
-        reqTahun=$('#reqTahun').val();
+        reqTahunAwal=$('#reqTahunAwal').val();
+        reqTahunAkhir=$('#reqTahunAkhir').val();
         var reqDistrikId=$('#reqDistrikId').val();
         var reqBlokId= $("#reqBlokId").val();
         var reqUnitMesinId= $("#reqUnitMesinId").val();
         // console.log('xxx');
         $("#isi").empty();
 
-        $('#isi').load("app/loadUrl/app/preparation_isi?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId+"&reqTahun="+reqTahun);
+        $('#isi').load("app/loadUrl/app/preparation_isi?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId+"&reqTahunAwal="+reqTahunAwal+"&reqTahunAkhir="+reqTahunAkhir);
 
         // $.getJSON("json-app/preparation_json/json?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId+"&reqTahun="+reqTahun,
         //     function(data)
@@ -459,6 +483,8 @@ $(document).ready(function() {
 
     $(document).ready( function () {
         setCariInfo();
+        $("#reqTahunAwal").prop("selectedIndex", 1).change();
+
     });
 
     function setCariInfo()

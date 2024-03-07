@@ -1,7 +1,9 @@
 <?
 $this->load->model("base-app/T_Preperation_Lccm");
 
-$reqTahun= $this->input->get("reqTahun");
+$reqTahunAwal= $this->input->get("reqTahunAwal");
+$reqTahunAkhir= $this->input->get("reqTahunAkhir");
+
 $reqDistrikId= $this->input->get("reqDistrikId");
 $reqBlokId= $this->input->get("reqBlokId");
 $reqUnitMesinId= $this->input->get("reqUnitMesinId");
@@ -26,10 +28,22 @@ if(!empty($reqUnitMesinId))
     $statement .= " AND A.KODE_UNIT_M='".$reqUnitMesinId."'";
 }
 
-if(!empty($reqTahun))
+if(!empty($reqTahunAwal) && !empty($reqTahunAkhir))
 {
-    $statement .= " AND A.YEAR_LCCM='".$reqTahun."'";
+    $statement .= " AND A.YEAR_LCCM  between '".$reqTahunAwal."' and '".$reqTahunAkhir."' ";
 }
+else
+{
+    if(!empty($reqTahunAwal))
+    {
+        $statement .= " AND A.YEAR_LCCM='".$reqTahunAwal."'";
+    }
+    else if(!empty($reqTahunAkhir))
+    {
+        $statement .= " AND A.YEAR_LCCM='".$reqTahunAkhir."'";
+    }
+}
+
 
 
 $set->selectByParamsDashboard(array(), -1,-1,$statement);
