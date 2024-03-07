@@ -5978,8 +5978,9 @@ thead input {
 	padding: 10px 15px;
 }
 .area-preparation-dashboard .item .status {
-	background-color: #f5f647;
+	background-color: #ee5d5a;
 	padding: 10px 15px;
+	font-size: 12pt;
 }
 .area-preparation-dashboard .item .status.status-checked {
 	background-color: #43f642;

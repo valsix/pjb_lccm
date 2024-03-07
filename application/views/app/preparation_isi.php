@@ -86,104 +86,124 @@ while($set->nextRow())
         if($WO_CR=='false' || $WO_CR=='f' || $WO_CR=='0' )
         {
             $WO_CR='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscompwocr="Incomplete";
         }
         else
         {
             $statuscheckedwocr="status-checked";
             $WO_CR='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscompwocr="Complete";
         }
 
         if($WO_STANDING=='false' || $WO_STANDING=='f' || $WO_STANDING=='0' )
         {
             $WO_STANDING='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscompwostand="Incomplete";
         }
         else
         {
             $statuscheckedwostanding="status-checked";
             $WO_STANDING='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscompwostand="Complete";
         }
 
 
         if($WO_PM=='false' || $WO_PM=='f' || $WO_PM=='0' )
         {
             $WO_PM='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscompwopm="Incomplete";
         }
         else
         {
             $statuscheckedwopm="status-checked";
             $WO_PM='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscompwopm="Complete";
         }
 
 
         if($WO_PDM=='false' || $WO_PDM=='f' || $WO_PDM=='0' )
         {
             $WO_PDM='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscompwopdm="Incomplete";
         }
         else
         {
             $statuscheckedwopdm="status-checked";
             $WO_PDM='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscompwopdm="Complete";
         }
 
 
         if($WO_OH=='false' || $WO_OH=='f' || $WO_OH=='0' )
         {
             $WO_OH='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscompwooh="Incomplete";
         }
         else
         {
             $statuscheckedwooh="status-checked";
             $WO_OH='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscompwooh="Complete";
         }
 
         if($PRK=='false' || $PRK=='f' || $PRK=='0' )
         {
             $PRK='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscompwoprk="Incomplete";
         }
         else
         {
             $statuscheckedprk="status-checked";
             $PRK='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscompwoprk="Complete";
         }
 
         if($LOSS_OUTPUT=='false' || $LOSS_OUTPUT=='f' || $LOSS_OUTPUT=='0' )
         {
             $LOSS_OUTPUT='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscomploss="Incomplete";
         }
         else
         {
             $statuscheckedlossoutput="status-checked";
             $LOSS_OUTPUT='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscomploss="Complete";
         }
 
         if($ENERGY_PRICE=='false' || $ENERGY_PRICE=='f' || $ENERGY_PRICE=='0' )
         {
             $ENERGY_PRICE='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscompenergy="Incomplete";
         }
         else
         {
             $statuscheckedenergy="status-checked";
             $ENERGY_PRICE='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscompenergy="Complete";
         }
 
         if($OPERATION=='false' || $OPERATION=='f' || $OPERATION=='0' )
         {
             $OPERATION='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscompoperation="Incomplete";
         }
         else
         {
             $statuscheckedoperation="status-checked";
             $OPERATION='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscompoperation="Complete";
         }
 
         if($STATUS_COMPLETE=='false' || $STATUS_COMPLETE=='f' || $STATUS_COMPLETE=='0' )
         {
             $STATUS_COMPLETE='<i class="fa fa-times" aria-hidden="true"></i>';
+            $statuscompstatus="Incomplete";
         }
         else
         {
             $statuscheckedstatus="status-checked";
             $STATUS_COMPLETE='<i class="fa fa-check" aria-hidden="true"></i>';
+            $statuscompstatus="Complete";
         }
 
 ?>
@@ -216,61 +236,61 @@ while($set->nextRow())
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <div class="title">Wo Cr</div>
-                    <div class="status  <?=$statuscheckedwocr?>"><span>Status : </span> <?=$WO_CR?></div>
+                    <div class="status  <?=$statuscheckedwocr?>"><label>Status :  <?=$statuscompwocr?></label>  <?=$WO_CR?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                    <a href="app/index/wo_standing"><div class="title">Wo Standing</div></a>
-                   <div class="status <?=$statuscheckedwostanding?>"><span>Status : </span><?=$WO_STANDING?></i></div>
+                   <div class="status <?=$statuscheckedwostanding?>"><label>Status : <?=$statuscompwostand?> </label><?=$WO_STANDING?></i></div>
                </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/total_wo_pm"><div class="title">Wo PM</div></a>
-                    <div class="status  <?=$statuscheckedwopm?>"><span>Status : </span><?=$WO_PM?></i></div>
+                    <div class="status  <?=$statuscheckedwopm?>"><label>Status : <?=$statuscompwopm?> </label><?=$WO_PM?></i></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/total_pdm"><div class="title">Wo PDM</div></a>
-                    <div class="status  <?=$statuscheckedwopdm?>"><span>Status : </span><?=$WO_PDM?></i></div>
+                    <div class="status  <?=$statuscheckedwopdm?>"><label>Status : <?=$statuscompwopdm?> </label><?=$WO_PDM?></i></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <div class="title">Wo OH</div>
-                    <div class="status  <?=$statuscheckedwooh?>"><span>Status : </span><?=$WO_OH?></i></div>
+                    <div class="status  <?=$statuscheckedwooh?>"><label>Status : <?=$statuscompwooh?> </label><?=$WO_OH?></i></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/total_prk"><div class="title">PRK</div></a>
-                    <div class="status  <?=$statuscheckedprk?>"><span>Status : </span><?=$PRK?></i></div>
+                    <div class="status  <?=$statuscheckedprk?>"><label>Status : <?=$statuscompwoprk?> </label><?=$PRK?></i></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                    <a href="app/index/total_output"><div class="title">Loss Output</div></a>
-                   <div class="status  <?=$statuscheckedlossoutput?>"><span>Status : </span><?=$LOSS_OUTPUT?></div>
+                   <div class="status  <?=$statuscheckedlossoutput?>"><label>Status : <?=$statuscomploss?> </label><?=$LOSS_OUTPUT?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/energi_price"><div class="title">Energy Price</div></a>
-                    <div class="status  <?=$statuscheckedenergy?>"><span>Status : </span><?=$ENERGY_PRICE?></div>
+                    <div class="status  <?=$statuscheckedenergy?>"><label>Status :  <?=$statuscompenergy?></label><?=$ENERGY_PRICE?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/operation"><div class="title">Operation</div> </a>
-                    <div class="status  <?=$statuscheckedoperation?>"><span>Status : </span><?=$OPERATION?></div>
+                    <div class="status  <?=$statuscheckedoperation?>"><label>Status : <?=$statuscompoperation?> </label><?=$OPERATION?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <div class="title">Status Complete</div>
-                    <div class="status  <?=$statuscheckedstatus?>"><span>Status : </span><?=$STATUS_COMPLETE?></div>
+                    <div class="status  <?=$statuscheckedstatus?>"><label>Status : <?=$statuscompstatus?> </label><?=$STATUS_COMPLETE?></div>
                 </div>
             </div>
         </div>

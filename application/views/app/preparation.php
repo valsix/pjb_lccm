@@ -461,7 +461,12 @@ $(document).ready(function() {
         var reqBlokId= $("#reqBlokId").val();
         var reqUnitMesinId= $("#reqUnitMesinId").val();
         // console.log('xxx');
+        if(parseInt(reqTahunAwal)>parseInt(reqTahunAkhir))
+        {
+            alert('Tahun Awal tidak boleh lebih dari tahun akhir');return false;
+        }
         $("#isi").empty();
+       
 
         $('#isi').load("app/loadUrl/app/preparation_isi?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId+"&reqTahunAwal="+reqTahunAwal+"&reqTahunAkhir="+reqTahunAkhir);
 
