@@ -169,7 +169,11 @@ $(document).ready(function() {
 <style type="text/css">
     .select-css {
         /*display: block;*/
-        font-size: 16px;
+        /*font-size: 16px;*/
+        font-size: 14px;
+        padding-left: 8px;
+        width: auto !important;
+
         font-family: 'Verdana', sans-serif;
         font-weight: 400;
         color: #444;
