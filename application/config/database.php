@@ -82,7 +82,7 @@ $db['default'] = array(
 	'hostname' => '192.168.88.100',
 	'password' => 'root',
 	// 'database' => 'db_icarla_online_13122022',
-	'database' => 'lccm_28122023_online',
+	'database' => 'lccm_26012024_online',
 	
 	'dbdriver' => 'postgre',
 	'dbprefix' => '',
