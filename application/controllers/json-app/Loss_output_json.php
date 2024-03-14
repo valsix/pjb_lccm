@@ -86,6 +86,11 @@ class Loss_output_json extends CI_Controller
 			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
 		}
 
+		if(!empty($reqStatus))
+		{
+			$statement .= " AND A.loss_output='".$reqStatus."'";
+		}
+
 		$sOrder = " ORDER BY A.YEAR_LCCM ASC ";
 		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
 

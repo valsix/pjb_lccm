@@ -72,7 +72,7 @@
 	}
 
 
-    function selectByParams($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.PDM_YEAR ASC")
+    function selectByParams($paramsArray=array(),$limit=-1,$from=-1, $statement='', $statement2='', $sOrder="ORDER BY A.PDM_YEAR ASC")
 	{
 		$str = "
 		SELECT DISTINCT
@@ -99,7 +99,7 @@
 		$str .= $statement." GROUP BY A.PDM_YEAR, B.GROUP_PM,b.KODE_BLOK
 		) A
 		LEFT JOIN t_preperation_lccm PC ON PC.YEAR_LCCM = A.PDM_YEAR AND PC.SITEID = A.KODE_BLOK
-		WHERE 1=1
+		WHERE 1=1 ".$statement2."
 		".$sOrder;
 		$this->query = $str;
 				

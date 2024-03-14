@@ -322,6 +322,17 @@ unset($set);
 
     infoscrolly= 50;
 
+    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="TRUE">Valid</option><option value="null">Belum Valid</option></select>';
+
+    $('.table').on('init.dt', function() {
+        $('.selectstatus ').html(elselect);
+        $('#reqStatus').on('change', function() {
+            reqStatus=$('#reqStatus').val();
+            jsonurl= "json-app/work_order_json/json?reqStatus="+reqStatus;
+            datanewtable.DataTable().ajax.url(jsonurl).load();
+        });
+    });
+
 
     $('#reqDistrikId').on('change', function() {
         var reqDistrikId= this.value;
@@ -409,7 +420,7 @@ unset($set);
             reqUnitMesin="";
         }
 
-        console.log(reqUnitMesin);
+        // console.log(reqUnitMesin);
 
         $.getJSON("json-app/work_order_json/rekapwo?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesin,
         function(data)
@@ -556,7 +567,7 @@ unset($set);
 
     jQuery(document).ready(function() {
         var jsonurl= "json-app/work_order_json/json";
-        ajaxserverselectsingle.init(infotableid, jsonurl, arrdata);
+        ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',1);
     });
 
     function calltriggercari()

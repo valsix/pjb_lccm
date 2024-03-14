@@ -320,6 +320,18 @@ $(document).ready(function() {
     });
 
 
+    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="TRUE">Valid</option><option value="FALSE">Tidak Valid</option></select>';
+
+    $('.table').on('init.dt', function() {
+        $('.selectstatus ').html(elselect);
+        $('#reqStatus').on('change', function() {
+            reqStatus=$('#reqStatus').val();
+            jsonurl= "json-app/wo_pm_json/json?reqStatus="+reqStatus;
+            datanewtable.DataTable().ajax.url(jsonurl).load();
+        });
+    });
+
+
 	var datanewtable;
 	var infotableid= "example";
 	var carijenis= "";
@@ -463,7 +475,7 @@ $(document).ready(function() {
 
 	jQuery(document).ready(function() {
 		var jsonurl= "json-app/wo_pm_json/json";
-	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata);
+	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',3);
 	});
 
 	function calltriggercari()

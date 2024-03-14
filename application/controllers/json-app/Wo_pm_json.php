@@ -57,6 +57,7 @@ class Wo_pm_json extends CI_Controller
 		$searchJson= "";
 
 		$statement="";
+		$statement2="";
 
 		
 		if(!empty($reqDistrikId))
@@ -85,8 +86,14 @@ class Wo_pm_json extends CI_Controller
 		}
 
 
+		if(!empty($reqStatus))
+		{
+			$statement2 .= " AND PC.WO_PM='".$reqStatus."'";
+		}
+
+
 		$sOrder = " ORDER BY A.PM_YEAR ASC ";
-		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
+		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson,$statement2, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];

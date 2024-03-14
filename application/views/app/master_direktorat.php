@@ -103,7 +103,7 @@ $(document).ready(function() {
         <br>
 
         <div  style=" border: none;  padding: 4px 5px; top: 90px;
-        z-index: 10;clear: both;">
+        z-index: 10;clear: both;display: none">
             <div class="col-md-12" style="margin-bottom: 20px; border: none;">
                 <button id="btnfilter" class="filter btn btn-default pull-left">Filter <i class="fa fa-caret-down" aria-hidden="true"></i></button>
             </div>
@@ -112,11 +112,11 @@ $(document).ready(function() {
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-1 control-label">Status</label>
                         <div class="col-sm-4">
-                            <select class="form-control jscaribasicmultiple" id="reqStatus" <?=$disabled?>  style="width:100%;" >
+                           <!--  <select class="form-control jscaribasicmultiple" id="reqStatus" <?=$disabled?>  style="width:100%;" >
                                 <option value="">Semua</option>
                                 <option value="NULL">Aktif</option>
                                 <option value="1">Tidak Aktif</option>
-                            </select>
+                            </select> -->
                         </div>
                     </div>
                 </div>
@@ -170,6 +170,17 @@ $(document).ready(function() {
         $("#btnfilter").click(function(){
            $(".divfilter").toggle();
        });
+    });
+
+    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="NULL">Aktif</option><option value="1">Tidak Aktif</option></select>';
+
+    $('.table').on('init.dt', function() {
+        $('.selectstatus ').html(elselect);
+        $('#reqStatus').on('change', function() {
+            reqStatus=$('#reqStatus').val();
+            jsonurl= "json-app/direktorat_json/json?reqStatus="+reqStatus;
+            datanewtable.DataTable().ajax.url(jsonurl).load();
+        });
     });
 
 	var datanewtable;

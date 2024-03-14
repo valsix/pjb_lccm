@@ -85,8 +85,13 @@ class Pdm_json extends CI_Controller
 			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
 		}
 
+		if(!empty($reqStatus))
+		{
+			$statement2 .= " AND PC.WO_PDM='".$reqStatus."'";
+		}
+
 		$sOrder = " ORDER BY A.PDM_YEAR ASC ";
-		$set->selectByParams(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
+		$set->selectByParams(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $statement2, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];

@@ -86,8 +86,13 @@ class Prk_json extends CI_Controller
 			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
 		}
 
+		if(!empty($reqStatus))
+		{
+			$statement2 .= " AND PC.PRK='".$reqStatus."'";
+		}
+
 		$sOrder = " ORDER BY A.PRK_YEAR ASC ";
-		$set->selectByParams(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
+		$set->selectByParams(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $statement2, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];

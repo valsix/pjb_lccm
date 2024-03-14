@@ -287,6 +287,17 @@ $(document).ready(function() {
        });
     });
 
+    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="1">Valid</option><option value="2">Tidak Valid</option></select>';
+
+    $('.table').on('init.dt', function() {
+        $('.selectstatus ').html(elselect);
+        $('#reqStatus').on('change', function() {
+            reqStatus=$('#reqStatus').val();
+            jsonurl= "json-app/energi_price_json/json?reqStatus="+reqStatus;
+            datanewtable.DataTable().ajax.url(jsonurl).load();
+        });
+    });
+
 
 	var datanewtable;
 	var infotableid= "example";
@@ -305,6 +316,7 @@ $(document).ready(function() {
     var arrChecked = [];
 
 	infoscrolly= 50;
+    var valstatus="1";
 
 	$("#btnAdd, #btnEdit").on("click", function () {
         btnid= $(this).attr('id');

@@ -66,11 +66,11 @@ class Inflasi_Json extends CI_Controller
 		{
 			if($reqStatus== 'NULL')
 			{
-				$statement .= " AND A.STATUS IS NULL";
+				$statement .= " AND A.STATUS = ''";
 			}
 			else
 			{
-				$statement .= " AND A.STATUS =".$reqStatus;
+				$statement .= " AND A.STATUS ='".$reqStatus."'";
 			}
 			
 		}
@@ -216,14 +216,15 @@ class Inflasi_Json extends CI_Controller
 		{
 			if($reqStatus== 'NULL')
 			{
-				$statement .= " AND A.STATUS IS NULL";
+				$statement .= " AND A.STATUS  is null";
 			}
 			else
 			{
-				$statement .= " AND A.STATUS =".$reqStatus;
+				$statement .= " AND A.STATUS ='".$reqStatus."'";
 			}
 			
 		}
+		
 		
 
 		$sOrder = " ORDER BY A.ID ASC";

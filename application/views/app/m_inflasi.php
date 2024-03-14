@@ -116,7 +116,7 @@ $(document).ready(function() {
                     <div class="form-group">
                          <label for="inputEmail3" class="col-sm-1 control-label">Tahun Awal</label>
                         <div class="col-sm-4">
-                            <select class="form-control jscaribasicmultiple" id="reqStatus" <?=$disabled?>  style="width:100%;" >
+                            <select class="form-control jscaribasicmultiple" id="reqSatatus" <?=$disabled?>  style="width:100%;" >
                                 <option value="">Semua</option>
                                 <option value="NULL">2022</option>
                                 <option value="1">2023</option>
@@ -183,6 +183,17 @@ $(document).ready(function() {
         $("#btnfilter").click(function(){
            $(".divfilter").toggle();
        });
+    });
+
+    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="1">Sesuai BI</option><option value="NULL">Need Update</option></select>';
+
+    $('.table').on('init.dt', function() {
+        $('.selectstatus ').html(elselect);
+        $('#reqStatus').on('change', function() {
+            reqStatus=$('#reqStatus').val();
+            jsonurl= "json-app/inflasi_json/json_m?reqStatus="+reqStatus;
+            datanewtable.DataTable().ajax.url(jsonurl).load();
+        });
     });
 
 
@@ -314,7 +325,7 @@ $(document).ready(function() {
 
 	jQuery(document).ready(function() {
 		var jsonurl= "json-app/inflasi_json/json_m";
-	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata);
+	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',3);
 	});
 
 	function calltriggercari()

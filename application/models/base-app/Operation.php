@@ -180,7 +180,7 @@
 	}
 
 
-    function selectByParamsTahun($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.OPR_YEAR ASC")
+    function selectByParamsTahun($paramsArray=array(),$limit=-1,$from=-1, $statement='',  $statement2='',$sOrder="ORDER BY A.OPR_YEAR ASC")
 	{
 		$str = "
 		SELECT
@@ -209,7 +209,7 @@
 		$str .= $statement." GROUP BY A.OPR_YEAR, B1.KODE_DISTRIK,B1.KODE_BLOK,B1.KODE_UNIT_M, C.NAMA,D.NAMA,E.NAMA 
 		) A
 		LEFT JOIN t_preperation_lccm PC ON PC.YEAR_LCCM = A.OPR_YEAR AND PC.KODE_BLOK=A.KODE_BLOK
-		WHERE 1=1
+		WHERE 1=1 ".$statement2."
 		".$sOrder;
 		$this->query = $str;
 				

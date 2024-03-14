@@ -151,6 +151,17 @@ $(document).ready(function() {
 
 	infoscrolly= 50;
 
+    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="NULL">Aktif</option><option value="1">Inactive</option></select>';
+
+    $('.table').on('init.dt', function() {
+        $('.selectstatus ').html(elselect);
+        $('#reqStatus').on('change', function() {
+            reqStatus=$('#reqStatus').val();
+            jsonurl= "json-app/user_json/json?reqStatus="+reqStatus;
+            datanewtable.DataTable().ajax.url(jsonurl).load();
+        });
+    });
+
 	$("#btnAdd, #btnEdit").on("click", function () {
         btnid= $(this).attr('id');
 
@@ -240,7 +251,7 @@ $(document).ready(function() {
 
 	jQuery(document).ready(function() {
 		var jsonurl= "json-app/user_json/json";
-	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata);
+	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',6);
 	});
 
 	function calltriggercari()

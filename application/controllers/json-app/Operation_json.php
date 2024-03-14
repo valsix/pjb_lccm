@@ -57,6 +57,7 @@ class Operation_json extends CI_Controller
 		$searchJson= "";
 
 		$statement="";
+		$statement2="";
 
 		
 		if(!empty($reqDistrikId))
@@ -80,8 +81,13 @@ class Operation_json extends CI_Controller
 			$statement .= " AND B.GROUP_PM='".$reqGroupPm."'";
 		}
 
+		if(!empty($reqStatus))
+		{
+			$statement2 .= " AND PC.OPERATION='".$reqStatus."'";
+		}
+
 		$sOrder = " ORDER BY A.OPR_YEAR ASC ";
-		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
+		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson,$statement2, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];

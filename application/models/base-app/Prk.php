@@ -78,7 +78,7 @@
 		return $this->execQuery($str);
 	}
 
-    function selectByParams($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.PRK_YEAR ASC")
+    function selectByParams($paramsArray=array(),$limit=-1,$from=-1, $statement='', $statement2='',$sOrder="ORDER BY A.PRK_YEAR ASC")
 	{
 		$str = "
 		SELECT
@@ -106,7 +106,7 @@
 		$str .= $statement." GROUP BY A.PRK_YEAR, B.KODE_DISTRIK,B.KODE_BLOK,B.KODE_UNIT_M, C.NAMA,D.NAMA,E.NAMA 
 		) A
 		LEFT JOIN t_preperation_lccm PC ON PC.YEAR_LCCM = A.PRK_YEAR AND PC.KODE_BLOK=A.KODE_BLOK
-		WHERE 1=1
+		WHERE 1=1 ".$statement2."
 		 ".$sOrder;
 		$this->query = $str;
 		// echo $str;exit;

@@ -154,7 +154,7 @@
 		 END STATUS_INFO
 		FROM 
 		t_workorder a
-		LEFT JOIN M_ASSET_LCCM b on b.ASSETNUM = a.ASSETNUM
+		--LEFT JOIN M_ASSET_LCCM b on b.ASSETNUM = a.ASSETNUM
 		left JOIN T_PREPERATION_LCCM C on C.YEAR_LCCM = a.wo_year
 		WHERE 1=1
 		and A.wo_year is not null

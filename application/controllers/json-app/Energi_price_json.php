@@ -90,6 +90,11 @@ class Energi_price_Json extends CI_Controller
 		{
 			$statement.= " AND C.BLOK_UNIT_ID = ".$this->appblokunitid;
 		}
+
+		if(!empty($reqStatus))
+		{
+			$statement .= " AND A.STATUS='".$reqStatus."'";
+		}
 		
 
 		$sOrder = " ORDER BY A.PRICE_YEAR ASC ";

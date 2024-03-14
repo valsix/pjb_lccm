@@ -49,6 +49,21 @@ class User_json extends CI_Controller
 		$arrinfodata= [];
 
 		$reqPencarian= $this->input->get("reqPencarian");
+		$reqStatus= $this->input->get("reqStatus");
+		$statement="";
+
+		if(!empty($reqStatus))
+		{
+			if($reqStatus== 'NULL')
+			{
+				$statement .= " AND A.STATUS = ''";
+			}
+			else
+			{
+				$statement .= " AND A.STATUS =".$reqStatus;
+			}
+			
+		}
 		$searchJson= "";
 
 		$sOrder = " ";

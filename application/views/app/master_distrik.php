@@ -207,14 +207,14 @@ $(document).ready(function() {
                 <div class="col-md-12" style="margin-bottom: 20px;" >
                     <div class="form-group">
                        
-                        <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
+                       <!--  <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
                         <div class="col-sm-4">
                             <select class="form-control jscaribasicmultiple" id="reqStatus" <?=$disabled?>  style="width:100%;" >
                                 <option value="">Semua</option>
                                 <option value="NULL">Aktif</option>
                                 <option value="1">Tidak Aktif</option>
                             </select>
-                        </div>
+                        </div> -->
                          <label for="inputEmail3" class="col-sm-2 control-label">Wilayah</label>
                         <div class="col-sm-4">
                             <select class="form-control jscaribasicmultiple" id="reqWilayah" <?=$disabled?>  style="width:100%;" >
@@ -344,6 +344,18 @@ $(document).ready(function() {
         $("#btnfilter").click(function(){
            $(".divfilter").toggle();
        });
+    });
+
+    
+    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="NULL">Aktif</option><option value="1">Tidak Aktif</option></select>';
+
+    $('.table').on('init.dt', function() {
+        $('.selectstatus ').html(elselect);
+        $('#reqStatus').on('change', function() {
+            reqStatus=$('#reqStatus').val();
+            jsonurl= "json-app/distrik_json/json?reqStatus="+reqStatus;
+            datanewtable.DataTable().ajax.url(jsonurl).load();
+        });
     });
 
 

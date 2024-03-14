@@ -83,8 +83,20 @@ class Work_order_json extends CI_Controller
 			$statement .= " AND A.ASSETNUM IN (".$reqAssetNum.")";
 		}
 
-	
+		if(!empty($reqStatus))
+		{
+			if($reqStatus=='null')
+			{
+				$statement .= " AND C.WO_CR is null";
+			}
+			else
+			{
+				$statement .= " AND C.WO_CR='".$reqStatus."'";
+			}
+			
+		}
 
+	
 		$sOrder = " ORDER BY wo_year ASC ";
 		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
 
