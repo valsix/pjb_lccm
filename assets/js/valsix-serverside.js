@@ -564,25 +564,26 @@ var ajaxserverselectsingle = function() {
                             var title = $(cell).text();
                             if ($(api.column(colIdx).header()).index() >= 0) {
                                    // $(cell).html('<input type="text" style="color: #000000;" placeholder="aaaaaaaaaaaaaaaaaaa"/>');
-                                   $(cell).html('<select style="color: #000000;"><option value="">Semua<option >Aktif</option><option>Tidak Aktif</option></select>');
+                                   // $(cell).html('<select style="color: #000000;"><option value="">Semua<option >Aktif</option><option>Tidak Aktif</option></select>');
+                                   $(cell).html('<div class="selectstatus"></div>');
                                 }
                             // On every keypress in this input
-                            $('select', $('.filters th').eq($(api.column(colIdx).header()).index()) )
-                                .off('keyup change')
-                                .on('keyup change', function (e) {
-                                    e.stopPropagation();
-                                    // Get the search value
-                                    $(this).attr('title', $(this).val());
-                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
-                                    var cursorPosition = this.selectionStart;
-                                    console.log(this.value);
-                                    // Search the column for that value
-                                    api
-                                        .column(colIdx)
-                                        .search((this.value != "") ? regexr.replace('{search}', '((('+this.value+')))') : "", this.value != "", this.value == "")
-                                        .draw();
-                                    // $(this).focus()[0].setSelectionRange(cursorPosition, cursorPosition);
-                                });
+                            // $('select', $('.filters th').eq($(api.column(colIdx).header()).index()) )
+                            //     .off('keyup change')
+                            //     .on('keyup change', function (e) {
+                            //         e.stopPropagation();
+                            //         // Get the search value
+                            //         $(this).attr('title', $(this).val());
+                            //         var regexr = '({search})'; //$(this).parents('th').find('select').val();
+                            //         var cursorPosition = this.selectionStart;
+                            //         console.log(this.value);
+                            //         // Search the column for that value
+                            //         api
+                            //             .column(colIdx)
+                            //             .search((this.value != "") ? regexr.replace('{search}', '((('+this.value+')))') : "", this.value != "", this.value == "")
+                            //             .draw();
+                            //         // $(this).focus()[0].setSelectionRange(cursorPosition, cursorPosition);
+                            //     });
                         });
                     }
                 },
@@ -614,6 +615,7 @@ $(document).ready(function(){
     .clone(true)
     .addClass('filters')
     .appendTo('#example thead');
+
 });
    
 
