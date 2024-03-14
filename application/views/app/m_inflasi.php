@@ -185,7 +185,7 @@ $(document).ready(function() {
        });
     });
 
-    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="1">Sesuai BI</option><option value="NULL">Need Update</option></select>';
+    var elselect='<select id="reqStatus" class="statusgen" style="color: #000000;" ><option value="">Semua</option><option value="1">Sesuai BI</option><option value="NULL">Need Update</option></select>';
 
     $('.table').on('init.dt', function() {
         $('.selectstatus ').html(elselect);

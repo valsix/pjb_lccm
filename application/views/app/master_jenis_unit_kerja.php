@@ -178,7 +178,7 @@ $(document).ready(function() {
     });
 
 
-    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="NULL">Aktif</option><option value="1">Tidak Aktif</option></select>';
+    var elselect='<select id="reqStatus"  class="statusgen" style="color: #000000;" ><option value="">Semua</option><option value="NULL">Aktif</option><option value="1">Tidak Aktif</option></select>';
 
     $('.table').on('init.dt', function() {
         $('.selectstatus ').html(elselect);

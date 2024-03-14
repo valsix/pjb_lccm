@@ -320,7 +320,7 @@ $(document).ready(function() {
     });
 
 
-    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="TRUE">Valid</option><option value="FALSE">Tidak Valid</option></select>';
+    var elselect='<select id="reqStatus"  class="statusgen" style="color: #000000;" ><option value="">Semua</option><option value="TRUE">Valid</option><option value="FALSE">Tidak Valid</option></select>';
 
     $('.table').on('init.dt', function() {
         $('.selectstatus ').html(elselect);

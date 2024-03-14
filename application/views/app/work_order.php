@@ -322,7 +322,7 @@ unset($set);
 
     infoscrolly= 50;
 
-    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="TRUE">Valid</option><option value="null">Belum Valid</option></select>';
+    var elselect='<select id="reqStatus"  class="statusgen" style="color: #000000;" ><option value="">Semua</option><option value="TRUE">Valid</option><option value="null">Belum Valid</option></select>';
 
     $('.table').on('init.dt', function() {
         $('.selectstatus ').html(elselect);

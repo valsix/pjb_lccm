@@ -151,7 +151,7 @@ $(document).ready(function() {
 
 	infoscrolly= 50;
 
-    var elselect='<select id="reqStatus"  style="width:100%;color: #000000;" ><option value="">Semua</option><option value="NULL">Aktif</option><option value="1">Inactive</option></select>';
+    var elselect='<select id="reqStatus"  class="statusgen" style="color: #000000;" ><option value="">Semua</option><option value="NULL">Aktif</option><option value="1">Inactive</option></select>';
 
     $('.table').on('init.dt', function() {
         $('.selectstatus ').html(elselect);
