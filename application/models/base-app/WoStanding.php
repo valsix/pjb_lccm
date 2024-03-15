@@ -100,6 +100,20 @@
         return $this->execQuery($str);
     }
 
+
+    function savestate()
+    {
+        $str = "
+        UPDATE t_wo_standing_lccm 
+        SET
+          STATE_STATUS= '".$this->getField("STATE_STATUS")."'
+        WHERE KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."'  AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."'  AND GROUP_PM = '".$this->getField("GROUP_PM")."' 
+        "; 
+        $this->query = $str;
+        // echo $str;exit;
+        return $this->execQuery($str);
+     }
+
     function deleteparent()
     {
         $str = "
@@ -309,7 +323,7 @@
     {
         $str = "
         SELECT
-        A.KODE_BLOK,A.GROUP_PM,B.NAMA BLOK_NAMA,C.NAMA DISTRIK_NAMA,A.KODE_DISTRIK,E.NAMA UNIT_NAMA
+        A.KODE_BLOK,A.KODE_DISTRIK,A.KODE_UNIT_M,A.GROUP_PM,B.NAMA BLOK_NAMA,C.NAMA DISTRIK_NAMA,A.KODE_DISTRIK,E.NAMA UNIT_NAMA,A.STATE_STATUS
         , CASE WHEN A.KODE_UNIT_M IS NULL THEN
         '<a onClick=\"openurl(''app/index/wo_standing_add?reqMode=insert&reqParent=group&reqSiteId=' || TRIM(A.KODE_BLOK) || '&reqDistrikId=' || TRIM(A.KODE_DISTRIK) || '&reqGroupPm=' || TRIM(A.GROUP_PM) || '&reqUnitMesinId=' || TRIM(A.KODE_UNIT_M) || ''')\" 
         style=\"cursor:pointer\" title=\"Tambah\"><img src=\"images/icn_add.gif\" width=\"15px\" heigth=\"15px\"></a>'
@@ -343,7 +357,7 @@
             $str .= " AND $key = '$val' ";
         }
 
-        $str .= $statement."  GROUP BY A.KODE_BLOK,A.GROUP_PM,B.NAMA,C.NAMA,A.KODE_DISTRIK,A.KODE_UNIT_M,E.NAMA  ".$sOrder;
+        $str .= $statement."  GROUP BY A.KODE_BLOK,A.GROUP_PM,B.NAMA,C.NAMA,A.KODE_DISTRIK,A.KODE_UNIT_M,E.NAMA,A.STATE_STATUS  ".$sOrder;
         $this->query = $str;
 
         return $this->selectLimit($str,$limit,$from); 
@@ -385,7 +399,7 @@
     {
         $str = "
         SELECT
-        A.KODE_BLOK,A.GROUP_PM,A.PM_YEAR,A.COST_PM_YEARLY,B.NAMA BLOK_NAMA,C.NAMA DISTRIK_NAMA,E.NAMA UNIT_NAMA
+        A.KODE_BLOK,A.KODE_DISTRIK,A.KODE_UNIT_M,A.GROUP_PM,A.PM_YEAR,A.COST_PM_YEARLY,B.NAMA BLOK_NAMA,C.NAMA DISTRIK_NAMA,E.NAMA UNIT_NAMA,A.STATE_STATUS
         , CASE WHEN A.KODE_UNIT_M IS NULL THEN
         '<a onClick=\"openurl(''app/index/wo_standing_add?reqMode=update&reqParent=tahun&reqSiteId=' || TRIM(A.KODE_BLOK) || '&reqDistrikId=' || TRIM(A.KODE_DISTRIK) || '&reqGroupPm=' || TRIM(A.GROUP_PM) || '&reqTahun=' || A.PM_YEAR || '&reqCost=' || A.COST_PM_YEARLY || '&reqUnitMesinId=' || TRIM(A.KODE_UNIT_M) || ''')\" 
         style=\"cursor:pointer\" title=\"Ubah\"><img src=\"images/icn_edit.gif\" KODE_BLOK=\"15px\" heigth=\"15px\"></a>'

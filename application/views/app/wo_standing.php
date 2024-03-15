@@ -142,21 +142,32 @@ while($set->nextRow())
                                 url: 'json-app/wo_standing_json/tree'
                                 , rownumbers: false
                                 , pagination: false
-                                // , height: 'auto'
                                 , idField: 'ID'
                                 , treeField: 'NAMA'
                                 , onSelect:function(node){
-                                    // console.log(node);
                                     selectedNodeId = node.ID;
-                                    //console.log(selectedNodeId);
                                 }
                                 , onLoadSuccess: function(row, data){
-                                }
-                                , onBeforeLoad: function(row,param){
-                                    if (!row) {
-                                        param.id = 0;
+                                    loadstate(row, data)
+                               
+                               
+                                   // 
+                               }
+                               , onBeforeLoad: function(row,param){
+                                if (!row) {
+                                    param.id = 0;
                                     }
+                                },
+                                onExpand: function(row)
+                                {
+                                    savestate(row.state,row.ID,row.KODE_DISTRIK,row.KODE_BLOK,row.KODE_UNIT_M);
                                 }
+                                ,
+                                onCollapse: function(row)
+                                {
+                                    savestate(row.state,row.ID,row.KODE_DISTRIK,row.KODE_BLOK,row.KODE_UNIT_M);
+                                }
+                                                       
                             " style="width:100%;height:470px">
                             <thead>
                                 <tr>
@@ -181,6 +192,25 @@ while($set->nextRow())
 </div>
 
 <script type="text/javascript">
+
+function loadstate(row,data)
+{
+    object = Object.assign({}, data.rows);
+
+    $.each(object, function(key,valueObj){
+
+        console.log(valueObj.STATE_STATUS);
+        if(valueObj.STATE_STATUS=='open')
+        {
+            $('#tt').treegrid('expand', valueObj.ID);
+        }
+        else
+        {
+            $('#tt').treegrid('collapse', valueObj.ID);
+        }
+
+    });
+}
 
 function searchtree(value)
 {
@@ -308,6 +338,15 @@ $(function(){
 function openurl(varurl)
 {
     document.location.href = varurl;
+}
+
+function savestate(state,id,distrik,blok,unit)
+{
+
+   $.getJSON("json-app/wo_standing_json/savestate/?reqState="+state+"&reqGroupPm="+id+"&reqDistrikId="+distrik+"&reqBlokId="+blok+"&reqUnitMesinId="+unit,
+    function(data){
+        // console.log(data.PESAN);
+    });
 }
 
 function delete_parent(valinfoid)

@@ -203,7 +203,7 @@ class wo_standing_json extends CI_Controller
 
 		if ($id == "0")
 		{
-			$sorder= " ";
+			$sorder= " ORDER BY A.GROUP_PM ASC ";
 			$statement= " ";
 
 			if(!empty($reqDistrikId))
@@ -241,6 +241,10 @@ class wo_standing_json extends CI_Controller
 				$items[$i]['BLOK_NAMA'] = $set->getField("BLOK_NAMA");
 				$items[$i]['UNIT_NAMA'] = $set->getField("UNIT_NAMA");
 				$items[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
+				$items[$i]['KODE_DISTRIK'] = $set->getField("KODE_DISTRIK");
+				$items[$i]['KODE_BLOK'] = $set->getField("KODE_BLOK");
+				$items[$i]['KODE_UNIT_M'] = $set->getField("KODE_UNIT_M");
+				$items[$i]['STATE_STATUS'] = $set->getField("STATE_STATUS");
 				$items[$i]['state'] = $this->hasunitchildtahun($valinfoid) ? 'closed' : 'open';
 				$i++;
 			}
@@ -312,6 +316,9 @@ class wo_standing_json extends CI_Controller
 						$result[$i]['UNIT_NAMA'] = $set->getField("UNIT_NAMA");
 						$result[$i]['DISTRIK_NAMA'] = $set->getField("DISTRIK_NAMA");
 						$result[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
+						$result[$i]['KODE_DISTRIK'] = $set->getField("KODE_DISTRIK");
+						$result[$i]['KODE_BLOK'] = $set->getField("KODE_BLOK");
+						$result[$i]['KODE_UNIT_M'] = $set->getField("KODE_UNIT_M");
 						$result[$i]['state'] = $this->hasunitchildtahun($valinfoid) ? 'closed' : 'open';
 						$i++;
 					}	
@@ -358,6 +365,9 @@ class wo_standing_json extends CI_Controller
 						$result[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
 						$result[$i]['BLOK_NAMA'] = $set->getField("BLOK_NAMA");
 						$result[$i]['UNIT_NAMA'] = $set->getField("UNIT_NAMA");
+						$result[$i]['KODE_DISTRIK'] = $set->getField("KODE_DISTRIK");
+						$result[$i]['KODE_BLOK'] = $set->getField("KODE_BLOK");
+						$result[$i]['KODE_UNIT_M'] = $set->getField("KODE_UNIT_M");
 						// $result[$i]['state'] = $this->hasunitchildcost($valinfoid) ? 'closed' : 'open';
 						$i++;
 					}	
@@ -556,6 +566,35 @@ class wo_standing_json extends CI_Controller
 
 		
 
+		echo json_encode( $arrJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
+	}
+
+	function savestate()
+	{	
+		$reqDistrikId =  $this->input->get('reqDistrikId');
+		$reqBlokId =  $this->input->get('reqBlokId');
+		$reqUnitMesinId =  $this->input->get('reqUnitMesinId');
+		$reqGroupPm =  $this->input->get('reqGroupPm');
+		$reqState =  $this->input->get('reqState');
+
+		$this->load->model("base-app/WoStanding");
+		$set = new WoStanding();
+
+		$set->setField("KODE_DISTRIK", $reqDistrikId);
+		$set->setField("KODE_BLOK", $reqBlokId);
+		$set->setField("GROUP_PM", $reqGroupPm);
+		$set->setField("KODE_UNIT_M", $reqUnitMesinId);
+		$set->setField("STATE_STATUS", $reqState);
+
+
+		if($set->savestate())
+		{
+			$arrJson["PESAN"] = "State berhasil disimpan.";
+		}
+		else
+		{
+			$arrJson["PESAN"] = "State gagal disimpan.";	
+		}
 		echo json_encode( $arrJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
 	}
 
