@@ -62,17 +62,17 @@ class Work_order_json extends CI_Controller
 		
 		if(!empty($reqDistrikId))
 		{
-			$statement .= " AND A.KODE_DISTRIK='".$reqDistrikId."'";
+			$statement .= " AND C.KODE_DISTRIK='".$reqDistrikId."'";
 		}
 
 		if(!empty($reqBlokId))
 		{
-			$statement .= " AND A.KODE_BLOK='".$reqBlokId."'";
+			$statement .= " AND C.KODE_BLOK='".$reqBlokId."'";
 		}
 
 		if(!empty($reqUnitMesinId))
 		{
-			$statement .= " AND A.KODE_UNIT_M='".$reqUnitMesinId."'";
+			$statement .= " AND C.KODE_UNIT_M='".$reqUnitMesinId."'";
 		}
 
 		
