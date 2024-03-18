@@ -8,12 +8,16 @@ $this->load->model("base-app/T_Energy_Price_Lccm");
 $this->load->model("base-app/BlokUnit");
 $this->load->model("base-app/UnitMesin");
 $this->load->model("base-app/T_Preperation_Lccm");
-
-
-
+$this->load->model("base/Users");
 
 
 $appuserkodehak= $this->appuserkodehak;
+$reqPenggunaid= $this->appuserid;
+$appdistrikid= $this->appdistrikid;
+$appdistrikkode= $this->appdistrikkode;
+$appblokunitid= $this->appblokunitid;
+$appblokunitkode= $this->appblokunitkode;
+
 
 $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
@@ -69,11 +73,31 @@ while($set->nextRow())
 }
 unset($set);
 
+$arridDistrik=[];
+$usersdistrik = new Users();
+$usersdistrik->selectByPenggunaDistrik($reqPenggunaid);
+// echo $usersdistrik->query;exit;
+while($usersdistrik->nextRow())
+{
+    $arridDistrik[]= $usersdistrik->getField("DISTRIK_ID"); 
+   
+}
+
+$idDistrik = implode(",",$arridDistrik);  
+
+
 
 
 $set= new Distrik();
 $arrdistrik= [];
-$statement="  ";
+$statement.="  ";
+if(!empty($idDistrik))
+{
+    $statement=" AND A.DISTRIK_ID IN (".$appdistrikid.") AND A.STATUS IS NULL AND A.NAMA IS NOT NULL 
+    ";
+}
+
+
 $set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
@@ -89,41 +113,13 @@ unset($set);
 $set= new BlokUnit();
 $arrblok= [];
 
-if(empty($reqSiteId))
-{
-    if(empty($reqParent))
-    {
-        $statement=" AND 1=2 ";
-    }
-    else
-    {
-         $statement=" AND A.KODE <> '' ";
-    }
-    
-}
-else
-{
-    $statement="  AND A.KODE <> '' ";
-}
+$statement=" AND 1=2 ";
 
-if($reqMode=="update")
+if(!empty($appblokunitid))
 {
-
-    if($reqParent=="parent")
-    {
-       $statement=" AND B.KODE= '".$reqDistrikId."'  ";
-    }
-    else
-    {
-        $statement="  AND B.KODE= '".$reqDistrikId."'  ";
-    }
-
+    $statement=" AND A.BLOK_UNIT_ID IN (".$appblokunitid.") AND A.STATUS IS NULL AND A.NAMA IS NOT NULL 
+    ";
 }
-else
-{
-    $statement=" AND A.KODE= '".$reqSiteId."' AND B.KODE= '".$reqDistrikId."'  ";
-}
-
 
 
 $set->selectByParams(array(), -1,-1,$statement);
@@ -264,7 +260,7 @@ $(document).ready(function() {
                         $selectvalkode= $item["KODE"];
 
                         $selected="";
-                        if($selectvalkode == $reqDistrikId)
+                        if($selectvalkode == $appdistrikkode)
                         {
                             $selected="selected";
                         }
@@ -284,7 +280,7 @@ $(document).ready(function() {
                         $selectvaltext= $item["text"];
                         $selectvalkode= $item["KODE"];
                         $selected="";
-                        if($selectvalkode==$reqBlokId)
+                        if($selectvalkode==$appblokunitkode)
                         {
                             $selected="selected";
                         }
@@ -373,6 +369,23 @@ $(document).ready(function() {
 <a href="#" id="btnCari" style="display: none;" title="Cari"></a>
 
 <script type="text/javascript">
+
+   var reqDistrikId= $("#reqDistrikId").val();
+   var reqBlokId= $("#reqBlokId").val();
+   
+            $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+            function(data)
+            {
+                // console.log(data);
+                $("#reqUnitMesinId option").remove();
+                $("#reqUnitMesinId").attr("readonly", false); 
+                $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+                jQuery(data).each(function(i, item){
+                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+                });
+            });
+
+
     $('#reqDistrikId').on('change', function() {
     // $("#blok").empty();
     var reqDistrikId= this.value;

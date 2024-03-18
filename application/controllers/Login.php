@@ -22,7 +22,9 @@ class Login extends CI_Controller
 		$this->appuserpilihankodehak= $this->session->userdata("appuserpilihankodehak");
 
 		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appblokunitkode= $this->session->userdata("appblokunitkode");
 		$this->appdistrikid= $this->session->userdata("appdistrikid");
+		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
 		$this->appdistrikblokunitnama= $this->session->userdata("appdistrikblokunitnama");
 	}
 

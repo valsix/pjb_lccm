@@ -23,7 +23,9 @@ class App extends CI_Controller {
 		$this->appuserroleid= $this->session->userdata("appuserroleid");
 
 		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appblokunitkode= $this->session->userdata("appblokunitkode");
 		$this->appdistrikid= $this->session->userdata("appdistrikid");
+		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
 		$this->appdistrikblokunitnama= $this->session->userdata("appdistrikblokunitnama");
 
 		$this->configtitle= $this->config->config["configtitle"];

@@ -212,7 +212,9 @@ class kauth {
             {
                 // $penggunaid= $users->getField("PENGGUNA_ID");
                 $CI->session->set_userdata("appblokunitid", $blokunit->getField("BLOK_UNIT_ID"));
+                $CI->session->set_userdata("appblokunitkode", $blokunit->getField("KODE"));
                 $CI->session->set_userdata("appdistrikid", $blokunit->getField("DISTRIK_ID"));
+                $CI->session->set_userdata("appdistrikkode", $blokunit->getField("DISTRIK_KODE"));
                 $CI->session->set_userdata("appdistrikblokunitnama", $blokunit->getField("DISTRIK_NAMA")." - ".$blokunit->getField("NAMA"));
                 // $CI->session->set_userdata("appuserroleid", $users->getField("ROLE_ID"));
 
@@ -241,7 +243,9 @@ class kauth {
         else
         {
             $CI->session->unset_userdata("appblokunitid");
+            $CI->session->unset_userdata("appblokunitkode");
             $CI->session->unset_userdata("appdistrikid");
+            $CI->session->unset_userdata("appdistrikkode");
             $CI->session->unset_userdata("appdistrikblokunitnama");
             // $CI->session->set_userdata("appblokunitid", $blokunit->getField("BLOK_UNIT_ID"));
             // $CI->session->set_userdata("appdistrikid", $blokunit->getField("DISTRIK_ID"));
