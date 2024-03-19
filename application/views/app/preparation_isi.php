@@ -46,7 +46,7 @@ else
 
 
 
-$set->selectByParamsDashboard(array(), -1,-1,$statement);
+$set->selectByParamsDashboard(array(), 1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
 {
