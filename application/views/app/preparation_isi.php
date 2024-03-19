@@ -200,7 +200,7 @@ while($set->nextRow())
 
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <a href="app/index/wo_standing"><div class="title">Wo Cr</div></a>
+                    <a href="app/index/work_order"><div class="title">Wo Cr</div></a>
                     <div class="status  <?=$statuscheckedwocr?>"><label>Status :  <?=$statuscompwocr?></label>  <?=$WO_CR?></div>
                 </div>
             </div>
@@ -224,7 +224,7 @@ while($set->nextRow())
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <div class="title">Wo OH</div>
+                    <a href="app/index/schedule_oh"><div class="title">Wo OH</div></a>
                     <div class="status  <?=$statuscheckedwooh?>"><label>Status : <?=$statuscompwooh?> </label><?=$WO_OH?></div>
                 </div>
             </div>

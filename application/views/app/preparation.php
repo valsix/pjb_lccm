@@ -266,7 +266,7 @@ $(document).ready(function() {
             <div class="filter">
                 
                 <label>Distrik :</label>
-                <select class="select-css " style="width: 15%" id="reqDistrikId"  name="reqDistrikId">
+                <select class="select-css "  id="reqDistrikId"  name="reqDistrikId">
                     <option value="" >Pilih Distrik</option>
                     <?
                     foreach($arrdistrik as $item) 
@@ -287,7 +287,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>Blok :</label>
-                <select class="select-css" style="width: 15%"  id="reqBlokId"   name="reqBlokId" >
+                <select class="select-css"   id="reqBlokId"   name="reqBlokId" >
                     <option value="" >Pilih Blok Unit</option>
                     <?
                     foreach($arrblok as $item) 
@@ -309,7 +309,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>Unit :</label>
-                <select class="select-css" style="width: 15%" id="reqUnitMesinId"  name="reqUnitMesinId">
+                <select class="select-css"  id="reqUnitMesinId"  name="reqUnitMesinId">
                     <option value="" >Pilih Unit Mesin</option>
                     <?
                     foreach($arrunitmesin as $item) 
@@ -331,7 +331,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>Year LCCM :</label>
-                <select class="select-css " style="width: 10%" id="reqTahunAwal">
+                <select class="select-css " id="reqTahunAwal">
                     <option value="">Pilih Tahun</option>
                     <?
                     foreach($arrtahun as $item) 
@@ -348,7 +348,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>S.d</label>
-                <select class="select-css " style="width: 10%" id="reqTahunAkhir">
+                <select class="select-css "  id="reqTahunAkhir">
                     <option value="">Pilih Tahun</option>
                     <?
                     foreach($arrtahun as $item) 
