@@ -91,7 +91,7 @@ $idDistrik = implode(",",$arridDistrik);
 $set= new Distrik();
 $arrdistrik= [];
 $statement.="  ";
-if(!empty($idDistrik))
+if(!empty($appdistrikid))
 {
     $statement=" AND A.DISTRIK_ID IN (".$appdistrikid.") AND A.STATUS IS NULL AND A.NAMA IS NOT NULL 
     ";
@@ -373,17 +373,16 @@ $(document).ready(function() {
    var reqDistrikId= $("#reqDistrikId").val();
    var reqBlokId= $("#reqBlokId").val();
    
-            $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
-            function(data)
-            {
-                // console.log(data);
-                $("#reqUnitMesinId option").remove();
-                $("#reqUnitMesinId").attr("readonly", false); 
-                $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
-                jQuery(data).each(function(i, item){
-                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
-                });
-            });
+   $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+    function(data)
+    {
+        $("#reqUnitMesinId option").remove();
+        $("#reqUnitMesinId").attr("readonly", false); 
+        $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+        jQuery(data).each(function(i, item){
+            $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+        });
+    });
 
 
     $('#reqDistrikId').on('change', function() {

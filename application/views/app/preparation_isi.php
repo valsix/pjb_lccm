@@ -194,17 +194,17 @@ while($set->nextRow())
             $statuscompoperation="Complete";
         }
 
-        if($STATUS_COMPLETE=='false' || $STATUS_COMPLETE=='f' || $STATUS_COMPLETE=='0' )
-        {
-            $STATUS_COMPLETE='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscompstatus="Incomplete";
-        }
-        else
-        {
-            $statuscheckedstatus="status-checked";
-            $STATUS_COMPLETE='<i style="float:right;" class="fa fa-check" aria-hidden="true"></i>';
-            $statuscompstatus="Complete";
-        }
+        // if($STATUS_COMPLETE=='false' || $STATUS_COMPLETE=='f' || $STATUS_COMPLETE=='0' )
+        // {
+        //     $STATUS_COMPLETE='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
+        //     $statuscompstatus="Incomplete";
+        // }
+        // else
+        // {
+        //     $statuscheckedstatus="status-checked";
+        //     $STATUS_COMPLETE='<i style="float:right;" class="fa fa-check" aria-hidden="true"></i>';
+        //     $statuscompstatus="Complete";
+        // }
 
 ?>
         <div style="border:1px solid black;">
@@ -287,12 +287,12 @@ while($set->nextRow())
                     <div class="status  <?=$statuscheckedoperation?>"><label>Status : <?=$statuscompoperation?> </label><?=$OPERATION?></div>
                 </div>
             </div>
-            <div class="col-md-5ths col-xs-6">
+            <!-- <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <div class="title">Status Complete</div>
                     <div class="status  <?=$statuscheckedstatus?>"><label>Status : <?=$statuscompstatus?> </label><?=$STATUS_COMPLETE?></div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
 <?
