@@ -349,6 +349,34 @@
 		return $this->selectLimit($str,$limit,$from); 
     }
 
+
+    function selectByParamsDashboardNew($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="")
+	{
+		$str = "
+		SELECT BOOL_AND(WO_CR) WO_CR,BOOL_AND(WO_STANDING) WO_STANDING
+		,BOOL_AND(WO_PM) WO_PM,BOOL_AND(WO_PDM) WO_PDM,BOOL_AND(WO_OH) WO_OH,BOOL_AND(PRK) PRK
+		,BOOL_AND(LOSS_OUTPUT) LOSS_OUTPUT,BOOL_AND(ENERGY_PRICE) ENERGY_PRICE,BOOL_AND(OPERATION) OPERATION
+		 
+		FROM 
+		t_preperation_lccm a
+		LEFT JOIN DISTRIK C ON C.KODE = A.KODE_DISTRIK
+		LEFT JOIN BLOK_UNIT D ON D.KODE = A.KODE_BLOK AND D.DISTRIK_ID = C.DISTRIK_ID
+		LEFT  JOIN UNIT_MESIN E ON E.KODE = A.KODE_UNIT_M AND E.BLOK_UNIT_ID = D.BLOK_UNIT_ID AND E.DISTRIK_ID = C.DISTRIK_ID
+		WHERE 1=1
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
+		// echo $str;exit();
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
      function selectByParamsTahun($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder=" order by a.year_lccm asc")
 	{
 		$str = "

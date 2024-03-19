@@ -21,6 +21,8 @@ $appblokunitkode= $this->appblokunitkode;
 
 $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
+$tahunskg= date('Y');
+
 
 // YEAR_LCCM, WO_CR, WO_STANDING, WO_PM, WO_PDM, WO_OH, PRK, LOSS_OUTPUT, ENERGY_PRICE, OPERATION, STATUS_COMPLETE
 
@@ -72,6 +74,20 @@ while($set->nextRow())
     array_push($arrtahun, $arrdata);
 }
 unset($set);
+
+$tahunch=$tahunskg-1;
+$searchthn = array_search($tahunch, array_column($arrtahun, 'id'));
+
+if(empty($searchthn))
+{
+    $arrdata= array();
+    $arrdata["id"]= $tahunch;
+    $arrdata["text"]= $tahunch;
+    array_push($arrtahun, $arrdata);
+}
+
+// print_r($arrtahun);exit;
+
 
 $arridDistrik=[];
 $usersdistrik = new Users();
@@ -340,7 +356,6 @@ $(document).ready(function() {
                         $selectvalid= $item["id"];
                         $selectvaltext= $item["text"];
 
-                        $tahunskg= date('Y');
                         $selected="";
                         if($selectvalid==$tahunskg-1)
                         {

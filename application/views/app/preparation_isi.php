@@ -46,14 +46,10 @@ else
 
 
 
-$set->selectByParamsDashboard(array(), 1,-1,$statement);
+$set->selectByParamsDashboardNew(array(), 1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
 {
-    $NAMA_DISTRIK= $set->getField("NAMA_DISTRIK");
-    $BLOK_UNIT_NAMA= $set->getField("BLOK_UNIT_NAMA");
-    $UNIT_MESIN_NAMA= $set->getField("UNIT_MESIN_NAMA");
-    $YEAR_LCCM= $set->getField("YEAR_LCCM");
 
     $WO_CR= $set->getField("WO_CR");
     $WO_STANDING= $set->getField("WO_STANDING");
@@ -194,48 +190,17 @@ while($set->nextRow())
             $statuscompoperation="Complete";
         }
 
-        // if($STATUS_COMPLETE=='false' || $STATUS_COMPLETE=='f' || $STATUS_COMPLETE=='0' )
-        // {
-        //     $STATUS_COMPLETE='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-        //     $statuscompstatus="Incomplete";
-        // }
-        // else
-        // {
-        //     $statuscheckedstatus="status-checked";
-        //     $STATUS_COMPLETE='<i style="float:right;" class="fa fa-check" aria-hidden="true"></i>';
-        //     $statuscompstatus="Complete";
-        // }
+    }
+}
+
 
 ?>
         <div style="border:1px solid black;">
             <br>
-            <!-- <div class="col-md-2ths col-xs-6">
-                <div class="item" >
-                    <div class="title" style="background-color:green">Distrik</div>
-                    <div class="status "> <?=$NAMA_DISTRIK?></div>
-                </div>
-            </div>
-            <div class="col-md-2ths col-xs-6">
-                <div class="item">
-                    <div class="title" style="background-color:blue">Blok</div>
-                    <div class="status  "><?=$BLOK_UNIT_NAMA?></div>
-                </div>
-            </div>
-            <div class="col-md-2ths col-xs-6">
-                <div class="item">
-                    <div class="title" style="background-color:brown">Unit</div>
-                    <div class="status "> <?=$UNIT_MESIN_NAMA?></div>
-                </div>
-            </div>
-            <div class="col-md-2ths col-xs-6">
-                <div class="item">
-                    <div class="title" style="background-color:#11af9c ">Tahun</div>
-                    <div class="status "> <?=$YEAR_LCCM?></div>
-                </div>
-            </div> -->
+
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
-                    <div class="title">Wo Cr</div>
+                    <a href="app/index/wo_standing"><div class="title">Wo Cr</div></a>
                     <div class="status  <?=$statuscheckedwocr?>"><label>Status :  <?=$statuscompwocr?></label>  <?=$WO_CR?></div>
                 </div>
             </div>
@@ -296,6 +261,5 @@ while($set->nextRow())
         </div>
 
 <?
-    }
-}
+
 ?>
