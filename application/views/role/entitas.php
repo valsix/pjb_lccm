@@ -162,7 +162,7 @@ body{
 <body>
 <div class="pilihan-wrapper">
 	
-    <div class="logo"><img src="images/logo-pjb.png" height="50"></div>
+    <div class="logo"><img src="images/logo-pln-np.png" height="50"></div>
     <div class="judul">Silahkan pilih Entitas</div>
     <div class="pilihan">
 		<form id="myForm" action="login/multi_entitas" method="post">
