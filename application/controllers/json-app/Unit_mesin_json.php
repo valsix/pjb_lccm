@@ -374,4 +374,59 @@ class unit_mesin_json extends CI_Controller
 
 	}
 
+	function filter_unit_dash()
+	{
+		$this->load->model("base-app/UnitMesin");
+		$this->load->model("base-app/Distrik");
+		$this->load->model("base-app/BlokUnit");
+
+		$reqDistrikId =  $this->input->get('reqDistrikId');
+		$reqBlokId =  $this->input->get('reqBlokId');
+		
+		
+		$statementnew=" AND 1=2 ";
+
+		if(!empty($reqDistrikId) && !empty($reqBlokId))
+		{
+			$set= new Distrik();
+			$statement =" AND A.KODE  = '".$reqDistrikId."'";
+			$set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
+			// echo $set->query;exit;
+			$set->firstRow();
+			$reqDistrikId= $set->getField("DISTRIK_ID");
+
+			unset($set);
+
+			$set= new BlokUnit();
+			$statement =" AND A.KODE  = '".$reqBlokId."' AND A.DISTRIK_ID  = '".$reqDistrikId."'";
+			$set->selectByParams(array(), -1,-1,$statement);
+			// echo $set->query;exit;
+			$set->firstRow();
+			$reqBlokId= $set->getField("BLOK_UNIT_ID");
+
+			unset($set);
+
+			$statementnew =" AND A.KODE IS NOT NULL AND A.DISTRIK_ID = ".$reqDistrikId." AND A.BLOK_UNIT_ID = ".$reqBlokId;
+		}
+
+
+		$set= new UnitMesin();
+		$arrset= [];
+
+		
+		$set->selectByParams(array(), -1,-1,$statementnew);
+		// echo $set->query;exit;
+		while($set->nextRow())
+		{
+			$arrdata= array();
+			$arrdata["id"]= $set->getField("UNIT_MESIN_ID");
+			$arrdata["text"]= $set->getField("KODE")." - ". $set->getField("NAMA");
+			$arrdata["KODE"]= $set->getField("KODE");
+			array_push($arrset, $arrdata);
+		}
+		unset($set);
+		echo json_encode( $arrset, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
+
+	}
+
 }

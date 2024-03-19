@@ -388,7 +388,7 @@ $(document).ready(function() {
    var reqDistrikId= $("#reqDistrikId").val();
    var reqBlokId= $("#reqBlokId").val();
    
-   $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+   $.getJSON("json-app/unit_mesin_json/filter_unit_dash?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
     function(data)
     {
         $("#reqUnitMesinId option").remove();
@@ -429,7 +429,7 @@ $(document).ready(function() {
         if(reqBlokId)
         {
 
-            $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+            $.getJSON("json-app/unit_mesin_json/filter_unit_dash?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
             function(data)
             {
                 // console.log(data);
@@ -469,16 +469,16 @@ $(document).ready(function() {
         var reqBlokId=  $("#reqBlokId").val();
         var reqUnitMesinId= this.value;
 
-        $.getJSON("json-app/group_pm_json/filter_group?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId,
-            function(data)
-            {
-                $("#reqGroupPm option").remove();
-                $("#reqGroupPm").attr("readonly", false); 
-                $("#reqGroupPm").append('<option value="" >Pilih Group Pm</option>');
-                jQuery(data).each(function(i, item){
-                    $("#reqGroupPm").append('<option value="'+item.text+'" >'+item.text+'</option>');
-                });            
-            });
+        // $.getJSON("json-app/group_pm_json/filter_group?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId,
+        //     function(data)
+        //     {
+        //         $("#reqGroupPm option").remove();
+        //         $("#reqGroupPm").attr("readonly", false); 
+        //         $("#reqGroupPm").append('<option value="" >Pilih Group Pm</option>');
+        //         jQuery(data).each(function(i, item){
+        //             $("#reqGroupPm").append('<option value="'+item.text+'" >'+item.text+'</option>');
+        //         });            
+        //     });
     });
 
 
