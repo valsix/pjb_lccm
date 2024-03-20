@@ -55,8 +55,8 @@ $appuserkodehak= $this->appuserkodehak;
         <div class="row">
             <div class="col-md-5 area-login-kiri">
                 <div class="inner">
-                    <div class="logo"><img src="images/logo-pjb.png"></div>
-                    <h3>First</h3>
+                    <div class="logo"><img src="images/logo-pln-np.png"></div>
+                    <h3>Lccm</h3>
                     <p></p>
                 </div>
             </div>
