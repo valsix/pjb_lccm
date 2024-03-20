@@ -1,0 +1,3 @@
+UPDATE public.pengguna_modul
+	SET  menu_modul='Setting Peran'
+	WHERE kode_modul='0801';

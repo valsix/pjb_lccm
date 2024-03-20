@@ -59,7 +59,7 @@ $(document).ready(function() {
 </style>
 
 <div class="col-md-12">
-    <div class="judul-halaman"> Data <?=$pgtitle?></div>
+    <div class="judul-halaman"> Data Peran</div>
     <div class="konten-area">
     	<div id="bluemenu" class="aksi-area">
             <?
