@@ -260,7 +260,7 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                         </div>
                     </div>
 
-                    <div class="form-group">  
+                    <div class="form-group" style="display: none">  
                         <label class="control-label col-md-2">Role Approval</label>
                         <div class='col-md-8'>
                             <div class='form-group'>
@@ -323,7 +323,7 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                        </div>
                    </div >
 
-                    <div class="form-group">  
+                    <div class="form-group" style="display: none">  
                         <label class="control-label col-md-2">Distrik</label>
                         <div class='col-md-8'>
                             <div class='form-group'>
