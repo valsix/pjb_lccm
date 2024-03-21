@@ -1,3 +1,16 @@
 UPDATE public.pengguna_modul
 	SET  menu_modul='Setting Peran'
 	WHERE kode_modul='0801';
+
+CREATE TABLE IF NOT EXISTS public.pengguna_hak_distrik
+(
+    pengguna_hak_distrik_id numeric NOT NULL,
+    pengguna_hak_id numeric,
+    distrik_id numeric,
+    status_all integer,
+    last_create_user character varying COLLATE pg_catalog."default",
+    last_create_date date,
+    last_update_user character varying COLLATE pg_catalog."default",
+    last_update_date date,
+    CONSTRAINT pengguna_hak_distrik_pkey PRIMARY KEY (pengguna_hak_distrik_id)
+);

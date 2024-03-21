@@ -119,6 +119,11 @@ class App extends CI_Controller {
 		// echo $reqhak;exit;
 
 		$this->session->set_userdata('appuserkodehak', $reqhak);
+		$this->session->unset_userdata("appblokunitid");
+		$this->session->unset_userdata("appblokunitkode");
+		$this->session->unset_userdata("appdistrikid");
+		$this->session->unset_userdata("appdistrikkode");
+		$this->session->unset_userdata("appdistrikblokunitnama");
 		redirect('app');
 	}
 

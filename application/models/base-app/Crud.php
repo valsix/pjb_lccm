@@ -108,6 +108,29 @@ class Crud extends Entity {
 	    return $this->execQuery($str);
 	}
 
+	function insertPenggunaHakDistrik()
+    {
+    	$this->setField("PENGGUNA_HAK_DISTRIK_ID", $this->getNextId("PENGGUNA_HAK_DISTRIK_ID","PENGGUNA_HAK_DISTRIK"));
+
+    	$str = "
+    	INSERT INTO PENGGUNA_HAK_DISTRIK
+    	(
+    		PENGGUNA_HAK_DISTRIK_ID, PENGGUNA_HAK_ID, DISTRIK_ID,STATUS_ALL
+    	)
+    	VALUES 
+    	(
+	    	'".$this->getField("PENGGUNA_HAK_DISTRIK_ID")."'
+	    	, '".$this->getField("PENGGUNA_HAK_ID")."'
+	    	, '".$this->getField("DISTRIK_ID")."'
+	    	, ".$this->getField("STATUS_ALL")."
+	    )"; 
+
+	    $this->id= $this->getField("PENGGUNA_HAK_DISTRIK_ID");
+	    $this->query= $str;
+		// echo $str;
+	    return $this->execQuery($str);
+	}
+
 	function update()
 	{
 			$str = "
@@ -180,12 +203,37 @@ class Crud extends Entity {
 		return $this->execQuery($str);
 	}
 
+	function deletePenggunaHakDistrik()
+	{
+		$str = "
+		DELETE FROM PENGGUNA_HAK_DISTRIK
+		WHERE 
+		PENGGUNA_HAK_ID = '".$this->getField("PENGGUNA_HAK_ID")."'"; 
+
+		// echo $str;exit();
+		$this->query = $str;
+		return $this->execQuery($str);
+	}
+
 	function selectByParams($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY PENGGUNA_HAK_ID ASC")
 	{
 		$str = "
 			SELECT 
 				A.*
+				, F.DISTRIK_ID_INFO
+				, F.DISTRIK_NAMA_INFO
+				, F.STATUS_ALL_INFO
 			FROM PENGGUNA_HAK A 
+			LEFT JOIN 
+			(
+				SELECT B.PENGGUNA_HAK_ID
+				,STRING_AGG(A.DISTRIK_ID::text, ', ') AS DISTRIK_ID_INFO
+				,STRING_AGG(B.STATUS_ALL::text, ', ') AS STATUS_ALL_INFO
+				,STRING_AGG(A.NAMA, ', ') AS DISTRIK_NAMA_INFO 
+				FROM DISTRIK A
+				LEFT JOIN PENGGUNA_HAK_DISTRIK B ON B.DISTRIK_ID = A.DISTRIK_ID 
+				GROUP BY B.PENGGUNA_HAK_ID
+			) F ON F.PENGGUNA_HAK_ID = A.PENGGUNA_HAK_ID
 			WHERE 1=1
 		"; 
 		

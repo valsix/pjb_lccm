@@ -3,6 +3,8 @@ include_once("functions/string.func.php");
 include_once("functions/date.func.php");
 
 $this->load->model("base-app/Crud");
+$this->load->model("base-app/Distrik");
+
 
 $pgreturn= str_replace("_add", "", $pg);
 
@@ -25,7 +27,7 @@ else
 {
     $reqMode = "update";
 
-    $statement = " AND PENGGUNA_HAK_ID = '".$reqId."' ";
+    $statement = " AND A.PENGGUNA_HAK_ID = '".$reqId."' ";
     $set->selectByParams(array(), -1, -1, $statement);
     // echo $set->query;exit;
     $set->firstRow();
@@ -33,6 +35,8 @@ else
     $reqKodeHak= $set->getField("KODE_HAK");
     $reqNamaHak= $set->getField("NAMA_HAK");
     $reqDeskripsi= $set->getField("DESKRIPSI");
+    $reqDistrik= getmultiseparator($set->getField("DISTRIK_ID_INFO"));
+    $reqStatusAll= getmultiseparator($set->getField("STATUS_ALL_INFO"));
 
     $jabatandetil= new Crud();
     $arrjabatandetil= [];
@@ -80,6 +84,22 @@ while ($set->nextRow())
 // print_r($table);exit;
 
 
+$set= new Distrik();
+$statement=" AND A.NAMA IS NOT NULL ";
+$arrdistrik= [];
+$set->selectByParams(array(), 30,-1,$statement);
+// echo $set->query;exit;
+while($set->nextRow())
+{
+    $arrdata= array();
+    $arrdata["id"]= $set->getField("DISTRIK_ID");
+    $arrdata["kode"]=  $set->getField("KODE");
+    $arrdata["text"]=  $set->getField("NAMA");
+    array_push($arrdistrik, $arrdata);
+}
+unset($set);
+
+
 
 
 $disabled="";
@@ -91,6 +111,22 @@ if($reqLihat ==1)
 }
 
 ?>
+
+<style type="text/css">
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+      color: #000000;
+    }
+    .select2-container--default .select2-search--inline .select2-search__field:focus {
+      outline: 0;
+      border: 1px solid #ffff;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+      cursor: default;
+      padding-left: 6px;
+      padding-right: 5px;
+    }
+</style>
 
 <script src='assets/multifile-master/jquery.form.js' type="text/javascript" language="javascript"></script> 
 <script src='assets/multifile-master/jquery.MetaData.js' type="text/javascript" language="javascript"></script> 
@@ -204,55 +240,100 @@ if($reqLihat ==1)
                         </div>
                     </div>
 
-                    <div class="form-group" id="tambaharea">  
-                        <label class="control-label col-md-2">Tambah Jabatan</label>
-                        <div class='col-md-4'>
-                            <div class='form-group'>
-                                <div class='col-md-11' id="blok">
-                                     <a id="btnAdd" onclick="openJabatan()"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> </a>
+
+                    <div class="form-group">  
+                            <label class="control-label col-md-2">Distrik</label>
+                            <div class='col-md-4'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                        <select class="form-control jscaribasicmultiple" id="reqDistrik" <?=$disabled?> name="reqDistrik[]" style="width:100%;" multiple="multiple">
+                                            <?
+                                            $selected="";
+                                            if($reqStatusAll[0]=="0")
+                                            {
+                                                $selected="selected";
+
+                                            }
+                                           
+                                            ?>
+                                            <option value="0" <?=$selected?>>All Distrik</option>
+                                            <?
+                                            foreach($arrdistrik as $item) 
+                                            {
+                                                $selectvalid= $item["id"];
+                                                $selectvaltext= $item["text"];
+
+                                                $selected="";
+                                                if($reqStatusAll[0]=="0")
+                                                {
+                                                }
+                                                else
+                                                {
+                                                    if(in_array($selectvalid, $reqDistrik))
+                                                    {
+                                                        $selected="selected";
+                                                    }
+                                                }
+                                               
+                                                ?>
+                                                <option value="<?=$selectvalid?>" <?=$selected?>><?=$selectvaltext?></option>
+                                                <?
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group" id="jabatan">  
-                        <label class="control-label col-md-2">Jabatan</label>
-                        <div class='col-md-8'>
-                            <div class='form-group'>
-                             <table id="tabel" class="table table-bordered" style="width: 100%;" >
-                                <thead >
-                                    <tr>
-                                        <th class="text-center" style="display: none">Position Id</th>
-                                        <th class="text-center" style="vertical-align: middle;">Jabatan</th>
-
-                                        <th class="text-center" style="width: 5%;text-align: center;vertical-align: middle;">Hapus </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="jabatanmulti">
-                                    <?
-                                    // print_r($arrjabatandetil);
-                                    if(!empty($arrjabatandetil))
-                                    {
-                                        foreach ($arrjabatandetil as $key => $value) 
-                                        {
-                                    ?>
-                                            <tr >
-                                                <td style="display: none"><input type="hidden" name="reqPositionId[]" id="reqPositionId" value="<?=$value['POSITION_ID']?>" /></td>
-                                                <td> <?=$value['NAMA']?></td>
-                                                <td style="text-align: center;vertical-align: middle;"><span  class='hapustabel' style='background-color: red; padding: 10px; border-radius: 5px;top: 50%;position: relative;'><a onclick='HapusDetil("<?=$value['PENGGUNA_HAK_JABATAN_ID']?>","<?=$value['POSITION_ID']?>","<?=$reqId?>")'><i class='fa fa-trash fa-lg' style='color: white;' aria-hidden='true'></i></a></span>
-                                                </td>  
-                                            </tr>
-
-                                    <?
-                                        }
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                        <div class="form-group" id="tambaharea">  
+                            <label class="control-label col-md-2">Tambah Jabatan</label>
+                            <div class='col-md-4'>
+                                <div class='form-group'>
+                                    <div class='col-md-11' id="blok">
+                                         <a id="btnAdd" onclick="openJabatan()"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
+                        <div class="form-group" id="jabatan">  
+                            <label class="control-label col-md-2">Jabatan</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <table id="tabel" class="table table-bordered" style="width: 100%;" >
+                                        <thead >
+                                            <tr>
+                                                <th class="text-center" style="display: none">Position Id</th>
+                                                <th class="text-center" style="vertical-align: middle;">Jabatan</th>
+
+                                                <th class="text-center" style="width: 5%;text-align: center;vertical-align: middle;">Hapus </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="jabatanmulti">
+                                            <?
+                                            if(!empty($arrjabatandetil))
+                                            {
+                                                foreach ($arrjabatandetil as $key => $value) 
+                                                {
+                                            ?>
+                                                    <tr >
+                                                        <td style="display: none"><input type="hidden" name="reqPositionId[]" id="reqPositionId" value="<?=$value['POSITION_ID']?>" /></td>
+                                                        <td> <?=$value['NAMA']?></td>
+                                                        <td style="text-align: center;vertical-align: middle;"><span  class='hapustabel' style='background-color: red; padding: 10px; border-radius: 5px;top: 50%;position: relative;'><a onclick='HapusDetil("<?=$value['PENGGUNA_HAK_JABATAN_ID']?>","<?=$value['POSITION_ID']?>","<?=$reqId?>")'><i class='fa fa-trash fa-lg' style='color: white;' aria-hidden='true'></i></a></span>
+                                                        </td>  
+                                                    </tr>
+
+                                            <?
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
 
                     <input type="hidden" name="reqId" value="<?=$reqId?>" />
                     <input type="hidden" name="reqMode" value="<?=$reqMode?>" />
@@ -465,6 +546,119 @@ if($reqLihat ==1)
 </div>
 
 <script>
+
+var reqId= '<?=$reqId?>';
+var reqDistrikId= '<?=$reqDistrik[0]?>';
+var arrDistrikCheck = $('#reqDistrik').val(); 
+var discheck="";
+if(jQuery.inArray("0", arrDistrikCheck) != -1) {
+    discheck=1;
+} 
+
+if(reqId !== '')
+{
+    if(reqDistrikId !== '')
+    {
+        var validasipengukuran= <?php echo json_encode($arrdistrik); ?>;
+        validasipengukuran.forEach(function(e) {
+            // console.log(discheck);
+            if(discheck==1)
+            {
+                $("#reqDistrik>option[value='"+e.id+"']").attr('disabled','disabled');
+            }
+            else
+            {
+                if (e.id != '0' ) 
+                { 
+                   $("#reqDistrik>option[value='"+e.id+"']").removeAttr('disabled');
+                   $("#reqDistrik>option[value='0']").attr('disabled','disabled');   
+                }
+                else
+                {
+                    $("#reqDistrik>option[value='"+e.id+"']").attr('disabled','disabled');
+                }           
+            }            
+             
+        });
+    }
+}
+
+var tipe = $("#reqDistrik");
+tipe.on("select2:select", function(event) {
+
+    var selected=$(this).val();
+    var values = [];
+
+    $(event.currentTarget).find("option:selected").each(function(i, selected)
+    { 
+       values[i] = selected.value;
+    });
+
+    jQuery.each(values, function(index, value) {
+        var selected=value;
+        $("#reqDistrik option").each(function()
+        {
+            console.log(selected);
+            if(selected==0)
+            {
+               if ($(this).val() != '0' ) 
+               { 
+
+                $("#reqDistrik>option[value='"+$(this).val()+"']").attr('disabled','disabled');
+               }
+            }
+            else
+            {
+
+                if ($(this).val() != '0' ) 
+                { 
+                     $("#reqDistrik>option[value='"+$(this).val()+"']").removeAttr('disabled');   
+
+                }
+                else
+                {
+                    $("#reqDistrik>option[value='"+$(this).val()+"']").attr('disabled','disabled');
+                }
+               
+            }  
+        });
+    });
+
+});
+
+   $('#reqDistrik').on("select2:unselecting", function(event){
+       var value = event.params.args.data.id;
+       var keterangan = event.params.args.data.text;
+
+       var values = [];
+
+       $(event.currentTarget).find("option:selected").each(function(i, selected)
+       { 
+         values[i] = selected.value;
+       });
+
+       var selectedlength=values.length;
+
+       if(selectedlength==1)
+       {
+            $("#reqDistrik>option[value='0']").removeAttr('disabled');
+       }
+
+       jQuery.each(values, function(index, value) {
+        var selected=value;
+            $("#reqDistrik option").each(function()
+            {
+                if(selected==0)
+                {
+                    if ($(this).val() != '0' ) 
+                    { 
+                        $("#reqDistrik>option[value='"+$(this).val()+"']").removeAttr('disabled'); 
+                    }
+                }
+            });
+        });
+    }).trigger('change');
+
 
 function submitForm(){
     

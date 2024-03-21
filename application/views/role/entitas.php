@@ -13,6 +13,9 @@ $this->load->library("crfs_protect"); $csrf = new crfs_protect('_crfs_role');
 // {}
 // else
 // 	redirect("app");
+// print_r($arrpilihanmulti);exit;
+$appuserkodehak= $this->appuserkodehak;
+
 ?>
 <!doctype html>
 <html>
@@ -174,24 +177,27 @@ body{
 		// else
 		// 	$statement .= "AND A.DISTRIK_ID = '".$this->DISTRIK_ID."' ";
 
-        if (!empty($this->appuserid)) 
+        if (!empty($this->appuserkodehak)) 
         {
-        	$statement= " AND a.pengguna_id = ".$this->appuserid;
+        	$statement= " AND d.kode_hak = '".$this->appuserkodehak."'";
         }
 
         $querynya= "
         	SELECT 
-        		a.pengguna_distrik_id, a.pengguna_id, b.distrik_id, b.nama distrik_nama, c.blok_unit_id, c.nama blok_unit_nama
-			FROM pengguna_distrik a
+        		a.pengguna_hak_distrik_id, a.pengguna_hak_id, b.distrik_id, b.nama distrik_nama, c.blok_unit_id, c.nama blok_unit_nama
+			FROM pengguna_hak_distrik a
 			left join distrik b on b.distrik_id = a.distrik_id
 			left join blok_unit c on c.distrik_id = b.distrik_id
+			inner join pengguna_hak d on d.pengguna_hak_id = a.pengguna_hak_id
 			where 1=1
 			".$statement."
-			ORDER BY pengguna_distrik_id ASC 
+			ORDER BY pengguna_hak_id ASC 
         ";
 
 		$distrik = "";
 		$query = $this->db->query($querynya);
+
+		// print_r($querynya);exit;
 		$i = 0;
 
 		$checked='';

@@ -170,6 +170,7 @@ class Crud_json extends CI_Controller
 	function add()
 	{
 		$this->load->model("base-app/Crud");
+		$this->load->model("base-app/Distrik");
 
 		$reqId= $this->input->post("reqId");
 		$reqMode= $this->input->post("reqMode");
@@ -178,6 +179,7 @@ class Crud_json extends CI_Controller
 		$reqNamaHak= $this->input->post("reqNamaHak");
 		$reqDeskripsi= $this->input->post("reqDeskripsi");
 		$reqPositionId= $this->input->post("reqPositionId");
+		$reqDistrik= $this->input->post("reqDistrik");
 
 		$set = new Crud();
 		$set->setField("KODE_HAK", strtoupper($reqKodeHak));
@@ -288,6 +290,58 @@ class Crud_json extends CI_Controller
 
 				}
 			}
+
+
+			if(!empty($reqDistrik))
+			{
+
+				if($reqDistrik[0] == 0)
+				{
+					$setinsert = new Crud();
+					$setinsert->setField("PENGGUNA_HAK_ID", $reqId);
+					$setinsert->deletePenggunaHakDistrik();
+
+					$set= new Distrik();
+					$statement=" ";
+					$set->selectByParams(array(), -1,-1,$statement);
+					// echo $set->query;exit;
+					while($set->nextRow())
+					{
+						$reqDistrikId=$set->getField("DISTRIK_ID");
+						$setinsert->setField("DISTRIK_ID", $reqDistrikId);
+						$setinsert->setField("STATUS_ALL", 0);
+						if($setinsert->insertPenggunaHakDistrik())
+						{
+							$reqSimpan= 1;
+						}
+					}
+					unset($set);
+				}
+				else
+				{
+					$setinsert = new Crud();
+					$setinsert->setField("PENGGUNA_HAK_ID", $reqId);
+					$setinsert->deletePenggunaHakDistrik();
+					foreach ($reqDistrik as $key => $value) {
+						$setinsert->setField("DISTRIK_ID", $value);
+						$setinsert->setField("STATUS_ALL", valToNullDB(''));
+						if($setinsert->insertPenggunaHakDistrik())
+						{
+							$reqSimpan= 1;
+						}
+					}
+				}
+			}
+			else
+			{
+
+				$setdelete = new Crud();
+				$setdelete->setField("PENGGUNA_HAK_ID", $reqId);
+				$setdelete->deletePenggunaHakDistrik();
+				unset($setdelete);
+
+			}
+
 		}
 
 		if($reqSimpan == 1 )
