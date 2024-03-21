@@ -14,3 +14,62 @@ CREATE TABLE IF NOT EXISTS public.pengguna_hak_distrik
     last_update_date date,
     CONSTRAINT pengguna_hak_distrik_pkey PRIMARY KEY (pengguna_hak_distrik_id)
 );
+
+
+CREATE OR REPLACE FUNCTION public.preparation_status_info()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+declare
+    kode_distrik character varying;
+    kode_blok character varying;
+    kode_unit_m character varying;
+    year_lccm integer;
+    wo_cr boolean;
+    wo_standing boolean;
+    wo_pm boolean;
+    wo_pdm boolean;
+    wo_oh boolean;
+    prk boolean;
+    loss_output boolean;
+    energy_price boolean;
+    operation boolean;
+    status_complete boolean;
+    
+begin
+
+    status_complete:= 'false';
+    if new.wo_cr = 'true' 
+    and new.wo_standing = 'true' 
+    and new.wo_pm = 'true' 
+    and new.wo_pdm = 'true' 
+    and new.wo_oh = 'true' 
+    and new.prk = 'true'
+    and new.loss_output = 'true'
+    and new.energy_price = 'true'
+    and new.operation = 'true'
+    then
+        status_complete:= 'true';
+        else
+        status_complete:= 'false';
+    end if;
+   -- raise notice 'sql %',status_complete;
+    new.status_complete:= status_complete;
+
+  return new;
+   
+end;
+$BODY$;
+
+ALTER FUNCTION public.preparation_status_info()
+    OWNER TO postgres;
+
+
+
+CREATE TRIGGER tpreparation_status_info
+    BEFORE INSERT OR UPDATE 
+    ON public.t_preperation_lccm
+    FOR EACH ROW
+    EXECUTE PROCEDURE public.preparation_status_info();
