@@ -191,7 +191,7 @@ if($reqLihat ==1)
 
 <div class="col-md-12">
     
-  <div class="judul-halaman"> <a href="app/index/<?=$pgreturn?>">Data <?=$pgtitle?></a> &rsaquo; Kelola <?=$pgtitle?></div>
+  <div class="judul-halaman"> <a href="app/index/<?=$pgreturn?>">Data Peran</a> &rsaquo; Kelola Peran</div>
 
     <div class="konten-area">
         <div class="konten-inner">
@@ -201,7 +201,7 @@ if($reqLihat ==1)
                 <form id="ff" class="easyui-form form-horizontal" method="post" novalidate enctype="multipart/form-data">
 
                     <div class="page-header">
-                        <h3><i class="fa fa-file-text fa-lg"></i> <?=$pgtitle?></h3>       
+                        <h3><i class="fa fa-file-text fa-lg"></i> Peran</h3>       
                     </div>
                                                                              
                     <div class="form-group">  
@@ -353,7 +353,7 @@ if($reqLihat ==1)
                     ?>
 
                     <div class="page-header">
-                        <h3><i class="fa fa-file-text fa-lg"></i> <?=$pgtitle?></h3>       
+                        <h3><i class="fa fa-file-text fa-lg"></i> Peran</h3>       
                     </div>
             
                     <div class="box-body table-height">
