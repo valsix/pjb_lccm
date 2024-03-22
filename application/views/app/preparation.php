@@ -265,8 +265,8 @@ $(document).ready(function() {
         <div class="area-preparation-dashboard" style="width: 100%">
             <div class="filter">
                 
-                <label>Distrik :</label>
-                <select class="select-css "  id="reqDistrikId"  name="reqDistrikId">
+                <label style="margin-top: 30px">Distrik :</label>
+                <select class="select-css form-control jscaribasicmultiple"  id="reqDistrikId"  name="reqDistrikId">
                     <option value="" >Pilih Distrik</option>
                     <?
                     foreach($arrdistrik as $item) 
@@ -287,7 +287,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>Blok :</label>
-                <select class="select-css"   id="reqBlokId"   name="reqBlokId" >
+                <select class="select-css form-control jscaribasicmultiple"   id="reqBlokId"   name="reqBlokId" >
                     <option value="" >Pilih Blok Unit</option>
                     <?
                     foreach($arrblok as $item) 
@@ -309,7 +309,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>Unit :</label>
-                <select class="select-css"  id="reqUnitMesinId"  name="reqUnitMesinId">
+                <select class="select-css form-control jscaribasicmultiple"  id="reqUnitMesinId"  name="reqUnitMesinId">
                     <option value="" >Pilih Unit Mesin</option>
                     <?
                     foreach($arrunitmesin as $item) 
@@ -331,7 +331,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>Year LCCM :</label>
-                <select class="select-css " id="reqTahunAwal">
+                <select class="select-css form-control jscaribasicmultiple " id="reqTahunAwal">
                     <option value="">Pilih Tahun</option>
                     <?
                     foreach($arrtahun as $item) 
@@ -348,7 +348,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>S.d</label>
-                <select class="select-css "  id="reqTahunAkhir">
+                <select class="select-css form-control jscaribasicmultiple  "  id="reqTahunAkhir">
                     <option value="">Pilih Tahun</option>
                     <?
                     foreach($arrtahun as $item) 
@@ -370,7 +370,7 @@ $(document).ready(function() {
                     }
                     ?>
                 </select>
-                <button class="btn btn-success btn-sm" style="margin-left: 50px;margin-top: -10px" onclick="setCariInfo()" ><i class="fas fa-search"></i> Cari</button>
+                <button class="btn btn-success btn-sm" style="margin-left: 50px;margin-top: 0px" onclick="setCariInfo()" ><i class="fas fa-search"></i> Cari</button>
             </div>
             <div class="inner row" id="isi">
                 
