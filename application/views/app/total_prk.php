@@ -494,7 +494,7 @@ $(document).ready(function() {
 
             $.messager.confirm('Konfirmasi',vinfo,function(r){
                 if (r){
-                    $.getJSON("json-app/general_json/preperation_lccm_prk_loss_output?m=PRK&t="+vtahun+"&vdistrik="+vdistrik+"&vblok="+vblok+"&vunit="+vunit+"&value="+value,
+                    $.getJSON("json-app/general_json/preperation_lccm_new?m=PRK&t="+vtahun+"&vdistrik="+vdistrik+"&vblok="+vblok+"&vunit="+vunit+"&value="+value,
                         function(data){
                             $.messager.alert('Info', data.PESAN, 'info');
                             valinfoid= "";

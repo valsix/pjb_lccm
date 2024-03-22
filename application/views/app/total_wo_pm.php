@@ -22,6 +22,9 @@ $arrtabledata= array(
     , array("label"=>"Total Wo PM", "field"=> "TOTAL_TAHUN", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Status", "field"=> "INFO_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
+    , array("label"=>"fieldid", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_UNIT", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "WO_PM", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "GROUP_PM", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "PM_YEAR", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
@@ -539,6 +542,13 @@ $(document).ready(function() {
 
             // console.log(dataselected);
             vtahun= dataselected['PM_YEAR'];
+            vdistrik= dataselected['KODE_DISTRIK'];
+            vblok= dataselected['KODE_BLOK'];
+            vunit= dataselected['KODE_UNIT'];
+            if(vunit==null)
+            {
+                vunit="";
+            }
             vinfo= "";
             if(btnid=="btnValid")
             {
@@ -553,7 +563,7 @@ $(document).ready(function() {
 
             $.messager.confirm('Konfirmasi',vinfo,function(r){
                 if (r){
-                    $.getJSON("json-app/general_json/preperation_lccm?m=WO_PM&t="+vtahun+"&value="+value,
+                    $.getJSON("json-app/general_json/preperation_lccm_new?m=WO_PM&t="+vtahun+"&value="+value+"&vdistrik="+vdistrik+"&vblok="+vblok+"&vunit="+vunit,
                         function(data){
                             $.messager.alert('Info', data.PESAN, 'info');
                             valinfoid= "";
