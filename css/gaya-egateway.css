@@ -5935,7 +5935,7 @@ thead input {
     
 }
 .area-preparation-dashboard .filter {
-	background-color: #235A81;
+	background-color: #405885;
 	/*-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;*/
@@ -5983,21 +5983,23 @@ thead input {
 
 }
 .area-preparation-dashboard .item .title {
-	background-color: #235A81;
+	background-color: #405885;
 	color: #FFFFFF;
 	font-family: 'avenir-next-bold';
 	padding: 10px 15px;
 }
 .area-preparation-dashboard .item .status {
 	/*background-color: #ee5d5a;*/
-	background-color: #ff4444;
+	/*background-color: #ff4444;*/
+	background-color: #F47174;
 	color: #FFFFFF;
 	padding: 10px 15px;
 	font-size: 12pt;
 }
 .area-preparation-dashboard .item .status.status-checked {
 	/*background-color: #43f642;*/
-	background-color: #00c851;
+	/*background-color: #00c851;*/
+	background-color: #6fc276;
 	color: #FFFFFF;
 }
 .area-preparation-dashboard .item .status.status-checked label {
