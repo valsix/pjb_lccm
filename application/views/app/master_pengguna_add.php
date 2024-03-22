@@ -47,6 +47,30 @@ else
     $reqHakAkses= getmultiseparator($set->getField("PENGGUNA_HAK_ID_INFO"));
     $reqDistrik= getmultiseparator($set->getField("DISTRIK_ID_INFO"));
     $reqStatusAll= getmultiseparator($set->getField("STATUS_ALL_INFO"));
+
+
+    $reqNid= $set->getField("NID");
+    $reqKodeBagian= $set->getField("KODE_BAGIAN");
+    $reqBagian= $set->getField("BAGIAN");
+    $reqKodeDitbid= $set->getField("KODE_DITBID");
+    $reqDitbid= $set->getField("DITBID");
+    $reqKodeUnit= $set->getField("KODE_UNIT");
+    $reqUnit= $set->getField("UNIT");
+    $reqKodeKlasifikasi= $set->getField("KODE_KLASIFIKASI_UNIT");
+    $reqKlasifikasi= $set->getField("KLASIFIKASI_UNIT");
+    $reqPosisi= $set->getField("NAMA_POSISI");
+    $reqEmail= $set->getField("EMAIL");
+
+    $reqNoTelpon= $set->getField("NO_TELP");
+    $reqDistrikId= $set->getField("DISTRIK_ID");
+
+    $reqPositionId= $set->getField("POSITION_ID");
+    $reqRoleId= $set->getField("ROLE_ID");
+    $reqPerusahaanId= $set->getField("PERUSAHAAN_EKSTERNAL_ID");
+    $reqStatus= $set->getField("STATUS");
+    $reqLinkFoto= $set->getField("FOTO");
+    $reqExpiredDate= dateToPageCheck($set->getField("EXPIRED_DATE"));
+    $reqPositionNama= $set->getField("JABATAN_INFO");
     // var_dump( $reqDistrik);exit;
     // print_r( $reqStatusAll);exit();
 }   
@@ -108,6 +132,8 @@ unset($set);
 
 $disabled="";
 $readonly="";
+$namareadonly="";
+
 
 
 if($reqLihat ==1 )
@@ -119,6 +145,12 @@ if($reqTipe ==1 ||  $reqTipe ==2)
 {
     $readonly="disabled"; 
 } 
+
+if($reqTipe ==1)
+{
+    $namareadonly="readonly"; 
+} 
+
 
 ?>
 
@@ -168,12 +200,12 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                                     <select class="form-control " id="reqTipe" <?=$disabled?> <?=$readonly?> name="reqTipe" style="width:100%;" >
                                         <option value="" >Pilih Tipe</option>
                                         <?
-                                        // if($reqTipe == 1)
-                                        // {
+                                        if($reqTipe == 1 && !empty($reqId))
+                                        {
                                         ?>
                                         <option value="1" <? if($reqTipe == 1) echo 'selected'?>>Internal</option>
                                         <?
-                                        // }
+                                        }
                                         // else
                                         // {
                                         ?>
@@ -194,7 +226,7 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                         <div class='col-md-8'>
                             <div class='form-group'>
                                 <div class='col-md-11'>
-                                     <input autocomplete="off" <?=$disabled?>  class="easyui-validatebox textbox form-control" type="text" name="reqUsername"  id="reqUsername" value="<?=$reqUsername?>"  style="width:100%" <?if($reqUsername){echo "readonly";}?> />
+                                     <input autocomplete="new-password" <?=$disabled?>  data-options="required:true"  class="easyui-validatebox textbox form-control" type="text" name="reqUsername"  id="reqUsername" value="<?=$reqUsername?>"  style="width:100%" <?if($reqUsername){echo "readonly";}?> />
                                 </div>
                             </div>
                         </div>
@@ -210,7 +242,7 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                             <div class='col-md-8'>
                                 <div class='form-group'>
                                     <div class='col-md-11'>
-                                       <input autocomplete="off" <?=$disabled?>  class="easyui-validatebox textbox form-control" type="password" name="reqPass"  id="reqPass" value=""  style="width:100%" />
+                                       <input autocomplete="new-password" <?=$disabled?>   data-options="required:true" class="easyui-validatebox textbox form-control" type="password" name="reqPass"  id="reqPass" value=""  style="width:100%" />
                                    </div>
                                </div>
                            </div>
@@ -226,7 +258,7 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                         <div class='col-md-8'>
                             <div class='form-group'>
                                 <div class='col-md-11'>
-                                     <input autocomplete="off" <?=$disabled?>  class="easyui-validatebox textbox form-control" type="text" name="reqNama"  id="reqNama"  readonly value="<?=$reqNama?>" style="width:100%" />
+                                     <input autocomplete="off" <?=$disabled?>  class="easyui-validatebox textbox form-control" type="text" name="reqNama"  id="reqNama"  <?=$namareadonly?> value="<?=$reqNama?>" style="width:100%" />
                                 </div>
                             </div>
                         </div>
@@ -260,7 +292,7 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                         </div>
                     </div>
 
-                    <div class="form-group" style="display: none">  
+                   <!--  <div class="form-group" style="display: none">  
                         <label class="control-label col-md-2">Role Approval</label>
                         <div class='col-md-8'>
                             <div class='form-group'>
@@ -270,9 +302,9 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group" id="eksternal">  
+                    <!-- <div class="form-group" id="eksternal">  
                         <label class="control-label col-md-2">Pengguna Eksternal</label>
                         <div class='col-md-8'>
                             <div class='form-group'>
@@ -295,7 +327,7 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                                     <input type="hidden" name="reqInternalId" id="reqInternalId" value="<?=$reqInternalId?>" style="width:100%" />
                                     <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqInternalNama"  id="reqInternalNama" value="<?=$reqInternalNama?>" style="width:100%" readonly />
                                 </div>
-                                <?
+                                <?/*
                                 if($reqLihat ==1 || $reqMode=="update")
                                 {}
                                 else
@@ -306,11 +338,11 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                                 </div>
                                     <?
                                 }
-                                ?>
+                                */?>
                             </div>
                         </div>
-                    </div>
-                    <div id="jabatan" style="display: none">
+                    </div> -->
+                   <!--  <div id="jabatan" style="display: none">
                         <div class="form-group">  
                             <label class="control-label col-md-2">Jabatan</label>
                             <div class='col-md-8'>
@@ -329,7 +361,7 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                             <div class='form-group'>
                                 <div class='col-md-11'>
                                 <select class="form-control jscaribasicmultiple" id="reqDistrik" <?=$disabled?> name="reqDistrik[]" style="width:100%;" multiple="multiple">
-                                    <?
+                                    <?/*
                                     $selected="";
                                     if($reqStatusAll[0]=="0")
                                     {
@@ -361,10 +393,237 @@ if($reqTipe ==1 ||  $reqTipe ==2)
                                         <option value="<?=$selectvalid?>" <?=$selected?>><?=$selectvaltext?></option>
                                         <?
                                     }
-                                    ?>
+                                    */?>
                                 </select>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+ -->
+                    <div id="internal"> 
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">NID</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNid"  id="reqNid" value="<?=$reqNid?>" readonly style="width:100%" />
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                       <!--  <div class="form-group">  
+                            <label class="control-label col-md-2">Nama Lengkap</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                         <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNama" readonly id="reqNama" value="<?=$reqNama?>" style="width:100%" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">Email</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input autocomplete="off" readonly class="easyui-validatebox textbox form-control" type="text" name="reqEmail"  id="reqEmail" value="<?=$reqEmail?>"  style="width:100%" />
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">Bagian</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input autocomplete="off" readonly class="easyui-validatebox textbox form-control" type="text" name="reqBagian"  id="reqBagian" value="<?=$reqBagian?>"  style="width:100%" />
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">Ditbid</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input autocomplete="off" readonly class="easyui-validatebox textbox form-control" type="text" name="reqDitbid"  id="reqDitbid" value="<?=$reqDitbid?>"  style="width:100%" />
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">Unit</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input autocomplete="off" readonly class="easyui-validatebox textbox form-control" type="text" name="reqUnit"  id="reqUnit" value="<?=$reqUnit?>"  style="width:100%" />
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                    </div>
+                    <div id ="eksternal">
+                                                                                 
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">NID</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                         <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNid"  id="reqNid" value="<?=$reqNid?>" style="width:100%" <?=$disabled?> />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">  
+                            <label class="control-label col-md-2">Nama Lengkap</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                         <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNama"  id="reqNama" value="<?=$reqNama?>" style="width:100%" <?=$disabled?>/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">No Telpon</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                         <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNoTelpon"  id="reqNoTelpon" value="<?=$reqNoTelpon?>"  style="width:50%" <?=$disabled?>/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">Email</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqEmail"  id="reqEmail" value="<?=$reqEmail?>"  style="width:100%" <?=$disabled?>/>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">Distrik</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input   name="reqDistrikId" class="easyui-combobox form-control" id="reqDistrikId"
+                                        data-options="width:'300',editable:false,valueField:'id',textField:'text',url:'json-app/Combo_json/combodistrik'" value="<?=$reqDistrikId?>"  <?=$disabled?>/>
+
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="form-group">  
+                            <label class="control-label col-md-2">Jabatan</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                      <input type="hidden" name="reqPositionId" id="reqPositionId" value="<?=$reqPositionId?>" style="width:100%" />
+                                      <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqPositionNama"  id="reqPositionNama" value="<?=$reqPositionNama?>" style="width:60%" readonly />
+                                      <a id="btnAdd" onclick="openJabatan()"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i>&nbsp; </a>
+                                    </div>
+                                      <!-- <a><input type="checkbox" id="reqSemuaPemeriksa" /> &nbsp;Semua Distrik</a> -->
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="form-group" style="display: none">  
+                            <label class="control-label col-md-2">Role</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                     <select class="form-control jscaribasicmultiple" id="reqRoleId" <?=$disabled?> name="reqRoleId" style="width:300px;" >
+                                        <?
+                                        foreach($arrset as $item) 
+                                        {
+                                            $selectvalid= $item["id"];
+                                            $selectvaltext= $item["text"];
+
+                                            $selected="";
+                                            if($selectvalid==$reqRoleId)
+                                            {
+                                                $selected="selected";
+                                            }
+                                            ?>
+                                            <option value="<?=$selectvalid?>" <?=$selected?>><?=$selectvaltext?></option>
+                                            <?
+                                        }
+                                        ?>
+                                    </select> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">Perusahaan</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                        <input   name="reqPerusahaanId" class="easyui-combobox form-control" id="reqPerusahaanId"
+                                        data-options="width:'300',editable:false,valueField:'id',textField:'text',url:'json-app/Combo_json/comboperusahaan'" value="<?=$reqPerusahaanId?>"  <?=$disabled?>/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">Status</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                        <input   name="reqStatus" class="easyui-combobox form-control" id="reqStatus"
+                                        data-options="width:'300',editable:false,valueField:'id',textField:'text',url:'json-app/Combo_json/combostatusaktif'" value="<?=$reqStatus?>" required <?=$disabled?>/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">  
+                                <label class="control-label col-md-2">Foto</label>
+                                <div class='col-md-8'>
+                                    <div class='form-group'>
+                                        <div class='col-md-12'>
+                                        <input type="file" name="reqLinkFoto" accept="image/*" <?=$disabled?>>
+                                        <?
+                                        if(!empty($reqLinkFoto))
+                                        {
+                                            ?>
+                                            <a onclick="delete_gambar()"><img src="images/delete-icon.png"></a> 
+                                            <br>
+                                            <img src="<?=$reqLinkFoto?>" width=150 height=200>
+                                            <?
+                                        }
+                                        ?>
+                                       </div>
+                                   </div>
+                               </div>
+                        </div>
+
+
+                        <div class="form-group">  
+                            <label class="control-label col-md-2">Expired Date</label>
+                            <div class='col-md-8'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input autocomplete="off" class="easyui-datebox  form-control"  name="reqExpiredDate"  id="reqExpiredDate"  style="width:100%" value="<?=$reqExpiredDate?>" <?=$disabled?> />
+                                    </div>
+                                </div>
+                           </div>
                         </div>
                     </div>
 
@@ -395,7 +654,46 @@ if($reqTipe ==1 ||  $reqTipe ==2)
 
 <script>
 
+$(document).ready(function(){
 
+    $(document).on("input", "#reqNoTelpon", function() {
+        this.value = this.value.replace(/\D/g,'');
+    });
+
+    $('#check').click(function(){
+        if ($("#reqPassword").attr("type") === "password" || $("#reqKonfirmasiPassword").attr("type") === "password" ) {
+            $("#reqPassword").attr("type", "text");
+            $("#reqKonfirmasiPassword").attr("type", "text");
+        } else {
+            $("#reqPassword").attr("type", "password");
+            $("#reqKonfirmasiPassword").attr("type", "password");
+        }
+   });
+    $('#reqDistrikId').combobox({
+        onChange: function(value){
+            $('#reqDistrikId').val(value);
+            $('#reqPositionId').val('');
+            $('#reqPositionNama').val('');
+
+        }
+    })
+
+});
+
+function openJabatan()
+{
+    
+    var distrikid = $('#reqDistrikId').val();
+    
+   
+    openAdd('app/index/lookup_jabatan?reqDistrikId='+distrikid);
+}
+
+function setJabatan(values)
+{
+    $('#reqPositionId').val(values.POSITION_ID);
+    $('#reqPositionNama').val(values.NAMA_POSISI);
+} 
 
 var reqTipe= '<?=$reqTipe?>';
 if(reqTipe==1)
@@ -415,9 +713,9 @@ else if(reqTipe==2)
 {
     $('#eksternal').show();
     $('#internal').hide(); 
-    $('#pass').hide(); 
-    $('#reqPass').val("");
-    $("#reqNama").attr("readonly", true); 
+    $('#pass').show(); 
+    // $('#reqPass').val("");
+    $("#reqNama").attr("readonly", false); 
     $('#jabatan').hide();
     $('#reqUsername').prop('readonly', false);
 }
@@ -435,6 +733,8 @@ else
 
 $('#reqTipe').on('change', function() {
     var reqTipe= this.value;
+
+    // console.log(reqTipe);
 
     if(reqTipe==1)
     {
@@ -457,9 +757,9 @@ $('#reqTipe').on('change', function() {
         $('#internal').hide(); 
         $('#reqInternalId').val("");
         $('#reqInternalNama').val(""); 
-        $('#pass').hide();
-        $('#reqPass').val("");
-        $("#reqNama").attr("readonly", true);
+        $('#pass').show();
+        // $('#reqPass').val("");
+        $("#reqNama").attr("readonly", false);
         $('#jabatan').hide(); 
         $('#reqUsername').prop('readonly', false);
     }
@@ -477,6 +777,12 @@ $('#reqTipe').on('change', function() {
     $('#reqJabatan').val("");
 
 });
+
+if(reqTipe=="")
+{
+    $("#reqTipe").val("2").change();
+
+}
 
 function submitForm(){
     
@@ -545,120 +851,23 @@ function setInternal(values)
     $('#reqJabatan').val(values.NAMA_POSISI);   
 }
 
-
-var reqId= '<?=$reqId?>';
-var reqDistrikId= '<?=$reqDistrik[0]?>';
-var arrDistrikCheck = $('#reqDistrik').val(); 
-var discheck="";
-if(jQuery.inArray("0", arrDistrikCheck) != -1) {
-    discheck=1;
-} 
-
-// console.log(reqDistrik);
-
-if(reqId !== '')
+function delete_gambar()
 {
-    if(reqDistrikId !== '')
-    {
-        var validasipengukuran= <?php echo json_encode($arrdistrik); ?>;
-        validasipengukuran.forEach(function(e) {
-            // console.log(discheck);
-            if(discheck==1)
-            {
-                $("#reqDistrik>option[value='"+e.id+"']").attr('disabled','disabled');
-            }
-            else
-            {
-                if (e.id != '0' ) 
-                { 
-                   $("#reqDistrik>option[value='"+e.id+"']").removeAttr('disabled');
-                   $("#reqDistrik>option[value='0']").attr('disabled','disabled');   
-                }
-                else
-                {
-                    $("#reqDistrik>option[value='"+e.id+"']").attr('disabled','disabled');
-                }           
-            }            
-             
-        });
-    }
+    $.messager.confirm('Konfirmasi',"Hapus gambar?",function(r){
+        if (r){
+            $.getJSON("json-app/pengguna_json/delete_gambar/?reqId=<?=$reqId?>",
+                function(data){
+                    $.messager.alert('Info', data.PESAN, 'info');
+                    valinfoid= "";
+                    location.reload();
+                });
+        }
+    }); 
 }
 
-var tipe = $("#reqDistrik");
-tipe.on("select2:select", function(event) {
 
-    var selected=$(this).val();
-    var values = [];
 
-    $(event.currentTarget).find("option:selected").each(function(i, selected)
-    { 
-       values[i] = selected.value;
-    });
 
-    jQuery.each(values, function(index, value) {
-        var selected=value;
-        $("#reqDistrik option").each(function()
-        {
-            console.log(selected);
-            if(selected==0)
-            {
-               if ($(this).val() != '0' ) 
-               { 
-
-                $("#reqDistrik>option[value='"+$(this).val()+"']").attr('disabled','disabled');
-               }
-            }
-            else
-            {
-
-                if ($(this).val() != '0' ) 
-                { 
-                     $("#reqDistrik>option[value='"+$(this).val()+"']").removeAttr('disabled');   
-
-                }
-                else
-                {
-                    $("#reqDistrik>option[value='"+$(this).val()+"']").attr('disabled','disabled');
-                }
-               
-            }  
-        });
-    });
-
-});
-
-   $('#reqDistrik').on("select2:unselecting", function(event){
-       var value = event.params.args.data.id;
-       var keterangan = event.params.args.data.text;
-
-       var values = [];
-
-       $(event.currentTarget).find("option:selected").each(function(i, selected)
-       { 
-         values[i] = selected.value;
-       });
-
-       var selectedlength=values.length;
-
-       if(selectedlength==1)
-       {
-            $("#reqDistrik>option[value='0']").removeAttr('disabled');
-       }
-
-       jQuery.each(values, function(index, value) {
-        var selected=value;
-            $("#reqDistrik option").each(function()
-            {
-                if(selected==0)
-                {
-                    if ($(this).val() != '0' ) 
-                    { 
-                        $("#reqDistrik>option[value='"+$(this).val()+"']").removeAttr('disabled'); 
-                    }
-                }
-            });
-        });
-    }).trigger('change');
 
 
 </script>

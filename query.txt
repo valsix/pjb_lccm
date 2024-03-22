@@ -73,3 +73,79 @@ CREATE TRIGGER tpreparation_status_info
     ON public.t_preperation_lccm
     FOR EACH ROW
     EXECUTE PROCEDURE public.preparation_status_info();
+
+
+
+
+    ALTER TABLE public.pengguna
+    ADD COLUMN nid character varying ;
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN nama_lengkap character varying;
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN occup_status character varying ;
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN kode_bagian character varying ;
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN bagian character varying ;
+    
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN kode_ditbid character varying; 
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN ditbid character varying ;
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN kode_unit character varying ;
+    
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN unit character varying ;
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN kode_klasifikasi_unit character varying ;
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN klasifikasi_unit character varying ;
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN position_id character varying ;
+    
+    ALTER TABLE public.pengguna
+    ADD COLUMN nama_posisi character varying ;
+
+
+    ALTER TABLE pengguna 
+    ALTER COLUMN username DROP NOT NULL;
+
+    UPDATE public.pengguna
+    SET username=nid
+    WHERE username is null;
+
+    UPDATE public.pengguna
+    SET tipe='1'
+    WHERE nama is null;
+
+    UPDATE public.pengguna
+    SET nama=nama_lengkap
+    WHERE nama is null;
+
+    UPDATE public.pengguna
+    SET pass='21232f297a57a5a743894a0e4a801fc3'
+    WHERE pass is null;
+
+    ALTER TABLE public.pengguna
+    ADD COLUMN expired_date date;
+
+    ALTER TABLE public.pengguna
+    ADD COLUMN no_telp numeric;
+
+    ALTER TABLE public.pengguna
+    ADD COLUMN distrik_id numeric;
+
+    ALTER TABLE public.pengguna
+    ADD COLUMN perusahaan_eksternal_id numeric;

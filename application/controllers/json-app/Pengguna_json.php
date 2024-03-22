@@ -175,6 +175,20 @@ class Pengguna_json extends CI_Controller
 		$reqTipe= $this->input->post("reqTipe");
 		$reqDistrik= $this->input->post("reqDistrik");
 		$reqPass= $this->input->post("reqPass");
+
+		$reqNid= $this->input->post("reqNid");
+		$reqNoTelpon= $this->input->post("reqNoTelpon");
+		$reqEmail= $this->input->post("reqEmail");
+		$reqDistrikId= $this->input->post("reqDistrikId");
+		$reqPositionId= $this->input->post("reqPositionId");
+		$reqRoleId= $this->input->post("reqRoleId");
+		$reqPerusahaanId= $this->input->post("reqPerusahaanId");
+		$reqStatus= $this->input->post("reqStatus");
+		$reqExpiredDate= $this->input->post("reqExpiredDate");
+		$reqPassword= $this->input->post("reqPassword");
+		$reqLinkFoto = $_FILES['reqLinkFoto']['name'];
+
+
 		if(empty($reqTipe))
 		{
 			$reqTipe= $this->input->post("reqTipeId");
@@ -194,75 +208,62 @@ class Pengguna_json extends CI_Controller
 			}
 
 		}
+
+		if(!empty($reqNid))
+		{
+
+			$set = new Pengguna();
+			$statement = " AND A.NID = '".$reqNid."'";
+			$set->selectByParams(array(), -1, -1, $statement);
+			// echo $set->query;exit;
+			$set->firstRow();
+			$reqNidCheck= $set->getField("NID");
+
+			if($reqNid !== $reqNidCheck)
+			{
+				if(!empty($reqNidCheck))
+				{
+					echo "xxx***NID ".$reqNidCheck." Sudah ada ";exit;
+				}
+			}
+
+		}
 		
 
-		$check = new Pengguna();
+		// print_r($reqPass);exit;
+		if(empty($reqTipe))
+		{
+			echo "xxx*** Tipe tidak boleh kosong";exit;
+			
+		}
+		
 
 		$set = new Pengguna();
 		$set->setField("PENGGUNA_ID", $reqId);
 		$set->setField("USERNAME", $reqUsername);
-		// print_r($reqPass);exit;
-		if(empty($reqTipe))
-		{
-			if(!empty($reqPass))
-			{
-				$set->setField("PASS", md5($reqPass));
-			}
-			
-		}
-		else
-		{
-			if($reqTipe==1 && empty($reqPass))
-			{
-				if(empty($reqInternalId))
-				{
-					echo "xxx*** Pengguna Internal tidak boleh kosong";exit;
-				}
-				else
-				{
-					// $statement = " AND A.PENGGUNA_INTERNAL_ID = '".$reqInternalId."' ";
-					// $check->selectByParamsCheckInternal(array(), -1, -1, $statement);
-					// // echo $check->query;exit;
-					// $check->firstRow();
-					// $reqPass= $check->getField("NID");
-					// // print_r($reqPass);exit;
-					// $set->setField("PASS", md5($reqPass));
-
-				}
-				
-			}
-
-			if($reqTipe==2  && empty($reqPass))
-			{
-
-				if(empty($reqPenggunaEksternalId))
-				{
-					echo "xxx*** Pengguna Eksternal tidak boleh kosong";exit;
-				}
-				else
-				{
-					$statement = " AND A.PENGGUNA_EXTERNAL_ID = '".$reqPenggunaEksternalId."' ";
-					$check->selectByParamsCheckEksternal(array(), -1, -1, $statement);
-					$check->firstRow();
-					$reqPass= $check->getField("PASSWORD");
-					// print_r($reqPass);exit;
-					$set->setField("PASS", $reqPass);
-
-				}
-				
-			}
-		}
-		// exit;
-		
 		
 		$set->setField("NAMA", $reqNama);
 		$set->setField("ROLE_ID", valToNullDB($reqRoleApprId));
+
+		$set->setField("NID", $reqNid);
 
 		$set->setField("STATUS", '1');
 		$set->setField("PERUSAHAAN_ID", '0');
 		$set->setField("PENGGUNA_EXTERNAL_ID", valToNullDB($reqPenggunaEksternalId));
 		$set->setField("PENGGUNA_INTERNAL_ID", valToNullDB($reqInternalId));
 		$set->setField("TIPE", $reqTipe);
+		$set->setField("DISTRIK_ID", ValToNullDB($reqDistrikId));
+
+		$set->setField("NO_TELP", ValToNullDB($reqNoTelpon));
+		$set->setField("EMAIL", $reqEmail);
+		$set->setField("ROLE_ID", ValToNullDB($reqRoleId));
+		$set->setField("STATUS", $reqStatus);
+		$set->setField("FOTO", $reqLinkFoto);
+		$set->setField("PASS", md5($reqPass));
+		$set->setField("EXPIRED_DATE", dateToDBCheck($reqExpiredDate));
+		$set->setField("POSITION_ID", $reqPositionId);
+		$set->setField("PERUSAHAAN_EKSTERNAL_ID", ValToNullDB($reqPerusahaanId));
+
 		// $set->setField("EMAIL", $reqEmail);
 
 		$reqSimpan= "";
@@ -316,56 +317,31 @@ class Pengguna_json extends CI_Controller
 				}
 			}
 
-		
-			if(!empty($reqDistrik))
+			if(!empty($reqLinkFoto))
 			{
-
-				if($reqDistrik[0] == 0)
+				$reqSimpan="";
+				$linkupload="uploads/pengguna/foto/".$reqId."/";
+				if (!is_dir($linkupload)) {
+					makedirs($linkupload);
+				}
+				$reqLinkFile=$_FILES['reqLinkFoto']['tmp_name'];
+				$namefile= $linkupload.$reqLinkFoto;
+				// print_r($namefile);exit;
+				if(move_uploaded_file($reqLinkFile, $namefile))
 				{
-					$setinsert = new Pengguna();
-					$setinsert->setField("PENGGUNA_ID", $reqId);
-					$setinsert->deletePenggunaDistrik();
-
-					$set= new Distrik();
-					$statement=" ";
-					$set->selectByParams(array(), -1,-1,$statement);
-					// echo $set->query;exit;
-					while($set->nextRow())
+					$set = new Pengguna();
+					$reqSimpan="";
+					$set->setField("PENGGUNA_ID", $reqId);
+					$set->setField("FOTO", $namefile);
+					if($set->updateupload())
 					{
-						$reqDistrikId=$set->getField("DISTRIK_ID");
-						$setinsert->setField("DISTRIK_ID", $reqDistrikId);
-						$setinsert->setField("STATUS_ALL", 0);
-						if($setinsert->insertPenggunaDistrik())
-						{
-							$reqSimpan= 1;
-						}
-					}
-					unset($set);
-				}
-				else
-				{
-					$setinsert = new Pengguna();
-					$setinsert->setField("PENGGUNA_ID", $reqId);
-					$setinsert->deletePenggunaDistrik();
-					foreach ($reqDistrik as $key => $value) {
-						$setinsert->setField("DISTRIK_ID", $value);
-						$setinsert->setField("STATUS_ALL", valToNullDB(''));
-						if($setinsert->insertPenggunaDistrik())
-						{
-							$reqSimpan= 1;
-						}
+						$reqSimpan= 1;
 					}
 				}
 			}
-			else
-			{
 
-				$setdelete = new Pengguna();
-				$setdelete->setField("PENGGUNA_ID", $reqId);
-				$setdelete->deletePenggunaDistrik();
-				unset($setdelete);
-
-			}
+		
+			
 
 			echo $reqId."***Data berhasil disimpan";
 		}
@@ -404,18 +380,20 @@ class Pengguna_json extends CI_Controller
 		echo json_encode( $arrJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
 	}
 
+
+
 	function delete_gambar()
 	{
-		$this->load->model("base-app/PenggunaEksternal");
-		$set = new PenggunaEksternal();
+		$this->load->model("base-app/Pengguna");
+		$set = new Pengguna();
 		
 		$reqId =  $this->input->get('reqId');
 		$reqMode =  $this->input->get('reqMode');
 
-		$set->setField("PENGGUNA_EXTERNAL_ID", $reqId);
+		$set->setField("PENGGUNA_ID", $reqId);
 
-		$check = new PenggunaEksternal();
-		$statement = " AND PENGGUNA_EXTERNAL_ID = '".$reqId."' ";
+		$check = new Pengguna();
+		$statement = " AND PENGGUNA_ID = '".$reqId."' ";
 		$check->selectByParams(array(), -1, -1, $statement);
   		  // echo $check->query;exit;
 		$check->firstRow();
@@ -437,6 +415,48 @@ class Pengguna_json extends CI_Controller
 		}
 
 		echo json_encode( $arrJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
+	}
+
+
+	function reset_password()
+	{
+		$this->load->model("base-app/Pengguna");
+
+		$reqId= $this->input->post("reqId");
+		$reqMode= $this->input->post("reqMode");
+
+		
+		$reqPassword= $this->input->post("reqPassword");
+		$reqKonfirmasiPassword= $this->input->post("reqKonfirmasiPassword");
+
+		$set = new Pengguna();
+		$set->setField("PASS", md5($reqPassword));
+		$set->setField("PENGGUNA_ID", $reqId);
+
+		if($reqKonfirmasiPassword !== $reqPassword)
+		{
+			echo "xxx***Password tidak sama, cek kembali password anda";exit;
+		}
+
+		$reqSimpan= "";
+		
+		$set->setField("LAST_UPDATE_USER", $this->adminusernama);
+		$set->setField("LAST_UPDATE_DATE", 'SYSDATE');
+		if($set->reset_password())
+		{
+			$reqSimpan= 1;
+		}
+		
+
+		if($reqSimpan == 1 )
+		{
+			echo $reqId."***Data berhasil disimpan";
+		}
+		else
+		{
+			echo "xxx***Data gagal disimpan";
+		}
+				
 	}
 
 }

@@ -17,20 +17,26 @@ class Pengguna extends Entity {
     	$str = "
     	INSERT INTO PENGGUNA
     	(
-    		PENGGUNA_ID, USERNAME, NAMA, STATUS, PERUSAHAAN_ID, ROLE_ID,PENGGUNA_INTERNAL_ID,TIPE,PENGGUNA_EXTERNAL_ID,PASS
+    		PENGGUNA_ID, USERNAME, PASS, NAMA, STATUS, PERUSAHAAN_ID, ROLE_ID,TIPE,NID,NO_TELP,EMAIL,DISTRIK_ID,POSITION_ID,EXPIRED_DATE,PERUSAHAAN_EKSTERNAL_ID
     	)
     	VALUES 
     	(
 	    	'".$this->getField("PENGGUNA_ID")."'
 	    	, '".$this->getField("USERNAME")."'
+	    	, '".$this->getField("PASS")."'
 	    	, '".$this->getField("NAMA")."'
 	    	, '".$this->getField("STATUS")."'
 	    	, '".$this->getField("PERUSAHAAN_ID")."'
 	    	, ".$this->getField("ROLE_ID")."
-	    	, ".$this->getField("PENGGUNA_INTERNAL_ID")."
 	    	, '".$this->getField("TIPE")."'
-	    	, ".$this->getField("PENGGUNA_EXTERNAL_ID")."
-	    	, '".$this->getField("PASS")."'
+	    	, '".$this->getField("NID")."'
+	    	, ".$this->getField("NO_TELP")."
+	    	, '".$this->getField("EMAIL")."'
+	    	, ".$this->getField("DISTRIK_ID")."
+	    	, '".$this->getField("POSITION_ID")."'
+	    	, ".$this->getField("EXPIRED_DATE")."
+	    	, ".$this->getField("PERUSAHAAN_EKSTERNAL_ID")."
+
 	    )"; 
 
 		$this->id= $this->getField("PENGGUNA_ID");
@@ -51,11 +57,22 @@ class Pengguna extends Entity {
 		, STATUS= '".$this->getField("STATUS")."'
 		, PERUSAHAAN_ID= '".$this->getField("PERUSAHAAN_ID")."'
 		, ROLE_ID= ".$this->getField("ROLE_ID")."
-		, PENGGUNA_EXTERNAL_ID= ".$this->getField("PENGGUNA_EXTERNAL_ID")."
-		, PENGGUNA_INTERNAL_ID= ".$this->getField("PENGGUNA_INTERNAL_ID")."
 		, TIPE= '".$this->getField("TIPE")."'
 		, PASS= '".$this->getField("PASS")."'
 
+		WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
+	function updateupload($field)
+	{
+		$str = "
+		UPDATE PENGGUNA
+		SET
+		FOTO = '".$this->getField("FOTO")."'
 		WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."'
 		"; 
 		$this->query = $str;
@@ -71,14 +88,33 @@ class Pengguna extends Entity {
 		SET
 		USERNAME= '".$this->getField("USERNAME")."'
 		, NAMA= '".$this->getField("NAMA")."'
-		, STATUS= '".$this->getField("STATUS")."'
 		, PERUSAHAAN_ID= '".$this->getField("PERUSAHAAN_ID")."'
 		, ROLE_ID= ".$this->getField("ROLE_ID")."
-		, PENGGUNA_EXTERNAL_ID= ".$this->getField("PENGGUNA_EXTERNAL_ID")."
-		, PENGGUNA_INTERNAL_ID= ".$this->getField("PENGGUNA_INTERNAL_ID")."
 		, TIPE= '".$this->getField("TIPE")."'
+		, DISTRIK_ID = ".$this->getField("DISTRIK_ID")."
+		, POSITION_ID = '".$this->getField("POSITION_ID")."'
+		, PERUSAHAAN_EKSTERNAL_ID = ".$this->getField("PERUSAHAAN_EKSTERNAL_ID")."
+		, NID = '".$this->getField("NID")."'
+		, STATUS = '".$this->getField("STATUS")."'
+		, NO_TELP = ".$this->getField("NO_TELP")."
+		, EMAIL = '".$this->getField("EMAIL")."'
+		, EXPIRED_DATE = ".$this->getField("EXPIRED_DATE")."
 
 		WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
+
+	function reset_password()
+	{
+		$str = "
+		UPDATE pengguna
+		SET
+		 PASS = '".$this->getField("PASS")."'
+		WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."';
 		"; 
 		$this->query = $str;
 		// echo $str;exit;
@@ -92,6 +128,18 @@ class Pengguna extends Entity {
 		WHERE 
 		PENGGUNA_ID = ".$this->getField("PENGGUNA_ID").""; 
 
+		$this->query = $str;
+		return $this->execQuery($str);
+	}
+
+	function delete_gambar()
+	{
+		$str = "
+		UPDATE PENGGUNA
+		SET
+		FOTO = ''
+		WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."'
+		"; 
 		$this->query = $str;
 		return $this->execQuery($str);
 	}
@@ -169,17 +217,16 @@ class Pengguna extends Entity {
 	{
 		$str = "
 			SELECT 
-				A.PENGGUNA_ID,A.USERNAME,A.NAMA,A.HAK,A.STATUS,A.FOTO,A.KONTAK,A.ALAMAT
-				, A.AKTIVASI,A.PERUSAHAAN_ID,A.ROLE_ID,A.EMAIL,A.LINK_FILE,A.PENGGUNA_EXTERNAL_ID,A.TIPE,A.PENGGUNA_INTERNAL_ID
+				A.*
 				, B.PENGGUNA_HAK_NAMA_INFO
 				, B.PENGGUNA_HAK_ID_INFO
-				, C.ROLE_NAMA
-				, D.NAMA PENGGUNA_EKSTERNAL_INFO
-				, E.NAMA_LENGKAP PENGGUNA_INTERNAL_INFO
-				, COALESCE (D.NAMA_POSISI,E.NAMA_POSISI) JABATAN
-				, F.DISTRIK_ID_INFO
-				, F.DISTRIK_NAMA_INFO
-				, F.STATUS_ALL_INFO
+				, C.NAMA_POSISI JABATAN_INFO
+				, CASE WHEN A.TIPE = '1'
+				THEN 'Internal'
+				WHEN A.TIPE = '2'
+				THEN 'Eksternal'
+				END TIPE_INFO
+				
 			FROM PENGGUNA A
 			LEFT JOIN 
 			(
@@ -190,32 +237,7 @@ class Pengguna extends Entity {
 				INNER JOIN PENGGUNA_HAK_AKSES B ON B.PENGGUNA_HAK_ID = A.PENGGUNA_HAK_ID 
 				GROUP BY B.PENGGUNA_ID
 			) B ON B.PENGGUNA_ID = A.PENGGUNA_ID
-			LEFT JOIN ROLE_APPROVAL C ON C.ROLE_ID = A.ROLE_ID
-			LEFT JOIN 
-			(
-				SELECT A.PENGGUNA_EXTERNAL_ID,A.NAMA,A.POSITION_ID,B.NAMA_POSISI
-				FROM PENGGUNA_EXTERNAL A
-				LEFT JOIN MASTER_JABATAN B ON B.POSITION_ID = A.POSITION_ID
-				GROUP BY A.PENGGUNA_EXTERNAL_ID,A.NAMA,A.POSITION_ID,B.NAMA_POSISI
-			) D ON D.PENGGUNA_EXTERNAL_ID = A.PENGGUNA_EXTERNAL_ID
-			LEFT JOIN 
-			(
-				SELECT A.PENGGUNA_INTERNAL_ID,A.NAMA_LENGKAP,A.POSITION_ID,B.NAMA_POSISI
-				FROM PENGGUNA_INTERNAL A
-				LEFT JOIN MASTER_JABATAN B ON B.POSITION_ID = A.POSITION_ID
-				GROUP BY A.PENGGUNA_INTERNAL_ID,A.NAMA_LENGKAP,A.POSITION_ID,B.NAMA_POSISI
-			) E ON E.PENGGUNA_INTERNAL_ID = A.PENGGUNA_INTERNAL_ID
-			LEFT JOIN 
-			(
-				SELECT B.PENGGUNA_ID
-				,STRING_AGG(A.DISTRIK_ID::text, ', ') AS DISTRIK_ID_INFO
-				,STRING_AGG(B.STATUS_ALL::text, ', ') AS STATUS_ALL_INFO
-				,STRING_AGG(A.NAMA, ', ') AS DISTRIK_NAMA_INFO 
-				FROM DISTRIK A
-				LEFT JOIN PENGGUNA_DISTRIK B ON B.DISTRIK_ID = A.DISTRIK_ID 
-				GROUP BY B.PENGGUNA_ID
-			) F ON F.PENGGUNA_ID = A.PENGGUNA_ID
-			
+			LEFT JOIN MASTER_JABATAN C ON C.POSITION_ID = A.POSITION_ID
 			WHERE 1=1
 		"; 
 		

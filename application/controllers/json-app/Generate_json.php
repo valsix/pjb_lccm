@@ -184,7 +184,7 @@ class generate_json extends CI_Controller {
 		    // echo $check->query;exit;
 		    $check->firstRow();
 		    $checknid= $check->getField("NID");
-		    $checkid= $check->getField("PENGGUNA_INTERNAL_ID");
+		    $checkid= $check->getField("PENGGUNA_ID");
 
 		    $setInsert->setField('POSITION_ID', $reqPositionId);
 		    $setInsert->setField('NAMA_POSISI', $reqNamaPosisi);
@@ -200,11 +200,11 @@ class generate_json extends CI_Controller {
 		    $setInsert->setField('NAMA_LENGKAP', setQuote($reqNamaLengkap));
 		    $setInsert->setField('EMAIL', setQuote($reqEmail));
 		    $setInsert->setField('NID', $reqNid);
-		    $setInsert->setField('PENGGUNA_INTERNAL_ID', $checkid);
+		    $setInsert->setField('PENGGUNA_ID', $checkid);
 		  
 			if(empty($checkid))
 		    {
-		    	if($setInsert->insertUserInternal()){
+		    	if($setInsert->insertUserInternalPengguna()){
 		    		$berhasil++;
 		    	}
 		    	else{
@@ -215,7 +215,7 @@ class generate_json extends CI_Controller {
 		    }
 		    else
 		    {
-		    	if($setInsert->updateUserInternal()){
+		    	if($setInsert->updateUserInternalPengguna()){
 		    		$berhasil++;
 		    	}
 		    	else{

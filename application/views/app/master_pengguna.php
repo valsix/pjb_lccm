@@ -13,6 +13,7 @@ $arrtabledata= array(
     , array("label"=>"Nama User", "field"=> "NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"Role Approval", "field"=> "ROLE_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Hak User", "field"=> "PENGGUNA_HAK_NAMA_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Tipe", "field"=> "TIPE_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
     , array("label"=>"fieldid", "field"=> "PENGGUNA_ID", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 );
@@ -75,6 +76,7 @@ $(document).ready(function() {
             {
             ?>
             <span><a id="btnEdit"><i class="fa fa-check-square fa-lg" aria-hidden="true"></i> Edit</a></span>
+            <span><a id="btnReset"><i class="fa fa-lock fa-stack-1" aria-hidden="true"></i> Reset Password</a></span>
             <?
             }
             if($reqRead ==1)
@@ -200,6 +202,19 @@ $(document).ready(function() {
 
             }
         }); 
+    });
+
+
+    $("#btnReset").on("click", function () {
+        btnid= $(this).attr('id');
+
+        if(valinfoid == "")
+            return false; 
+
+        varurl= "app/index/master_pengguna_reset?reqId="+valinfoid;
+        document.location.href = varurl;
+
+        
     });
 
 	$('#btnCari').on('click', function () {

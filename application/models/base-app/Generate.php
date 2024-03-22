@@ -116,6 +116,42 @@
 	    return $this->execQuery($str);
   	}
 
+
+	function insertUserInternalPengguna()
+  	{
+  		$this->setField("PENGGUNA_ID", $this->getNextId("PENGGUNA_ID","pengguna"));
+	    $str = "
+	    INSERT INTO PENGGUNA(
+            PENGGUNA_ID, NID, USERNAME, NAMA_LENGKAP, EMAIL, OCCUP_STATUS, KODE_BAGIAN, BAGIAN, 
+            KODE_DITBID, DITBID, KODE_UNIT, UNIT, KODE_KLASIFIKASI_UNIT, 
+            KLASIFIKASI_UNIT, POSITION_ID, NAMA_POSISI
+        )
+	    VALUES 
+	    (
+	    	'".$this->getField("PENGGUNA")."'
+	      ,	'".$this->getField("NID")."'
+	      ,	'".$this->getField("USERNAME")."'
+	      , '".$this->getField("NAMA_LENGKAP")."'
+	      , '".$this->getField("EMAIL")."'
+	      , '".$this->getField("OCCUP_STATUS")."'
+	      , '".$this->getField("KODE_BAGIAN")."'
+	      , '".$this->getField("BAGIAN")."'
+	      , '".$this->getField("KODE_DITBID")."'
+	      , '".$this->getField("DITBID")."'
+	      , '".$this->getField("KODE_UNIT")."'
+	      , '".$this->getField("UNIT")."'
+	      , '".$this->getField("KODE_KLASIFIKASI_UNIT")."'
+	      , '".$this->getField("KLASIFIKASI_UNIT")."'
+	      , '".$this->getField("POSITION_ID")."'
+	      , '".$this->getField("NAMA_POSISI")."'
+	  
+	    )"; 
+	    $this->query= $str;
+	    	    echo $str;exit;
+
+	    return $this->execQuery($str);
+  	}
+
 	function updateUserInternal()
 	{
 	    $str = "
@@ -135,6 +171,31 @@
 	      , POSITION_ID= '".$this->getField("POSITION_ID")."'
 	      , NAMA_POSISI= '".$this->getField("NAMA_POSISI")."'
 	    WHERE PENGGUNA_INTERNAL_ID = '".$this->getField("PENGGUNA_INTERNAL_ID")."'
+	    "; 
+	    $this->query = $str;
+	    // echo $str;exit;
+	    return $this->execQuery($str);
+	}
+
+	function updateUserInternalPengguna()
+	{
+	    $str = "
+	    UPDATE PENGGUNA 
+	    SET
+	      NAMA_LENGKAP= '".$this->getField("NAMA_LENGKAP")."'
+	      , EMAIL= '".$this->getField("EMAIL")."'
+	      , OCCUP_STATUS= '".$this->getField("OCCUP_STATUS")."'
+	      , KODE_BAGIAN= '".$this->getField("KODE_BAGIAN")."'
+	      , BAGIAN= '".$this->getField("BAGIAN")."'
+	      , KODE_DITBID= '".$this->getField("KODE_DITBID")."'
+	      , DITBID= '".$this->getField("DITBID")."'
+	      , KODE_UNIT= '".$this->getField("KODE_UNIT")."'
+	      , UNIT= '".$this->getField("UNIT")."'
+	      , KODE_KLASIFIKASI_UNIT= '".$this->getField("KODE_KLASIFIKASI_UNIT")."'
+	      , KLASIFIKASI_UNIT= '".$this->getField("KLASIFIKASI_UNIT")."'
+	      , POSITION_ID= '".$this->getField("POSITION_ID")."'
+	      , NAMA_POSISI= '".$this->getField("NAMA_POSISI")."'
+	    WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."'
 	    "; 
 	    $this->query = $str;
 	    // echo $str;exit;

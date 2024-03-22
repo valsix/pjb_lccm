@@ -17,7 +17,7 @@ class Users extends Entity{
       $str = "
       INSERT INTO PENGGUNA
       (
-        PENGGUNA_ID, USERNAME, NAMA, STATUS, PENGGUNA_INTERNAL_ID,TIPE,PASS
+        PENGGUNA_ID, USERNAME, NAMA, STATUS, PENGGUNA_INTERNAL_ID,TIPE,PASS,NAMA_LENGKAP
       )
       VALUES 
       (
@@ -28,6 +28,7 @@ class Users extends Entity{
         , ".$this->getField("PENGGUNA_INTERNAL_ID")."
         , '1'
         , '".$this->getField("PASS")."'
+        , '".$this->getField("NAMA_LENGKAP")."'
       )"; 
 
     $this->id= $this->getField("PENGGUNA_ID");
@@ -72,6 +73,21 @@ class Users extends Entity{
     FROM pengguna A
     WHERE 1=1
     AND USERNAME= ".$id_usr." AND PASS=".$passwd."";
+    
+    $this->query = $str;
+    // echo $str;exit;
+    return $this->select($str);
+  }
+
+  function selectByPenggunaNid($nid)
+  {
+    $str = "
+    SELECT 
+      A.*
+    FROM pengguna A
+    WHERE 1=1
+    AND NID = '".$nid."'
+    ";
     
     $this->query = $str;
     // echo $str;exit;
