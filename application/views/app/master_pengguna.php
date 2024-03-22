@@ -11,7 +11,7 @@ $arrtabledata= array(
     array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Username", "field"=> "USERNAME", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Nama User", "field"=> "NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Role Approval", "field"=> "ROLE_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    // , array("label"=>"Role Approval", "field"=> "ROLE_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Hak User", "field"=> "PENGGUNA_HAK_NAMA_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
     , array("label"=>"fieldid", "field"=> "PENGGUNA_ID", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")

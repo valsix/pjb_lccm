@@ -29,7 +29,7 @@ $infodatagroupmodul= $set->getField("GROUP_MODUL");
 // echo $infodatagroupmodul;exit;
 
 $set= new Approval();
-$set->selectmenu($appuserkodehak,' AND MENU = 1');
+$set->selectmenu($appuserkodehak," AND MENU = 1 AND KODE_MODUL NOT IN ('0802', '0803') ");
 // echo $set->query;exit;
 $arrMenu=[];
 while($set->nextRow())
