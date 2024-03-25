@@ -149,3 +149,27 @@ CREATE TRIGGER tpreparation_status_info
 
     ALTER TABLE public.pengguna
     ADD COLUMN perusahaan_eksternal_id numeric;
+
+    ALTER TABLE public.pengguna
+    ADD COLUMN kode_distrik character varying(8) ;
+    ALTER TABLE public.pengguna
+    ADD COLUMN kode_blok character varying(8) ;
+    ALTER TABLE public.pengguna
+    ADD COLUMN kode_unit_m character varying(8) ;
+
+    select nid, count(*)
+from pengguna
+group by nid
+HAVING count(*) > 1
+
+
+delete from pengguna pl
+where exists
+(
+  select null
+  from pengguna pl2
+  where pl2.nid = pl.nid
+  and pl2.ctid > pl.ctid
+);
+
+ALTER TABLE pengguna ADD CONSTRAINT pengguna_nid_u UNIQUE (nid);

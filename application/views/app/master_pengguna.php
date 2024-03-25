@@ -98,6 +98,7 @@ $(document).ready(function() {
             <?
             }
             ?>
+            <span><a id="btnGenerate"><i class="fas fa-sync"></i> Generate</a></span>
         </div>
 
         <div class="area-filter">
@@ -234,6 +235,27 @@ $(document).ready(function() {
         {
             
         }
+    });
+
+    $('#btnGenerate').on('click', function () {
+        $.messager.confirm('Konfirmasi',"Generate data?",function(r){
+            if (r){
+                $.messager.progress({
+                    title:'Please waiting',
+                    msg:'Loading data...'
+                });
+                $.ajax({
+                    url: "json-app/generate_json/MasterUserInternalNew/",
+                    cache: false,
+                    success: function(data){
+                        console.log(data);return false;
+                        $.messager.progress('close');
+                        $.messager.alert('Info', data, 'info');
+                        setTimeout(function(){  document.location.href = "app/index/master_pengguna"; }, 3000); 
+                    }
+                });
+            }
+        }); 
     });
 
 	jQuery(document).ready(function() {

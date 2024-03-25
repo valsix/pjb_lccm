@@ -35,6 +35,8 @@ class Pengguna_json extends CI_Controller
 
 		$reqJenisNaskahId= $this->input->get("reqJenisNaskahId");
 
+		ini_set("memory_limit", "512M"); 
+
 		if ( isset( $_REQUEST['columnsDef'] ) && is_array( $_REQUEST['columnsDef'] ) ) {
 			$columnsDefault = [];
 			foreach ( $_REQUEST['columnsDef'] as $field ) {

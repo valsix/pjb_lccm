@@ -124,11 +124,11 @@
 	    INSERT INTO PENGGUNA(
             PENGGUNA_ID, NID, USERNAME, NAMA_LENGKAP, EMAIL, OCCUP_STATUS, KODE_BAGIAN, BAGIAN, 
             KODE_DITBID, DITBID, KODE_UNIT, UNIT, KODE_KLASIFIKASI_UNIT, 
-            KLASIFIKASI_UNIT, POSITION_ID, NAMA_POSISI
+            KLASIFIKASI_UNIT, POSITION_ID, NAMA_POSISI,KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M
         )
 	    VALUES 
 	    (
-	    	'".$this->getField("PENGGUNA")."'
+	    	'".$this->getField("PENGGUNA_ID")."'
 	      ,	'".$this->getField("NID")."'
 	      ,	'".$this->getField("USERNAME")."'
 	      , '".$this->getField("NAMA_LENGKAP")."'
@@ -144,10 +144,13 @@
 	      , '".$this->getField("KLASIFIKASI_UNIT")."'
 	      , '".$this->getField("POSITION_ID")."'
 	      , '".$this->getField("NAMA_POSISI")."'
+	      , '".$this->getField("KODE_DISTRIK")."'
+	      , '".$this->getField("KODE_UNIT")."'
+	      , '".$this->getField("KODE_SUBDIT")."'
 	  
 	    )"; 
 	    $this->query= $str;
-	    	    echo $str;exit;
+	    	    // echo $str;exit;
 
 	    return $this->execQuery($str);
   	}
@@ -195,6 +198,9 @@
 	      , KLASIFIKASI_UNIT= '".$this->getField("KLASIFIKASI_UNIT")."'
 	      , POSITION_ID= '".$this->getField("POSITION_ID")."'
 	      , NAMA_POSISI= '".$this->getField("NAMA_POSISI")."'
+	      , KODE_DISTRIK= '".$this->getField("KODE_DISTRIK")."'
+	      , KODE_BLOK= '".$this->getField("KODE_UNIT")."'
+	      , KODE_UNIT_M= '".$this->getField("KODE_SUBDIT")."'
 	    WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."'
 	    "; 
 	    $this->query = $str;
@@ -227,6 +233,27 @@
     	SELECT
     	A.*
     	FROM PENGGUNA_INTERNAL A
+    	WHERE 1=1
+    	
+    	 "; 
+
+    	while(list($key,$val) = each($paramsArray))
+    	{
+    		$str .= " AND $key = '$val' ";
+    	}
+
+    	$str .= $statement." ".$sOrder;
+    	$this->query = $str;
+
+    	return $this->selectLimit($str,$limit,$from); 
+    }
+
+    function selectByParamsCheckPengguna($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="")
+    {
+    	$str = "
+    	SELECT
+    	A.*
+    	FROM PENGGUNA A
     	WHERE 1=1
     	
     	 "; 

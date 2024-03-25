@@ -38,88 +38,88 @@ class generate_json extends CI_Controller {
 		$jsonJadi=json_decode($json);
 		$jsonJadiproses=json_decode(json_encode($jsonJadi), true);
 
-	    $gagal=0;
-	    $berhasil=0;
+		$gagal=0;
+		$berhasil=0;
 	    // $berhasilupdate=0;
-	    $setInsert= new Generate();
-	   	for($i=0; $i<count($jsonJadiproses); $i++){
-		    $reqPositionId= trim($jsonJadiproses[$i]['POSITION_ID']);
-		    $reqNamaPosisi= $jsonJadiproses[$i]['NAMA_POSISI'];
-		    $reqSuperiorId= $jsonJadiproses[$i]['SUPERIOR_ID'];
-		    $reqKodeKategori= $jsonJadiproses[$i]['KODE_KATEGORI'];
-		    $reqKategori= $jsonJadiproses[$i]['KATEGORI'];
-		    $reqKodeKelompokJabatan= $jsonJadiproses[$i]['KODE_KELOMPOK_JABATAN'];
-		    $reqKelompokJabatan= $jsonJadiproses[$i]['KELOMPOK_JABATAN'];
-		    $reqKodeJenjangJabatan= $jsonJadiproses[$i]['KODE_JENJANG_JABATAN'];
-		    $reqJenjangJabatan= $jsonJadiproses[$i]['JENJANG_JABATAN'];
-		    $reqKodeKlasifikasiUnit= $jsonJadiproses[$i]['KODE_KLASIFIKASI_UNIT'];
-		    $reqKlasifikasiUnit= $jsonJadiproses[$i]['KLASIFIKASI_UNIT'];
-		    $reqKodeUnit= $jsonJadiproses[$i]['KODE_UNIT'];
-		    $reqUnit= $jsonJadiproses[$i]['UNIT'];
-		    $reqKodeDitbid= $jsonJadiproses[$i]['KODE_DITBID'];
-		    $reqDitbid= $jsonJadiproses[$i]['DITBID'];
-		    $reqKodeBagian= $jsonJadiproses[$i]['KODE_BAGIAN'];
-		    $reqBagian= $jsonJadiproses[$i]['BAGIAN'];
-		    $reqOccupStatus= $jsonJadiproses[$i]['OCCUP_STATUS'];
-		    $reqNamaLengkap= $jsonJadiproses[$i]['NAMA_LENGKAP'];
-		    $reqEmail= $jsonJadiproses[$i]['EMAIL'];
-		    $reqNid= $jsonJadiproses[$i]['NID'];
-		    $reqPosisi= $jsonJadiproses[$i]['POSISI'];
-		    $reqChange= $jsonJadiproses[$i]['CHANGE_REASON'];
+		$setInsert= new Generate();
+		for($i=0; $i<count($jsonJadiproses); $i++){
+			$reqPositionId= trim($jsonJadiproses[$i]['POSITION_ID']);
+			$reqNamaPosisi= $jsonJadiproses[$i]['NAMA_POSISI'];
+			$reqSuperiorId= $jsonJadiproses[$i]['SUPERIOR_ID'];
+			$reqKodeKategori= $jsonJadiproses[$i]['KODE_KATEGORI'];
+			$reqKategori= $jsonJadiproses[$i]['KATEGORI'];
+			$reqKodeKelompokJabatan= $jsonJadiproses[$i]['KODE_KELOMPOK_JABATAN'];
+			$reqKelompokJabatan= $jsonJadiproses[$i]['KELOMPOK_JABATAN'];
+			$reqKodeJenjangJabatan= $jsonJadiproses[$i]['KODE_JENJANG_JABATAN'];
+			$reqJenjangJabatan= $jsonJadiproses[$i]['JENJANG_JABATAN'];
+			$reqKodeKlasifikasiUnit= $jsonJadiproses[$i]['KODE_KLASIFIKASI_UNIT'];
+			$reqKlasifikasiUnit= $jsonJadiproses[$i]['KLASIFIKASI_UNIT'];
+			$reqKodeUnit= $jsonJadiproses[$i]['KODE_UNIT'];
+			$reqUnit= $jsonJadiproses[$i]['UNIT'];
+			$reqKodeDitbid= $jsonJadiproses[$i]['KODE_DITBID'];
+			$reqDitbid= $jsonJadiproses[$i]['DITBID'];
+			$reqKodeBagian= $jsonJadiproses[$i]['KODE_BAGIAN'];
+			$reqBagian= $jsonJadiproses[$i]['BAGIAN'];
+			$reqOccupStatus= $jsonJadiproses[$i]['OCCUP_STATUS'];
+			$reqNamaLengkap= $jsonJadiproses[$i]['NAMA_LENGKAP'];
+			$reqEmail= $jsonJadiproses[$i]['EMAIL'];
+			$reqNid= $jsonJadiproses[$i]['NID'];
+			$reqPosisi= $jsonJadiproses[$i]['POSISI'];
+			$reqChange= $jsonJadiproses[$i]['CHANGE_REASON'];
 
 		    // $statement= " AND A.POSITION_ID LIKE '%".$reqPositionId."%'";
-		    $statement= " AND TRIM(POSITION_ID) = TRIM('".$reqPositionId."')";
-		    $check->selectByParamsCheckJabatan(array(), -1, -1, $statement);
+			$statement= " AND TRIM(POSITION_ID) = TRIM('".$reqPositionId."')";
+			$check->selectByParamsCheckJabatan(array(), -1, -1, $statement);
 		    // echo $check->query;exit;
-		    $check->firstRow();
-		    $checkkode= $check->getField("POSITION_ID");
+			$check->firstRow();
+			$checkkode= $check->getField("POSITION_ID");
 
-		    $setInsert->setField('POSITION_ID', $reqPositionId);
-		    $setInsert->setField('NAMA_POSISI', $reqNamaPosisi);
-		    $setInsert->setField('SUPERIOR_ID', $reqSuperiorId);
-		    $setInsert->setField('KODE_KATEGORI', $reqKodeKategori);
-		    $setInsert->setField('KATEGORI', $reqKategori);
-		    $setInsert->setField('KODE_KELOMPOK_JABATAN', $reqKodeKelompokJabatan);
-		    $setInsert->setField('KELOMPOK_JABATAN', $reqKelompokJabatan);
-		    $setInsert->setField('KODE_JENJANG_JABATAN', $reqKodeJenjangJabatan);
-		    $setInsert->setField('JENJANG_JABATAN', $reqJenjangJabatan);
-		    $setInsert->setField('KODE_KLASIFIKASI_UNIT', $reqKodeKlasifikasiUnit);
-		    $setInsert->setField('KLASIFIKASI_UNIT', $reqKlasifikasiUnit);
-		    $setInsert->setField('KODE_UNIT', $reqKodeUnit);
-		    $setInsert->setField('UNIT', $reqUnit);
-		    $setInsert->setField('KODE_DITBID', $reqKodeDitbid);
-		    $setInsert->setField('DITBID', $reqDitbid);
-		    $setInsert->setField('KODE_BAGIAN', $reqKodeBagian);
-		    $setInsert->setField('BAGIAN', $reqBagian);
-		    $setInsert->setField('OCCUP_STATUS', $reqOccupStatus);
-		    $setInsert->setField('NAMA_LENGKAP', setQuote($reqNamaLengkap));
-		    $setInsert->setField('EMAIL', setQuote($reqEmail));
-		    $setInsert->setField('NID', $reqNid);
-		    $setInsert->setField('POSISI', $reqPosisi);
-		    $setInsert->setField('CHANGE_REASON', $reqChange);
-		    $setInsert->setField('TIPE', 1);
-		  
+			$setInsert->setField('POSITION_ID', $reqPositionId);
+			$setInsert->setField('NAMA_POSISI', $reqNamaPosisi);
+			$setInsert->setField('SUPERIOR_ID', $reqSuperiorId);
+			$setInsert->setField('KODE_KATEGORI', $reqKodeKategori);
+			$setInsert->setField('KATEGORI', $reqKategori);
+			$setInsert->setField('KODE_KELOMPOK_JABATAN', $reqKodeKelompokJabatan);
+			$setInsert->setField('KELOMPOK_JABATAN', $reqKelompokJabatan);
+			$setInsert->setField('KODE_JENJANG_JABATAN', $reqKodeJenjangJabatan);
+			$setInsert->setField('JENJANG_JABATAN', $reqJenjangJabatan);
+			$setInsert->setField('KODE_KLASIFIKASI_UNIT', $reqKodeKlasifikasiUnit);
+			$setInsert->setField('KLASIFIKASI_UNIT', $reqKlasifikasiUnit);
+			$setInsert->setField('KODE_UNIT', $reqKodeUnit);
+			$setInsert->setField('UNIT', $reqUnit);
+			$setInsert->setField('KODE_DITBID', $reqKodeDitbid);
+			$setInsert->setField('DITBID', $reqDitbid);
+			$setInsert->setField('KODE_BAGIAN', $reqKodeBagian);
+			$setInsert->setField('BAGIAN', $reqBagian);
+			$setInsert->setField('OCCUP_STATUS', $reqOccupStatus);
+			$setInsert->setField('NAMA_LENGKAP', setQuote($reqNamaLengkap));
+			$setInsert->setField('EMAIL', setQuote($reqEmail));
+			$setInsert->setField('NID', $reqNid);
+			$setInsert->setField('POSISI', $reqPosisi);
+			$setInsert->setField('CHANGE_REASON', $reqChange);
+			$setInsert->setField('TIPE', 1);
+
 			if(empty($checkkode))
-		    {
-		    	if($setInsert->insertJabatan()){
-		    		$berhasil++;
-		    	}
-		    	else{
-		    		$gagal++;
+			{
+				if($setInsert->insertJabatan()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
 		    		// echo $setInsert->query;
-		    	}
+				}
 
-		    }
-		    else
-		    {
-		    	if($setInsert->updateJabatan()){
-		    		$berhasil++;
-		    	}
-		    	else{
-		    		$gagal++;
+			}
+			else
+			{
+				if($setInsert->updateJabatan()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
 		    		// echo $setInsert->query;
-		    	}
-		    }
+				}
+			}
 		}
 
 		// exit;
@@ -134,8 +134,127 @@ class generate_json extends CI_Controller {
 
 		// echo " ".$berhasilinsert." data telah berhasil di insert.   ".$berhasilupdate." data telah berhasil di update.  ".$gagal." data gagal di generate";
 		echo $berhasil." data telah berhasil di generate.  ".$gagal." data gagal di generate";
-			
+
 	}
+
+	function MasterUserInternalNew()
+	{
+		$this->load->model("base-app/Generate");
+		$this->load->model("base-app/LogGenerate");
+
+		$check= new Generate();
+		$arrContextOptions=array(
+			"ssl"=>array(
+				"verify_peer"=>false,
+				"verify_peer_name"=>false,
+			),
+		);  
+
+		
+		$json = file_get_contents('https://webcontent.plnnusantarapower.co.id/api/data/hr/karyawan/all?apikey=539581c464b44701a297a04a782ce4a9');
+		$jsonJadi=json_decode($json);
+		$jsonJadiproses=json_decode(json_encode($jsonJadi), true);
+		$jsonJadiproses=$jsonJadiproses["returned_object"];
+
+		// print_r($json);exit;
+
+
+		$gagal=0;
+		$berhasil=0;
+	    // $berhasilupdate=0;
+		$setInsert= new Generate();
+		for($i=0; $i<count($jsonJadiproses); $i++){
+			$reqPositionId= trim($jsonJadiproses[$i]['POSITION_ID']);
+			$reqNamaPosisi= $jsonJadiproses[$i]['POSISI'];
+			$reqKodeKlasifikasiUnit= $jsonJadiproses[$i]['KODE_POSISI_KLASIFIKASI_UNIT'];
+			$reqKlasifikasiUnit= $jsonJadiproses[$i]['POSISI_KLASIFIKASI_UNIT'];
+			$reqKodeUnit= $jsonJadiproses[$i]['KODE_UNIT'];
+			$reqUnit= $jsonJadiproses[$i]['POSISI_UNIT'];
+			$reqKodeDitbid= $jsonJadiproses[$i]['KODE_POSISI_DITBID'];
+			$reqDitbid= $jsonJadiproses[$i]['POSISI_DITBID'];
+			$reqKodeBagian= $jsonJadiproses[$i]['KODE_POSISI_SUBDIT'];
+			$reqBagian= $jsonJadiproses[$i]['POSISI_SUBDIT'];
+		    // $reqOccupStatus= $jsonJadiproses[$i]['OCCUP_STATUS'];
+			$reqOccupStatus= "";
+			$reqNamaLengkap= $jsonJadiproses[$i]['NAMA_LENGKAP'];
+			$reqEmail= $jsonJadiproses[$i]['EMAIL'];
+			$reqNid= $jsonJadiproses[$i]['NID'];
+			$reqPosisi= $jsonJadiproses[$i]['POSISI'];
+			$reqKodeDistrik= $jsonJadiproses[$i]['KODE_DISTRIK'];
+			$reqKodeBlok= $jsonJadiproses[$i]['KODE_UNIT'];
+			$reqKodeUnitM= $jsonJadiproses[$i]['KODE_SUBDIT'];
+
+			if(empty($reqNid))
+			{
+				continue;
+			}
+
+		    // $statement= " AND A.POSITION_ID LIKE '%".$reqPositionId."%'";
+			$statement= " AND TRIM(NID) = TRIM('".$reqNid."') ";
+			$check->selectByParamsCheckPengguna(array(), -1, -1, $statement);
+		    // echo $check->query;exit;
+			$check->firstRow();
+			$checknid= $check->getField("NID");
+			$checkid= $check->getField("PENGGUNA_ID");
+
+			$setInsert->setField('POSITION_ID', $reqPositionId);
+			$setInsert->setField('NAMA_POSISI', $reqNamaPosisi);
+			$setInsert->setField('KODE_KLASIFIKASI_UNIT', $reqKodeKlasifikasiUnit);
+			$setInsert->setField('KLASIFIKASI_UNIT', $reqKlasifikasiUnit);
+			$setInsert->setField('KODE_UNIT', $reqKodeUnit);
+			$setInsert->setField('UNIT', $reqUnit);
+			$setInsert->setField('KODE_DITBID', $reqKodeDitbid);
+			$setInsert->setField('DITBID', $reqDitbid);
+			$setInsert->setField('KODE_BAGIAN', $reqKodeBagian);
+			$setInsert->setField('BAGIAN', $reqBagian);
+			$setInsert->setField('OCCUP_STATUS', $reqOccupStatus);
+			$setInsert->setField('NAMA_LENGKAP', setQuote($reqNamaLengkap));
+			$setInsert->setField('EMAIL', setQuote($reqEmail));
+			$setInsert->setField('NID', $reqNid);
+			$setInsert->setField('PENGGUNA_ID', $checkid);
+			$setInsert->setField('KODE_DISTRIK', $reqKodeDistrik);
+			$setInsert->setField('KODE_UNIT', $reqKodeBlok);
+			$setInsert->setField('KODE_SUBDIT', $reqKodeUnitM);
+			$setInsert->setField('USERNAME', $reqNid);
+
+			if(empty($checkid))
+			{
+				if($setInsert->insertUserInternalPengguna()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
+		    		// echo $setInsert->query;
+				}
+
+			}
+			else
+			{
+				if($setInsert->updateUserInternalPengguna()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
+		    		// echo $setInsert->query;
+				}
+			}
+		}
+
+		// exit;
+		
+		$set= new LogGenerate();
+		$set->setField('TABLE_GENERATE', "PENGGUNA USER INTERNAL");
+		$set->setField('USER_GENERATE', $this->appuserid);
+		$set->setField('DATE_GENERATE', "CURRENT_DATE");
+		$set->setField('BERHASIL_GENERATE', $berhasil);
+		$set->setField('GAGAL_GENERATE', $gagal);
+		$set->insert();
+
+		// echo " ".$berhasilinsert." data telah berhasil di insert.   ".$berhasilupdate." data telah berhasil di update.  ".$gagal." data gagal di generate";
+		echo $berhasil." data telah berhasil di generate.  ".$gagal." data gagal di generate";
+
+	}
+
 
 	function MasterUserInternal()
 	{
@@ -150,79 +269,79 @@ class generate_json extends CI_Controller {
 
 		// print_r($jsonJadiproses);exit;
 
-	
 
-	    $gagal=0;
-	    $berhasil=0;
+
+		$gagal=0;
+		$berhasil=0;
 	    // $berhasilupdate=0;
-	    $setInsert= new Generate();
-	   	for($i=0; $i<count($jsonJadiproses); $i++){
-		    $reqPositionId= trim($jsonJadiproses[$i]['POSITION_ID']);
-		    $reqNamaPosisi= $jsonJadiproses[$i]['NAMA_POSISI'];
-		    $reqKodeKlasifikasiUnit= $jsonJadiproses[$i]['KODE_KLASIFIKASI_UNIT'];
-		    $reqKlasifikasiUnit= $jsonJadiproses[$i]['KLASIFIKASI_UNIT'];
-		    $reqKodeUnit= $jsonJadiproses[$i]['KODE_UNIT'];
-		    $reqUnit= $jsonJadiproses[$i]['UNIT'];
-		    $reqKodeDitbid= $jsonJadiproses[$i]['KODE_DITBID'];
-		    $reqDitbid= $jsonJadiproses[$i]['DITBID'];
-		    $reqKodeBagian= $jsonJadiproses[$i]['KODE_BAGIAN'];
-		    $reqBagian= $jsonJadiproses[$i]['BAGIAN'];
-		    $reqOccupStatus= $jsonJadiproses[$i]['OCCUP_STATUS'];
-		    $reqNamaLengkap= $jsonJadiproses[$i]['NAMA_LENGKAP'];
-		    $reqEmail= $jsonJadiproses[$i]['EMAIL'];
-		    $reqNid= $jsonJadiproses[$i]['NID'];
-		    $reqPosisi= $jsonJadiproses[$i]['POSISI'];
+		$setInsert= new Generate();
+		for($i=0; $i<count($jsonJadiproses); $i++){
+			$reqPositionId= trim($jsonJadiproses[$i]['POSITION_ID']);
+			$reqNamaPosisi= $jsonJadiproses[$i]['NAMA_POSISI'];
+			$reqKodeKlasifikasiUnit= $jsonJadiproses[$i]['KODE_KLASIFIKASI_UNIT'];
+			$reqKlasifikasiUnit= $jsonJadiproses[$i]['KLASIFIKASI_UNIT'];
+			$reqKodeUnit= $jsonJadiproses[$i]['KODE_UNIT'];
+			$reqUnit= $jsonJadiproses[$i]['UNIT'];
+			$reqKodeDitbid= $jsonJadiproses[$i]['KODE_DITBID'];
+			$reqDitbid= $jsonJadiproses[$i]['DITBID'];
+			$reqKodeBagian= $jsonJadiproses[$i]['KODE_BAGIAN'];
+			$reqBagian= $jsonJadiproses[$i]['BAGIAN'];
+			$reqOccupStatus= $jsonJadiproses[$i]['OCCUP_STATUS'];
+			$reqNamaLengkap= $jsonJadiproses[$i]['NAMA_LENGKAP'];
+			$reqEmail= $jsonJadiproses[$i]['EMAIL'];
+			$reqNid= $jsonJadiproses[$i]['NID'];
+			$reqPosisi= $jsonJadiproses[$i]['POSISI'];
 
-		    if(empty($reqNid))
-		    {
-		    	continue;
-		    }
+			if(empty($reqNid))
+			{
+				continue;
+			}
 
 		    // $statement= " AND A.POSITION_ID LIKE '%".$reqPositionId."%'";
-		    $statement= " AND TRIM(NID) = TRIM('".$reqNid."') ";
-		    $check->selectByParamsCheckUserInternal(array(), -1, -1, $statement);
+			$statement= " AND TRIM(NID) = TRIM('".$reqNid."') ";
+			$check->selectByParamsCheckUserInternal(array(), -1, -1, $statement);
 		    // echo $check->query;exit;
-		    $check->firstRow();
-		    $checknid= $check->getField("NID");
-		    $checkid= $check->getField("PENGGUNA_ID");
+			$check->firstRow();
+			$checknid= $check->getField("NID");
+			$checkid= $check->getField("PENGGUNA_ID");
 
-		    $setInsert->setField('POSITION_ID', $reqPositionId);
-		    $setInsert->setField('NAMA_POSISI', $reqNamaPosisi);
-		    $setInsert->setField('KODE_KLASIFIKASI_UNIT', $reqKodeKlasifikasiUnit);
-		    $setInsert->setField('KLASIFIKASI_UNIT', $reqKlasifikasiUnit);
-		    $setInsert->setField('KODE_UNIT', $reqKodeUnit);
-		    $setInsert->setField('UNIT', $reqUnit);
-		    $setInsert->setField('KODE_DITBID', $reqKodeDitbid);
-		    $setInsert->setField('DITBID', $reqDitbid);
-		    $setInsert->setField('KODE_BAGIAN', $reqKodeBagian);
-		    $setInsert->setField('BAGIAN', $reqBagian);
-		    $setInsert->setField('OCCUP_STATUS', $reqOccupStatus);
-		    $setInsert->setField('NAMA_LENGKAP', setQuote($reqNamaLengkap));
-		    $setInsert->setField('EMAIL', setQuote($reqEmail));
-		    $setInsert->setField('NID', $reqNid);
-		    $setInsert->setField('PENGGUNA_ID', $checkid);
-		  
+			$setInsert->setField('POSITION_ID', $reqPositionId);
+			$setInsert->setField('NAMA_POSISI', $reqNamaPosisi);
+			$setInsert->setField('KODE_KLASIFIKASI_UNIT', $reqKodeKlasifikasiUnit);
+			$setInsert->setField('KLASIFIKASI_UNIT', $reqKlasifikasiUnit);
+			$setInsert->setField('KODE_UNIT', $reqKodeUnit);
+			$setInsert->setField('UNIT', $reqUnit);
+			$setInsert->setField('KODE_DITBID', $reqKodeDitbid);
+			$setInsert->setField('DITBID', $reqDitbid);
+			$setInsert->setField('KODE_BAGIAN', $reqKodeBagian);
+			$setInsert->setField('BAGIAN', $reqBagian);
+			$setInsert->setField('OCCUP_STATUS', $reqOccupStatus);
+			$setInsert->setField('NAMA_LENGKAP', setQuote($reqNamaLengkap));
+			$setInsert->setField('EMAIL', setQuote($reqEmail));
+			$setInsert->setField('NID', $reqNid);
+			$setInsert->setField('PENGGUNA_ID', $checkid);
+
 			if(empty($checkid))
-		    {
-		    	if($setInsert->insertUserInternalPengguna()){
-		    		$berhasil++;
-		    	}
-		    	else{
-		    		$gagal++;
+			{
+				if($setInsert->insertUserInternalPengguna()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
 		    		// echo $setInsert->query;
-		    	}
+				}
 
-		    }
-		    else
-		    {
-		    	if($setInsert->updateUserInternalPengguna()){
-		    		$berhasil++;
-		    	}
-		    	else{
-		    		$gagal++;
+			}
+			else
+			{
+				if($setInsert->updateUserInternalPengguna()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
 		    		// echo $setInsert->query;
-		    	}
-		    }
+				}
+			}
 		}
 
 		// exit;
@@ -237,7 +356,7 @@ class generate_json extends CI_Controller {
 
 		// echo " ".$berhasilinsert." data telah berhasil di insert.   ".$berhasilupdate." data telah berhasil di update.  ".$gagal." data gagal di generate";
 		echo $berhasil." data telah berhasil di generate.  ".$gagal." data gagal di generate";
-			
+
 	}
 
 	function work_order()
@@ -255,10 +374,10 @@ class generate_json extends CI_Controller {
 		$statement=" AND A.DISTRIK_ID=".$reqDistrikId;
 		$set->selectByParams(array(), -1, -1, $statement);
    		 // echo $set->query;exit;
-   		$set->firstRow();
-   		$reqDistrikKode= $set->getField("KODE_SITE");
-   		
-   		$setInsert= new WorkOrder();
+		$set->firstRow();
+		$reqDistrikKode= $set->getField("KODE_SITE");
+
+		$setInsert= new WorkOrder();
 
 		// Prepare new cURL resource
 
@@ -317,7 +436,7 @@ class generate_json extends CI_Controller {
 
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
-		 
+
 		$resultdepart = curl_exec($ch);
 
 
@@ -334,9 +453,9 @@ class generate_json extends CI_Controller {
 		
 
 		if(empty($resultdepart))
-   		{
-   			echo 'Koneksi Api Bermasalah / Data Tidak Ditemukan ';exit;
-   		}
+		{
+			echo 'Koneksi Api Bermasalah / Data Tidak Ditemukan ';exit;
+		}
 
 		$jsondepart=json_decode($resultdepart);
 		$jsondepartproses = json_decode(json_encode($jsondepart), true);
@@ -351,7 +470,7 @@ class generate_json extends CI_Controller {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 			curl_setopt($ch, CURLOPT_VERBOSE, true);
-			 
+
 			// curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 			//     'maxauth : ' . base64_encode('maxadmin' . ':' . 'maxadmintest76'))
 			// );
@@ -370,7 +489,7 @@ class generate_json extends CI_Controller {
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
 
 			$arrdata=array();
-			 
+
 			$result= curl_exec($ch);
 			$jsonwo=json_decode($result);
 			// print_r($jsonwo);exit;
@@ -392,14 +511,14 @@ class generate_json extends CI_Controller {
 
 		
 		if(empty($arrwo))
-   		{
-   			echo 'Data Distrik '.$reqDistrikKode.' Tidak Ditemukan ';exit;
-   		}
+		{
+			echo 'Data Distrik '.$reqDistrikKode.' Tidak Ditemukan ';exit;
+		}
 
 		
 		$infonomor= 0;
 		$gagal=0;
-	    $berhasil=0;
+		$berhasil=0;
 		foreach ($arrwo as $key => $value) 
 		{
 			$reqAssetNum= $value['assetnum'];
@@ -411,42 +530,42 @@ class generate_json extends CI_Controller {
 			$reqWorkType= $value['worktype'];
 
 			$setInsert->setField('ASSET_NUM', $reqAssetNum);
-		    $setInsert->setField('STATUS', $reqStatus);
-		    $setInsert->setField('DESCRIPTION', $reqDesc);
-		    $setInsert->setField('WO', $reqWoNum);
-		    $setInsert->setField('SITE_ID', $reqSiteId);
-		    $setInsert->setField('EQUIPMENT_ID', $reqEquipmentId);
-		    $setInsert->setField('PROJECT_NO', $reqProjectNo);
-		    $setInsert->setField('WORKTYPE', $reqWorkType);
+			$setInsert->setField('STATUS', $reqStatus);
+			$setInsert->setField('DESCRIPTION', $reqDesc);
+			$setInsert->setField('WO', $reqWoNum);
+			$setInsert->setField('SITE_ID', $reqSiteId);
+			$setInsert->setField('EQUIPMENT_ID', $reqEquipmentId);
+			$setInsert->setField('PROJECT_NO', $reqProjectNo);
+			$setInsert->setField('WORKTYPE', $reqWorkType);
 
-		    $check= new WorkOrder();
+			$check= new WorkOrder();
 
-		    $statement= " AND TRIM(WO) = TRIM('".$reqWoNum."')";
-		    $check->selectByParams(array(), -1, -1, $statement);
+			$statement= " AND TRIM(WO) = TRIM('".$reqWoNum."')";
+			$check->selectByParams(array(), -1, -1, $statement);
 		    // echo $check->query;exit;
-		    $check->firstRow();
-		    $checkwo= $check->getField("WO");
+			$check->firstRow();
+			$checkwo= $check->getField("WO");
 
-		    if(empty($checkwo))
-		    {
-		    	if($setInsert->insert()){
-		    		$berhasil++;
-		    	}
-		    	else{
-		    		$gagal++;
-		    	}
+			if(empty($checkwo))
+			{
+				if($setInsert->insert()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
+				}
 
-		    }
-		    else
-		    {
-		    	if($setInsert->update()){
-		    		$berhasil++;
-		    	}
-		    	else{
-		    		$gagal++;
+			}
+			else
+			{
+				if($setInsert->update()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
 		    		// echo $setInsert->query;
-		    	}
-		    }
+				}
+			}
 			
 		}
 
@@ -480,10 +599,10 @@ class generate_json extends CI_Controller {
 		$statement=" AND A.DISTRIK_ID=".$reqDistrikId;
 		$set->selectByParams(array(), -1, -1, $statement);
    		 // echo $set->query;exit;
-   		$set->firstRow();
-   		$reqDistrikKode= $set->getField("KODE_SITE");
-   		
-   		$setInsert= new WorkRequest();
+		$set->firstRow();
+		$reqDistrikKode= $set->getField("KODE_SITE");
+
+		$setInsert= new WorkRequest();
 
 
 		// Prepare new cURL resource
@@ -511,21 +630,21 @@ class generate_json extends CI_Controller {
 		curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 		// curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_VERBOSE, true);
-		 
+
 		// Set HTTP Header 
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-		    'maxauth : ' . base64_encode('maxadmin' . ':' . 'maxadmintest76'))
-		);
-		 
+			'maxauth : ' . base64_encode('maxadmin' . ':' . 'maxadmintest76'))
+	);
+
 		$resultdepart = curl_exec($ch);
 
 		// Close cURL session handle
 		curl_close($ch);
 
 		if(empty($resultdepart))
-   		{
-   			echo 'Koneksi Api Bermasalah / Data Tidak Ditemukan ';exit;
-   		}
+		{
+			echo 'Koneksi Api Bermasalah / Data Tidak Ditemukan ';exit;
+		}
 
 
 		$jsondepart=json_decode($resultdepart);
@@ -542,13 +661,13 @@ class generate_json extends CI_Controller {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 			curl_setopt($ch, CURLOPT_VERBOSE, true);
-			 
+
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			    'maxauth : ' . base64_encode('maxadmin' . ':' . 'maxadmintest76'))
-			);
+				'maxauth : ' . base64_encode('maxadmin' . ':' . 'maxadmintest76'))
+		);
 
 			$arrdata=array();
-			 
+
 			$result= curl_exec($ch);
 			$jsonwo=json_decode($result);
 			$jsonwotes = json_decode(json_encode($jsonwo), true);
@@ -568,14 +687,14 @@ class generate_json extends CI_Controller {
 		// print_r($arrwo);exit;
 
 		if(empty($arrwo))
-   		{
-   			echo 'Data Distrik '.$reqDistrikKode.' Tidak Ditemukan';exit;
-   		}
+		{
+			echo 'Data Distrik '.$reqDistrikKode.' Tidak Ditemukan';exit;
+		}
 
 		
 		$infonomor= 0;
 		$gagal=0;
-	    $berhasil=0;
+		$berhasil=0;
 		foreach ($arrwo as $key => $value) 
 		{
 			$reqAssetNum= $value['assetnum'];
@@ -586,41 +705,41 @@ class generate_json extends CI_Controller {
 			$reqSiteId= $value['siteid'];
 
 			$setInsert->setField('ASSET_NUM', $reqAssetNum);
-		    $setInsert->setField('STATUS', $reqStatus);
-		    $setInsert->setField('DESCRIPTION', $reqDesc);
-		    $setInsert->setField('OPRGROUP', $reqOprgroup);
-		    $setInsert->setField('FAULTTYPE', $reqFaulttype);
-		    $setInsert->setField('SITE_ID', $reqSiteId);
-		    $setInsert->setField('EQUIPMENT_ID', $reqEquipmentId);
+			$setInsert->setField('STATUS', $reqStatus);
+			$setInsert->setField('DESCRIPTION', $reqDesc);
+			$setInsert->setField('OPRGROUP', $reqOprgroup);
+			$setInsert->setField('FAULTTYPE', $reqFaulttype);
+			$setInsert->setField('SITE_ID', $reqSiteId);
+			$setInsert->setField('EQUIPMENT_ID', $reqEquipmentId);
 
-		    $check= new WorkRequest();
+			$check= new WorkRequest();
 
-		    $statement= " AND TRIM(WO) = TRIM('".$reqWoNum."')";
-		    $check->selectByParams(array(), -1, -1, $statement);
+			$statement= " AND TRIM(WO) = TRIM('".$reqWoNum."')";
+			$check->selectByParams(array(), -1, -1, $statement);
 		    // echo $check->query;exit;
-		    $check->firstRow();
-		    $checkwo= $check->getField("ASSET_NUM");
+			$check->firstRow();
+			$checkwo= $check->getField("ASSET_NUM");
 
-		    if(empty($checkwo))
-		    {
-		    	if($setInsert->insert()){
-		    		$berhasil++;
-		    	}
-		    	else{
-		    		$gagal++;
-		    	}
+			if(empty($checkwo))
+			{
+				if($setInsert->insert()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
+				}
 
-		    }
-		    else
-		    {
-		    	if($setInsert->update()){
-		    		$berhasil++;
-		    	}
-		    	else{
-		    		$gagal++;
+			}
+			else
+			{
+				if($setInsert->update()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
 		    		// echo $setInsert->query;
-		    	}
-		    }
+				}
+			}
 			
 		}
 
