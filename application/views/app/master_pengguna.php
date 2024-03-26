@@ -248,7 +248,7 @@ $(document).ready(function() {
                     url: "json-app/generate_json/MasterUserInternalNew/",
                     cache: false,
                     success: function(data){
-                        console.log(data);return false;
+                        // console.log(data);return false;
                         $.messager.progress('close');
                         $.messager.alert('Info', data, 'info');
                         setTimeout(function(){  document.location.href = "app/index/master_pengguna"; }, 3000); 
