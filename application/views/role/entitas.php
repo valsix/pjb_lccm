@@ -181,7 +181,7 @@ body{
         {
         	$statement= " AND d.kode_hak = '".$this->appuserkodehak."'";
         }
-
+        
         $querynya= "
         	SELECT 
         		a.pengguna_hak_distrik_id, a.pengguna_hak_id, b.distrik_id, b.nama distrik_nama, c.blok_unit_id, c.nama blok_unit_nama
@@ -194,11 +194,31 @@ body{
 			ORDER BY pengguna_hak_id ASC 
         ";
 
-		$distrik = "";
-		$query = $this->db->query($querynya);
+			$distrik = "";
+			$query = $this->db->query($querynya);
+
+		
+		$i = 0;
+
+		if(empty($query->result_array()))
+		{
+			$statement= " AND a.pengguna_id = '".$this->appuserid."'";
+			$querynya= "
+        	SELECT 
+        		a.pengguna_id, b.distrik_id, b.nama distrik_nama, c.blok_unit_id, c.nama blok_unit_nama
+			FROM pengguna a
+			inner join distrik b on b.kode = a.kode_distrik
+			inner join blok_unit c on c.kode = a.kode_blok
+			where 1=1
+			".$statement."
+			ORDER BY pengguna_id ASC 
+        ";
+
+			$distrik = "";
+			$query = $this->db->query($querynya);
+		}
 
 		// print_r($querynya);exit;
-		$i = 0;
 
 		$checked='';
 		if ($this->appblokunitid=='') 
