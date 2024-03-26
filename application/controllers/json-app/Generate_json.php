@@ -137,6 +137,120 @@ class generate_json extends CI_Controller {
 
 	}
 
+	function MasterJabatanNew()
+	{
+		$this->load->model("base-app/Generate");
+		$this->load->model("base-app/LogGenerate");
+
+		// $set= new LogGenerate();
+		// // $set->deleteJabatan();
+		$check= new Generate();
+		
+		$json = file_get_contents('https://webcontent.plnnusantarapower.co.id/api/data/hr/Jabatan/all?apikey=539581c464b44701a297a04a782ce4a9');
+		$jsonJadi=json_decode($json);
+		$jsonJadiproses=json_decode(json_encode($jsonJadi), true);
+
+		$gagal=0;
+		$berhasil=0;
+	    // $berhasilupdate=0;
+		$setInsert= new Generate();
+		for($i=0; $i<count($jsonJadiproses); $i++){
+			$reqPositionId= trim($jsonJadiproses[$i]['POS_JABATANKODE']);
+			$reqNamaPosisi= $jsonJadiproses[$i]['POS_JABATANDESC_SHORT'];
+			$reqSuperiorId= $jsonJadiproses[$i]['POS_JABATANATASANKODE'];
+			$reqKodeKategori= $jsonJadiproses[$i]['POS_KLASKATEGORIKODE'];
+			$reqKategori= $jsonJadiproses[$i]['KATEGORI'];
+			$reqKodeKelompokJabatan= $jsonJadiproses[$i]['POS_KLASKELOMPOKJABATANKODE'];
+			$reqKelompokJabatan= $jsonJadiproses[$i]['KELOMPOK_JABATAN'];
+			$reqKodeJenjangJabatan= $jsonJadiproses[$i]['POS_KLASJENJANGJABATANKODE'];
+			$reqJenjangJabatan= $jsonJadiproses[$i]['JENJANG_JABATAN'];
+			$reqKodeKlasifikasiUnit= $jsonJadiproses[$i]['POS_KLASKLASIFIKASIUNITKODE'];
+			$reqKlasifikasiUnit= $jsonJadiproses[$i]['KLASIFIKASI_UNIT'];
+			$reqKodeUnit= $jsonJadiproses[$i]['POS_KLASUNITKODE'];
+			$reqUnit= $jsonJadiproses[$i]['UNIT'];
+			$reqKodeDitbid= $jsonJadiproses[$i]['POS_KLASDITBIDKODE'];
+			$reqDitbid= $jsonJadiproses[$i]['DITBID'];
+			$reqKodeBagian= $jsonJadiproses[$i]['POS_KLASSUBDITKODE'];
+			$reqBagian= $jsonJadiproses[$i]['BAGIAN'];
+			$reqOccupStatus= $jsonJadiproses[$i]['OCCUP_STATUS'];
+
+			$reqNamaLengkap= "";
+			$reqEmail= "";
+			$reqNid= "";
+			$reqPosisi= "";
+			$reqChange= "";
+
+		    // $statement= " AND A.POSITION_ID LIKE '%".$reqPositionId."%'";
+			$statement= " AND TRIM(POSITION_ID) = TRIM('".$reqPositionId."')";
+			$check->selectByParamsCheckJabatan(array(), -1, -1, $statement);
+		    // echo $check->query;exit;
+			$check->firstRow();
+			$checkkode= $check->getField("POSITION_ID");
+
+			$setInsert->setField('POSITION_ID', $reqPositionId);
+			$setInsert->setField('NAMA_POSISI', $reqNamaPosisi);
+			$setInsert->setField('SUPERIOR_ID', $reqSuperiorId);
+			$setInsert->setField('KODE_KATEGORI', $reqKodeKategori);
+			$setInsert->setField('KATEGORI', $reqKategori);
+			$setInsert->setField('KODE_KELOMPOK_JABATAN', $reqKodeKelompokJabatan);
+			$setInsert->setField('KELOMPOK_JABATAN', $reqKelompokJabatan);
+			$setInsert->setField('KODE_JENJANG_JABATAN', $reqKodeJenjangJabatan);
+			$setInsert->setField('JENJANG_JABATAN', $reqJenjangJabatan);
+			$setInsert->setField('KODE_KLASIFIKASI_UNIT', $reqKodeKlasifikasiUnit);
+			$setInsert->setField('KLASIFIKASI_UNIT', $reqKlasifikasiUnit);
+			$setInsert->setField('KODE_UNIT', $reqKodeUnit);
+			$setInsert->setField('UNIT', $reqUnit);
+			$setInsert->setField('KODE_DITBID', $reqKodeDitbid);
+			$setInsert->setField('DITBID', $reqDitbid);
+			$setInsert->setField('KODE_BAGIAN', $reqKodeBagian);
+			$setInsert->setField('BAGIAN', $reqBagian);
+			$setInsert->setField('OCCUP_STATUS', $reqOccupStatus);
+			$setInsert->setField('NAMA_LENGKAP', setQuote($reqNamaLengkap));
+			$setInsert->setField('EMAIL', setQuote($reqEmail));
+			$setInsert->setField('NID', $reqNid);
+			$setInsert->setField('POSISI', $reqPosisi);
+			$setInsert->setField('CHANGE_REASON', $reqChange);
+			$setInsert->setField('TIPE', 1);
+
+			if(empty($checkkode))
+			{
+				if($setInsert->insertJabatan()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
+		    		// echo $setInsert->query;
+				}
+
+			}
+			else
+			{
+				if($setInsert->updateJabatan()){
+					$berhasil++;
+				}
+				else{
+					$gagal++;
+		    		// echo $setInsert->query;
+				}
+			}
+		}
+
+		// exit;
+		
+		$set= new LogGenerate();
+		$set->setField('TABLE_GENERATE', "MASTER JABATAN");
+		$set->setField('USER_GENERATE', $this->appusernama);
+		$set->setField('DATE_GENERATE', "CURRENT_DATE");
+		$set->setField('BERHASIL_GENERATE', $berhasil);
+		$set->setField('GAGAL_GENERATE', $gagal);
+		$set->insert();
+
+		// echo " ".$berhasilinsert." data telah berhasil di insert.   ".$berhasilupdate." data telah berhasil di update.  ".$gagal." data gagal di generate";
+		echo $berhasil." data telah berhasil di generate.  ".$gagal." data gagal di generate";
+
+	}
+
+
 	function MasterUserInternalNew()
 	{
 		$this->load->model("base-app/Generate");

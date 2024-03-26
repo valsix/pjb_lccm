@@ -2,6 +2,12 @@ UPDATE public.pengguna_modul
 	SET  menu_modul='Setting Peran'
 	WHERE kode_modul='0801';
 
+    ALTER TABLE public.log_generate
+    ADD COLUMN berhasil_generate character varying ;
+    
+    ALTER TABLE public.log_generate
+    ADD COLUMN gagal_generate character varying ;
+
 CREATE TABLE IF NOT EXISTS public.pengguna_hak_distrik
 (
     pengguna_hak_distrik_id numeric NOT NULL,

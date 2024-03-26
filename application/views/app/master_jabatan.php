@@ -137,7 +137,7 @@ $(function(){
             });
             if (r){
                 $.ajax({
-                    url: "json-app/generate_json/MasterJabatan/",
+                    url: "json-app/generate_json/MasterJabatanNew/",
                     cache: false,
                     success: function(data){
                         // console.log(data);return false;
