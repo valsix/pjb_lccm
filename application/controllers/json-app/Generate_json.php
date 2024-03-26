@@ -216,6 +216,7 @@ class generate_json extends CI_Controller {
 			$setInsert->setField('KODE_UNIT', $reqKodeBlok);
 			$setInsert->setField('KODE_SUBDIT', $reqKodeUnitM);
 			$setInsert->setField('USERNAME', $reqNid);
+			$setInsert->setField('NAMA', setQuote($reqNamaLengkap));
 
 			if(empty($checkid))
 			{

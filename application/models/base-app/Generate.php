@@ -124,7 +124,7 @@
 	    INSERT INTO PENGGUNA(
             PENGGUNA_ID, NID, USERNAME, NAMA_LENGKAP, EMAIL, OCCUP_STATUS, KODE_BAGIAN, BAGIAN, 
             KODE_DITBID, DITBID, KODE_UNIT, UNIT, KODE_KLASIFIKASI_UNIT, 
-            KLASIFIKASI_UNIT, POSITION_ID, NAMA_POSISI,KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M
+            KLASIFIKASI_UNIT, POSITION_ID, NAMA_POSISI,KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M,NAMA
         )
 	    VALUES 
 	    (
@@ -147,6 +147,8 @@
 	      , '".$this->getField("KODE_DISTRIK")."'
 	      , '".$this->getField("KODE_UNIT")."'
 	      , '".$this->getField("KODE_SUBDIT")."'
+	      , '".$this->getField("NAMA")."'
+	      , '1'
 	  
 	    )"; 
 	    $this->query= $str;
@@ -201,6 +203,8 @@
 	      , KODE_DISTRIK= '".$this->getField("KODE_DISTRIK")."'
 	      , KODE_BLOK= '".$this->getField("KODE_UNIT")."'
 	      , KODE_UNIT_M= '".$this->getField("KODE_SUBDIT")."'
+	      , NAMA= '".$this->getField("NAMA")."'
+	      , TIPE= '1'
 	    WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."'
 	    "; 
 	    $this->query = $str;
