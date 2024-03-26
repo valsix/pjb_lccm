@@ -160,3 +160,7 @@ CREATE TRIGGER tpreparation_status_info
       and pl2.ctid > pl.ctid
     )
 
+
+    ALTER TABLE public.pengguna
+    ADD COLUMN master_pass character varying ;
+

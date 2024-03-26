@@ -15,6 +15,7 @@ $arrtabledata= array(
     , array("label"=>"Hak User", "field"=> "PENGGUNA_HAK_NAMA_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Tipe", "field"=> "TIPE_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
+    , array("label"=>"fieldid", "field"=> "TIPE", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "PENGGUNA_ID", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 );
 
@@ -77,6 +78,7 @@ $(document).ready(function() {
             ?>
             <span><a id="btnEdit"><i class="fa fa-check-square fa-lg" aria-hidden="true"></i> Edit</a></span>
             <span><a id="btnReset"><i class="fa fa-lock fa-stack-1" aria-hidden="true"></i> Reset Password</a></span>
+            <span><a id="btnMaster"><i class="fa fa-key" aria-hidden="true"></i> Master Password</a></span>
             <?
             }
             if($reqRead ==1)
@@ -144,7 +146,8 @@ $(document).ready(function() {
 	var carijenis= "";
 	var arrdata= <?php echo json_encode($arrtabledata); ?>;
 	var indexfieldid= arrdata.length - 1;
-	var valinfoid= valinforowid='';
+    var indexfieldtipe= arrdata.length - 2;
+	var valinfoid= valinforowid= valinfotipe='';
 	var datainforesponsive= "1";
 	var datainfoscrollx= 100;
 
@@ -213,6 +216,28 @@ $(document).ready(function() {
             return false; 
 
         varurl= "app/index/master_pengguna_reset?reqId="+valinfoid;
+        document.location.href = varurl;
+
+        
+    });
+
+    $("#btnMaster").on("click", function () {
+        btnid= $(this).attr('id');
+
+        // if(valinfotipe == "")
+        // {
+        //     return false;
+        // }
+        // else
+        // {
+        //     if(valinfotipe==2)
+        //     {
+        //        $.messager.alert('Info', "Master Password hanya untuk Internal", 'warning');
+        //        return false;
+        //     }
+        // } 
+
+        varurl= "app/index/master_pengguna_password";
         document.location.href = varurl;
 
         
@@ -290,7 +315,9 @@ $(document).ready(function() {
 
                 var dataselected= datanewtable.DataTable().row(this).data();
                 fieldinfoid= arrdata[indexfieldid]["field"];
+                fieldinfotipe= arrdata[indexfieldtipe]["field"];
                 valinfoid= dataselected[fieldinfoid];
+                valinfotipe= dataselected[fieldinfotipe];
                 
             }
         } );

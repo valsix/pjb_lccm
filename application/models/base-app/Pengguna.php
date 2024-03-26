@@ -121,6 +121,19 @@ class Pengguna extends Entity {
 		return $this->execQuery($str);
 	}
 
+	function reset_password_master()
+	{
+		$str = "
+		UPDATE pengguna
+		SET
+		 MASTER_PASS = '".$this->getField("MASTER_PASS")."'
+		WHERE TIPE = '1';
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 	function delete()
 	{
 		$str = "

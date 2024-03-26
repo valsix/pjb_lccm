@@ -461,4 +461,46 @@ class Pengguna_json extends CI_Controller
 				
 	}
 
+	function reset_master_password()
+	{
+		$this->load->model("base-app/Pengguna");
+
+		$reqId= $this->input->post("reqId");
+		$reqMode= $this->input->post("reqMode");
+
+		
+		$reqPassword= $this->input->post("reqPassword");
+		$reqKonfirmasiPassword= $this->input->post("reqKonfirmasiPassword");
+
+		$set = new Pengguna();
+		$set->setField("MASTER_PASS", md5($reqPassword));
+		$set->setField("TIPE", "1");
+		$set->setField("PENGGUNA_ID", $reqId);
+
+		if($reqKonfirmasiPassword !== $reqPassword)
+		{
+			echo "xxx***Password tidak sama, cek kembali password anda";exit;
+		}
+
+		$reqSimpan= "";
+		
+		$set->setField("LAST_UPDATE_USER", $this->adminusernama);
+		$set->setField("LAST_UPDATE_DATE", 'SYSDATE');
+		if($set->reset_password_master())
+		{
+			$reqSimpan= 1;
+		}
+		
+
+		if($reqSimpan == 1 )
+		{
+			echo $reqId."***Data berhasil disimpan";
+		}
+		else
+		{
+			echo "xxx***Data gagal disimpan";
+		}
+				
+	}
+
 }
