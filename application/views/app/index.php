@@ -253,15 +253,21 @@ unset($foto);
                             // $imageSave = imagejpeg($rotate,$imageName,100);
                             // imagedestroy($source);
                             // $reqLinkFoto = $imageSave;
+                            $file="";
+                            if(!empty($reqLinkFoto))
+                            {
+                                $data         = base64_decode($reqLinkFoto);
+                                $file_name    = $reqUsername;
+                                $dirfoto      = 'uploads/pengguna/foto/'.$reqPenggunaid.'/';
+                                if (!is_dir($dirfoto)) {
+                                    makedirs($dirfoto);
+                                }
+                                $file         = $dirfoto . $file_name . '.jpg';
 
-                            $data         = base64_decode($reqLinkFoto);
-                            $file_name    = $reqUsername;
-                            $dirfoto      = 'uploads/pengguna/foto/'.$reqPenggunaid.'/';
-                            if (!is_dir($dirfoto)) {
-                                makedirs($dirfoto);
+
+                                $success      = file_put_contents($file, $data);
                             }
-                            $file         = $dirfoto . $file_name . '.jpg';
-                            $success      = file_put_contents($file, $data);
+                           
 
                             if(file_exists($file))
                             {
