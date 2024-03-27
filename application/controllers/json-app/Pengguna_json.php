@@ -395,7 +395,7 @@ class Pengguna_json extends CI_Controller
 		$set->setField("PENGGUNA_ID", $reqId);
 
 		$check = new Pengguna();
-		$statement = " AND PENGGUNA_ID = '".$reqId."' ";
+		$statement = " AND A.PENGGUNA_ID = '".$reqId."' ";
 		$check->selectByParams(array(), -1, -1, $statement);
   		  // echo $check->query;exit;
 		$check->firstRow();

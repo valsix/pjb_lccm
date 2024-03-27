@@ -63,8 +63,8 @@ class Login extends CI_Controller
 		$vcapcha= $this->session->userdata("capchalogin");
 		$reqCapcha= $this->input->post("reqCapcha");
 
-		// $configwsdl= $this->config;
-		// $configwsdl= $configwsdl->config["ldap"];
+		$configwsdl= $this->config;
+		$configwsdl= $configwsdl->config["ldap"];
 
 		// $payload = array(
 		// 	'username' => '9015051zjy',
@@ -116,10 +116,12 @@ class Login extends CI_Controller
 			// $context  = stream_context_create($opts);
 			// $result = file_get_contents($configwsdl, false, $context);
 			// $hasil = json_decode($result,true);
-			// // print_r($hasil);exit;
+			// // print_r($hasil["userdetail"]);exit;
 			// $valid = $hasil["valid"];
+			// $arrphoto=$hasil["userdetail"];
 
-			// // var_dump($valid);exit;
+			// $linkfoto =$arrphoto["jpegphoto"][0];
+
 
 			// if($valid == 1)
 			// {
@@ -136,6 +138,7 @@ class Login extends CI_Controller
 			// 		$update = new Users();
 			// 		$update->setField("USERNAME", $reqUser);
 			// 		$update->setField("PASS", md5($reqPasswd));
+			// 		$update->setField("FOTO", $linkfoto);
 			// 		$reqSimpan="";
 			// 		if($update->update())
 			// 		{
@@ -157,6 +160,7 @@ class Login extends CI_Controller
 			// 		$insert->setField("PASS", md5($reqPasswd));
 			// 		$insert->setField("PENGGUNA_INTERNAL_ID", ValToNullDB($reqInternalId));
 			// 		$insert->setField("NAMA", $reqNamaLengkap);
+			// 		$insert->setField("FOTO", $linkfoto);
 			// 		$reqSimpan="";
 			// 		if($insert->insert())
 			// 		{

@@ -4,6 +4,8 @@ include_once("functions/date.func.php");
 $this->load->model("base-app/Approval");
 $this->load->model("base-app/Crud");
 $this->load->model("base/Users");
+$this->load->model("base-app/Pengguna");
+
 
 
 $appuserpilihankodehak= $this->appuserpilihankodehak;
@@ -42,6 +44,21 @@ while($set->nextRow())
     $arrdata["LINK_MODUL"]= $set->getField("LINK_MODUL");
     array_push($arrMenu, $arrdata);
 }
+
+
+
+$foto = new Pengguna();
+$foto->selectByParams(array(), -1, -1," AND A.PENGGUNA_ID=".$reqPenggunaid);
+// echo $foto->query;exit;
+$foto->firstRow();
+$reqLinkFoto= $foto->getField("FOTO");
+$reqUsername= $foto->getField("USERNAME");
+$reqPenggunaInternalid= $foto->getField("PENGGUNA_INTERNAL_ID");
+$reqTipePengguna= $foto->getField("TIPE");
+
+
+unset($foto);
+
 
 
 
@@ -220,8 +237,66 @@ while($set->nextRow())
 
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="margin-bottom: 0px !important;">
-                    <div class="image">
+                    <!-- <div class="image">
                         <img src="images/foto.png" class="img-circle elevation-2" alt="User Image">
+                    </div> -->
+                    <div class="image">
+                        <?
+                        if($reqTipePengguna==1)
+                        {
+                            $output_file="photo.jpg";
+                            // $reqLinkFoto=file_put_contents($output_file, file_get_contents($reqLinkFoto));
+                            // $imageName = "hello1.png";
+                            // $imageData = base64_decode($reqLinkFoto);
+                            // $source = imagecreatefromstring($imageData);
+                            // $rotate = imagerotate($source, $angle, 0); 
+                            // $imageSave = imagejpeg($rotate,$imageName,100);
+                            // imagedestroy($source);
+                            // $reqLinkFoto = $imageSave;
+
+                            $data         = base64_decode($reqLinkFoto);
+                            $file_name    = $reqUsername;
+                            $dirfoto      = 'uploads/pengguna/foto/'.$reqPenggunaid.'/';
+                            if (!is_dir($dirfoto)) {
+                                makedirs($dirfoto);
+                            }
+                            $file         = $dirfoto . $file_name . '.jpg';
+                            $success      = file_put_contents($file, $data);
+
+                            if(file_exists($file))
+                            {
+                                $reqLinkFoto=$file;
+                            }
+                            else
+                            {
+                                $reqLinkFoto="images/foto.png";
+                            }
+                        ?>
+                            <img src="<?=$reqLinkFoto?>" class="img-circle elevation-2" alt="User Image">
+                        <?
+                        }
+                        else
+                        {
+                        ?>
+                            <?
+                            if(file_exists($reqLinkFoto))
+                            {
+                              ?>
+                              <img src="<?=$reqLinkFoto?>" class="img-circle elevation-2" alt="User Image">
+                              <?
+                            }
+                            else
+                            {
+                            ?>
+                            <img src="images/foto.png" class="img-circle elevation-2" alt="User Image">
+                            <?
+                            }
+
+                            ?>
+                        <?
+                        }
+                        ?>
+                        
                     </div>
                     <div class="info" style="min-height: 0px !important;">
                        <!--  <a href="#" class="d-block">

@@ -17,7 +17,7 @@ class Users extends Entity{
       $str = "
       INSERT INTO PENGGUNA
       (
-        PENGGUNA_ID, USERNAME, NAMA, STATUS, PENGGUNA_INTERNAL_ID,TIPE,PASS,NAMA_LENGKAP
+        PENGGUNA_ID, USERNAME, NAMA, STATUS, PENGGUNA_INTERNAL_ID,TIPE,PASS,NAMA_LENGKAP,FOTO
       )
       VALUES 
       (
@@ -29,6 +29,7 @@ class Users extends Entity{
         , '1'
         , '".$this->getField("PASS")."'
         , '".$this->getField("NAMA_LENGKAP")."'
+        , '".$this->getField("FOTO")."'
       )"; 
 
     $this->id= $this->getField("PENGGUNA_ID");
@@ -43,6 +44,7 @@ class Users extends Entity{
     UPDATE PENGGUNA
     SET
     PASS= '".$this->getField("PASS")."'
+    , FOTO= '".$this->getField("FOTO")."'
     WHERE USERNAME = '".$this->getField("USERNAME")."'
     "; 
     $this->query = $str;
