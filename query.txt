@@ -170,3 +170,5 @@ CREATE TRIGGER tpreparation_status_info
     ALTER TABLE public.pengguna
     ADD COLUMN master_pass character varying ;
 
+    ALTER TABLE pengguna ALTER COLUMN foto TYPE text;
+
