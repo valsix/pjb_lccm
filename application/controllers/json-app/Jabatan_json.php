@@ -204,7 +204,7 @@ class Jabatan_json extends CI_Controller
 				}
 				if(!empty($reqSearch))
 				{
-					$statement.= " AND lower(A.NAMA_POSISI) like lower('%".$reqSearch."%') or lower(A.unit) like lower('%".$reqSearch."%') ";
+					$statement.= " AND lower(A.NAMA_POSISI) like lower('%".$reqSearch."%') or lower(A.unit) like lower('%".$reqSearch."%') or lower(A.POSITION_ID) like lower('%".$reqSearch."%') ";
 				}
 				
 				$items=array();
