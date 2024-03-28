@@ -481,7 +481,7 @@
 		, NEEDDOWNTIME= '".$this->getField("NEEDDOWNTIME")."'
 		, REPORTDATE= ".$this->getField("REPORTDATE")."
 		, WO_YEAR= ".$this->getField("WO_YEAR")."
-		WHERE WONUM = '".$this->getField("WONUM")."' AND SITEID = '".$this->getField("SITEID")."'
+		WHERE WONUM = '".$this->getField("WONUM")."' AND SITEID = '".$this->getField("SITEID")."' AND ASSETNUM = '".$this->getField("ASSETNUM")."'
 		"; 
 		$this->query = $str;
 		// echo $str;exit;
