@@ -3375,6 +3375,7 @@ class Import_json extends CI_Controller
 		}
 
 		$reqId="";
+		$woyear="";
 		for ($i=2; $i<=$baris; $i++){
 			$colIndex=1;
 			$arrData= [];
@@ -3385,7 +3386,10 @@ class Import_json extends CI_Controller
 				$arrData[$arrField[$row]]['VALUE']= $data->val($i,$colIndex);
 				if($arrField[$row]=="REPORTDATE" )
 				{
+					$tahunget = new DateTime($tempValue);
+					$woyear=$tahunget->format("Y");
 					$set->setField($arrField[$row],dateTimeToDBCheckNew($tempValue));
+					
 				}
 				else
 				{
@@ -3408,7 +3412,7 @@ class Import_json extends CI_Controller
 					}
 					
 				}
-				
+				$set->setField("WO_YEAR",ValToNullDB($woyear));
 				$colIndex++;
 			}
 

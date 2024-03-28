@@ -696,7 +696,7 @@ function jexcelcall(reqStatus)
                 if(reqId == 'xxx')
                     $.messager.alert('Info', infoSimpan, 'warning');
                 else
-                    $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>?reqTahun=<?=$reqTahun?>&reqSelected=selected");
+                    $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>?reqTahun=<?=$reqTahun?>&reqDistrikId=<?=$reqDistrikId?>&reqBlokId=<?=$reqBlokId?>&reqUnitMesinId=<?=$reqUnitMesinId?>&reqAssetNum=<?=$reqAssetNum?>&reqSelected=selected");
             }
         });
        

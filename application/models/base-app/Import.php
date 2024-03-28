@@ -445,7 +445,7 @@
     	$str = "
     	INSERT INTO t_workorder
     	(
-    		SITEID, ASSETNUM, WONUM, WO_DESC, WORKTYPE, WORK_GROUP, NEEDDOWNTIME, REPORTDATE, LAST_CREATE_USER, LAST_CREATE_DATE
+    		SITEID, ASSETNUM, WONUM, WO_DESC, WORKTYPE, WORK_GROUP, NEEDDOWNTIME, REPORTDATE, LAST_CREATE_USER, LAST_CREATE_DATE,WO_YEAR
     	)
     	VALUES 
     	(
@@ -459,6 +459,7 @@
 	    	, ".$this->getField("REPORTDATE")."
 	    	, '".$this->getField("LAST_CREATE_USER")."'
 	    	, ".$this->getField("LAST_CREATE_DATE")."
+	    	, ".$this->getField("WO_YEAR")."
 	    )"; 
 
 		// $this->id= $this->getField("PENGGUNA_EXTERNAL_ID");
@@ -479,6 +480,7 @@
 		, WORK_GROUP= '".$this->getField("WORK_GROUP")."'
 		, NEEDDOWNTIME= '".$this->getField("NEEDDOWNTIME")."'
 		, REPORTDATE= ".$this->getField("REPORTDATE")."
+		, WO_YEAR= ".$this->getField("WO_YEAR")."
 		WHERE WONUM = '".$this->getField("WONUM")."' AND SITEID = '".$this->getField("SITEID")."'
 		"; 
 		$this->query = $str;

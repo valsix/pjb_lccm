@@ -460,7 +460,7 @@ class Work_order_json extends CI_Controller
 				}
 				else
 				{
-					$statement .= " AND A.WOSTATUS='".$reqStatus."'";
+					// $statement .= " AND A.WOSTATUS='".$reqStatus."'";
 				}
 
 			}
@@ -760,16 +760,14 @@ class Work_order_json extends CI_Controller
 		$reqArrValue=json_decode($reqArrValue);
 		$reqArrValueBefore=json_decode($reqArrValueBefore);
 		$reqArrValueCheck=$reqArrValue;
-		// print_r($reqArrValue);exit;
 		$checkstatus="";
 		$baris="";
 		foreach ($reqArrValue as $key => $value) {
 			$reqJumlahLabor=$value[11];
-			$reqOnHandRepair = explode("-", $value[11])[0];
+			$reqOnHandRepair = explode("-", $value[10])[0];
 			$reqDown0 = explode("-", $value[9])[0];
 			$reqDownTime = explode("-", $value[8])[0];
 
-			// var_dump($reqDownTime);
 			$baris=$key+1;
 			if(!is_numeric($reqDownTime))
 			{
@@ -797,7 +795,7 @@ class Work_order_json extends CI_Controller
 		foreach ($reqArrValue as $key => $value) {
 			$set = new WorkOrder();
 			$reqJumlahLabor=$value[11];
-			$reqOnHandRepair = explode("-", $value[11])[0];
+			$reqOnHandRepair = explode("-", $value[10])[0];
 			$reqDown0 = explode("-", $value[9])[0];
 			$reqDownTime = explode("-", $value[8])[0];
 			$set->setField("ASSETNUMOLD", $reqArrValueBefore[$key][0]);
