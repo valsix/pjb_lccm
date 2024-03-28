@@ -2793,7 +2793,7 @@ class Import_json extends CI_Controller
 			}
 		}
 
-
+		$reqId="";
 		for ($i=2; $i<=$baris; $i++){
 			$colIndex=1;
 			$arrData= [];
@@ -2803,17 +2803,43 @@ class Import_json extends CI_Controller
 				$tempValue= $data->val($i,$colIndex);
 				$arrData[$arrField[$row]]['VALUE']= $data->val($i,$colIndex);
 				$set->setField($arrField[$row],$tempValue);
+
+				$opryear=$data->val($i,2);
+				$assetnum=$data->val($i,1);
+				$statement =" AND A.ASSETNUM = '".$assetnum."' AND A.OPR_YEAR = '".$opryear."'";
+				$check = new Import();
+				$check->selectByParamsCheckOperationAsset(array(), -1, -1, $statement);
+					// echo $check->query;
+				$check->firstRow();
+				$reqCheckAsset=$check->getField("ASSETNUM");
 				
 				$colIndex++;
 			}
 
 			$set->setField("LAST_CREATE_DATE", "NOW()");
 			$set->setField("LAST_CREATE_USER", $this->appusernama);
-			if($set->insertopasset())
-			{
-				$reqSimpan = 1;
 
+			if(empty($reqCheckAsset))
+			{
+				$set->setField("LAST_CREATE_DATE", "NOW()");
+				$set->setField("LAST_CREATE_USER", $this->appusernama);
+				if($set->insertopasset())
+				{
+					$reqSimpan = 1;
+				}
 			}
+			else
+			{
+				$set->setField("LAST_UPDATE_DATE", "NOW()");
+				$set->setField("LAST_UPDATE_USER", $this->appusernama);
+
+				if($set->updateopasset())
+				{
+					$reqSimpan = 1;
+				}
+			}
+
+		
 		}
 
 		if($reqSimpan == 1 )

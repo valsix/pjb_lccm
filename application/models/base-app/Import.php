@@ -769,6 +769,23 @@
 	}
 
 
+	function updateopasset()
+	{
+		$str = "
+		UPDATE t_opr_asset_lccm
+		SET
+		 ELECT_lOSS=".$this->getField("ELECT_lOSS")."
+		, EFF_LOSS=".$this->getField("EFF_LOSS")."
+		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
+		WHERE OPR_YEAR = '".$this->getField("OPR_YEAR")."'  AND ASSETNUM = '".$this->getField("ASSETNUM")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
+
 	
     function selectByParamsCheckJenisUnit($paramsArray=array(),$limit=-1,$from=-1, $distrikment='', $sOrder="ORDER BY JENIS_UNIT_KERJA_ID ASC")
 	{
@@ -1228,6 +1245,26 @@
 		$this->query = $str;
 				
 		return $this->selectLimit($str,10,$from); 
+    }
+
+    function selectByParamsCheckOperationAsset($paramsArray=array(),$limit=-1,$from=-1, $distrikment='', $sOrder="ORDER BY OPR_YEAR ASC")
+	{
+		$str = "
+		SELECT 
+			A.*
+		FROM t_opr_asset_lccm A
+		WHERE 1=1
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $distrikment." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
     }
 
 
