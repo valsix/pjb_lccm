@@ -9,6 +9,10 @@ $this->load->model("base-app/WorkOrder");
 
 
 $appuserkodehak= $this->appuserkodehak;
+$appdistrikid= $this->appdistrikid;
+$appdistrikkode= $this->appdistrikkode;
+$appblokunitid= $this->appblokunitid;
+$appblokunitkode= $this->appblokunitkode;
 
 $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
@@ -37,6 +41,13 @@ $reqDelete= $set->getField("MODUL_D");
 $set= new Distrik();
 $arrdistrik= [];
 $statement="  ";
+if(!empty($appdistrikid))
+{
+    $statement=" AND A.DISTRIK_ID IN (".$appdistrikid.") AND A.STATUS IS NULL AND A.NAMA IS NOT NULL 
+    ";
+}
+
+
 $set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
@@ -121,7 +132,7 @@ unset($set);
                                                 $selectvalkode= $item["KODE"];
 
                                                 $selected="";
-                                                if($selectvalkode==$reqDistrikId)
+                                                if($selectvalkode==$appdistrikkode)
                                                 {
                                                     $selected="selected";
                                                 }
@@ -332,6 +343,45 @@ unset($set);
             datanewtable.DataTable().ajax.url(jsonurl).load();
         });
     });
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        // console.log(reqBlokId);
+        var selectednew="";
+        var appblokunitkode='<?=$appblokunitkode?>';
+
+        $(document).ready(function(){
+             rekapwo();
+            $.getJSON("json-app/blok_unit_json/filter_blok?reqDistrikId="+reqDistrikId,
+                function(data)
+                {
+                    $("#reqBlokId option").remove();
+                    $("#reqUnitMesinId option").remove();
+
+                    $("#reqBlokId").attr("readonly", false); 
+                    $("#reqBlokId").append('<option value="" >Pilih Blok Unit</option>');
+                    $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+                    jQuery(data).each(function(i, item){
+                        if(item.KODE==appblokunitkode)
+                        {
+                            var selectednew="selected";
+                        }
+                        $("#reqBlokId").append('<option '+selectednew+' value="'+item.KODE+'" >'+item.text+'</option>');
+                    });
+                });
+
+              
+            $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+                function(data)
+                {
+                // console.log(data);
+                $("#reqUnitMesinId option").remove();
+                $("#reqUnitMesinId").attr("readonly", false); 
+                $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+                jQuery(data).each(function(i, item){
+                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+                });
+            });
+       });
 
 
     $('#reqDistrikId').on('change', function() {

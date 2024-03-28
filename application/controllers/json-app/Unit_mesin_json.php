@@ -22,6 +22,10 @@ class unit_mesin_json extends CI_Controller
 		$this->appusernama= $this->session->userdata("appusernama");
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
+		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appdistrikid= $this->session->userdata("appdistrikid");
+		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
+		$this->appblokunitkode= $this->session->userdata("appblokunitkode");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -327,6 +331,12 @@ class unit_mesin_json extends CI_Controller
 
 		$reqDistrikId =  $this->input->get('reqDistrikId');
 		$reqBlokId =  $this->input->get('reqBlokId');
+
+
+		$appdistrikid= $this->appdistrikid;
+		$appdistrikkode= $this->appdistrikkode;
+		$appblokunitid= $this->appblokunitid;
+		$appblokunitkode= $this->appblokunitkode;
 		
 		
 		$statement=" AND 1=2 ";
@@ -352,6 +362,11 @@ class unit_mesin_json extends CI_Controller
 			unset($set);
 
 			$statementnew =" AND A.KODE IS NOT NULL AND A.DISTRIK_ID = ".$reqDistrikId." AND A.BLOK_UNIT_ID = ".$reqBlokId;
+		}
+
+		if(empty($reqBlokId) && !empty($appblokunitid))
+		{
+			 $statementnew=" AND A.BLOK_UNIT_ID IN (".$appblokunitid.") AND A.STATUS IS NULL AND A.NAMA IS NOT NULL ";
 		}
 
 

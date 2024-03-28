@@ -22,6 +22,10 @@ class Work_order_json extends CI_Controller
 		$this->appusernama= $this->session->userdata("appusernama");
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
+		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appdistrikid= $this->session->userdata("appdistrikid");
+		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
+		$this->appblokunitkode= $this->session->userdata("appblokunitkode");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -30,6 +34,8 @@ class Work_order_json extends CI_Controller
 	function json()
 	{
 		$this->load->model("base-app/WorkOrder");
+
+
 
 		$set= new WorkOrder();
 
@@ -53,6 +59,12 @@ class Work_order_json extends CI_Controller
 		$reqBlokId= $this->input->get("reqBlokId");
 		$reqUnitMesinId= $this->input->get("reqUnitMesinId");
 		$reqAssetNum= $this->input->get("reqAssetNum");
+
+		$appdistrikid= $this->appdistrikid;
+		$appdistrikkode= $this->appdistrikkode;
+		$appblokunitid= $this->appblokunitid;
+		$appblokunitkode= $this->appblokunitkode;
+		
 
 
 		$searchJson= "";
@@ -94,6 +106,16 @@ class Work_order_json extends CI_Controller
 				$statement .= " AND C.WO_CR='".$reqStatus."'";
 			}
 			
+		}
+
+		if(!empty($appdistrikkode) && empty($reqDistrikId))
+		{
+			 $statement.=" AND C.KODE_DISTRIK = '".$appdistrikkode."' ";
+		}
+
+		if(!empty($appblokunitkode) && empty($reqBlokId))
+		{
+			 $statement.=" AND C.KODE_BLOK = '".$appblokunitkode."' ";
 		}
 
 	
