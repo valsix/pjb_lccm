@@ -67,7 +67,7 @@ else
     $reqPositionId= $set->getField("POSITION_ID");
     $reqRoleId= $set->getField("ROLE_ID");
     $reqPerusahaanId= $set->getField("PERUSAHAAN_EKSTERNAL_ID");
-    $reqStatus= $set->getField("STATUS");
+    $reqStatus= $set->getField("STATUS_AKTIF");
     $reqLinkFoto= $set->getField("FOTO");
     $reqExpiredDate= dateToPageCheck($set->getField("EXPIRED_DATE"));
     $reqPositionNama= $set->getField("JABATAN_INFO");
@@ -475,7 +475,7 @@ if($reqTipe ==1)
                             <div class='col-md-8'>
                                 <div class='form-group'>
                                     <div class='col-md-11'>
-                                         <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" name="reqNid"  id="reqNid" value="<?=$reqNid?>" style="width:100%" <?=$disabled?> />
+                                         <input autocomplete="off" class="easyui-validatebox textbox form-control" type="text" required name="reqNid"  id="reqNid" value="<?=$reqNid?>" style="width:100%" <?=$disabled?> />
                                     </div>
                                 </div>
                             </div>
@@ -587,7 +587,7 @@ if($reqTipe ==1)
                                 <div class='form-group'>
                                     <div class='col-md-11'>
                                         <input   name="reqStatus" class="easyui-combobox form-control" id="reqStatus"
-                                        data-options="width:'300',editable:false,valueField:'id',textField:'text',url:'json-app/Combo_json/combostatusaktif'" value="<?=$reqStatus?>" required <?=$disabled?>/>
+                                        data-options="width:'300',editable:false,valueField:'id',textField:'text',url:'json-app/Combo_json/combostatusaktifpengguna'" value="<?=$reqStatus?>" required <?=$disabled?>/>
                                     </div>
                                 </div>
                             </div>

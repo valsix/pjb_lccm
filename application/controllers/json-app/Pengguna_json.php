@@ -259,7 +259,7 @@ class Pengguna_json extends CI_Controller
 		$set->setField("NO_TELP", ValToNullDB($reqNoTelpon));
 		$set->setField("EMAIL", $reqEmail);
 		$set->setField("ROLE_ID", ValToNullDB($reqRoleId));
-		$set->setField("STATUS", $reqStatus);
+		$set->setField("STATUS_AKTIF", $reqStatus);
 		$set->setField("FOTO", $reqLinkFoto);
 		$set->setField("PASS", md5($reqPass));
 		$set->setField("EXPIRED_DATE", dateToDBCheck($reqExpiredDate));

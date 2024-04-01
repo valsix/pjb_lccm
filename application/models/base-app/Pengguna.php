@@ -59,6 +59,7 @@ class Pengguna extends Entity {
 		, ROLE_ID= ".$this->getField("ROLE_ID")."
 		, TIPE= '".$this->getField("TIPE")."'
 		, PASS= '".$this->getField("PASS")."'
+		, STATUS_AKTIF= '".$this->getField("STATUS_AKTIF")."'
 
 		WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."'
 		"; 
@@ -99,6 +100,7 @@ class Pengguna extends Entity {
 		, NO_TELP = ".$this->getField("NO_TELP")."
 		, EMAIL = '".$this->getField("EMAIL")."'
 		, EXPIRED_DATE = ".$this->getField("EXPIRED_DATE")."
+		, STATUS_AKTIF = '".$this->getField("STATUS_AKTIF")."'
 
 		WHERE PENGGUNA_ID = '".$this->getField("PENGGUNA_ID")."'
 		"; 
@@ -250,7 +252,7 @@ class Pengguna extends Entity {
 				INNER JOIN PENGGUNA_HAK_AKSES B ON B.PENGGUNA_HAK_ID = A.PENGGUNA_HAK_ID 
 				GROUP BY B.PENGGUNA_ID
 			) B ON B.PENGGUNA_ID = A.PENGGUNA_ID
-			LEFT JOIN MASTER_JABATAN C ON C.POSITION_ID = A.POSITION_ID
+			LEFT JOIN MASTER_JABATAN C ON C.POSITION_ID = A.POSITION_ID AND C.POSITION_ID <> ''
 			WHERE 1=1
 		"; 
 		

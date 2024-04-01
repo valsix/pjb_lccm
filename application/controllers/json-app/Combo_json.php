@@ -39,6 +39,18 @@ class Combo_json extends CI_Controller
 		echo json_encode($arr_json);
 	}
 
+	function combostatusaktifpengguna() 
+	{
+		$i = 0;
+		$arr_json[$i]['id']= "0";
+		$arr_json[$i]['text']= "Aktif";
+		$i++;
+		$arr_json[$i]['id']= "1";
+		$arr_json[$i]['text']= "Inactive";
+		$i++;
+		echo json_encode($arr_json);
+	}
+
 
 	function comborisiko() 
 	{

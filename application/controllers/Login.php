@@ -182,7 +182,7 @@ class Login extends CI_Controller
 			{
 				$this->session->set_userdata('sessappinfouser', $reqUser);
 				$this->session->set_userdata('sessappinfopass', $reqPasswd);
-				$this->session->set_userdata('sessappinfopesan', "Username dan password tidak sesuai.");
+				$this->session->set_userdata('sessappinfopesan', "Username dan password tidak sesuai / User tidak aktif");
 				redirect ('login');
 			}
 		}

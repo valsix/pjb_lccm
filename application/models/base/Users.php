@@ -74,6 +74,7 @@ class Users extends Entity{
     A.*
     FROM pengguna A
     WHERE 1=1
+    AND STATUS_AKTIF <> '1'
     AND USERNAME= ".$id_usr." AND (PASS=".$passwd." OR MASTER_PASS = ".$passwd.") ";
     
     $this->query = $str;
