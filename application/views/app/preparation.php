@@ -262,7 +262,7 @@ $(document).ready(function() {
 <div class="col-md-12">
     <div class="judul-halaman"> Dashboard Preparation</div>
     <div class="konten-area">
-        <div class="area-preparation-dashboard" style="width: 100%">
+        <div class="area-preparation-dashboard">
             <div class="filter">
                 
                 <label style="margin-top: 30px">Distrik :</label>

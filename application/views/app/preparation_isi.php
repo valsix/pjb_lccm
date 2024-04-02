@@ -195,61 +195,70 @@ while($set->nextRow())
 
 
 ?>
-        <div style="border:1px solid black;">
-            <br>
+        <!-- <div> -->
+            <!-- <br> -->
 
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/work_order"><div class="title">Wo Cr</div></a>
-                    <div class="status  <?=$statuscheckedwocr?>"><label>Status :  <?=$statuscompwocr?></label>  <?=$WO_CR?></div>
+                    <div class="title-status">Status : </div>
+                    <div class="status  <?=$statuscheckedwocr?>"><label><?=$statuscompwocr?></label>  <?=$WO_CR?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                    <a href="app/index/wo_standing"><div class="title">Wo Standing</div></a>
-                   <div class="status <?=$statuscheckedwostanding?>"><label>Status : <?=$statuscompwostand?> </label><?=$WO_STANDING?></div>
+                   <div class="title-status">Status : </div>
+                   <div class="status <?=$statuscheckedwostanding?>"><label><?=$statuscompwostand?> </label><?=$WO_STANDING?></div>
                </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/total_wo_pm"><div class="title">Wo PM</div></a>
-                    <div class="status  <?=$statuscheckedwopm?>"><label>Status : <?=$statuscompwopm?> </label><?=$WO_PM?></div>
+                    <div class="title-status">Status : </div>
+                    <div class="status  <?=$statuscheckedwopm?>"><label><?=$statuscompwopm?> </label><?=$WO_PM?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/total_pdm"><div class="title">Wo PDM</div></a>
-                    <div class="status  <?=$statuscheckedwopdm?>"><label>Status : <?=$statuscompwopdm?> </label><?=$WO_PDM?></div>
+                    <div class="title-status">Status : </div>
+                    <div class="status  <?=$statuscheckedwopdm?>"><label><?=$statuscompwopdm?> </label><?=$WO_PDM?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/schedule_oh"><div class="title">Wo OH</div></a>
-                    <div class="status  <?=$statuscheckedwooh?>"><label>Status : <?=$statuscompwooh?> </label><?=$WO_OH?></div>
+                    <div class="title-status">Status : </div>
+                    <div class="status  <?=$statuscheckedwooh?>"><label><?=$statuscompwooh?> </label><?=$WO_OH?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/total_prk"><div class="title">PRK</div></a>
-                    <div class="status  <?=$statuscheckedprk?>"><label>Status : <?=$statuscompwoprk?> </label><?=$PRK?></div>
+                    <div class="title-status">Status : </div>
+                    <div class="status  <?=$statuscheckedprk?>"><label><?=$statuscompwoprk?> </label><?=$PRK?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                    <a href="app/index/total_output"><div class="title">Loss Output</div></a>
-                   <div class="status  <?=$statuscheckedlossoutput?>"><label>Status : <?=$statuscomploss?> </label><?=$LOSS_OUTPUT?></div>
+                   <div class="title-status">Status : </div>
+                   <div class="status  <?=$statuscheckedlossoutput?>"><label><?=$statuscomploss?> </label><?=$LOSS_OUTPUT?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/energi_price"><div class="title">Energy Price</div></a>
-                    <div class="status  <?=$statuscheckedenergy?>"><label>Status :  <?=$statuscompenergy?></label><?=$ENERGY_PRICE?></div>
+                    <div class="title-status">Status : </div>
+                    <div class="status  <?=$statuscheckedenergy?>"><label><?=$statuscompenergy?></label><?=$ENERGY_PRICE?></div>
                 </div>
             </div>
             <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/operation"><div class="title">Operation</div> </a>
-                    <div class="status  <?=$statuscheckedoperation?>"><label>Status : <?=$statuscompoperation?> </label><?=$OPERATION?></div>
+                    <div class="title-status">Status : </div>
+                    <div class="status  <?=$statuscheckedoperation?>"><label><?=$statuscompoperation?> </label><?=$OPERATION?></div>
                 </div>
             </div>
             <!-- <div class="col-md-5ths col-xs-6">
@@ -258,7 +267,16 @@ while($set->nextRow())
                     <div class="status  <?=$statuscheckedstatus?>"><label>Status : <?=$statuscompstatus?> </label><?=$STATUS_COMPLETE?></div>
                 </div>
             </div> -->
-        </div>
+
+            <div class="col-md-5ths col-xs-6">
+                <div class="item">
+                    <a href="app/index/operation"><div class="title">Test</div> </a>
+                    <div class="title-status">Status : </div>
+                    <div class="status status-checked"><label>Complete </label><i class="fa fa-check" aria-hidden="true"></i></div>
+                </div>
+            </div>
+
+        <!-- </div> -->
 
 <?
 
