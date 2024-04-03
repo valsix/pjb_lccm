@@ -381,5 +381,25 @@ class Crud extends Entity {
 		return $this->selectLimit($str,$limit,$from); 
 	}
 
+	function selectByParamsPengguna($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="")
+	{
+		$str = "
+		SELECT A.* 
+		FROM PENGGUNA A
+		WHERE 1=1 
+
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+	}
+
 } 
 ?>

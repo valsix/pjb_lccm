@@ -264,7 +264,7 @@ class Crud_json extends CI_Controller
 					{
 						$penggunainternal = new Crud();
 						$statement =" AND POSITION_ID='".$value."'";
-						$penggunainternal->selectByParamsInternal(array(), -1, -1, $statement);
+						$penggunainternal->selectByParamsPengguna(array(), -1, -1, $statement);
 						while($penggunainternal->nextRow())
 						{
 
