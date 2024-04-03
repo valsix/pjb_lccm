@@ -268,13 +268,13 @@ while($set->nextRow())
                 </div>
             </div> -->
 
-            <div class="col-md-5ths col-xs-6">
+           <!--  <div class="col-md-5ths col-xs-6">
                 <div class="item">
                     <a href="app/index/operation"><div class="title">Test</div> </a>
                     <div class="title-status">Status : </div>
                     <div class="status status-checked"><label>Complete </label><i class="fa fa-check" aria-hidden="true"></i></div>
                 </div>
-            </div>
+            </div> -->
 
         <!-- </div> -->
 
