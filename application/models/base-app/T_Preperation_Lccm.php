@@ -138,6 +138,22 @@
 		return $this->execQuery($str);
 	}
 
+
+	function updateenergy()
+	{
+		$str = "
+		UPDATE t_preperation_lccm
+		SET
+		 ENERGY_PRICE= ".$this->getField("ENERGY_PRICE")."
+		, LAST_UPDATE_USER= '".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE= ".$this->getField("LAST_UPDATE_DATE")."
+		WHERE YEAR_LCCM = '".$this->getField("YEAR_LCCM")."'  AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."' 
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 	function updateoh()
 	{
 		$str = "

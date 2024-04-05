@@ -48,7 +48,7 @@
 		, STATUS= '".$this->getField("STATUS")."'
 		, LAST_UPDATE_USER= '".$this->getField("LAST_UPDATE_USER")."'
 		, LAST_UPDATE_DATE= ".$this->getField("LAST_UPDATE_DATE")."
-		WHERE PRICE_YEAR = '".$this->getField("PRICE_YEAR")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."'
+		WHERE PRICE_YEAR = '".$this->getField("PRICE_YEAR")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."'
 		"; 
 		$this->query = $str;
 		// echo $str;exit;

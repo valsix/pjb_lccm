@@ -22,6 +22,7 @@ $arrtabledata= array(
     , array("label"=>"Energi Price", "field"=> "ENERGY_PRICE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Status", "field"=> "STATUS_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
    
+    , array("label"=>"fieldid", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "PRICE_YEAR", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 );
@@ -305,6 +306,7 @@ $(document).ready(function() {
 	var arrdata= <?php echo json_encode($arrtabledata); ?>;
 	var indexfieldid= arrdata.length - 1;
     var indexfieldblok= arrdata.length - 2;
+    var indexfielddistrik= arrdata.length - 3;
     var valinfoid= valinforowid= valinfoblok='';
 	var datainforesponsive= "1";
 	var datainfoscrollx= 100;
@@ -334,7 +336,7 @@ $(document).ready(function() {
             }
         }
 
-        varurl= "app/index/energi_price_add?reqId="+valinfoid+"&reqBlokId="+valinfoblok;
+        varurl= "app/index/energi_price_add?reqId="+valinfoid+"&reqBlokId="+valinfoblok+"&reqDistrikId="+valinfodistrik;
         document.location.href = varurl;
     });
 
@@ -462,8 +464,10 @@ $(document).ready(function() {
                 var dataselected= datanewtable.DataTable().row(this).data();
                 fieldinfoid= arrdata[indexfieldid]["field"];
                 fieldinfoblok= arrdata[indexfieldblok]["field"];
+                fieldinfodistrik= arrdata[indexfielddistrik]["field"];
                 valinfoid= dataselected[fieldinfoid];
                 valinfoblok= dataselected[fieldinfoblok];
+                valinfodistrik= dataselected[fieldinfodistrik];
 
 
                 // if(valinfostatus=='' || valinfostatus==null )

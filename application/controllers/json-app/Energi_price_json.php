@@ -280,10 +280,10 @@ class Energi_price_Json extends CI_Controller
 					$statusprep="";
 					if($reqStatus==1)
 					{
-						$statusprep=1;
+						$statusprep='true';
 					}
 					elseif ($reqStatus==2) {
-						$statusprep=0;
+						$statusprep='false';
 					}
 
 					$statement=" AND A.KODE_DISTRIK =  '".$reqDistrikId."' AND A.KODE_BLOK =  '".$reqBlokId."' AND A.YEAR_LCCM =  '".$reqTahun."' ";
@@ -303,7 +303,7 @@ class Energi_price_Json extends CI_Controller
 						$set->setField("YEAR_LCCM", $reqTahun);
 						$set->setField("LAST_UPDATE_USER", $this->appusernama);
 						$set->setField("LAST_UPDATE_DATE", 'NOW()');
-						if($set->update())
+						if($set->updateenergy())
 						{
 							$reqSimpan= 1;
 						}
@@ -335,10 +335,10 @@ class Energi_price_Json extends CI_Controller
 					$statusprep="";
 					if($reqStatus==1)
 					{
-						$statusprep=1;
+						$statusprep='true';
 					}
 					elseif ($reqStatus==2) {
-						$statusprep=0;
+						$statusprep='false';
 					}
 
 					$statement=" AND A.KODE_DISTRIK =  '".$reqDistrikId."' AND A.KODE_BLOK =  '".$reqBlokId."' AND A.YEAR_LCCM =  '".$reqTahun."' ";
@@ -358,7 +358,7 @@ class Energi_price_Json extends CI_Controller
 						$set->setField("YEAR_LCCM", $reqTahun);
 						$set->setField("LAST_UPDATE_USER", $this->appusernama);
 						$set->setField("LAST_UPDATE_DATE", 'NOW()');
-						if($set->update())
+						if($set->updateenergy())
 						{
 							$reqSimpan= 1;
 						}

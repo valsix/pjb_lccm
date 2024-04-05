@@ -17,6 +17,8 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 $reqId = $this->input->get("reqId");
 $reqLihat = $this->input->get("reqLihat");
 $reqBlokId = $this->input->get("reqBlokId");
+$reqDistrikId = $this->input->get("reqDistrikId");
+
 
 
 
@@ -30,7 +32,7 @@ else
 {
     $reqMode = "update";
 
-    $statement = " AND A.PRICE_YEAR = '".$reqId."' AND A.KODE_BLOK = '".$reqBlokId."' ";
+    $statement = " AND A.PRICE_YEAR = '".$reqId."' AND A.KODE_DISTRIK = '".$reqDistrikId."'  AND A.KODE_BLOK = '".$reqBlokId."'";
     $set->selectByParams(array(), -1, -1, $statement);
     // echo $set->query;exit;
     $set->firstRow();
