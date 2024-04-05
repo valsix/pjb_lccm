@@ -3087,9 +3087,10 @@ class Import_json extends CI_Controller
 
 		$baris = $data->rowcount($sheet_index=0);
 
-		$arrField= array("KODE_DISTRIK","KODE_BLOK","PRICE_YEAR","ENERGY_PRICE");
+		$arrField= array("KODE_DISTRIK","KODE_BLOK","PRICE_YEAR","ENERGY_PRICE","STATUS");
 
 		$this->load->model("base-app/Import");
+		$this->load->model("base-app/T_Preperation_Lccm");
 
 		$set = new Import();
 		
@@ -3229,6 +3230,7 @@ class Import_json extends CI_Controller
 					$kddistrik=$data->val($i,1);
 					$kdblok=$data->val($i,2);
 					$priceyear=$data->val($i,3);
+					$chstatus=$data->val($i,5);
 					$statement =" AND A.KODE_DISTRIK = '".$kddistrik."' AND A.KODE_BLOK = '".$kdblok."'  AND A.PRICE_YEAR = '".$priceyear."'";
 					$check = new Import();
 					$check->selectByParamsCheckEnergiPrice(array(), -1, -1, $statement);
@@ -3248,6 +3250,42 @@ class Import_json extends CI_Controller
 						$set->setField("KODE_BLOK_OLD",$reqCheckBlok);
 						$set->setField("PRICE_YEAR_OLD",$reqCheckPrice);
 					}
+						if(!empty($chstatus))
+						{
+							
+							$statusprep="";
+							if($chstatus==1)
+							{
+								$statusprep='true';
+							}
+							elseif ($chstatus==2) {
+								$statusprep='false';
+							}
+
+							$statement=" AND A.KODE_DISTRIK =  '".$reqCheckDistrik."' AND A.KODE_BLOK =  '".$reqCheckBlok."' AND A.YEAR_LCCM =  '".$priceyear."' ";
+							$checkprep = new T_Preperation_Lccm();
+							$checkprep->selectByParams(array(), -1, -1, $statement);
+							// echo $check->query;exit;
+							$checkprep->firstRow();
+							$checkKodeprep= $checkprep->getField("KODE_DISTRIK");
+
+							if(!empty($checkKodeprep))
+							{
+								$reqSimpan="";
+								$setprep = new T_Preperation_Lccm();
+								$setprep->setField("ENERGY_PRICE", $statusprep);
+								$setprep->setField("KODE_DISTRIK", $reqCheckDistrik);
+								$setprep->setField("KODE_BLOK", $reqCheckBlok);
+								$setprep->setField("YEAR_LCCM", $priceyear);
+								$setprep->setField("LAST_UPDATE_USER", $this->appusernama);
+								$setprep->setField("LAST_UPDATE_DATE", 'NOW()');
+								if($setprep->updateenergy())
+								{
+									$reqSimpan= 1;
+								}
+							}
+							
+						}
 					
 				}
 				
@@ -3272,6 +3310,8 @@ class Import_json extends CI_Controller
 					$reqSimpan = 1;
 
 				}
+
+
 			}
 
 			
