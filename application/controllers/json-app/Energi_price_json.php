@@ -346,7 +346,7 @@ class Energi_price_Json extends CI_Controller
 					$check->selectByParams(array(), -1, -1, $statement);
 					// echo $check->query;exit;
 					$check->firstRow();
-					$checkKode= $check->getField("SITEID");
+					$checkKode= $check->getField("KODE_BLOK");
 
 					if(!empty($checkKode))
 					{
