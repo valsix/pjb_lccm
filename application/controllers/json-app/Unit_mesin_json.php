@@ -369,6 +369,11 @@ class unit_mesin_json extends CI_Controller
 			 $statementnew=" AND A.BLOK_UNIT_ID IN (".$appblokunitid.") AND A.STATUS IS NULL AND A.NAMA IS NOT NULL ";
 		}
 
+		if(empty($reqBlokId) && empty($appblokunitid))
+		{
+			 $statementnew=" AND 1=2  ";
+		}
+
 
 		$set= new UnitMesin();
 		$arrset= [];
