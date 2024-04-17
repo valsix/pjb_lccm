@@ -19,7 +19,15 @@ $reqLihat = $this->input->get("reqLihat");
 $reqBlokId = $this->input->get("reqBlokId");
 $reqDistrikId = $this->input->get("reqDistrikId");
 
+if(empty($reqDistrikId))
+{
+    $reqDistrikId=$this->appdistrikkode;
+}
 
+if(empty($reqBlokId))
+{
+    $reqBlokId=$this->appblokunitkode;
+}
 
 
 $set= new T_Energy_Price_Lccm();
@@ -60,6 +68,12 @@ if($reqLihat ==1)
 $set= new Distrik();
 $arrdistrik= [];
 $statement="  ";
+
+if(!empty($reqDistrikId))
+{
+    $statement = " AND A.KODE = '".$reqDistrikId."'";
+}
+
 $set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
@@ -77,7 +91,15 @@ $arrblok= [];
 
 if(empty($reqId))
 {
-    $statement=" AND 1=2 ";
+    if(empty($reqBlokId))
+    {
+        $statement=" AND 1=2 ";
+    }
+    else
+    {
+         $statement = " AND A.KODE = '".$reqBlokId."'";
+    }
+    
 }
 else
 {
@@ -133,6 +155,14 @@ $readonlyfilter="";
 if(empty($reqId))
 {
     $readonlyfilter="readonly";
+
+}
+
+
+$readonlydisses="";
+if(!empty($reqDistrikId))
+{
+    $readonlydisses="readonly";
 
 }
 
@@ -209,7 +239,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                     <div class='col-md-6'>
                         <div class='form-group'>
                             <div class='col-md-11'>
-                                <select class="form-control jscaribasicmultiple"  <?=$readonly?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                                <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlydisses?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
                                     <option value="" >Pilih Distrik</option>
                                     <?
                                     foreach($arrdistrik as $item) 

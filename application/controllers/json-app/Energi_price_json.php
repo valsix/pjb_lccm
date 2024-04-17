@@ -23,6 +23,11 @@ class Energi_price_Json extends CI_Controller
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
 		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appblokunitkode= $this->session->userdata("appblokunitkode");
+		$this->appdistrikid= $this->session->userdata("appdistrikid");
+		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
+		$this->appdistrikblokunitnama= $this->session->userdata("appdistrikblokunitnama");
+
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
