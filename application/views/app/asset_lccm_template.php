@@ -11,6 +11,7 @@ $this->load->model("base-app/Asset_Lccm");
 $this->load->model("base-app/Distrik");
 $this->load->model("base-app/BlokUnit");
 $this->load->model("base-app/UnitMesin");
+$this->load->model("base-app/M_Group_Pm_Lccm");
 
 // ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 
@@ -113,6 +114,11 @@ $field= array("DISTRIK_ID","KODE","NAMA");
 
 $statement=" AND A.STATUS IS NULL";
 
+if(!empty($reqDistrikId))
+{
+	$statement .=" AND A.KODE='".$reqDistrikId."'";
+}
+
 $set = new Distrik();
 $sOrder=" ORDER BY A.DISTRIK_ID ASC ";
 $set->selectByParams(array(), -1,-1, $statement,$sOrder);
@@ -152,6 +158,16 @@ $field= array();
 $field= array("BLOK_UNIT_ID","DISTRIK_ID","KODE","NAMA");
 
 $statement=" AND A.STATUS IS NULL";
+
+if(!empty($reqDistrikId))
+{
+	$statement .=" AND B.KODE='".$reqDistrikId."'";
+}
+if(!empty($reqBlokId))
+{
+	$statement .=" AND A.KODE='".$reqBlokId."'";
+}
+
 
 $set = new BlokUnit();
 $sOrder=" ORDER BY A.BLOK_UNIT_ID ASC ";
@@ -195,6 +211,20 @@ $field= array("UNIT_MESIN_ID","BLOK_UNIT_ID","DISTRIK_ID","KODE","NAMA");
 
 $statement=" AND A.STATUS IS NULL";
 
+if(!empty($reqDistrikId))
+{
+	$statement .=" AND B.KODE='".$reqDistrikId."'";
+}
+if(!empty($reqBlokId))
+{
+	$statement .=" AND C.KODE='".$reqBlokId."'";
+}
+
+if(!empty($reqUnitMesinId))
+{
+	$statement .=" AND D.KODE='".$reqUnitMesinId."'";
+}
+
 $set = new UnitMesin();
 $sOrder=" ORDER BY A.UNIT_MESIN_ID ASC ";
 $set->selectByParams(array(), -1,-1, $statement,$sOrder);
@@ -213,6 +243,58 @@ while($set->nextRow())
 	}
 	$row++;
 }
+
+$sheetIndex= 5;
+$objPHPexcel->setActiveSheetIndex($sheetIndex);
+$objWorksheet= $objPHPexcel->getActiveSheet();
+$objWorksheet->getStyle("A1")->applyFromArray($BStyle);
+
+$objWorksheet->setCellValue("A1","Nama");
+
+$row = 2;
+$tempRowAwal= 1;
+
+$field= array();
+$field= array("GROUP_PM");
+
+$statement="";
+
+if(!empty($reqDistrikId))
+{
+	$statement .=" AND B.KODE='".$reqDistrikId."'";
+}
+if(!empty($reqBlokId))
+{
+	$statement .=" AND C.KODE='".$reqBlokId."'";
+}
+
+if(!empty($reqUnitMesinId))
+{
+	$statement .=" AND D.KODE='".$reqUnitMesinId."'";
+}
+
+
+$set = new M_Group_Pm_Lccm();
+$sOrder=" ORDER BY A.GROUP_PM ASC ";
+$set->selectByParams(array(), -1,-1, $statement,$sOrder);
+
+// echo $set->query;exit;
+while($set->nextRow())
+{
+	$index_kolom= 1;
+	for($i=0; $i<count($field); $i++)
+	{
+		$kolom= getColoms($index_kolom);
+		
+		$objWorksheet->getStyle($kolom.$row)->applyFromArray($BStyle);
+		$objWorksheet->setCellValue($kolom.$row,$set->getField($field[$i]));
+		$objWorksheet->getColumnDimension($kolom)->setAutoSize(TRUE);
+		
+		$index_kolom++;
+	}
+	$row++;
+}
+
 
 
 $objPHPexcel->setActiveSheetIndex(0);

@@ -21,6 +21,12 @@ class Iframe extends CI_Controller {
 		$this->appuserpilihankodehak= $this->session->userdata("appuserpilihankodehak");
 		$this->appuserkodehak= $this->session->userdata("appuserkodehak");
 
+		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appblokunitkode= $this->session->userdata("appblokunitkode");
+		$this->appdistrikid= $this->session->userdata("appdistrikid");
+		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
+		$this->appdistrikblokunitnama= $this->session->userdata("appdistrikblokunitnama");
+
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
 	}
