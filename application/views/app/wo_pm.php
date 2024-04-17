@@ -8,6 +8,10 @@ $this->load->model("base-app/Asset_Lccm");
 $reqTahun= $this->input->get("reqTahun");
 $reqGroupPm= $this->input->get("reqGroupPm");
 
+$reqDistrikId= $this->input->get("reqDistrikId");
+$reqBlokId= $this->input->get("reqBlokId");
+$reqUnitMesinId= $this->input->get("reqUnitMesinId");
+
 $appuserkodehak= $this->appuserkodehak;
 
 $pgtitle= $pg;
@@ -403,7 +407,7 @@ $(document).ready(function() {
     });
 
 	jQuery(document).ready(function() {
-		var jsonurl= "json-app/wo_pm_json/jsondetail?reqTahun=<?=$reqTahun?>&reqGroupPm=<?=$reqGroupPm?>";
+		var jsonurl= "json-app/wo_pm_json/jsondetail?reqTahun=<?=$reqTahun?>&reqGroupPm=<?=$reqGroupPm?>&reqDistrikId=<?=$reqDistrikId?>&reqBlokId=<?=$reqBlokId?>&reqUnitMesinId=<?=$reqUnitMesinId?>";
 	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata);
 	});
 

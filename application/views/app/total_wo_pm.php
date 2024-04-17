@@ -16,8 +16,13 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 
 $arrtabledata= array(
     // array("label"=>"No", "field"=> "NO", "display"=>"1",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
-    // , array("label"=>"Unit Mesin", "field"=> "DISTRIK_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-     array("label"=>"PM Year", "field"=> "PM_YEAR", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+     array("label"=>"Distrik K", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Blok Unit K", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Unit Mesin K", "field"=> "KODE_UNIT", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Distrik", "field"=> "DISTRIK_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Blok Unit", "field"=> "BLOK_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Unit Mesin", "field"=> "UNIT_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"PM Year", "field"=> "PM_YEAR", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Group Pm", "field"=> "GROUP_PM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Total Wo PM", "field"=> "TOTAL_TAHUN", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Status", "field"=> "INFO_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
@@ -342,7 +347,12 @@ $(document).ready(function() {
 	var indexfieldid= arrdata.length - 1;
     var indexfieldgroup= arrdata.length - 2;
     var indexfieldstatus= arrdata.length - 3;
-    var valinfoid= valinforowid= valinfoblok= valinfodistrik='';
+  
+    var indexfielddistrik= arrdata.length - 16;
+    var indexfieldblok= arrdata.length - 15;
+    var indexfieldunit= arrdata.length - 14;
+    // console.log(indexfieldblok);
+    var valinfoid= valinforowid= valinfoblok= valinfodistrik= valinfounit='';
 	var datainforesponsive= "1";
 	var datainfoscrollx= 100;
 
@@ -366,7 +376,7 @@ $(document).ready(function() {
             }
         }
 
-        varurl= "app/index/wo_pm?reqTahun="+valinfoid+"&reqGroupPm="+valinfogroup;
+        varurl= "app/index/wo_pm?reqTahun="+valinfoid+"&reqDistrikId="+valinfodistrik+"&reqBlokId="+valinfoblok+"&reqUnitMesinId="+valinfounit+"&reqGroupPm="+valinfogroup;
         document.location.href = varurl;
     });
 
@@ -478,7 +488,7 @@ $(document).ready(function() {
 
 	jQuery(document).ready(function() {
 		var jsonurl= "json-app/wo_pm_json/json";
-	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',3);
+	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',9);
 	});
 
 	function calltriggercari()
@@ -510,11 +520,19 @@ $(document).ready(function() {
                 dataselected= datanewtable.DataTable().row(this).data();
                 fieldinfoid= arrdata[indexfieldid]["field"];
                 fieldinfogroup= arrdata[indexfieldgroup]["field"];
+                fieldinfodistrik= arrdata[indexfielddistrik]["field"];
+                fieldinfoblok= arrdata[indexfieldblok]["field"];
+                fieldinfounit= arrdata[indexfieldunit]["field"];
+
                 valinfoid= dataselected[fieldinfoid];
                 valinfogroup= dataselected[fieldinfogroup];
 
                 fieldinfostatus= arrdata[indexfieldstatus]["field"];
                 valinfostatus= dataselected[fieldinfostatus];
+
+                valinfodistrik= dataselected[fieldinfodistrik];
+                valinfoblok= dataselected[fieldinfoblok];
+                valinfounit= dataselected[fieldinfounit];
 
                 $("#spanValid, #spanNotValid").hide();
                 if(valinfostatus == "t")

@@ -243,17 +243,17 @@ class Wo_pm_json extends CI_Controller
 		
 		if(!empty($reqDistrikId))
 		{
-			$statement .= " AND A.KODE_DISTRIK='".$reqDistrikId."'";
+			$statement .= " AND B.KODE_DISTRIK='".$reqDistrikId."'";
 		}
 
 		if(!empty($reqBlokId))
 		{
-			$statement .= " AND A.SITEID='".$reqBlokId."'";
+			$statement .= " AND B.KODE_BLOK='".$reqBlokId."'";
 		}
 
 		if(!empty($reqUnitMesinId))
 		{
-			$statement .= " AND A.KODE_UNIT_M='".$reqUnitMesinId."'";
+			$statement .= " AND B.KODE_UNIT_M='".$reqUnitMesinId."'";
 		}
 
 		if(!empty($reqTahun))
