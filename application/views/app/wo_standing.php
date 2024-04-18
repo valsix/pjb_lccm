@@ -7,8 +7,18 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 $this->load->model("base-app/Distrik");
 $this->load->model("base-app/M_Group_Pm_Lccm");
 
+$reqBlokId=$this->appblokunitkode;
+$reqDistrikId=$this->appdistrikkode;
+
+
 
 $statement= " ";
+
+if(!empty($reqDistrikId))
+{
+    $statement = " AND A.KODE = '".$reqDistrikId."'";
+}
+
 
 $sOrder=" ";
 $set= new Distrik();
@@ -36,11 +46,66 @@ while($set->nextRow())
     $arrdata= array();
     $arrdata["id"]= $set->getField("GROUP_PM");
     array_push($arrgroup, $arrdata);
-}   
+} 
+
+if(empty($reqBlokId))
+{
+
+   $readonlyblok="";
+}
+else
+{
+    $readonlyblok="readonly";
+}
+
+
 
 
 ?>
 
+
+<style type="text/css">
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+      color: #000000;
+  }
+  .select2-container--default .select2-search--inline .select2-search__field:focus {
+      outline: 0;
+      border: 1px solid #ffff;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+      cursor: default;
+      padding-left: 6px;
+      padding-right: 5px;
+  }
+
+  .select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
+    background: #eee;
+    box-shadow: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow, select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+    display: none;
+}
+
+
+
+</style>
 
 <div class="col-md-12">
 
@@ -62,7 +127,7 @@ while($set->nextRow())
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Distrik</label>
                         <div class="col-sm-3">
-                            <select class="form-control jscaribasicmultiple" id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                            <select class="form-control jscaribasicmultiple" id="reqDistrikId"   <?=$readonlyblok?> <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
                                 <option value="" >Pilih Distrik</option>
                                 <? 
                                 foreach($arrset as $item) 
@@ -72,7 +137,7 @@ while($set->nextRow())
                                     $selectvalkode= $item["KODE"];
 
                                     $selected="";
-                                    if(in_array($selectvalkode, $reqDistrikId))
+                                    if($selectvalkode==$reqDistrikId)
                                     {
                                         $selected="selected";
                                     }
@@ -85,7 +150,7 @@ while($set->nextRow())
                         </div>
                         <label for="inputEmail3" class="col-sm-2 control-label">Blok</label>
                         <div class="col-sm-3">
-                            <select class="form-control jscaribasicmultiple" id="reqBlokId" <?=$disabled?> name="reqBlokId"  style="width:100%;" >
+                            <select class="form-control jscaribasicmultiple" id="reqBlokId" <?=$disabled?>  <?=$readonlyblok?>  name="reqBlokId"  style="width:100%;" >
                                 <option value="" >Pilih Blok</option>
                             </select>
                         </div>
@@ -192,6 +257,50 @@ while($set->nextRow())
 </div>
 
 <script type="text/javascript">
+
+    $(document).ready(function(){
+      blok('<?=$reqDistrikId?>','<?=$reqBlokId?>');
+
+  });
+
+function blok(reqDistrikId,reqBlokId)
+{
+    $.getJSON("json-app/blok_unit_json/filter_blok?reqDistrikId="+reqDistrikId,
+        function(data)
+        {
+            $("#reqBlokId option").remove();
+            // $("#reqUnitMesinId option").remove();
+
+            // $("#reqBlokId").attr("readonly", false); 
+            $("#reqBlokId").append('<option value="" >Pilih Blok Unit</option>');
+            // $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+            var selected='';
+
+            if('<?=$reqBlokId?>')
+            {
+                selected='selected';
+            }
+            // console.log(selected);
+            jQuery(data).each(function(i, item){
+                $("#reqBlokId").append('<option value="'+item.KODE+'" '+selected+' >'+item.text+'</option>');
+            });
+        });
+
+        var reqDistrikId= reqDistrikId;
+        var reqBlokId= reqBlokId;
+
+        $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+            function(data)
+            {
+                // console.log(data);
+                // $("#reqUnitMesinId option").remove();
+                // $("#reqUnitMesinId").attr("readonly", false); 
+                jQuery(data).each(function(i, item){
+                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+                });
+            });
+
+}
 
 function loadstate(row,data)
 {

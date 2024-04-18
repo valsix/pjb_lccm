@@ -25,9 +25,27 @@ $reqMode = $this->input->get("reqMode");
 $reqTahun = $this->input->get("reqTahun");
 $reqUnitMesinId = $this->input->get("reqUnitMesinId");
 
+$readonlyent="";
+$readonlyu="readonly";
+if(empty($reqBlokId))
+{
+    $reqBlokId=$this->appblokunitkode;
+    if(!empty($reqBlokId))
+    {
+      $readonlyent="readonly";
+      $readonlyu="";
+    }
+}
 
-
-
+if(empty($reqDistrikId))
+{
+    $reqDistrikId=$this->appdistrikkode;
+    if(!empty($reqBlokId))
+    {
+      $readonlyent="readonly";
+      $readonlyu="";  
+    }
+}
 
 $set= new WoStanding();
 
@@ -76,6 +94,7 @@ if(empty($reqBlokId))
     $reqBlokId=$reqSiteId;
 }
 
+
 $disabled="";
 
 if($reqLihat ==1)
@@ -87,6 +106,12 @@ if($reqLihat ==1)
 $set= new Distrik();
 $arrdistrik= [];
 $statement="  ";
+
+if(!empty($reqDistrikId))
+{
+    $statement = " AND A.KODE = '".$reqDistrikId."'";
+}
+
 $set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
@@ -116,7 +141,15 @@ if(empty($reqSiteId))
 }
 else
 {
-    $statement="  AND A.KODE <> '' ";
+
+    if(!empty($reqBlokId))
+    {
+        $statement = " AND A.KODE = '".$reqBlokId."'";
+    }
+    else
+    {
+        $statement="  AND A.KODE <> '' ";
+    }
 }
 
 if($reqMode=="update")
@@ -134,7 +167,7 @@ if($reqMode=="update")
 }
 else
 {
-    $statement=" AND A.KODE= '".$reqSiteId."' AND B.KODE= '".$reqDistrikId."'  ";
+    $statement=" AND A.KODE= '".$reqBlokId."' AND B.KODE= '".$reqDistrikId."'  ";
 }
 
 
@@ -222,12 +255,12 @@ else
 if($reqMode=="update")
 {
 
-    $statement=" AND B.KODE= '".$reqDistrikId."' AND C.KODE= '".$reqSiteId."'  ";
+    $statement=" AND B.KODE= '".$reqDistrikId."' AND C.KODE= '".$reqSiteId."' AND A.KODE= '".$reqUnitMesinId."'  ";
 
 }
 else
 {
-    $statement=" AND A.KODE= '".$reqUnitMesinId."' AND B.KODE= '".$reqDistrikId."' AND C.KODE= '".$reqSiteId."'    ";
+    $statement="  AND B.KODE= '".$reqDistrikId."' AND C.KODE= '".$reqBlokId."'    ";
 }
 
 $arrunitmesin= [];
@@ -321,7 +354,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                         <div class='col-md-6'>
                             <div class='form-group'>
                                 <div class='col-md-11'>
-                                    <select class="form-control jscaribasicmultiple"   required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                                    <select class="form-control jscaribasicmultiple"  <?=$readonlyent?>  required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
                                         <option value="" >Pilih Distrik</option>
                                         <?
                                         foreach($arrdistrik as $item) 
@@ -351,8 +384,8 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                     <div class='col-md-6'>
                         <div class='form-group'>
                             <div class='col-md-11' id="blok">
-                                <select class="form-control jscaribasicmultiple"  <?=$readonlyfilter?> <?=$readonly?>   id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
-                                    <option value="" >Pilih Blok Unit</option>
+                                <select class="form-control jscaribasicmultiple"  <?=$readonlyfilter?> <?=$readonly?>    id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                    <option value="" >Pilih Blok Unit</option> 
                                     <?
                                     foreach($arrblok as $item) 
                                     {
@@ -382,7 +415,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                     <div class='col-md-4'>
                         <div class='form-group'>
                             <div class='col-md-11'  id="unit">
-                                <select class="form-control jscaribasicmultiple" readonly id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
+                                <select class="form-control jscaribasicmultiple" <?=$readonlyu?> id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
                                     <option value="" >Pilih Unit Mesin</option>
                                     <?
                                     foreach($arrunitmesin as $item) 
@@ -1002,27 +1035,52 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
         $(this).val(numeric);
     });
 
+    $('#reqCost').keyup(function(event) {
+  if (event.which >= 37 && event.which <= 40) return;
+  $(this).val(function(index, value) {
+    return value
+      // Keep only digits and decimal points:
+      .replace(/[^\d.]/g, "")
+      // Remove duplicated decimal point, if one exists:
+      .replace(/^(\d*\.)(.*)\.(.*)$/, '$1$2$3')
+      // Keep only two digits past the decimal point:
+      .replace(/\.(\d{2})\d+/, '.$1')
+      // Add thousands separators:
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  });
+});
 
-    $("#reqCost").keydown(function (event) {
-        if (event.shiftKey == true) {
-            event.preventDefault();
-        }
 
-        // console.log(event.keyCode);
+    // $('#reqCost').keyup(function(event) {
+    //     if(event.which >= 37 && event.which <= 40) return;
+    //     $(this).val(function(index, value) {
+    //       return value
+    //       .replace(/\D/g, "")
+    //       .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    //       ;
+    //   });
+    // });
 
-        if ((event.keyCode >= 48 && event.keyCode <= 57) || 
-            (event.keyCode >= 96 && event.keyCode <= 105) || 
-            event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 ||
-            event.keyCode == 39 || event.keyCode == 46 || event.keyCode == 190 || event.keyCode == 188) {
+    // $("#reqCost").keydown(function (event) {
+    //     if (event.shiftKey == true) {
+    //         event.preventDefault();
+    //     }
 
-        } else {
-            event.preventDefault();
-        }
+    //     console.log(event.keyCode);
 
-        if($(this).val().indexOf('.') !== -1 && event.keyCode == 190)
-            event.preventDefault(); 
+    //     if ((event.keyCode >= 48 && event.keyCode <= 57) || 
+    //         (event.keyCode >= 96 && event.keyCode <= 105) || 
+    //         event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 ||
+    //         event.keyCode == 39 || event.keyCode == 46 || event.keyCode == 190 || event.keyCode == 188) {
 
-    });
+    //     } else {
+    //         event.preventDefault();
+    //     }
+
+    //     if($(this).val().indexOf('.') !== -1 && event.keyCode == 190)
+    //         event.preventDefault(); 
+
+    // });
 
 
   
