@@ -420,7 +420,7 @@
 	    $str = "
 	    INSERT INTO T_WO_STANDING_LCCM
 	    (
-	        KODE_DISTRIK, KODE_BLOK, KODE_UNIT_M, GROUP_PM, PM_YEAR, COST_PM_YEARLY, LAST_CREATE_USER, LAST_CREATE_DATE
+	        KODE_DISTRIK, KODE_BLOK, KODE_UNIT_M, GROUP_PM, PM_YEAR, COST_PM_YEARLY, LAST_CREATE_USER, LAST_CREATE_DATE,STATE_STATUS
 	    )
 	    VALUES 
 	    (
@@ -432,6 +432,7 @@
 	      , '".$this->getField("COST_PM_YEARLY")."'
 	      , '".$this->getField("LAST_CREATE_USER")."'
 	      , '".$this->getField("LAST_CREATE_DATE")."'
+	      , '".$this->getField("STATE_STATUS")."'
 	    )"; 
 	    $this->query= $str;
 	    // echo $str;exit;
@@ -487,6 +488,27 @@
 		// echo $str;exit;
 		return $this->execQuery($str);
 	}
+
+
+	function updatewostanding()
+    {
+        $str = "
+        UPDATE t_wo_standing_lccm 
+        SET
+          KODE_BLOK= '".$this->getField("KODE_BLOK")."'
+          , GROUP_PM = '".$this->getField("GROUP_PM")."'
+          , PM_YEAR= ".$this->getField("PM_YEAR")."
+          , COST_PM_YEARLY= ".$this->getField("COST_PM_YEARLY")."
+          , LAST_UPDATE_USER=  '".$this->getField("LAST_UPDATE_USER")."'
+          , LAST_UPDATE_DATE= '".$this->getField("LAST_UPDATE_DATE")."'
+          , KODE_DISTRIK= '".$this->getField("KODE_DISTRIK")."'
+          , KODE_UNIT_M= '".$this->getField("KODE_UNIT_M")."'
+        WHERE KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND  KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND  KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."' AND  GROUP_PM = '".$this->getField("GROUP_PM")."' AND PM_YEAR = '".$this->getField("PM_YEAR")."'
+        "; 
+        $this->query = $str;
+        // echo $str;exit;
+        return $this->execQuery($str);
+    }
 
   	function selectByParamsCheckPenggunaEksternal($paramsArray=array(),$limit=-1,$from=-1, $pengguna_externalment='', $sOrder="ORDER BY PENGGUNA_EXTERNAL_ID ASC")
 	{

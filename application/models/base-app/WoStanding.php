@@ -28,7 +28,7 @@
           , '".$this->getField("KODE_DISTRIK")."'
           , '".$this->getField("KODE_UNIT_M")."'
           , '".$this->getField("STATE_STATUS")."'
-          
+
         )"; 
         $this->query= $str;
         // echo $str;exit;
@@ -48,7 +48,7 @@
           , LAST_UPDATE_DATE= '".$this->getField("LAST_UPDATE_DATE")."'
           , KODE_DISTRIK= '".$this->getField("KODE_DISTRIK")."'
           , KODE_UNIT_M= '".$this->getField("KODE_UNIT_M")."'
-        WHERE KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND  GROUP_PM = '".$this->getField("GROUP_PM")."' AND PM_YEAR = '".$this->getField("PM_YEAR")."'
+        WHERE KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND  KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND  KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."' AND  GROUP_PM = '".$this->getField("GROUP_PM")."' AND PM_YEAR = '".$this->getField("PM_YEAR")."'
         "; 
         $this->query = $str;
         // echo $str;exit;

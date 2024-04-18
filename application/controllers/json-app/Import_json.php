@@ -1291,29 +1291,25 @@ class Import_json extends CI_Controller
 		$arrField= array("KODE_DISTRIK","KODE_BLOK","KODE_UNIT_M","GROUP_PM","PM_YEAR","COST_PM_YEARLY");
 
 		$this->load->model("base-app/Import");
+		$this->load->model("base-app/WoStanding");
 
 		$set = new Import();
 		
 		$reqSimpan="";
 		$index=2;
-		for ($i=2; $i<=$baris; $i++){
-			// validasi kalau kode/id kosong
-			// if(empty($data->val($i,2)))
-			// 	continue;
-			
-			$colIndex=1;
-			$arrData= [];
 
-			for($row=0; $row < count($arrField); $row++){
-
-				$tempValue= $data->val($i,$colIndex);
-				$arrData[$arrField[$row]]['VALUE']= $data->val($i,$colIndex);
-				
-				if($arrField[$row]=="KODE_DISTRIK")
+		for ($z=2; $z<=$baris; $z++)
+		{
+			$colIndexCheck=1;
+			$arrDataCheck= [];
+			for($rowCheck=0; $rowCheck < count($arrField); $rowCheck++)
+			{
+				$tempValueCheck= $data->val($z,$colIndexCheck);
+				if($arrField[$rowCheck]=="KODE_DISTRIK")
 				{
-					if (!empty($tempValue))
+					if (!empty($tempValueCheck))
 					{
-						$statement =" AND A.KODE = '".$tempValue."'";
+						$statement =" AND A.KODE = '".$tempValueCheck."'";
 						$check = new Import();
 						$check->selectByParamsCheckDistrik(array(), -1, -1, $statement);
 						// echo $check->query;exit;
@@ -1322,7 +1318,7 @@ class Import_json extends CI_Controller
 						unset($check);
 						if(empty($reqKode))
 						{
-							echo "xxx***Kode Distrik  ".$tempValue." tidak ditemukan";
+							echo "xxx***Kode Distrik  ".$tempValueCheck." tidak ditemukan";
 							exit();
 						}
 						else
@@ -1332,13 +1328,13 @@ class Import_json extends CI_Controller
 					}
 					else
 					{
-						// $set->setField("KODE_DISTRIK",ValToNullDB($tempValue));
+						// $set->setField("KODE_DISTRIK",ValToNullDB($tempValueCheck));
 					}
 				}
-				else if($arrField[$row]=="KODE_BLOK")
+				else if($arrField[$rowCheck]=="KODE_BLOK")
 				{
-					$tempValDistrik= $data->val($i,1);
-					if (!empty($tempValDistrik) && !empty($tempValue))
+					$tempValDistrik= $data->val($z,1);
+					if (!empty($tempValDistrik) && !empty($tempValueCheck))
 					{
 						$statement =" AND A.KODE = '".$tempValDistrik."'";
 						$check = new Import();
@@ -1348,7 +1344,7 @@ class Import_json extends CI_Controller
 						$reqDistrikId=$check->getField("DISTRIK_ID");
 						unset($check);
 
-						$statement =" AND A.KODE = '".$tempValue."' AND B.DISTRIK_ID = '".$reqDistrikId."'  ";
+						$statement =" AND A.KODE = '".$tempValueCheck."' AND B.DISTRIK_ID = '".$reqDistrikId."'  ";
 						$check = new Import();
 						$check->selectByParamsCheckBlok(array(), -1, -1, $statement);
 						// echo $check->query;exit;
@@ -1358,7 +1354,7 @@ class Import_json extends CI_Controller
 
 						if(empty($reqKodeBlok))
 						{
-							echo "xxx***Kode Blok  ".$tempValue." tidak ditemukan";
+							echo "xxx***Kode Blok  ".$tempValueCheck." tidak ditemukan";
 							exit();
 						}
 						else
@@ -1368,14 +1364,14 @@ class Import_json extends CI_Controller
 					}
 					else
 					{
-						// $set->setField("KODE_DISTRIK",ValToNullDB($tempValue));
+						// $set->setField("KODE_DISTRIK",ValToNullDB($tempValueCheck));
 					}
 				}
-				else if($arrField[$row]=="KODE_UNIT_M")
+				else if($arrField[$rowCheck]=="KODE_UNIT_M")
 				{
-					$tempValDistrik= $data->val($i,1);
-					$tempValBlok= $data->val($i,2);
-					if (!empty($tempValDistrik) && !empty($tempValBlok) && !empty($tempValue))
+					$tempValDistrik= $data->val($z,1);
+					$tempValBlok= $data->val($z,2);
+					if (!empty($tempValDistrik) && !empty($tempValBlok) && !empty($tempValueCheck))
 					{
 						$statement =" AND A.KODE = '".$tempValDistrik."'";
 						$check = new Import();
@@ -1393,7 +1389,7 @@ class Import_json extends CI_Controller
 						$reqIdBlok=$check->getField("BLOK_UNIT_ID");
 						unset($check);
 
-						$statement =" AND A.KODE = '".$tempValue."' AND B.DISTRIK_ID = '".$reqDistrikId."' AND C.BLOK_UNIT_ID = '".$reqIdBlok."'  ";
+						$statement =" AND A.KODE = '".$tempValueCheck."' AND B.DISTRIK_ID = '".$reqDistrikId."' AND C.BLOK_UNIT_ID = '".$reqIdBlok."'  ";
 						$check = new Import();
 						$check->selectByParamsCheckUnitMesin(array(), -1, -1, $statement);
 						// echo $check->query;exit;
@@ -1403,7 +1399,7 @@ class Import_json extends CI_Controller
 
 						if(empty($reqKodeUnitMesin))
 						{
-							echo "xxx***Kode Unit Mesin  ".$tempValue." tidak ditemukan";
+							echo "xxx***Kode Unit Mesin  ".$tempValueCheck." tidak ditemukan";
 							exit();
 						}
 						else
@@ -1413,15 +1409,15 @@ class Import_json extends CI_Controller
 					}
 					else
 					{
-						// $set->setField("KODE_DISTRIK",ValToNullDB($tempValue));
+						// $set->setField("KODE_DISTRIK",ValToNullDB($tempValueCheck));
 					}
 				}
-				else if($arrField[$row]=="GROUP_PM")
+				else if($arrField[$rowCheck]=="GROUP_PM")
 				{
-					$tempValDistrik= $data->val($i,1);
-					$tempValBlok= $data->val($i,2);
-					$tempValUnitMesin= $data->val($i,3);
-					if (!empty($tempValDistrik) && !empty($tempValBlok) && !empty($tempValue))
+					$tempValDistrik= $data->val($z,1);
+					$tempValBlok= $data->val($z,2);
+					$tempValUnitMesin= $data->val($z,3);
+					if (!empty($tempValDistrik) && !empty($tempValBlok) && !empty($tempValueCheck))
 					{
 						$statement =" AND A.KODE = '".$tempValDistrik."'";
 						$check = new Import();
@@ -1451,7 +1447,7 @@ class Import_json extends CI_Controller
 							$reqKodeUnitMesin=$check->getField("KODE");
 							unset($check);
 
-							$statement =" AND A.GROUP_PM = '".$tempValue."' AND A.KODE_DISTRIK = '".$reqDistrikKode."' AND A.KODE_BLOK = '".$reqKodeBlok."' AND A.KODE_UNIT = '".$tempValUnitMesin."'  ";
+							$statement =" AND A.GROUP_PM = '".$tempValueCheck."' AND A.KODE_DISTRIK = '".$reqDistrikKode."' AND A.KODE_BLOK = '".$reqKodeBlok."' AND A.KODE_UNIT = '".$tempValUnitMesin."'  ";
 							$check = new Import();
 							$check->selectByParamsCheckGroupPmLccm(array(), -1, -1, $statement);
 							// echo $check->query;exit;
@@ -1461,7 +1457,7 @@ class Import_json extends CI_Controller
 						}
 						else
 						{
-							$statement =" AND A.GROUP_PM = '".$tempValue."' AND A.KODE_DISTRIK = '".$reqDistrikKode."' AND A.KODE_BLOK = '".$reqKodeBlok."'  ";
+							$statement =" AND A.GROUP_PM = '".$tempValueCheck."' AND A.KODE_DISTRIK = '".$reqDistrikKode."' AND A.KODE_BLOK = '".$reqKodeBlok."'  ";
 							$check = new Import();
 							$check->selectByParamsCheckGroupPmLccm(array(), -1, -1, $statement);
 							// echo $check->query;exit;
@@ -1473,7 +1469,7 @@ class Import_json extends CI_Controller
 
 						if(empty($reqGroupPm))
 						{
-							echo "xxx***GROUP PM  ".$tempValue." tidak ditemukan";
+							echo "xxx***GROUP PM  ".$tempValueCheck." tidak ditemukan";
 							exit();
 						}
 						else
@@ -1483,31 +1479,109 @@ class Import_json extends CI_Controller
 					}
 					else
 					{
-						// $set->setField("KODE_DISTRIK",ValToNullDB($tempValue));
+						// $set->setField("KODE_DISTRIK",ValToNullDB($tempValueCheck));
 					}
 				}
 				else
 				{
-					$set->setField($arrField[$row],$tempValue);
 				}
+				// print_r($tempValueCheck);
+				$colIndexCheck++;
+			}
+		}
+
+
+		for ($i=2; $i<=$baris; $i++){
+			// validasi kalau kode/id kosong
+			// if(empty($data->val($i,2)))
+			// 	continue;
+			
+			$colIndex=1;
+			$arrData= [];
+
+			for($row=0; $row < count($arrField); $row++){
+
+				$tempValue= $data->val($i,$colIndex);
+				$arrData[$arrField[$row]]['VALUE']= $data->val($i,$colIndex);
+
+				$tempValDistrik= $data->val($i,1);
+				$tempValBlok= $data->val($i,2);
+				$tempValUnitMesin= $data->val($i,3);
+				$tempValGroupPm= $data->val($i,4);
+				$tempValYear= $data->val($i,5);
+				
+				
+				$set->setField($arrField[$row],$tempValue);
+				
+
+
+				$statementupdate = " AND A.KODE_BLOK = '".$tempValBlok."' AND A.KODE_DISTRIK = '".$tempValDistrik."'";
+
+				if(!empty($tempValUnitMesin))
+				{
+					$statementupdate .= " AND A.KODE_UNIT_M = '".$tempValUnitMesin."' ";
+				}
+
+				if(!empty($tempValGroupPm))
+				{
+					$statementupdate .= " AND A.GROUP_PM = '".$tempValGroupPm."' ";
+				}
+
+
+				if(!empty($tempValYear))
+				{
+					$statementupdate .= " AND A.PM_YEAR = '".$tempValYear."' ";
+				}
+
+
+				$checkupdate = new WoStanding();
+				$checkupdate->selectByParamsGroup(array(), -1, -1, $statementupdate);
+				$checkupdate->firstRow();
+				// echo $checkupdate->query;exit; 
+
+				$reqId= $checkupdate->getField("KODE_DISTRIK");
+
+
+				$statementcheck = " AND A.KODE_BLOK = '".$tempValBlok."' AND A.KODE_DISTRIK = '".$tempValDistrik."'";
+
+				if(!empty($tempValUnitMesin))
+				{
+					$statementcheck .= " AND A.KODE_UNIT_M = '".$tempValUnitMesin."' ";
+				}
+
+				if(!empty($tempValGroupPm))
+				{
+					$statementcheck .= " AND A.GROUP_PM = '".$tempValGroupPm."' ";
+				}
+
+				$checkstate = new WoStanding();
+				$checkstate->selectByParamsGroup(array(), -1, -1, $statementcheck);
+				$checkstate->firstRow();
+
+				$reqStateStatus= $checkstate->getField("STATE_STATUS");
+				
+
+
+				$set->setField("STATE_STATUS",$reqStateStatus);
+
+			
 				$colIndex++;
 			}
 
 			// $set->setField("SUPERIOR_ID",$reqSuperiorId);
 
-			// if (!empty($reqId))
-			// {	
-			// 	$set->setField("LAST_UPDATE_DATE", "NOW()");
-			// 	$set->setField("LAST_UPDATE_USER", $this->appusernama);
-			// 	$set->setField("POSITION_ID",$reqId);			
-			// 	if($set->updatejabatan())
-			// 	{
-			// 		$reqSimpan = 1;
+			if (!empty($reqId))
+			{	
+				$set->setField("LAST_UPDATE_DATE", "NOW()");
+				$set->setField("LAST_UPDATE_USER", $this->appusernama);
+				if($set->updatewostanding())
+				{
+					$reqSimpan = 1;
 					
-			// 	}
-			// }
-			// else
-			// {
+				}
+			}
+			else
+			{
 				$set->setField("LAST_CREATE_DATE", "NOW()");
 				$set->setField("LAST_CREATE_USER", $this->appusernama);
 				if($set->insertwostanding())
@@ -1515,7 +1589,7 @@ class Import_json extends CI_Controller
 					$reqSimpan = 1;
 					
 				}
-			// }
+			}
 		}
 
 		if($reqSimpan == 1 )
