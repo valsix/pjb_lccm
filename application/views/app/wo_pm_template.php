@@ -70,7 +70,7 @@ if(!empty($reqUnitMesinId))
 
 $set = new Asset_Lccm();
 $sOrder=" ORDER BY A1.ASSETNUM ASC";
-$set->selectByParams(array(), -1,-1, $statement,$sOrder);
+$set->selectByParamsLookup(array(), -1,-1, $statement,$sOrder);
 
 // echo $set->query;exit; 
 $no=0;

@@ -748,7 +748,7 @@ class Lookup_json extends CI_Controller
 		$searchJson= "";
 
 		$sOrder = " ORDER BY A1.ASSETNUM ASC ";
-		$set->selectByParams(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
+		$set->selectByParamsLookup(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];

@@ -246,6 +246,46 @@
 		return $this->selectLimit($str,10,$from); 
     }
 
+    function selectByParamsLookup($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.ASSETNUM ASC")
+	{
+		$str = "
+		SELECT 
+			A1.*
+			, CASE WHEN A1.ASSET_LCCM = false THEN 'NO' ELSE 'YES' END ASSET_INFO
+			, CASE WHEN A1.ASSET_OH = false THEN 'NO' ELSE 'YES' END ASSET_OH_INFO
+			, B.NAMA DISTRIK_INFO
+			, B.DISTRIK_ID
+			, C.NAMA BLOK_INFO
+			, C.BLOK_UNIT_ID
+			, D.NAMA UNIT_INFO
+			, D.UNIT_MESIN_ID
+			, A.KKSNUM
+			, A.DESCRIPTION M_DESCRIPTION
+			, A.RBD_ID
+			, A.PARENT M_PARENT
+			, A.INSTALLDATE
+			, A.STATUS M_STATUS
+			
+
+		FROM M_ASSET A 
+		LEFT JOIN M_ASSET_LCCM A1 ON trim(A1.ASSETNUM) = trim(A.ASSETNUM)
+		LEFT JOIN DISTRIK B ON B.KODE = A1.KODE_DISTRIK
+		LEFT JOIN BLOK_UNIT C ON C.KODE = A1.KODE_BLOK AND C.DISTRIK_ID = B.DISTRIK_ID
+		LEFT JOIN UNIT_MESIN D ON D.KODE = A1.KODE_UNIT_M AND D.BLOK_UNIT_ID = C.BLOK_UNIT_ID AND D.DISTRIK_ID = B.DISTRIK_ID
+		WHERE 1=1
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
     
   } 
 ?>
