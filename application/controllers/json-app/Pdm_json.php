@@ -91,7 +91,7 @@ class Pdm_json extends CI_Controller
 		}
 
 		$sOrder = " ORDER BY A.PDM_YEAR ASC ";
-		$set->selectByParams(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $statement2, $sOrder);
+		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $statement2, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];
