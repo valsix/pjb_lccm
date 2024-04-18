@@ -61,7 +61,29 @@ class wo_standing_json extends CI_Controller
 		$set->setField("COST_PM_YEARLY",str_replace(',', '', $reqCost));
 		$set->setField("COST_PM_YEARLY_OLD",str_replace(',', '', $reqCostOld));
 		$set->setField("KODE_UNIT_M", $reqUnitMesinId);
+
 		
+		$statement = " AND A.KODE_BLOK = '".$reqBlokId."' AND A.KODE_DISTRIK = '".$reqDistrikId."'";
+
+		if(!empty($reqUnitMesinId))
+		{
+			$statement .= " AND A.KODE_UNIT_M = '".$reqUnitMesinId."' ";
+		}
+
+		if(!empty($reqGroupPm))
+		{
+			$statement .= " AND A.GROUP_PM = '".$reqGroupPm."' ";
+		}
+
+		$checkstate = new WoStanding();
+		$checkstate->selectByParamsGroup(array(), -1, -1, $statement);
+		$checkstate->firstRow();
+
+		// echo $checkstate->query;exit; 
+		$reqStateStatus= $checkstate->getField("STATE_STATUS");
+
+
+		$set->setField("STATE_STATUS", $reqStateStatus);
 
 		$reqSimpan= "";
 		if ($reqMode == "insert")

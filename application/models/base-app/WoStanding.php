@@ -15,7 +15,7 @@
         $str = "
         INSERT INTO t_wo_standing_lccm
         (
-            KODE_BLOK, GROUP_PM, PM_YEAR, COST_PM_YEARLY, LAST_CREATE_USER, LAST_CREATE_DATE,KODE_DISTRIK,KODE_UNIT_M
+            KODE_BLOK, GROUP_PM, PM_YEAR, COST_PM_YEARLY, LAST_CREATE_USER, LAST_CREATE_DATE,KODE_DISTRIK,KODE_UNIT_M,STATE_STATUS
         )
         VALUES 
         (
@@ -27,7 +27,8 @@
           , ".$this->getField("LAST_CREATE_DATE")."
           , '".$this->getField("KODE_DISTRIK")."'
           , '".$this->getField("KODE_UNIT_M")."'
-         
+          , '".$this->getField("STATE_STATUS")."'
+          
         )"; 
         $this->query= $str;
         // echo $str;exit;
