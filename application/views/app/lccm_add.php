@@ -2,12 +2,10 @@
 include_once("functions/string.func.php");
 include_once("functions/date.func.php");
 
-$this->load->model("base-app/M_Inflasi_Calculate");
-$this->load->model("base-app/M_Inflasi");
+$this->load->model("base-app/T_Lccm_Prj");
 $this->load->model("base-app/Distrik");
 $this->load->model("base-app/BlokUnit");
 $this->load->model("base-app/UnitMesin");
-$this->load->model("base-app/OhType");
 
 
 $pgreturn= str_replace("_add", "", $pg);
@@ -19,7 +17,7 @@ $reqId = $this->input->get("reqId");
 $reqLihat = $this->input->get("reqLihat");
 
 
-$set= new M_Inflasi_Calculate();
+$set= new T_Lccm_Prj();
 
 if($reqId == "")
 {
@@ -29,16 +27,27 @@ else
 {
     $reqMode = "update";
 
-	$statement = " AND A.M_INFLASI_CALCULATE_ID = '".$reqId."' ";
+	$statement = " AND A.PROJECT_NAME = '".$reqId."' ";
     $set->selectByParams(array(), -1, -1, $statement);
     // echo $set->query;exit;
     $set->firstRow();
-    $reqId= $set->getField("M_INFLASI_CALCULATE_ID");
-    $reqTahunAwal= $set->getField("TAHUN_AWAL");
-    $reqTahunAkhir= $set->getField("TAHUN_AKHIR");
-    $reqRata= $set->getField("INFLASI");
-    // $reqTahunAwalReadonly= " readonly ";
+    $reqId= $set->getField("PROJECT_NAME");
+    $reqDistrikId= $set->getField("KODE_DISTRIK");
+    $reqBlokId= $set->getField("KODE_BLOK");
+    $reqUnitMesinId= $set->getField("KODE_UNIT_M");
+    $reqProjectNo= $set->getField("PROJECT_NAME");
 
+    $reqProjectDesc= $set->getField("PROJECT_DESC");
+    $reqHistoryYearStart= $set->getField("LCCM_START_HIST_YEAR");
+    $reqHistoryYearEnd= $set->getField("LCCM_END_HIST_YEAR");
+    $reqPrediction= $set->getField("LCCM_PREDICT_YEAR");
+
+    $reqDiscount= $set->getField("DISC_RATE");
+    $reqPlant= $set->getField("PLANT_CAPITAL_COST");
+
+    $reqHistoryRate= $set->getField("HIST_INFLASI_RATE");
+    $reqAnnualRate= $set->getField("ANNUAL_INFLASI_RATE");
+   
 
 }
 
@@ -51,47 +60,13 @@ if($reqLihat ==1)
 
 $tahun = date("Y");
 
-$set= new M_Inflasi();
-$arrset= [];
 
-$statement=" ";
-$set->selectByParams(array(), -1,-1,$statement);
-// echo $set->query;exit;
-while($set->nextRow())
-{
-    $arrdata= array();
-    $arrdata["ID"]= $set->getField("ID");
-    $arrdata["TAHUN"]= $set->getField("TAHUN");
-    $arrdata["F"]= $set->getField("F");
-    $arrdata["FP1"]= $set->getField("FP1");
-    $arrdata["STATUS"]= $set->getField("STATUS");
-    array_push($arrset, $arrdata);
-}
-unset($set);
-
-$set= new M_Inflasi();
-$arrproduct= [];
-
-$statement="  ";
-$set->selectByParamsAll(array(), -1,-1,$statement);
-        // echo $set->query;exit;
-while($set->nextRow())
-{
-    $arrdata= array();
-    $arrdata["FP1"]=  $set->getField("FP1");
-
-    array_push($arrproduct, $arrdata);
-}
-unset($set);
 
 $set= new Distrik();
 $arrdistrik= [];
 $statement="  ";
 
-if(!empty($reqDistrikId))
-{
-    $statement = " AND A.KODE = '".$reqDistrikId."'";
-}
+
 
 
 $set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
@@ -122,7 +97,7 @@ if(empty($reqId))
 }
 else
 {
-    $statement=" AND A.KODE <> ''  AND A.DISTRIK_ID = '".$reqDistrikIdInfo."' ";
+    $statement=" AND A.KODE <> ''  AND B.KODE = '".$reqDistrikId."' ";
 }
 
 
@@ -221,14 +196,14 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
 <div class="col-md-12">
     
-  <div class="judul-halaman"> Data Lccm <?=$pgtitle?> &rsaquo; Kelola Lccm <?=$pgtitle?></div>
+  <div class="judul-halaman"> <a href="app/index/<?=$pgreturn?>"> Data  <?=$pgtitle?></a> &rsaquo; Kelola  <?=$pgtitle?></div>
 
     <div class="konten-area">
         <div class="konten-inner">
 
             <div>
 
-                <form id="ff" class="easyui-form form-horizontal" method="post" novalidate enctype="multipart/form-data">
+                <form id="ff" class="easyui-form form-horizontal" method="post" novalidate enctype="multipart/form-data" >
 
                     <div class="page-header">
                         <h3><i class="fa fa-file-text fa-lg"></i> <?=$pgtitle?></h3>       
@@ -239,7 +214,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11'>
-                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyblok?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyblok?> readonly required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
                                             <option value="" >Pilih Distrik</option>
                                             <?
                                             foreach($arrdistrik as $item) 
@@ -269,7 +244,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11' id="blok">
-                                        <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?>  <?=$readonlyblok?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                        <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> required  <?=$readonlyblok?> <?=$readonly?> readonly id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
                                             <option value="" >Pilih Blok Unit</option>
                                             <?
                                             foreach($arrblok as $item) 
@@ -301,7 +276,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11'  id="unit">
-                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
+                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> required readonly id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
                                             <option value="" >Pilih Unit Mesin</option>
                                             <?
                                             foreach($arrunitmesin as $item) 
@@ -328,39 +303,38 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             </div>
                         </div>
 
-
                         <div class="form-group" >  
                             <label class="control-label col-md-2">History Year </label>
                             <div class='col-md-4'>
                                 <div class='form-group'>
-                                    <div class='col-md-11'>
-                                       <input autocomplete="off" maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" type="text" name="reqHistory"  id="reqHistory" value="<?=$reqHistory?>" <?=$disabled?> style="width:50%" />
+                                    <div class='col-md-6'>
+                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqHistoryYearStart"  id="reqHistoryYearStart" value="<?=$reqHistoryYearStart?>" <?=$disabled?> style="width:50%" />
                                    </div>
-                               </div>
-                           </div>
-                       </div>
+                                   <div class='col-md-6'>
+                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqHistoryYearEnd"  id="reqHistoryYearEnd" value="<?=$reqHistoryYearEnd?>" <?=$disabled?> style="width:50%" />
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="form-group" >  
-                            <label class="control-label col-md-2">Prediction  Year </label>
+                            <label class="control-label col-md-2">Prediction Year </label>
                             <div class='col-md-4'>
                                 <div class='form-group'>
                                     <div class='col-md-6'>
-                                       <input autocomplete="off" maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" type="text" name="reqHistory"  id="reqHistory" value="<?=$reqHistory?>" <?=$disabled?> style="width:50%" />
-                                   </div>
-                                   <div class='col-md-6'>
-                                       <input autocomplete="off" maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" type="text" name="reqHistory"  id="reqHistory" value="<?=$reqHistory?>" <?=$disabled?> style="width:50%" />
+                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqPrediction"  id="reqPrediction" value="<?=$reqPrediction?>" <?=$disabled?> style="width:50%" />
                                    </div>
                                </div>
                            </div>
                        </div>
-
 
                        <div class="form-group" >  
                             <label class="control-label col-md-2">Discount Rate </label>
                             <div class='col-md-4'>
                                 <div class='form-group'>
                                     <div class='col-md-4'>
-                                       <input autocomplete="off" maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" type="text" name="reqHistory"  id="reqHistory" value="<?=$reqHistory?>" <?=$disabled?> style="width:50%" />
+                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqDiscount"  id="reqDiscount" value="<?=$reqDiscount?>" <?=$disabled?> style="width:50%" />
                                    </div>
                                </div>
                            </div>
@@ -371,7 +345,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-4'>
                                 <div class='form-group'>
                                     <div class='col-md-11'>
-                                       <input autocomplete="off" maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" type="text" name="reqHistory"  id="reqHistory" value="<?=$reqHistory?>" <?=$disabled?> style="width:50%" />
+                                       <input   <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqPlant"  id="reqPlant" value="<?=$reqPlant?>" <?=$disabled?> style="width:50%" />
                                    </div>
                                </div>
                            </div>
@@ -382,7 +356,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-4'>
                                 <div class='form-group'>
                                     <div class='col-md-11'>
-                                       <input autocomplete="off" maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" type="text" name="reqHistory"  id="reqHistory" value="<?=$reqHistory?>" <?=$disabled?> style="width:50%" />
+                                       <input  <?=$readonly?> required  class="easyui-validatebox textbox form-control" readonly type="text" name="reqProjectNo"  id="reqProjectNo" value="<?=$reqProjectNo?>" <?=$disabled?> style="width:50%" />
                                     </div>
                                 </div>
                            </div>
@@ -393,7 +367,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-4'>
                                 <div class='form-group'>
                                     <div class='col-md-11'>
-                                       <input autocomplete="off" maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" type="text" name="reqHistory"  id="reqHistory" value="<?=$reqHistory?>" <?=$disabled?> style="width:50%" />
+                                       <input   <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly  type="text" name="reqProjectDesc"  id="reqProjectDesc" value="<?=$reqProjectDesc?>" <?=$disabled?> style="width:50%" />
                                     </div>
                                 </div>
                            </div>
@@ -403,6 +377,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
                     <input type="hidden" name="reqId" value="<?=$reqId?>" />
                     <input type="hidden" name="reqMode" value="<?=$reqMode?>" />
+                    <input type="hidden" name="reqProjectNoOld" value="<?=$reqProjectNo?>" />
 
                 </form>
 
@@ -414,10 +389,10 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             {
             ?>
             <div style="text-align:center;padding:5px">
-                <a href="javascript:void(0)" class="btn btn-success" id="tombolcal" onclick="hideshow()">Hide Calculator</a>
-
-                
-
+              <!--   <a href="javascript:void(0)" class="btn btn-warning" id="new" onclick="formkondisi('formbaru')">New</a>
+                <a href="javascript:void(0)" class="btn btn-success"  id="edit" onclick="formkondisi('<?=$reqId?>')">Edit</a> -->
+                <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
+                <!-- <a href="javascript:void(0)" class="btn btn-danger" id="delete" onclick="deleteform()">Delete</a> -->
             </div>
             <?
             }
@@ -429,6 +404,85 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 </div>
 
 <script>
+    $('#simpan').show();
+    $(':input').removeAttr('readonly');
+    $('#delete').hide();
+    $('#edit').hide();
+    $('#new').show();
+
+    var reqId='<?=$reqId?>';
+
+    if(reqId)
+    {
+        $('#edit').show(); 
+        // $('#new').hide();
+        $('#delete').show();
+    }
+
+    function formkondisi(id)
+    {
+        $('#simpan').show();
+       
+        $('#simpan').show();
+        // console.log(id);
+        if(id=="formbaru")
+        {
+            $('#new').hide();
+            $('#edit').hide();
+            $(':input').removeAttr('readonly');
+            $('#ff').form('clear');
+
+            $("#reqDistrikId").val("").trigger( "change" );
+            $("#reqId").val("").trigger( "change" );
+            // $('#ff').trigger("reset");
+        }
+        else
+        {
+            $(":input").not("[name=reqProjectNo]").removeAttr('readonly');
+        }
+    }
+
+
+    $("#reqDiscount").keydown(function (event) {
+        if (event.shiftKey == true) {
+            event.preventDefault();
+        }
+
+        // console.log(event.keyCode);
+
+        if ((event.keyCode >= 48 && event.keyCode <= 57) || 
+            (event.keyCode >= 96 && event.keyCode <= 105) || 
+            event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 ||
+            event.keyCode == 39 || event.keyCode == 46 || event.keyCode == 190 || event.keyCode == 188) {
+
+        } else {
+            event.preventDefault();
+        }
+
+        if($(this).val().indexOf('.') !== -1 && event.keyCode == 190)
+            event.preventDefault(); 
+
+    });
+
+
+    $("#reqHistoryYearStart,#reqHistoryYearEnd,#reqPrediction,#reqPlant").keydown(function (event) {
+        if (event.shiftKey == true) {
+            event.preventDefault();
+        }
+
+        // console.log(event.keyCode);
+
+        if ((event.keyCode >= 48 && event.keyCode <= 57) || 
+            (event.keyCode >= 96 && event.keyCode <= 105) || 
+            event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 ||
+            event.keyCode == 39 || event.keyCode == 46 ) {
+
+        } else {
+            event.preventDefault();
+        }
+
+       
+    });
 
 
 
@@ -472,7 +526,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 function submitForm(){
    
     $('#ff').form('submit',{
-        url:'json-app/inflasi_json/add',
+        url:'json-app/lccm_json/add',
         onSubmit:function(){
 
             if($(this).form('validate'))
@@ -496,7 +550,8 @@ function submitForm(){
             if(reqId == 'xxx')
                 $.messager.alert('Info', infoSimpan, 'warning');
             else
-                $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
+                // $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>_add?reqId="+reqId);
+            $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
         }
     });
 }

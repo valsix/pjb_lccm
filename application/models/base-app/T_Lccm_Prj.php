@@ -16,24 +16,29 @@
     	$str = "
     	INSERT INTO t_lccm_prj
     	(
-    		SITEID, ASSETNUM, PDM_YEAR, PDM_DESC, PDMNUM, NO_PERSONAL, DURATION_HOURS, PDM_IN_YEAR, LAST_CREATE_USER, LAST_CREATE_DATE
+    		KODE_DISTRIK, KODE_BLOK, KODE_UNIT_M, PROJECT_NAME, PROJECT_DESC, LCCM_START_HIST_YEAR, LCCM_END_HIST_YEAR, LCCM_PREDICT_YEAR, DISC_RATE, HIST_INFLASI_RATE, ANNUAL_INFLASI_RATE, PLANT_CAPITAL_COST, SITEID, LAST_CREATE_USER, LAST_CREATE_DATE
 
     	)
     	VALUES 
     	(
-	    	'PT'
-	    	, '".$this->getField("ASSETNUM")."'
-	    	, ".$this->getField("PDM_YEAR")."
-	    	, '".$this->getField("PDM_DESC")."'
-	    	, '".$this->getField("PDMNUM")."'
-	    	, ".$this->getField("NO_PERSONAL")."
-	    	, ".$this->getField("DURATION_HOURS")."
-	    	, ".$this->getField("PDM_IN_YEAR")."
+	    	 '".$this->getField("KODE_DISTRIK")."'
+	    	, '".$this->getField("KODE_BLOK")."'
+	    	, '".$this->getField("KODE_UNIT_M")."'
+	    	, '".$this->getField("PROJECT_NAME")."'
+	    	, '".$this->getField("PROJECT_DESC")."'
+	    	, ".$this->getField("LCCM_START_HIST_YEAR")."
+	    	, ".$this->getField("LCCM_END_HIST_YEAR")."
+	    	, ".$this->getField("LCCM_PREDICT_YEAR")."
+	    	, ".$this->getField("DISC_RATE")."
+	    	, ".$this->getField("HIST_INFLASI_RATE")."
+	    	, ".$this->getField("ANNUAL_INFLASI_RATE")."
+	    	, ".$this->getField("PLANT_CAPITAL_COST")."
+	    	, '".$this->getField("SITEID")."'
 	    	, '".$this->getField("LAST_CREATE_USER")."'
 	    	, ".$this->getField("LAST_CREATE_DATE")."
 	    )"; 
 
-		// $this->id= $this->getField("PENGGUNA_EXTERNAL_ID");
+		$this->id= $this->getField("PROJECT_NAME");
 		$this->query= $str;
 		// echo $str;exit;
 		return $this->execQuery($str);
@@ -44,16 +49,24 @@
 		$str = "
 		UPDATE t_lccm_prj
 		SET
-		 ASSETNUM= '".$this->getField("ASSETNUM")."'
-		, PDM_YEAR= ".$this->getField("PDM_YEAR")."
-		, PDM_DESC='".$this->getField("PDM_DESC")."'
-		, PDMNUM='".$this->getField("PDMNUM")."'
-		, NO_PERSONAL=".$this->getField("NO_PERSONAL")."
-		, DURATION_HOURS=".$this->getField("DURATION_HOURS")."
-		, PDM_IN_YEAR=".$this->getField("PDM_IN_YEAR")."
-		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
-		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
-		WHERE ASSETNUM = '".$this->getField("ASSETNUM_OLD")."' AND PDM_YEAR = '".$this->getField("PDM_YEAR")."' AND PDMNUM = '".$this->getField("PDMNUM_OLD")."'
+		
+	    	KODE_DISTRIK ='".$this->getField("KODE_DISTRIK")."'
+	    	, KODE_BLOK='".$this->getField("KODE_BLOK")."'
+	    	, KODE_UNIT_M='".$this->getField("KODE_UNIT_M")."'
+	    	, PROJECT_NAME='".$this->getField("PROJECT_NAME")."'
+	    	, PROJECT_DESC='".$this->getField("PROJECT_DESC")."'
+	    	, LCCM_START_HIST_YEAR=".$this->getField("LCCM_START_HIST_YEAR")."
+	    	, LCCM_END_HIST_YEAR=".$this->getField("LCCM_END_HIST_YEAR")."
+	    	, LCCM_PREDICT_YEAR=".$this->getField("LCCM_PREDICT_YEAR")."
+	    	, DISC_RATE=".$this->getField("DISC_RATE")."
+	    	, HIST_INFLASI_RATE=".$this->getField("HIST_INFLASI_RATE")."
+	    	, ANNUAL_INFLASI_RATE=".$this->getField("ANNUAL_INFLASI_RATE")."
+	    	, PLANT_CAPITAL_COST=".$this->getField("PLANT_CAPITAL_COST")."
+	    	, SITEID='".$this->getField("SITEID")."'
+	    	, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
+	    	, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
+
+		WHERE PROJECT_NAME = '".$this->getField("PROJECT_NAME_OLD")."'
 		"; 
 		$this->query = $str;
 		// echo $str;exit;
@@ -71,88 +84,16 @@
 		return $this->execQuery($str);
 	}
 
-
-    function selectByParams($paramsArray=array(),$limit=-1,$from=-1, $statement='', $statement2='', $sOrder="ORDER BY A.PDM_YEAR ASC")
-	{
-		$str = "
-		SELECT DISTINCT
-			PC.WO_PDM
-			, CASE WHEN PC.WO_PDM = TRUE THEN 'Valid' WHEN PC.WO_PDM = FALSE THEN 'Tidak Valid' ELSE '-' END INFO_NAMA
-			, A.*
-		FROM
-		(
-			SELECT 
-				B.KODE_DISTRIK,B.KODE_BLOK,B.KODE_UNIT_M,A.PDM_YEAR,B.GROUP_PM, SUM(PDM_IN_YEAR) TOTAL_TAHUN
-			FROM t_lccm_prj A 
-			INNER JOIN M_ASSET_LCCM B ON B.ASSETNUM = A.ASSETNUM
-			LEFT JOIN DISTRIK C ON C.KODE = B.KODE_DISTRIK
-			LEFT JOIN BLOK_UNIT D ON D.KODE = B.SITEID AND D.DISTRIK_ID = C.DISTRIK_ID
-			LEFT JOIN UNIT_MESIN E ON E.KODE = B.KODE_UNIT_M AND E.BLOK_UNIT_ID = D.BLOK_UNIT_ID AND E.DISTRIK_ID = C.DISTRIK_ID
-			WHERE 1=1
-		"; 
-		
-		while(list($key,$val) = each($paramsArray))
-		{
-			$str .= " AND $key = '$val' ";
-		}
-		
-		$str .= $statement." GROUP BY A.PDM_YEAR, B.GROUP_PM,B.KODE_DISTRIK,B.KODE_BLOK,B.KODE_UNIT_M
-		) A
-		LEFT JOIN t_preperation_lccm PC ON PC.YEAR_LCCM = A.PDM_YEAR AND PC.KODE_DISTRIK = A.KODE_DISTRIK AND PC.KODE_BLOK = A.KODE_BLOK AND PC.KODE_UNIT_M = A.KODE_UNIT_M
-		WHERE 1=1 ".$statement2."
-		".$sOrder;
-		$this->query = $str;
-				
-		return $this->selectLimit($str,$limit,$from); 
-    }
-
-    function selectByParamsTahun($paramsArray=array(),$limit=-1,$from=-1, $statement='',  $statement2='',$sOrder="ORDER BY A.PDM_YEAR ASC")
-	{
-		$str = "
-		SELECT
-			PC.WO_PDM
-			, CASE WHEN PC.WO_PDM = TRUE THEN 'Valid' WHEN PC.WO_PDM = FALSE THEN 'Tidak Valid' ELSE '-' END INFO_NAMA
-			, A.*
-		FROM
-		(
-			SELECT 
-			B.KODE_DISTRIK,C.NAMA DISTRIK_INFO,B.KODE_BLOK,D.NAMA BLOK_INFO,B.KODE_UNIT, D.NAMA UNIT_INFO,A.PDM_YEAR,B.GROUP_PM, A.TOTAL_PDM TOTAL_TAHUN
-			FROM t_total_wopdm_lccm A 
-			LEFT JOIN DISTRIK C ON C.KODE = A.KODE_DISTRIK
-			LEFT JOIN BLOK_UNIT D ON D.KODE = A.KODE_BLOK AND D.DISTRIK_ID = C.DISTRIK_ID
-			LEFT JOIN UNIT_MESIN E ON E.KODE = A.KODE_UNIT_M AND E.BLOK_UNIT_ID = D.BLOK_UNIT_ID AND E.DISTRIK_ID = C.DISTRIK_ID
-			LEFT JOIN m_group_pm__lccm B ON B.KODE_DISTRIK = C.KODE AND B.KODE_BLOK = D.KODE AND B.KODE_UNIT = E.KODE
-			WHERE 1=1
-			
-		"; 
-		
-		while(list($key,$val) = each($paramsArray))
-		{
-			$str .= " AND $key = '$val' ";
-		}
-		
-		$str .= $statement." GROUP BY A.PDM_YEAR, B.GROUP_PM,B.KODE_DISTRIK,B.KODE_BLOK,B.KODE_UNIT,A.TOTAL_PDM,C.NAMA,D.NAMA,D.NAMA
-		) A
-		LEFT JOIN t_preperation_lccm PC ON PC.YEAR_LCCM = A.PDM_YEAR AND PC.KODE_DISTRIK = A.KODE_DISTRIK AND PC.KODE_BLOK = A.KODE_BLOK AND PC.KODE_UNIT_M = A.KODE_UNIT
-		WHERE 1=1 ".$statement2."
-		".$sOrder;
-		$this->query = $str;
-		// echo $str;exit;
-				
-		return $this->selectLimit($str,$limit,$from); 
-    }
-
-
-    function selectByParamsDetail($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.ASSETNUM ASC")
+	function selectByParams($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.PROJECT_NAME ASC")
 	{
 		$str = "
 		SELECT 
-			A.*,B.GROUP_PM
+			A.*,C.NAMA DISTRIK_INFO,D.NAMA BLOK_INFO,E.NAMA UNIT_INFO
+			, LCCM_START_HIST_YEAR || ' - ' || LCCM_END_HIST_YEAR HISTORY_YEAR
 		FROM t_lccm_prj A 
-		INNER JOIN M_ASSET_LCCM B ON B.ASSETNUM = A.ASSETNUM
-		LEFT JOIN DISTRIK C ON C.KODE = B.KODE_DISTRIK
-		LEFT JOIN BLOK_UNIT D ON D.KODE = B.SITEID AND D.DISTRIK_ID = C.DISTRIK_ID
-		LEFT  JOIN UNIT_MESIN E ON E.KODE = B.KODE_UNIT_M AND E.BLOK_UNIT_ID = D.BLOK_UNIT_ID AND E.DISTRIK_ID = C.DISTRIK_ID
+		LEFT JOIN DISTRIK C ON C.KODE = A.KODE_DISTRIK
+		LEFT JOIN BLOK_UNIT D ON D.KODE = A.KODE_BLOK AND D.DISTRIK_ID = C.DISTRIK_ID
+		LEFT JOIN UNIT_MESIN E ON E.KODE = A.KODE_UNIT_M AND E.BLOK_UNIT_ID = D.BLOK_UNIT_ID AND E.DISTRIK_ID = C.DISTRIK_ID
 		WHERE 1=1
 				
 		"; 
@@ -167,6 +108,8 @@
 				
 		return $this->selectLimit($str,$limit,$from); 
     }
+
+
 
     
   } 
