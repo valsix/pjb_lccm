@@ -43,7 +43,7 @@ else
     $reqPrediction= $set->getField("LCCM_PREDICT_YEAR");
 
     $reqDiscount= $set->getField("DISC_RATE");
-    $reqPlant= $set->getField("PLANT_CAPITAL_COST");
+    $reqPlant= toThousandComma($set->getField("PLANT_CAPITAL_COST"));
 
     $reqHistoryRate= $set->getField("HIST_INFLASI_RATE");
     $reqAnnualRate= $set->getField("ANNUAL_INFLASI_RATE");
@@ -138,7 +138,6 @@ while($set->nextRow())
 unset($set);
 
 // print_r($arrproduct);exit;
-$reqPredictionMin=date("Y");
 // print_r($reqPredictionMin);exit;
 
 
@@ -422,6 +421,21 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     //         $(this).val("");
     //      }
     //  });
+
+    $('#reqPlant').keyup(function(event) {
+      if (event.which >= 37 && event.which <= 40) return;
+      $(this).val(function(index, value) {
+        return value
+          // Keep only digits and decimal points:
+          .replace(/[^\d.]/g, "")
+          // Remove duplicated decimal point, if one exists:
+          .replace(/^(\d*\.)(.*)\.(.*)$/, '$1$2$3')
+          // Keep only two digits past the decimal point:
+          .replace(/\.(\d{2})\d+/, '.$1')
+          // Add thousands separators:
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      });
+    });
 
 
     $('#simpan').hide();

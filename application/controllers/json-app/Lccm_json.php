@@ -258,7 +258,7 @@ class Lccm_json extends CI_Controller
 		$set->setField("DISC_RATE", $reqDiscount);
 		$set->setField("HIST_INFLASI_RATE", $reqHistoryInflasi);
 		$set->setField("ANNUAL_INFLASI_RATE", $reqAnnual);
-		$set->setField("PLANT_CAPITAL_COST", $reqPlant);
+		$set->setField("PLANT_CAPITAL_COST",str_replace(',', '', $reqPlant));
 		$set->setField("SITEID", "");
 		
 		$set->setField("PROJECT_NAME_OLD", $reqProjectNoOld);
