@@ -211,9 +211,37 @@ class Lccm_json extends CI_Controller
 
 		$reqProjectNoOld= $this->input->post("reqProjectNoOld");
 
+		$reqPredictionMin=date("Y");
+
+
 		if($reqHistoryYearEnd < $reqHistoryYearStart)
 		{
 			echo "xxx*** Tahun Akhir tidak boleh kurang dari tahun awal";exit;
+		}
+
+
+		if($reqPrediction < $reqHistoryYearStart)
+		{
+			echo "xxx*** Tahun Prediction tidak boleh kurang dari history tahun awal";exit;
+		}
+
+
+		if($reqPrediction < $reqPredictionMin)
+		{
+			echo "xxx*** Tahun Prediction tidak boleh kurang dari tahun sekarang";exit;
+		}
+
+		$reqHistoryInflasi=$this->kalkulasi($reqHistoryYearStart,$reqHistoryYearEnd);
+		$reqAnnual=$this->kalkulasi($reqHistoryYearStart,$reqPrediction);
+		// print_r($reqHistoryInflasi);exit;
+
+		if(empty($reqHistoryInflasi))
+		{
+			$reqHistoryInflasi=0;
+		}
+		if(empty($reqAnnual))
+		{
+			$reqAnnual=0;
 		}
 
 		$set = new T_Lccm_Prj();
@@ -228,8 +256,8 @@ class Lccm_json extends CI_Controller
 		$set->setField("LCCM_END_HIST_YEAR", $reqHistoryYearEnd);
 		$set->setField("LCCM_PREDICT_YEAR", $reqPrediction);
 		$set->setField("DISC_RATE", $reqDiscount);
-		$set->setField("HIST_INFLASI_RATE", 1);
-		$set->setField("ANNUAL_INFLASI_RATE", 1);
+		$set->setField("HIST_INFLASI_RATE", $reqHistoryInflasi);
+		$set->setField("ANNUAL_INFLASI_RATE", $reqAnnual);
 		$set->setField("PLANT_CAPITAL_COST", $reqPlant);
 		$set->setField("SITEID", "");
 		
@@ -320,6 +348,85 @@ class Lccm_json extends CI_Controller
 
 		echo json_encode( $arrJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
 	}
+
+
+	function kalkulasi($reqTahunAwal,$reqTahunAkhir)
+	{
+		$this->load->model("base-app/M_Inflasi_Calculate");
+		$this->load->model("base-app/M_Inflasi");
+
+		
+		$set= new M_Inflasi();
+		$arrset= [];
+
+		$statement=" AND tahun >= ".$reqTahunAwal." and tahun <= ".$reqTahunAkhir."  ";
+		$set->selectByParamsAll(array(), -1,-1,$statement);
+		// echo $set->query;exit;
+		$product=1;
+		while($set->nextRow())
+		{
+			$fp1= $set->getField("FP1");
+			$product *= $fp1;
+		}
+		unset($set);
+
+		$product=number_format((float)$product, 8, '.', '');
+
+		$jangkawaktu= $reqTahunAkhir-$reqTahunAwal;
+
+
+		$nper = $jangkawaktu;
+		$pmt = 0;
+		$pv = -1;
+		$fv = $product;
+		$type = 0;
+		$guess = 0.1;
+		$rate=$this->RATE($nper, $pmt, $pv, $fv, $guess);
+		$rate=round($rate, 4);
+		$rate=$rate*100;
+	
+
+		$total=$rate;
+
+		return $total;
+				
+	}
+
+	function RATE($nper, $pmt, $pv, $fv = 0.0, $type = 0, $guess = 0.1) {
+		define('FINANCIAL_MAX_ITERATIONS', 128);
+		define('FINANCIAL_PRECISION', 1.0e-08);
+
+		$rate = $guess;
+		if (abs($rate) < FINANCIAL_PRECISION) {
+			$y = $pv * (1 + $nper * $rate) + $pmt * (1 + $rate * $type) * $nper + $fv;
+		} else {
+			$f = exp($nper * log(1 + $rate));
+			$y = $pv * $f + $pmt * (1 / $rate + $type) * ($f - 1) + $fv;
+		}
+		$y0 = $pv + $pmt * $nper + $fv;
+		$y1 = $pv * $f + $pmt * (1 / $rate + $type) * ($f - 1) + $fv;
+
+		$i  = $x0 = 0.0;
+		$x1 = $rate;
+		while ((abs($y0 - $y1) > FINANCIAL_PRECISION) && ($i < FINANCIAL_MAX_ITERATIONS)) {
+			$rate = ($y1 * $x0 - $y0 * $x1) / ($y1 - $y0);
+			$x0 = $x1;
+			$x1 = $rate;
+
+			if (abs($rate) < FINANCIAL_PRECISION) {
+				$y = $pv * (1 + $nper * $rate) + $pmt * (1 + $rate * $type) * $nper + $fv;
+			} else {
+				$f = exp($nper * log(1 + $rate));
+				$y = $pv * $f + $pmt * (1 / $rate + $type) * ($f - 1) + $fv;
+			}
+
+			$y0 = $y1;
+			$y1 = $y;
+			++$i;
+		}
+		return $rate;
+	}  
+
 
 	
 

@@ -138,7 +138,8 @@ while($set->nextRow())
 unset($set);
 
 // print_r($arrproduct);exit;
-
+$reqPredictionMin=date("Y");
+// print_r($reqPredictionMin);exit;
 
 
 
@@ -405,6 +406,24 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 </div>
 
 <script>
+
+    // $('#reqPrediction').on('change keyup blur', function(e){ 
+    //       id_arr = $(this).attr('id');
+
+    //       var fullPay = $('#reqPrediction').val();
+    //       var advancePay = '<?=$reqPredictionMin?>';
+
+    //       console.log(fullPay);
+    //       console.log(advancePay);
+
+    //       if (parseInt(fullPay) < parseInt(advancePay)) {
+    //         console.log(1);
+    //         e.preventDefault();     
+    //         $(this).val("");
+    //      }
+    //  });
+
+
     $('#simpan').hide();
     // $(':input').removeAttr('readonly');
     $('#delete').hide();
