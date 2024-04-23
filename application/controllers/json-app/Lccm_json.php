@@ -211,6 +211,11 @@ class Lccm_json extends CI_Controller
 
 		$reqProjectNoOld= $this->input->post("reqProjectNoOld");
 
+		if($reqHistoryYearEnd < $reqHistoryYearStart)
+		{
+			echo "xxx*** Tahun Akhir tidak boleh kurang dari tahun awal";exit;
+		}
+
 		$set = new T_Lccm_Prj();
 		$set->setField("KODE_DISTRIK", $reqDistrikId);
 		$set->setField("KODE_BLOK", $reqBlokId);
@@ -230,6 +235,32 @@ class Lccm_json extends CI_Controller
 		
 		$set->setField("PROJECT_NAME_OLD", $reqProjectNoOld);
 
+
+		$checkprep= new T_Lccm_Prj();
+
+		$statement = " AND A.KODE_DISTRIK = '".$reqDistrikId."' AND A.KODE_BLOK = '".$reqBlokId."' AND A.KODE_UNIT_M = '".$reqUnitMesinId."' AND A.YEAR_LCCM >= '".$reqHistoryYearStart."' AND A.YEAR_LCCM <= '".$reqHistoryYearEnd."'  ";
+		$checkprep->selectByParamsCheckPrep(array(), -1, -1, $statement);
+    	// echo $checkprep->query;exit;
+		// $checkprep->firstRow();
+		$arrpesan=array();
+		while($checkprep->nextRow())
+		{
+			$reqStatusComplete= $checkprep->getField("STATUS_COMPLETE");
+			$reqTahunComp= $checkprep->getField("YEAR_LCCM");
+
+			if($reqStatusComplete==f || $reqStatusComplete==false)
+			{
+				  array_push($arrpesan, $reqTahunComp);
+			}
+
+		}
+
+		if(!empty($arrpesan))
+		{
+			$pesantahun= implode (", ", $arrpesan);
+			echo "xxx***Data gagal disimpan, data histori tidak lengkap pada tahun ".$pesantahun;exit;
+		}
+				
 		$reqSimpan= "";
 		if ($reqId == "")
 		{

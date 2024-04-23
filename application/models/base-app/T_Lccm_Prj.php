@@ -109,6 +109,26 @@
 		return $this->selectLimit($str,$limit,$from); 
     }
 
+    function selectByParamsCheckPrep($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.YEAR_LCCM ASC")
+	{
+		$str = "
+		SELECT KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M, STATUS_COMPLETE,YEAR_LCCM 
+		FROM T_PREPERATION_LCCM A
+		WHERE 1=1
+				
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
 
 
     
