@@ -78,7 +78,7 @@
 		$str = "
 		DELETE FROM t_lccm_prj
 		WHERE 
-		ASSETNUM = '".$this->getField("ASSETNUM")."' AND PDM_YEAR = '".$this->getField("PDM_YEAR")."'  AND PDMNUM = '".$this->getField("PDMNUM")."' "; 
+		PROJECT_NAME = '".$this->getField("PROJECT_NAME")."' "; 
 
 		$this->query = $str;
 		return $this->execQuery($str);

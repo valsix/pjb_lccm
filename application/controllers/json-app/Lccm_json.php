@@ -270,13 +270,13 @@ class Lccm_json extends CI_Controller
 
 	function delete()
 	{
-		$this->load->model("base-app/M_Inflasi_Calculate");
-		$set = new M_Inflasi_Calculate();
+		$this->load->model("base-app/T_Lccm_Prj");
+		$set = new T_Lccm_Prj();
 		
 		$reqId =  $this->input->get('reqId');
 		$reqMode =  $this->input->get('reqMode');
 
-		$set->setField("M_INFLASI_CALCULATE_ID", $reqId);
+		$set->setField("PROJECT_NAME", $reqId);
 
 		if($set->delete())
 		{
