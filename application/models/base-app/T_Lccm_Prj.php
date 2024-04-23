@@ -129,6 +129,27 @@
 		return $this->selectLimit($str,$limit,$from); 
     }
 
+    function selectByParamsProjectNo($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.PROJECT_NAME ASC")
+	{
+		$str = "
+		SELECT KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M, PROJECT_NAME,PROJECT_DESC 
+		FROM t_lccm_prj A
+		WHERE 1=1
+		GROUP BY  KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M, PROJECT_NAME,PROJECT_DESC 
+				
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
 
 
     

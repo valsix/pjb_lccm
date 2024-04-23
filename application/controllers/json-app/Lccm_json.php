@@ -213,6 +213,10 @@ class Lccm_json extends CI_Controller
 
 		$reqPredictionMin=date("Y");
 
+		if($reqId=="")
+		{
+			$reqId=$reqProjectNo;
+		}
 
 		if($reqHistoryYearEnd < $reqHistoryYearStart)
 		{
@@ -244,6 +248,12 @@ class Lccm_json extends CI_Controller
 			$reqAnnual=0;
 		}
 
+		if($reqProjectNo=="")
+		{
+			$reqProjectNo= generateRandomString();
+			$reqProjectDesc= "DESC_".$reqProjectNo;
+		}
+
 		$set = new T_Lccm_Prj();
 		$set->setField("KODE_DISTRIK", $reqDistrikId);
 		$set->setField("KODE_BLOK", $reqBlokId);
@@ -261,7 +271,8 @@ class Lccm_json extends CI_Controller
 		$set->setField("PLANT_CAPITAL_COST",str_replace(',', '', $reqPlant));
 		$set->setField("SITEID", "");
 		
-		$set->setField("PROJECT_NAME_OLD", $reqProjectNoOld);
+		$set->setField("PROJECT_NAME_OLD", $reqProjectNo);
+
 
 
 		$checkprep= new T_Lccm_Prj();

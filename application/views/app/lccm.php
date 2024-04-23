@@ -66,9 +66,6 @@ $set= new Distrik();
 $arrdistrik= [];
 $statement="  ";
 
-
-
-
 $set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
@@ -136,6 +133,23 @@ while($set->nextRow())
     array_push($arrunitmesin, $arrdata);
 }
 unset($set);
+
+
+$set= new T_Lccm_Prj();
+$arrprojectno= [];
+$statement="  ";
+
+$set->selectByParamsProjectNo(array(), -1,-1,$statement);
+// echo $set->query;exit;
+while($set->nextRow())
+{
+    $arrdata= array();
+    $arrdata["id"]= $set->getField("PROJECT_NAME");
+    $arrdata["text"]= $set->getField("PROJECT_NAME");
+    array_push($arrprojectno, $arrdata);
+}
+unset($set);
+
 
 // print_r($arrproduct);exit;
 // print_r($reqPredictionMin);exit;
@@ -352,27 +366,54 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                            </div>
                        </div>
 
-                        <div class="form-group" >  
-                            <label class="control-label col-md-2">Project No </label>
-                            <div class='col-md-4'>
-                                <div class='form-group'>
-                                    <div class='col-md-11'>
-                                       <input  <?=$readonly?> required  class="easyui-validatebox textbox form-control" readonly type="text" name="reqProjectNo"  id="reqProjectNo" value="<?=$reqProjectNo?>" <?=$disabled?> style="width:50%" />
+                        <div id="selectno">
+                           
+                     
+                            <div class="form-group" >  
+                                <label class="control-label col-md-2">Project No </label>
+                                <div class='col-md-4'>
+                                    <div class='form-group'>
+                                        <div class='col-md-6'>
+                                          <!--  <input  <?=$readonly?> required  class="easyui-validatebox textbox form-control" readonly type="text" name="reqProjectNo"  id="reqProjectNo" value="<?=$reqProjectNo?>" <?=$disabled?> style="width:50%" /> -->
+                                          <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?>  readonly id="reqProjectNo" <?=$disabled?> name="reqProjectNo"  style="width:100%;" >
+                                                <!-- <option value="" >Pilih Project No</option> -->
+                                                <?
+                                                foreach($arrprojectno as $item) 
+                                                {
+                                                    $selectvalid= $item["id"];
+                                                    $selectvaltext= $item["text"];
+                                                    $selected="";
+                                                    if($selectvalid == $reqProjectNo)
+                                                    {
+                                                        $selected="selected";
+                                                    }
+
+
+                                                    ?>
+                                                    <option value="<?=$selectvalid?>" <?=$selected?>><?=$selectvaltext?></option>
+
+                                                    <?
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                           </div>
+                               </div>
+                            </div>
+
+                            <div class="form-group" >  
+                                <label class="control-label col-md-2">Project Desc </label>
+                                <div class='col-md-4'>
+                                    <div class='form-group'>
+                                        <div class='col-md-11'>
+                                           <input   <?=$readonly?>  class="easyui-validatebox textbox form-control"  readonly  type="text" name="reqProjectDesc"  id="reqProjectDesc" value="<?=$reqProjectDesc?>" <?=$disabled?> style="width:50%" />
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+
                         </div>
 
-                        <div class="form-group" >  
-                            <label class="control-label col-md-2">Project Desc </label>
-                            <div class='col-md-4'>
-                                <div class='form-group'>
-                                    <div class='col-md-11'>
-                                       <input   <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly  type="text" name="reqProjectDesc"  id="reqProjectDesc" value="<?=$reqProjectDesc?>" <?=$disabled?> style="width:50%" />
-                                    </div>
-                                </div>
-                           </div>
-                        </div>
 
 
 
@@ -441,7 +482,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     $('#simpan').hide();
     // $(':input').removeAttr('readonly');
     $('#delete').hide();
-    $('#edit').hide();
+    $('#edit').show();
     $('#new').show();
 
     var reqId='<?=$reqId?>';
@@ -449,7 +490,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     if(reqId)
     {
         $('#edit').show(); 
-        $('#new').hide();
+        $('#new').show();
         $('#delete').show();
     }
 
@@ -468,12 +509,17 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
             $("#reqDistrikId").val("").trigger( "change" );
             $("#reqId").val("").trigger( "change" );
+            $('#delete').hide();
+            $("#selectno").hide();
+            $("#reqProjectNo").val("").trigger( "change" );
             // $('#ff').trigger("reset");
         }
         else
         {
             $('#edit').hide();
-            $(":input").not("[name=reqProjectNo]").removeAttr('readonly');
+             $(":input").not("[name=reqProjectDesc]").removeAttr('readonly');
+            $("#reqProjectNo").removeAttr('readonly');
+            $("#selectno").show();
         }
     }
 
