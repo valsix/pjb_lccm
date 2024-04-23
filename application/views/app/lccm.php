@@ -150,7 +150,12 @@ while($set->nextRow())
 }
 unset($set);
 
+$readonly="";
+if(!empty($reqId))
+{
+    $readonly="";
 
+}
 // print_r($arrproduct);exit;
 // print_r($reqPredictionMin);exit;
 
@@ -229,7 +234,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11'>
-                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyblok?> readonly required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyblok?>  required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
                                             <option value="" >Pilih Distrik</option>
                                             <?
                                             foreach($arrdistrik as $item) 
@@ -259,7 +264,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11' id="blok">
-                                        <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> required  <?=$readonlyblok?> <?=$readonly?> readonly id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                         <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> required  <?=$readonlyblok?> <?=$readonly?> readonly id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
                                             <option value="" >Pilih Blok Unit</option>
                                             <?
                                             foreach($arrblok as $item) 
@@ -291,7 +296,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11'  id="unit">
-                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> required readonly id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
+                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> required  readonly id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
                                             <option value="" >Pilih Unit Mesin</option>
                                             <?
                                             foreach($arrunitmesin as $item) 
@@ -323,10 +328,10 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-4'>
                                 <div class='form-group'>
                                     <div class='col-md-6'>
-                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqHistoryYearStart"  id="reqHistoryYearStart" value="<?=$reqHistoryYearStart?>" <?=$disabled?> style="width:50%" />
+                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqHistoryYearStart"  id="reqHistoryYearStart" value="<?=$reqHistoryYearStart?>" <?=$disabled?> style="width:50%" />
                                    </div>
                                    <div class='col-md-6'>
-                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqHistoryYearEnd"  id="reqHistoryYearEnd" value="<?=$reqHistoryYearEnd?>" <?=$disabled?> style="width:50%" />
+                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqHistoryYearEnd"  id="reqHistoryYearEnd" value="<?=$reqHistoryYearEnd?>" <?=$disabled?> style="width:50%" />
                                    </div>
                                 </div>
                             </div>
@@ -338,7 +343,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-4'>
                                 <div class='form-group'>
                                     <div class='col-md-6'>
-                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqPrediction"  id="reqPrediction" value="<?=$reqPrediction?>" <?=$disabled?> style="width:50%" />
+                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqPrediction"  id="reqPrediction" value="<?=$reqPrediction?>" <?=$disabled?> style="width:50%" />
                                    </div>
                                </div>
                            </div>
@@ -349,7 +354,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-4'>
                                 <div class='form-group'>
                                     <div class='col-md-4'>
-                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqDiscount"  id="reqDiscount" value="<?=$reqDiscount?>" <?=$disabled?> style="width:50%" />
+                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqDiscount"  id="reqDiscount" value="<?=$reqDiscount?>" <?=$disabled?> style="width:50%" />
                                    </div>
                                </div>
                            </div>
@@ -360,42 +365,55 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-4'>
                                 <div class='form-group'>
                                     <div class='col-md-11'>
-                                       <input   <?=$readonly?>  class="easyui-validatebox textbox form-control" required readonly type="text" name="reqPlant"  id="reqPlant" value="<?=$reqPlant?>" <?=$disabled?> style="width:50%" />
+                                       <input   <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqPlant"  id="reqPlant" value="<?=$reqPlant?>" <?=$disabled?> style="width:50%" />
                                    </div>
                                </div>
                            </div>
                        </div>
 
-                        <div id="selectno">
+                       
                            
-                     
+                        <div id="selectno">
                             <div class="form-group" >  
                                 <label class="control-label col-md-2">Project No </label>
                                 <div class='col-md-4'>
                                     <div class='form-group'>
                                         <div class='col-md-6'>
                                           <!--  <input  <?=$readonly?> required  class="easyui-validatebox textbox form-control" readonly type="text" name="reqProjectNo"  id="reqProjectNo" value="<?=$reqProjectNo?>" <?=$disabled?> style="width:50%" /> -->
-                                          <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?>  readonly id="reqProjectNo" <?=$disabled?> name="reqProjectNo"  style="width:100%;" >
-                                                <!-- <option value="" >Pilih Project No</option> -->
-                                                <?
-                                                foreach($arrprojectno as $item) 
-                                                {
-                                                    $selectvalid= $item["id"];
-                                                    $selectvaltext= $item["text"];
-                                                    $selected="";
-                                                    if($selectvalid == $reqProjectNo)
-                                                    {
-                                                        $selected="selected";
-                                                    }
-
-
-                                                    ?>
-                                                    <option value="<?=$selectvalid?>" <?=$selected?>><?=$selectvaltext?></option>
-
+                                          <?
+                                          if(!empty($reqId))
+                                          {
+                                            ?>
+                                                <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> class="prono"   id="reqProjectNoSelect" <?=$disabled?> name="reqProjectNo"  style="width:100%;" >
+                                                    <!-- <option value="" >Pilih Project No</option> -->
                                                     <?
-                                                }
-                                                ?>
-                                            </select>
+                                                    foreach($arrprojectno as $item) 
+                                                    {
+                                                        $selectvalid= $item["id"];
+                                                        $selectvaltext= $item["text"];
+                                                        $selected="";
+                                                        if($selectvalid == $reqProjectNo)
+                                                        {
+                                                            $selected="selected";
+                                                        }
+
+
+                                                        ?>
+                                                        <option value="<?=$selectvalid?>" <?=$selected?>><?=$selectvaltext?></option>
+
+                                                        <?
+                                                    }
+                                                    ?>
+                                                </select>
+                                            <?
+                                            }
+                                            else
+                                            {
+                                            ?>
+                                                <input  <?=$readonly?> required  class="easyui-validatebox textbox form-control" maxlength="2"  type="text" name="reqProjectNo"  id="reqProjectNo" value="<?=$reqProjectNo?>" <?=$disabled?> style="width:50%" />
+                                            <?
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                </div>
@@ -406,7 +424,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                                 <div class='col-md-4'>
                                     <div class='form-group'>
                                         <div class='col-md-11'>
-                                           <input   <?=$readonly?>  class="easyui-validatebox textbox form-control"  readonly  type="text" name="reqProjectDesc"  id="reqProjectDesc" value="<?=$reqProjectDesc?>" <?=$disabled?> style="width:50%" />
+                                           <input   <?=$readonly?>  class="easyui-validatebox textbox form-control" required    type="text" name="reqProjectDesc"  id="reqProjectDesc" value="<?=$reqProjectDesc?>" <?=$disabled?> style="width:50%" />
                                         </div>
                                     </div>
                                </div>
@@ -431,8 +449,16 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             {
             ?>
             <div style="text-align:center;padding:5px">
-                <a href="javascript:void(0)" class="btn btn-warning" id="new" onclick="formkondisi('formbaru')">New</a>
-                <a href="javascript:void(0)" class="btn btn-success"  id="edit" onclick="formkondisi('<?=$reqId?>')">Edit</a>
+                
+                <?
+                if(!empty($reqId))
+                {
+                ?>
+                <a href="javascript:void(0)" class="btn btn-warning" id="new" onclick="formnew('formbaru')">New</a>
+                <!-- <a href="javascript:void(0)" class="btn btn-success"  id="edit" onclick="formkondisi('<?=$reqId?>')">Edit</a> -->
+                <?
+                }
+                ?>
                 <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
                 <a href="javascript:void(0)" class="btn btn-danger" id="delete" onclick="deleteData('<?=$reqId?>')">Delete</a>
             </div>
@@ -479,8 +505,8 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     });
 
 
-    $('#simpan').hide();
-    // $(':input').removeAttr('readonly');
+    // $('#simpan').hide();
+    
     $('#delete').hide();
     $('#edit').show();
     $('#new').show();
@@ -492,6 +518,12 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
         $('#edit').show(); 
         $('#new').show();
         $('#delete').show();
+        $('#simpan').show();
+
+    }
+
+    function formnew(){
+        window.location.href = 'app/index/<?=$pgreturn?>';
     }
 
     function formkondisi(id)
@@ -517,9 +549,11 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
         else
         {
             $('#edit').hide();
-             $(":input").not("[name=reqProjectDesc]").removeAttr('readonly');
+            $('#new').hide();
+             $(":input").removeAttr('readonly');
             $("#reqProjectNo").removeAttr('readonly');
             $("#selectno").show();
+            $('#simpan').show();
         }
     }
 
@@ -604,8 +638,10 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     
     });
 
-    $('#btnDeleteNew').on('click', function () {
-       
+    $('#reqProjectNoSelect').on('change', function() {
+        var reqId= this.value;
+        window.location.href = "app/index/<?=$pgreturn?>?reqId="+reqId;
+
     });
 
     function deleteData(valinfoid){
@@ -616,7 +652,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             return false;
         }
 
-         var pesan='Apakah anda yakin untuk hapus data terpilih?';
+        var pesan='Apakah anda yakin untuk hapus data Project No '+valinfoid+' ?';
 
         $.messager.confirm('Konfirmasi',pesan,function(r){
             if (r){

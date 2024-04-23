@@ -213,7 +213,7 @@ class Lccm_json extends CI_Controller
 
 		$reqPredictionMin=date("Y");
 
-		if($reqId=="")
+		if($reqId=="" && $reqMode=="update")
 		{
 			$reqId=$reqProjectNo;
 		}
@@ -248,11 +248,20 @@ class Lccm_json extends CI_Controller
 			$reqAnnual=0;
 		}
 
-		if($reqProjectNo=="")
+
+		if($reqMode=="insert")
 		{
-			$reqProjectNo= generateRandomString();
-			$reqProjectDesc= "DESC_".$reqProjectNo;
+			$reqProjectNo=  $reqDistrikId.$reqBlokId.$reqUnitMesinId.$reqHistoryYearStart.$reqHistoryYearEnd.$reqPrediction.$reqProjectNo;
 		}
+		else
+		{
+			$reqProjectNo=  $reqProjectNo;
+		}
+
+		
+		
+		// $reqProjectDesc= "DESC_".$reqProjectNo;
+		
 
 		$set = new T_Lccm_Prj();
 		$set->setField("KODE_DISTRIK", $reqDistrikId);
