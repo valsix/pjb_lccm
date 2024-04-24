@@ -67,7 +67,7 @@ class Loss_output_json extends CI_Controller
 
 		if(!empty($reqBlokId))
 		{
-			$statement .= " AND A.SITEID='".$reqBlokId."'";
+			$statement .= " AND A.KODE_BLOK='".$reqBlokId."'";
 		}
 
 		if(!empty($reqUnitMesinId))
@@ -90,6 +90,22 @@ class Loss_output_json extends CI_Controller
 		{
 			$statement .= " AND A.loss_output='".$reqStatus."'";
 		}
+
+		$statementblok="";
+		if(!empty($this->appblokunitid))
+		{
+			$statementblok.= " AND X4.BLOK_UNIT_ID  = ".$this->appblokunitid;
+		}
+
+		$statement .="  AND EXISTS
+		 (
+			 SELECT LO_YEAR FROM t_loss_output_lccm X
+			 INNER JOIN M_ASSET_LCCM X1 ON X1.ASSETNUM = X.ASSETNUM
+			 LEFT JOIN DISTRIK X3 ON X3.KODE = X1.KODE_DISTRIK
+			 LEFT JOIN BLOK_UNIT X4 ON X4.KODE = X1.KODE_BLOK AND X4.DISTRIK_ID = X3.DISTRIK_ID
+			 LEFT  JOIN UNIT_MESIN X5 ON X5.KODE = X1.KODE_UNIT_M AND X5.BLOK_UNIT_ID = X4.BLOK_UNIT_ID AND X5.DISTRIK_ID = X3.DISTRIK_ID
+			 WHERE A.YEAR_LCCM =X.LO_YEAR ".$statementblok."
+		 )";
 
 		$sOrder = " ORDER BY A.YEAR_LCCM ASC ";
 		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
