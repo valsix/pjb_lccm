@@ -15,6 +15,12 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 
 $reqId = $this->input->get("reqId");
 $reqLihat = $this->input->get("reqLihat");
+$reqStatus = $this->input->get("reqStatus");
+
+$reqDistrikId = $this->input->get("reqDistrikId");
+$reqBlokId = $this->input->get("reqBlokId");
+$reqUnitMesinId = $this->input->get("reqUnitMesinId");
+$reqDelete = $this->input->get("reqDelete");
 
 
 $set= new T_Lccm_Prj();
@@ -137,7 +143,19 @@ unset($set);
 
 $set= new T_Lccm_Prj();
 $arrprojectno= [];
-$statement="  ";
+
+if(empty($reqId) && empty($reqDelete) )
+{
+    $statement=" AND 1=2";
+}
+else
+{
+    if(!empty($reqDistrikId) && !empty($reqBlokId)  && !empty($reqUnitMesinId))
+    {
+       $statement=" AND A.KODE_DISTRIK = '".$reqDistrikId."' AND A.KODE_BLOK = '".$reqBlokId."' AND A.KODE_UNIT_M = '".$reqUnitMesinId."' ";
+    }
+
+}
 
 $set->selectByParamsProjectNo(array(), -1,-1,$statement);
 // echo $set->query;exit;
@@ -151,9 +169,9 @@ while($set->nextRow())
 unset($set);
 
 $readonly="";
-if(!empty($reqId))
+if(empty($reqStatus))
 {
-    $readonly="";
+    $readonly="disabled";
 
 }
 // print_r($arrproduct);exit;
@@ -264,7 +282,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11' id="blok">
-                                         <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> required  <?=$readonlyblok?> <?=$readonly?> readonly id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                         <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> required  <?=$readonlyblok?> <?=$readonly?>  id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
                                             <option value="" >Pilih Blok Unit</option>
                                             <?
                                             foreach($arrblok as $item) 
@@ -296,7 +314,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11'  id="unit">
-                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> required  readonly id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
+                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> required   id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
                                             <option value="" >Pilih Unit Mesin</option>
                                             <?
                                             foreach($arrunitmesin as $item) 
@@ -322,7 +340,8 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                                 </div>
                             </div>
                         </div>
-
+                    <div id="datadetil">
+                        
                         <div class="form-group" >  
                             <label class="control-label col-md-2">History Year </label>
                             <div class='col-md-4'>
@@ -381,11 +400,11 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                                         <div class='col-md-6'>
                                           <!--  <input  <?=$readonly?> required  class="easyui-validatebox textbox form-control" readonly type="text" name="reqProjectNo"  id="reqProjectNo" value="<?=$reqProjectNo?>" <?=$disabled?> style="width:50%" /> -->
                                           <?
-                                          if(!empty($reqId))
+                                          if($reqStatus=="edit")
                                           {
                                             ?>
                                                 <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> class="prono"   id="reqProjectNoSelect" <?=$disabled?> name="reqProjectNo"  style="width:100%;" >
-                                                    <!-- <option value="" >Pilih Project No</option> -->
+                                                    <option value="" >Pilih Project No</option>
                                                     <?
                                                     foreach($arrprojectno as $item) 
                                                     {
@@ -429,8 +448,9 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                                     </div>
                                </div>
                             </div>
+                         </div>
 
-                        </div>
+                    </div>
 
 
 
@@ -449,18 +469,37 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             {
             ?>
             <div style="text-align:center;padding:5px">
+                <a href="javascript:void(0)" class="btn btn-warning" id="new" onclick="formnew('new')">New</a>
+                <a href="javascript:void(0)" class="btn btn-success"  id="edit" onclick="formnew('edit')">Edit</a>
                 
                 <?
-                if(!empty($reqId))
+                if(!empty($reqStatus))
                 {
                 ?>
-                <a href="javascript:void(0)" class="btn btn-warning" id="new" onclick="formnew('formbaru')">New</a>
-                <!-- <a href="javascript:void(0)" class="btn btn-success"  id="edit" onclick="formkondisi('<?=$reqId?>')">Edit</a> -->
+                        <?
+                        if($reqStatus=="new")
+                        {
+                            ?>
+
+                            <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
+                            <?
+                        }
+                        ?>
+
+                        <?
+                        if($reqStatus=="edit" && !empty($reqId))
+                        {
+                            ?>
+
+                            <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
+                            <a href="javascript:void(0)" class="btn btn-danger" id="delete" onclick="deleteData('<?=$reqId?>')">Delete</a>
+                            <?
+                        }
+                        ?>
                 <?
                 }
                 ?>
-                <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
-                <a href="javascript:void(0)" class="btn btn-danger" id="delete" onclick="deleteData('<?=$reqId?>')">Delete</a>
+                
             </div>
             <?
             }
@@ -473,22 +512,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
 <script>
 
-    // $('#reqPrediction').on('change keyup blur', function(e){ 
-    //       id_arr = $(this).attr('id');
-
-    //       var fullPay = $('#reqPrediction').val();
-    //       var advancePay = '<?=$reqPredictionMin?>';
-
-    //       console.log(fullPay);
-    //       console.log(advancePay);
-
-    //       if (parseInt(fullPay) < parseInt(advancePay)) {
-    //         console.log(1);
-    //         e.preventDefault();     
-    //         $(this).val("");
-    //      }
-    //  });
-
+   
     $('#reqPlant').keyup(function(event) {
       if (event.which >= 37 && event.which <= 40) return;
       $(this).val(function(index, value) {
@@ -512,6 +536,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     $('#new').show();
 
     var reqId='<?=$reqId?>';
+    var reqStatus='<?=$reqStatus?>';
 
     if(reqId)
     {
@@ -522,8 +547,35 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
     }
 
-    function formnew(){
-        window.location.href = 'app/index/<?=$pgreturn?>';
+
+    if(reqStatus=='new')
+    {
+        $('#new').hide();
+       
+
+    }
+
+    if(reqStatus=='edit' &&  reqId=="")
+    {
+        $(":input").not('#reqDistrikId,#reqBlokId,#reqUnitMesinId,#reqProjectNoSelect').attr('disabled', 'disabled');
+        $('#edit').hide();
+        // $('#reqProjectNoSelect').attr('readonly', 'readonly');
+
+    }
+
+    function formnew(status){
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
+        if(status=='kembali')
+        {
+             window.location.href = 'app/index/<?=$pgreturn?>?reqStatus=edit&reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId;
+        }
+        else
+        {
+             window.location.href = 'app/index/<?=$pgreturn?>?reqStatus='+status;
+        }
+       
     }
 
     function formkondisi(id)
@@ -550,7 +602,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
         {
             $('#edit').hide();
             $('#new').hide();
-             $(":input").removeAttr('readonly');
+            $(":input").removeAttr('readonly');
             $("#reqProjectNo").removeAttr('readonly');
             $("#selectno").show();
             $('#simpan').show();
@@ -600,7 +652,6 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     });
 
 
-
     $('#reqDistrikId').on('change', function() {
     // $("#blok").empty();
     var reqDistrikId= this.value;
@@ -631,16 +682,42 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             // console.log(data);
             $("#reqUnitMesinId option").remove();
             $("#reqUnitMesinId").attr("readonly", false); 
+            $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
             jQuery(data).each(function(i, item){
                 $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
             });
         });
+
     
     });
 
+
+    $('#reqUnitMesinId').on('change', function() {
+    // $("#blok").empty();
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= this.value;
+        var reqStatus= '<?=$reqStatus?>';
+        if(reqStatus=='new')
+        {
+
+        }
+        else if(reqStatus=='edit')
+        {
+            $.get("app/loadUrl/app/template_lccm_add?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId, function(data) {
+                 $("#datadetil").empty();
+                $("#datadetil").append(data);
+            });
+
+        }
+    
+    });
+
+
+
     $('#reqProjectNoSelect').on('change', function() {
         var reqId= this.value;
-        window.location.href = "app/index/<?=$pgreturn?>?reqId="+reqId;
+        window.location.href = "app/index/<?=$pgreturn?>?reqStatus=edit&reqId="+reqId;
 
     });
 
@@ -652,15 +729,19 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             return false;
         }
 
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
+
         var pesan='Apakah anda yakin untuk hapus data Project No '+valinfoid+' ?';
 
         $.messager.confirm('Konfirmasi',pesan,function(r){
             if (r){
-                $.getJSON("json-app/lccm_json/delete?reqId="+valinfoid,
+                $.getJSON("json-app/lccm_json/delete?reqStatus=edit&reqId="+valinfoid,
                     function(data){
                         // $.messager.alert('Info', data.PESAN, 'info');
                         // valinfoid= "";
-                        $.messager.alertLink('Info', data.PESAN, 'info', "app/index/<?=$pgreturn?>");
+                        $.messager.alertLink('Info', data.PESAN, 'info', "app/index/<?=$pgreturn?>?reqDelete=1&reqStatus=edit&reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId);
                     });
 
             }
@@ -695,7 +776,7 @@ function submitForm(){
             if(reqId == 'xxx')
                 $.messager.alert('Info', infoSimpan, 'warning');
             else
-                $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>?reqId="+reqId);
+                $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>?reqStatus=edit&reqId="+reqId);
             // $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
         }
     });

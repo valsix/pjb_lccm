@@ -369,6 +369,47 @@ class Lccm_json extends CI_Controller
 		echo json_encode( $arrJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
 	}
 
+	function project_no()
+	{
+		$this->load->model("base-app/T_Lccm_Prj");
+
+		$reqDistrikId =  $this->input->get('reqDistrikId');
+		$reqBlokId =  $this->input->get('reqBlokId');
+		$reqUnitMesinId =  $this->input->get('reqUnitMesinId');
+
+
+		$appdistrikid= $this->appdistrikid;
+		$appdistrikkode= $this->appdistrikkode;
+		$appblokunitid= $this->appblokunitid;
+		$appblokunitkode= $this->appblokunitkode;
+		
+		
+		$statement=" AND 1=2 ";
+
+
+		if(empty($reqDistrikId) && !empty($reqBlokId)  && !empty($reqUnitMesinId))
+		{
+			 $statement=" AND A.KODE_DISTRIK = '".$reqDistrikId."' AND A.KODE_BLOK = '".$reqBlokId."' AND A.KODE_UNIT_M = '".$reqUnitMesinId."' ";
+		}
+
+
+		$set= new T_Lccm_Prj();
+		$arrset= [];
+
+		$set->selectByParams(array(), -1,-1,$statement);
+		// echo $set->query;exit;
+		while($set->nextRow())
+		{
+			$arrdata= array();
+			$arrdata["id"]= $set->getField("PROJECT_NAME");
+			$arrdata["text"]= $set->getField("PROJECT_DESC");
+			array_push($arrset, $arrdata);
+		}
+		unset($set);
+		echo json_encode( $arrset, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
+
+	}
+
 
 	function kalkulasi($reqTahunAwal,$reqTahunAkhir)
 	{

@@ -135,7 +135,7 @@
 		SELECT KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M, PROJECT_NAME,PROJECT_DESC 
 		FROM t_lccm_prj A
 		WHERE 1=1
-		GROUP BY  KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M, PROJECT_NAME,PROJECT_DESC 
+		
 				
 		"; 
 		
@@ -144,7 +144,7 @@
 			$str .= " AND $key = '$val' ";
 		}
 		
-		$str .= $statement." ".$sOrder;
+		$str .= $statement." GROUP BY  KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M, PROJECT_NAME,PROJECT_DESC  ".$sOrder;
 		$this->query = $str;
 				
 		return $this->selectLimit($str,$limit,$from); 
