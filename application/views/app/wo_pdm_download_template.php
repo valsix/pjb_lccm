@@ -6,12 +6,22 @@ $this->load->model("base-app/Distrik");
 
 $pgreturn= str_replace("_add", "", $pg);
 
+$reqBlokId=$this->appblokunitkode;
+$reqDistrikId=$this->appdistrikkode;
+
 $pgtitle= $pgreturn;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 
 $set= new Distrik();
 $arrdistrik= [];
 $statement="  ";
+
+if(!empty($reqDistrikId))
+{
+    $statement = " AND A.KODE = '".$reqDistrikId."'";
+}
+
+
 $set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
@@ -24,8 +34,63 @@ while($set->nextRow())
 }
 unset($set);
 
+if(empty($reqBlokId))
+{
+
+   $readonlyblok="";
+}
+else
+{
+    $readonlyblok="readonly";
+}
+
+
 
 ?>
+
+
+<style type="text/css">
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+      color: #000000;
+  }
+  .select2-container--default .select2-search--inline .select2-search__field:focus {
+      outline: 0;
+      border: 1px solid #ffff;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+      cursor: default;
+      padding-left: 6px;
+      padding-right: 5px;
+  }
+
+  .select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
+    background: #eee;
+    box-shadow: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow, select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+    display: none;
+}
+
+
+
+</style>
 
 <div class="col-md-12">
     
@@ -45,7 +110,7 @@ unset($set);
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Distrik</label>
                                 <div class="col-sm-4">
-                                    <select class="form-control jscaribasicmultiple"  <?=$readonly?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                                    <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyblok?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
                                             <option value="" >Pilih Distrik</option>
                                             <?
                                             foreach($arrdistrik as $item) 
@@ -56,6 +121,12 @@ unset($set);
 
                                                 $selected="";
 
+
+                                                if($selectvalkode==$reqDistrikId)
+                                                {
+                                                    $selected="selected";
+                                                }
+
                                                 ?>
                                                 <option value="<?=$selectvalkode?>" <?=$selected?>><?=$selectvaltext?></option>
                                                 <?
@@ -65,7 +136,7 @@ unset($set);
                                 </div>
                                 <label   for="inputEmail3" class="col-sm-2 control-label">Blok Unit</label>
                                 <div class="col-sm-4">
-                                    <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                    <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> <?=$readonlyblok?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
                                         <option value="" >Pilih Blok Unit</option>
                                     </select>
                                 </div>
@@ -96,6 +167,51 @@ unset($set);
 </div>
 
 <script>
+
+
+$(document).ready(function(){
+      blok('<?=$reqDistrikId?>','<?=$reqBlokId?>');
+
+});
+
+function blok(reqDistrikId,reqBlokId)
+{
+    $.getJSON("json-app/blok_unit_json/filter_blok?reqDistrikId="+reqDistrikId,
+        function(data)
+        {
+            $("#reqBlokId option").remove();
+            // $("#reqUnitMesinId option").remove();
+
+            // $("#reqBlokId").attr("readonly", false); 
+            $("#reqBlokId").append('<option value="" >Pilih Blok Unit</option>');
+            // $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+            var selected='';
+
+            if('<?=$reqBlokId?>')
+            {
+                selected='selected';
+            }
+            // console.log(selected);
+            jQuery(data).each(function(i, item){
+                $("#reqBlokId").append('<option value="'+item.KODE+'" '+selected+' >'+item.text+'</option>');
+            });
+        });
+
+        var reqDistrikId= reqDistrikId;
+        var reqBlokId= reqBlokId;
+
+        $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+            function(data)
+            {
+                // console.log(data);
+                // $("#reqUnitMesinId option").remove();
+                // $("#reqUnitMesinId").attr("readonly", false); 
+                jQuery(data).each(function(i, item){
+                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+                });
+            });
+
+}
 
 $('#reqDistrikId').on('change', function() {
         var reqDistrikId= this.value;
