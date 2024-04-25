@@ -2584,7 +2584,7 @@ class Import_json extends CI_Controller
 
 		$baris = $data->rowcount($sheet_index=0);
 
-		$arrField= array("ASSETNUM","PRK_YEAR","COST_ON_ASSET","DSTRCT_CODE","ACCOUNT_CODE","PROJECT_NO","PROJ_DESC","PO_NO","VALUE_PAID","LAST_APPR_DATE");
+		$arrField= array("ASSETNUM","PRK_YEAR","COST_ON_ASSET","PROJ_DESC","PO_NO","VALUE_PAID","LAST_APPR_DATE","DSTRCT_CODE","ACCOUNT_CODE","PROJECT_NO");
 
 		$this->load->model("base-app/Import");
 

@@ -19,13 +19,14 @@ $arrtabledata= array(
      array("label"=>"Asset No", "field"=> "ASSETNUM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"PRK Year", "field"=> "PRK_YEAR", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Cost On Asset ", "field"=> "COST_ON_ASSET", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Distric Code", "field"=> "DSTRCT_CODE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Account Code", "field"=> "ACCOUNT_CODE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Project No", "field"=> "PROJECT_NO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+   
     , array("label"=>"Project Description", "field"=> "PROJ_DESC", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Po No", "field"=> "PO_NO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Value Paid", "field"=> "VALUE_PAID", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Last Approval Date", "field"=> "LAST_APPR_DATE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Distric Code", "field"=> "DSTRCT_CODE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Account Code", "field"=> "ACCOUNT_CODE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Project No", "field"=> "PROJECT_NO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
     , array("label"=>"fieldid", "field"=> "PRK_YEAR", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "COST_ON_ASSET", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
