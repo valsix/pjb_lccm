@@ -207,7 +207,7 @@ $(document).ready(function() {
 	var datainforesponsive= "1";
 	var datainfoscrollx= 100;
 
-    var datainfostatesave=1;
+    var datainfostatesave="";
 
 	infoscrolly= 50;
 
