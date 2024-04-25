@@ -171,7 +171,7 @@ unset($set);
 $readonly="";
 if(empty($reqStatus))
 {
-    $readonly="disabled";
+    $readonly="";
 
 }
 // print_r($arrproduct);exit;
@@ -469,8 +469,9 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             {
             ?>
             <div style="text-align:center;padding:5px">
-                <a href="javascript:void(0)" class="btn btn-warning" id="new" onclick="formnew('new')">New</a>
-                <a href="javascript:void(0)" class="btn btn-success"  id="edit" onclick="formnew('edit')">Edit</a>
+                <!-- <a href="javascript:void(0)" class="btn btn-warning" id="new" onclick="formnew('new')">New</a> -->
+                <!-- <a href="javascript:void(0)" class="btn btn-success"  id="edit" onclick="formnew('edit')">Edit</a> -->
+                <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
                 
                 <?
                 if(!empty($reqStatus))
@@ -481,7 +482,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                         {
                             ?>
 
-                            <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
+                            <!-- <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a> -->
                             <?
                         }
                         ?>
@@ -491,8 +492,8 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                         {
                             ?>
 
-                            <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
-                            <a href="javascript:void(0)" class="btn btn-danger" id="delete" onclick="deleteData('<?=$reqId?>')">Delete</a>
+                           <!--  <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
+                            <a href="javascript:void(0)" class="btn btn-danger" id="delete" onclick="deleteData('<?=$reqId?>')">Delete</a> -->
                             <?
                         }
                         ?>
@@ -776,8 +777,8 @@ function submitForm(){
             if(reqId == 'xxx')
                 $.messager.alert('Info', infoSimpan, 'warning');
             else
-                $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>?reqStatus=edit&reqId="+reqId);
-            // $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
+                // $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>?reqStatus=edit&reqId="+reqId);
+            $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
         }
     });
 }

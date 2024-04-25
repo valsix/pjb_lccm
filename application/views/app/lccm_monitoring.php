@@ -121,26 +121,26 @@ $(document).ready(function() {
             if($reqCreate ==1)
             {
             ?>
-            <span><a id="btnAdd"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Tambah</a></span>
+            <!-- <span><a id="btnAdd"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Tambah</a></span> -->
             <?   
             }
             if($reqUpdate ==1)
             {
             ?>
-            <span><a id="btnEdit"><i class="fa fa-check-square fa-lg" aria-hidden="true"></i> Edit</a></span>
+            <!-- <span><a id="btnEdit"><i class="fa fa-check-square fa-lg" aria-hidden="true"></i> Edit</a></span> -->
             <?
             }
             if($reqRead ==1)
             {
             ?>
-            <span><a id="btnLihat"><i class="fa fa-eye fa-lg" aria-hidden="true"></i> Lihat</a></span>
+            <!-- <span><a id="btnLihat"><i class="fa fa-eye fa-lg" aria-hidden="true"></i> Lihat</a></span> -->
             <?
             }
             if($reqDelete ==1)
             {
             ?>            
             <!-- <span><a id="btnDelete"><i class="fa fa-times-rectangle fa-lg" aria-hidden="true"></i>Non Aktifkan</a></span> -->
-            <span><a id="btnDeleteNew"><i class="fa fa-times-rectangle fa-lg" aria-hidden="true"></i>Hapus</a></span>
+            <!-- <span><a id="btnDeleteNew"><i class="fa fa-times-rectangle fa-lg" aria-hidden="true"></i>Hapus</a></span> -->
             <?
             }
             if($reqCreate ==1)
@@ -152,10 +152,10 @@ $(document).ready(function() {
             ?>
 
         </div>
+        <!-- <br>
         <br>
         <br>
-        <br>
-
+ -->
       
 
 
