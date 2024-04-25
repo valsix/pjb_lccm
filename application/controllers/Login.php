@@ -172,7 +172,7 @@ class Login extends CI_Controller
 			$respon = $this->kauth->cekuserapp($reqUser,$reqPasswd);
 			if($respon == "1")
 			{
-				redirect('app');
+				redirect('app/index/preparation');
 			}
 			else if($respon == "multi")
 			{

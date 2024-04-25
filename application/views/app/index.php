@@ -197,7 +197,7 @@ unset($foto);
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block <? if($pg == "" || $pg == "home"|| $pg == "home_logsheet"|| $pg == "home_pemeliharaan"){?>active<? } ?>">
-                    <a href="app/" class="nav-link"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                    <a href="app/index/preparation" class="nav-link"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
