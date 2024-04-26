@@ -383,17 +383,18 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                                        <!-- <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqPrediction"  id="reqPrediction" value="<?=$reqPrediction?>" <?=$disabled?> style="width:50%" /> -->
 
                                         <select class="form-control jscaribasicmultiple" name="reqPrediction" required  id="reqPrediction">
-                                             <option value="" >Pilih Prediction</option>
+                                            <option value="" >Pilih Prediction</option>
                                             <?
                                             for ($x = $tahunnow; $x <= $tahunkedepan; $x++) 
                                             {
                                                 $selected="";
-                                                if($reqPrediction == $x)
+
+                                                if($tahunnow == $x)
                                                 {
                                                     $selected="selected";
                                                 }
                                             ?>
-                                            <option value="<?=$x?>"><?=$x?></option>
+                                            <option value="<?=$x?>" <?=$selected?>><?=$x?></option>
                                             <? 
                                                 
                                             }
@@ -466,7 +467,29 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                                    </div>
                                </div>
                            </div>
-                       </div>
+                        </div>
+
+                        <div class="form-group" >  
+                            <label class="control-label col-md-2">History Inflation Rate </label>
+                            <div class='col-md-4'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input   <?=$readonly?>  class="easyui-validatebox textbox form-control"  readonly    type="text" name="reqHistoryInflasi"  id="reqHistoryInflasi" value="<?=$reqHistoryInflasi?>" <?=$disabled?> style="width:50%" />
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
+
+                        <div class="form-group" >  
+                            <label class="control-label col-md-2">Annual Inflation Rate </label>
+                            <div class='col-md-4'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input   <?=$readonly?>  class="easyui-validatebox textbox form-control"  readonly    type="text" name="reqAnnual"  id="reqAnnual" value="<?=$reqAnnual?>" <?=$disabled?> style="width:50%" />
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
 
                     </div>
 
@@ -761,9 +784,26 @@ $('select').select2({
             $("#reqHistoryYearStart option").remove();
             $("#reqHistoryYearStart").attr("readonly", false); 
             $("#reqHistoryYearStart").append('<option value="" >Pilih Tahun Awal</option>');
+            var selected='';
+            var selectedval='';
             jQuery(data).each(function(i, item){
-                $("#reqHistoryYearStart").append('<option value="'+item.id+'" >'+item.text+'</option>');
+                // console.log(item.selected +' - '+item.id);
+                if(item.selected==item.id)
+                {
+                    selected='selected';
+                    selectedval=item.selected;
+                    
+                }
+                else
+                {
+                    selected='';
+                }
+                $("#reqHistoryYearStart").append('<option value="'+item.id+'" '+selected+' >'+item.text+'</option>');
             });
+            if(selectedval)
+            {
+                $('#reqHistoryYearStart').val(selectedval).trigger('change');
+            }
         });
 
         $.getJSON("json-app/lccm_json/filter_history?reqMode=akhir&reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId,
@@ -775,14 +815,24 @@ $('select').select2({
             var tahunsekarang=new Date().getFullYear() -1;
             $("#reqHistoryYearEnd").append('<option value="" >Pilih Tahun Akhir</option>');
             var selected='';
+            var selectedval='';
             jQuery(data).each(function(i, item){
 
                 if(item.id==tahunsekarang)
                 {
-                    // selected='selected';
+                    selected='selected';
+                    selectedval=tahunsekarang;
+                }
+                else
+                {
+                    selected='';
                 }
                 $("#reqHistoryYearEnd").append('<option value="'+item.id+'" '+selected+' >'+item.text+'</option>');
             });
+            if(selectedval)
+            {
+                $('#reqHistoryYearEnd').val(selectedval).trigger('change');
+            }
         });
 
         $('#reqHistoryYearEnd').attr("required", "required" );
@@ -841,6 +891,30 @@ $('select').select2({
         var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
         $("#reqProjectNoR").val(reqProjectNoR);
 
+    });
+
+    $('#reqHistoryYearStart,#reqHistoryYearEnd').on('change', function() {
+        var reqHistoryYearStart = $("#reqHistoryYearStart").val();
+        var reqHistoryYearEnd = $("#reqHistoryYearEnd").val();
+        var reqPrediction = $("#reqPrediction").val();
+      
+        $.ajax({
+              type: "GET",
+              url: "json-app/inflasi_json/kalkulasi?reqTahunAwal="+reqHistoryYearStart+"&reqTahunAkhir="+reqHistoryYearEnd,
+              cache: false,
+              success: function(data){
+                $("#reqHistoryInflasi").val(data);
+            }
+         });
+
+        $.ajax({
+              type: "GET",
+              url: "json-app/inflasi_json/kalkulasi?reqTahunAwal="+reqHistoryYearStart+"&reqTahunAkhir="+reqPrediction,
+              cache: false,
+              success: function(data){
+                $("#reqAnnual").val(data);
+            }
+         });
     });
 
 

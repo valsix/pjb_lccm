@@ -212,6 +212,9 @@ class Lccm_json extends CI_Controller
 
 		$reqProjectNoOld= $this->input->post("reqProjectNoOld");
 
+		$reqHistoryInflasi= $this->input->post("reqHistoryInflasi");
+		$reqAnnual= $this->input->post("reqAnnual");
+
 		if(is_numeric($reqDiscount))
 		{
 			$reqDiscount=$reqDiscount/100;
@@ -261,8 +264,8 @@ class Lccm_json extends CI_Controller
 			// echo "xxx*** Tahun Prediction tidak boleh kurang dari tahun sekarang";exit;
 		}
 
-		$reqHistoryInflasi=$this->kalkulasi($reqHistoryYearStart,$reqHistoryYearEnd);
-		$reqAnnual=$this->kalkulasi($reqHistoryYearStart,$reqPrediction);
+		// $reqHistoryInflasi=$this->kalkulasi($reqHistoryYearStart,$reqHistoryYearEnd);
+		// $reqAnnual=$this->kalkulasi($reqHistoryYearStart,$reqPrediction);
 		// print_r($reqHistoryInflasi);exit;
 
 		if(empty($reqHistoryInflasi))
@@ -315,7 +318,7 @@ class Lccm_json extends CI_Controller
 		$set->setField("LCCM_PREDICT_YEAR", $reqPrediction);
 		$set->setField("HIST_INFLASI_RATE", $reqHistoryInflasi);
 		$set->setField("ANNUAL_INFLASI_RATE", $reqAnnual);
-		$set->setField("PLANT_CAPITAL_COST",str_replace(',', '', $reqPlant));
+		$set->setField("PLANT_CAPITAL_COST",str_replace(',', '.', $reqPlant));
 		$set->setField("SITEID", "");
 		$set->setField("DISC_RATE", str_replace(',', '.', $reqDiscount));
 		
@@ -556,14 +559,16 @@ class Lccm_json extends CI_Controller
 			$set->selectByParamsTahunHistory(array(), 1,-1,$statement);
 			// echo $set->query;exit;
 			$set->firstRow();
-			$reqTahunMin= $set->getField("YEAR_LCCM");
-			$reqTahunMax= $set->getField("YEAR_LCCM") + 30;
+			$reqTahunSelected= $set->getField("YEAR_LCCM");
+			$reqTahunMax= date("Y") -1;
+			$reqTahunMin= $reqTahunMax - 30;
 
 			for ($x = $reqTahunMin; $x <= $reqTahunMax; $x++) 
 			{
 				$arrdata= array();
 				$arrdata["id"]= $x;
 				$arrdata["text"]= $x;
+				$arrdata["selected"]= $reqTahunSelected;
 				array_push($arrset, $arrdata);
 			}
 
@@ -576,8 +581,8 @@ class Lccm_json extends CI_Controller
 			$set->selectByParamsTahunHistory(array(), 1,-1,$statement);
 			// echo $set->query;exit;
 			$set->firstRow();
-			$reqTahunMin= date("Y");
-			$reqTahunMax= $set->getField("YEAR_LCCM") + 30;
+			$reqTahunMax= date("Y") -1;
+			$reqTahunMin= $reqTahunMax - 30;
 
 			for ($x = $reqTahunMin; $x <= $reqTahunMax; $x++) 
 			{
