@@ -418,6 +418,31 @@
 		return $this->selectLimit($str,$limit,$from); 
     }
 
+    function selectByParamsTahunHistory($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder=" order by a.year_lccm asc")
+	{
+		$str = "
+		SELECT a.year_lccm
+		 
+		FROM 
+		t_preperation_lccm a
+		LEFT JOIN DISTRIK C ON C.KODE = A.KODE_DISTRIK
+		LEFT JOIN BLOK_UNIT D ON D.KODE = A.KODE_BLOK AND D.DISTRIK_ID = C.DISTRIK_ID
+		LEFT  JOIN UNIT_MESIN E ON E.KODE = A.KODE_UNIT_M AND E.BLOK_UNIT_ID = D.BLOK_UNIT_ID AND E.DISTRIK_ID = C.DISTRIK_ID
+		WHERE 1=1
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." group by year_lccm  ".$sOrder;
+		// echo $str;exit();
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
 
     
     

@@ -6,6 +6,8 @@ $this->load->model("base-app/T_Lccm_Prj");
 $this->load->model("base-app/Distrik");
 $this->load->model("base-app/BlokUnit");
 $this->load->model("base-app/UnitMesin");
+$this->load->model("base-app/T_Preperation_Lccm");
+
 
 
 $pgreturn= str_replace("_add", "", $pg);
@@ -22,12 +24,16 @@ $reqBlokId = $this->input->get("reqBlokId");
 $reqUnitMesinId = $this->input->get("reqUnitMesinId");
 $reqDelete = $this->input->get("reqDelete");
 
+$tahunnow=date("Y");
+$tahunkedepan=date("Y") + 30;
+
 
 $set= new T_Lccm_Prj();
 
 if($reqId == "")
 {
     $reqMode = "insert";
+    $reqDiscount="12";
 }
 else
 {
@@ -57,15 +63,14 @@ else
 
 }
 
+
+
 $disabled="";
 
 if($reqLihat ==1)
 {
     $disabled="disabled";  
 }
-
-$tahun = date("Y");
-
 
 
 $set= new Distrik();
@@ -174,6 +179,8 @@ if(empty($reqStatus))
     $readonly="";
 
 }
+
+
 // print_r($arrproduct);exit;
 // print_r($reqPredictionMin);exit;
 
@@ -223,6 +230,10 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
 select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow, select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
     display: none;
+}
+
+.select2-selection.required {
+   background-color: yellow !important;
 }
 
 
@@ -346,12 +357,19 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <label class="control-label col-md-2">History Year </label>
                             <div class='col-md-4'>
                                 <div class='form-group'>
-                                    <div class='col-md-6'>
-                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqHistoryYearStart"  id="reqHistoryYearStart" value="<?=$reqHistoryYearStart?>" <?=$disabled?> style="width:50%" />
-                                   </div>
-                                   <div class='col-md-6'>
-                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqHistoryYearEnd"  id="reqHistoryYearEnd" value="<?=$reqHistoryYearEnd?>" <?=$disabled?> style="width:50%" />
-                                   </div>
+                                    <div class='col-md-5'>
+                                        <select class="form-control jscaribasicmultiple" name="reqHistoryYearStart" required  id="reqHistoryYearStart">
+                                            <option value="" >Pilih Tahun Awal</option>
+                                        </select>
+                                      <!--  <input  maxlength="5" <?=$readonly?> readonly  class="easyui-validatebox textbox form-control" required  type="text" name="reqHistoryYearStart"  id="reqHistoryYearStart" value="<?=$reqHistoryYearStart?>" <?=$disabled?> /> -->
+                                    </div>
+                                    <div class='col-md-1' style="margin-top: 5px">-</div>
+                                    <div class='col-md-5'>
+                                       <!-- <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqHistoryYearEnd"  id="reqHistoryYearEnd" value="<?=$reqHistoryYearEnd?>" <?=$disabled?>  /> -->
+                                       <select class="form-control jscaribasicmultiple" name="reqHistoryYearEnd" required  id="reqHistoryYearEnd">
+                                            <option value="" >Pilih Tahun Akhir</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -361,8 +379,27 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <label class="control-label col-md-2">Prediction Year </label>
                             <div class='col-md-4'>
                                 <div class='form-group'>
-                                    <div class='col-md-6'>
-                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqPrediction"  id="reqPrediction" value="<?=$reqPrediction?>" <?=$disabled?> style="width:50%" />
+                                    <div class='col-md-5'>
+                                       <!-- <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqPrediction"  id="reqPrediction" value="<?=$reqPrediction?>" <?=$disabled?> style="width:50%" /> -->
+
+                                        <select class="form-control jscaribasicmultiple" name="reqPrediction" required  id="reqPrediction">
+                                             <option value="" >Pilih Prediction</option>
+                                            <?
+                                            for ($x = $tahunnow; $x <= $tahunkedepan; $x++) 
+                                            {
+                                                $selected="";
+                                                if($reqPrediction == $x)
+                                                {
+                                                    $selected="selected";
+                                                }
+                                            ?>
+                                            <option value="<?=$x?>"><?=$x?></option>
+                                            <? 
+                                                
+                                            }
+                                            ?>
+                                            
+                                        </select>
                                    </div>
                                </div>
                            </div>
@@ -372,9 +409,10 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <label class="control-label col-md-2">Discount Rate </label>
                             <div class='col-md-4'>
                                 <div class='form-group'>
-                                    <div class='col-md-4'>
-                                       <input  maxlength="4" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqDiscount"  id="reqDiscount" value="<?=$reqDiscount?>" <?=$disabled?> style="width:50%" />
-                                   </div>
+                                    <div class='col-md-3'>
+                                       <input  maxlength="5" <?=$readonly?>  class="easyui-validatebox textbox form-control" required  type="text" name="reqDiscount"  id="reqDiscount" value="<?=$reqDiscount?>" <?=$disabled?> style="width:95%"  />
+                                    </div>
+                                    %
                                </div>
                            </div>
                        </div>
@@ -390,65 +428,45 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                            </div>
                        </div>
 
-                       
-                           
-                        <div id="selectno">
-                            <div class="form-group" >  
-                                <label class="control-label col-md-2">Project No </label>
-                                <div class='col-md-4'>
-                                    <div class='form-group'>
-                                        <div class='col-md-6'>
-                                          <!--  <input  <?=$readonly?> required  class="easyui-validatebox textbox form-control" readonly type="text" name="reqProjectNo"  id="reqProjectNo" value="<?=$reqProjectNo?>" <?=$disabled?> style="width:50%" /> -->
-                                          <?
-                                          if($reqStatus=="edit")
-                                          {
-                                            ?>
-                                                <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> class="prono"   id="reqProjectNoSelect" <?=$disabled?> name="reqProjectNo"  style="width:100%;" >
-                                                    <option value="" >Pilih Project No</option>
-                                                    <?
-                                                    foreach($arrprojectno as $item) 
-                                                    {
-                                                        $selectvalid= $item["id"];
-                                                        $selectvaltext= $item["text"];
-                                                        $selected="";
-                                                        if($selectvalid == $reqProjectNo)
-                                                        {
-                                                            $selected="selected";
-                                                        }
-
-
-                                                        ?>
-                                                        <option value="<?=$selectvalid?>" <?=$selected?>><?=$selectvaltext?></option>
-
-                                                        <?
-                                                    }
-                                                    ?>
-                                                </select>
+                        <div class="form-group" >  
+                            <label class="control-label col-md-2">Project No </label>
+                            <div class='col-md-10'>
+                                <div class='form-group'>
+                                    <div class='col-md-2'>
+                                        <input  <?=$readonly?> readonly  class="easyui-validatebox textbox form-control"   type="text" name="reqProjectNoR"  id="reqProjectNoR" value="<?=$reqProjectNoR?>" <?=$disabled?>  />
+                                    </div>
+                                    <div class='col-md-2'>
+                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> class="prono"   id="reqProjectNo" <?=$disabled?> name="reqProjectNo"  style="width:100%;" >
                                             <?
-                                            }
-                                            else
+                                            foreach (range('A', 'Z') as $column)
                                             {
+                                                $selected="";
+                                                if($reqProjectNo == $column)
+                                                {
+                                                    $selected="selected";
+                                                }
                                             ?>
-                                                <input  <?=$readonly?> required  class="easyui-validatebox textbox form-control" maxlength="2"  type="text" name="reqProjectNo"  id="reqProjectNo" value="<?=$reqProjectNo?>" <?=$disabled?> style="width:50%" />
+                                            <option value="<?=$column ?>" <?=$selected?>><?=$column ?></option>
                                             <?
                                             }
-                                            ?>
-                                        </div>
-                                    </div>
-                               </div>
-                            </div>
 
-                            <div class="form-group" >  
-                                <label class="control-label col-md-2">Project Desc </label>
-                                <div class='col-md-4'>
-                                    <div class='form-group'>
-                                        <div class='col-md-11'>
-                                           <input   <?=$readonly?>  class="easyui-validatebox textbox form-control" required    type="text" name="reqProjectDesc"  id="reqProjectDesc" value="<?=$reqProjectDesc?>" <?=$disabled?> style="width:50%" />
-                                        </div>
+                                            ?>
+                                        </select>
                                     </div>
-                               </div>
+                                </div>
                             </div>
-                         </div>
+                        </div>
+
+                        <div class="form-group" >  
+                            <label class="control-label col-md-2">Project Desc </label>
+                            <div class='col-md-4'>
+                                <div class='form-group'>
+                                    <div class='col-md-11'>
+                                       <input   <?=$readonly?>  class="easyui-validatebox textbox form-control" required    type="text" name="reqProjectDesc"  id="reqProjectDesc" value="<?=$reqProjectDesc?>" <?=$disabled?> style="width:50%" />
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
 
                     </div>
 
@@ -512,8 +530,10 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 </div>
 
 <script>
-
-   
+$('select').select2({
+  placeholder: 'This is my placeholder',
+  allowClear: false
+});
     $('#reqPlant').keyup(function(event) {
       if (event.which >= 37 && event.which <= 40) return;
       $(this).val(function(index, value) {
@@ -669,6 +689,15 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                 $("#reqBlokId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
             });
         });
+
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
+        var reqHistoryYearStart= $("#reqHistoryYearStart").val();
+        var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
+        var reqPrediction= $("#reqPrediction").val();
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        $("#reqProjectNoR").val(reqProjectNoR);
     
     });
 
@@ -688,6 +717,19 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                 $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
             });
         });
+
+    var reqDistrikId= $("#reqDistrikId").val();
+    var reqBlokId= $("#reqBlokId").val();
+    var reqUnitMesinId= $("#reqUnitMesinId").val();
+    if(reqUnitMesinId==null)
+    {
+        reqUnitMesinId="";
+    }
+    var reqHistoryYearStart= $("#reqHistoryYearStart").val();
+    var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
+    var reqPrediction= $("#reqPrediction").val();
+    var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+    $("#reqProjectNoR").val(reqProjectNoR);
 
     
     });
@@ -711,6 +753,49 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             });
 
         }
+
+        $.getJSON("json-app/lccm_json/filter_history?reqMode=awal&reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId,
+        function(data)
+        {
+            // console.log(data);
+            $("#reqHistoryYearStart option").remove();
+            $("#reqHistoryYearStart").attr("readonly", false); 
+            $("#reqHistoryYearStart").append('<option value="" >Pilih Tahun Awal</option>');
+            jQuery(data).each(function(i, item){
+                $("#reqHistoryYearStart").append('<option value="'+item.id+'" >'+item.text+'</option>');
+            });
+        });
+
+        $.getJSON("json-app/lccm_json/filter_history?reqMode=akhir&reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId,
+        function(data)
+        {
+            // console.log(data);
+            $("#reqHistoryYearEnd option").remove();
+            $("#reqHistoryYearEnd").attr("readonly", false); 
+            var tahunsekarang=new Date().getFullYear() -1;
+            $("#reqHistoryYearEnd").append('<option value="" >Pilih Tahun Akhir</option>');
+            var selected='';
+            jQuery(data).each(function(i, item){
+
+                if(item.id==tahunsekarang)
+                {
+                    // selected='selected';
+                }
+                $("#reqHistoryYearEnd").append('<option value="'+item.id+'" '+selected+' >'+item.text+'</option>');
+            });
+        });
+
+        $('#reqHistoryYearEnd').attr("required", "required" );
+
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
+        var reqHistoryYearStart= $("#reqHistoryYearStart").val();
+        var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
+        var reqPrediction= $("#reqPrediction").val();
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        $("#reqProjectNoR").val(reqProjectNoR);
+
     
     });
 
@@ -721,6 +806,43 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
         window.location.href = "app/index/<?=$pgreturn?>?reqStatus=edit&reqId="+reqId;
 
     });
+
+    $('#reqHistoryYearStart,#reqHistoryYearEnd').on('change', function() {
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
+        var reqHistoryYearStart= $("#reqHistoryYearStart").val();
+        var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
+        var reqPrediction= $("#reqPrediction").val();
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        $("#reqProjectNoR").val(reqProjectNoR);
+
+    });
+
+    $('#reqPrediction').on('change', function() {
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
+        var reqHistoryYearStart= $("#reqHistoryYearStart").val();
+        var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
+        var reqPrediction= $("#reqPrediction").val();
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        $("#reqProjectNoR").val(reqProjectNoR);
+
+    });
+
+    $('#reqProjectNo').on('change', function() {
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
+        var reqHistoryYearStart= $("#reqHistoryYearStart").val();
+        var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
+        var reqPrediction= $("#reqPrediction").val();
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        $("#reqProjectNoR").val(reqProjectNoR);
+
+    });
+
 
     function deleteData(valinfoid){
 

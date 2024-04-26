@@ -207,9 +207,15 @@ class Lccm_json extends CI_Controller
 		$reqDiscount= $this->input->post("reqDiscount");
 		$reqPlant= $this->input->post("reqPlant");
 		$reqProjectNo= $this->input->post("reqProjectNo");
+		$reqProjectNoR= $this->input->post("reqProjectNoR");
 		$reqProjectDesc= $this->input->post("reqProjectDesc");
 
 		$reqProjectNoOld= $this->input->post("reqProjectNoOld");
+
+		if(is_numeric($reqDiscount))
+		{
+			$reqDiscount=$reqDiscount/100;
+		}
 
 		$reqPredictionMin=date("Y");
 
@@ -223,6 +229,26 @@ class Lccm_json extends CI_Controller
 			echo "xxx*** Tahun Akhir tidak boleh kurang dari tahun awal";exit;
 		}
 
+		if(empty($reqDistrikId) ||  empty($reqBlokId) || empty($reqUnitMesinId) )
+		{
+			echo "xxx*** Distrik/Blok/Unit tidak boleh kosong";exit;
+		}
+
+		if(empty($reqHistoryYearStart))
+		{
+			echo "xxx*** Tahun History Awal tidak boleh kosong";exit;
+		}
+
+		if(empty($reqHistoryYearEnd))
+		{
+			echo "xxx*** Tahun History Akhir tidak boleh kosong";exit;
+		}
+
+		if(empty($reqPrediction))
+		{
+			echo "xxx*** Tahun Prediction tidak boleh kosong";exit;
+		}
+
 
 		if($reqPrediction < $reqHistoryYearStart)
 		{
@@ -232,7 +258,7 @@ class Lccm_json extends CI_Controller
 
 		if($reqPrediction < $reqPredictionMin)
 		{
-			echo "xxx*** Tahun Prediction tidak boleh kurang dari tahun sekarang";exit;
+			// echo "xxx*** Tahun Prediction tidak boleh kurang dari tahun sekarang";exit;
 		}
 
 		$reqHistoryInflasi=$this->kalkulasi($reqHistoryYearStart,$reqHistoryYearEnd);
@@ -248,19 +274,32 @@ class Lccm_json extends CI_Controller
 			$reqAnnual=0;
 		}
 
+		$reqProjectNo=  $reqProjectNoR."-".$reqProjectNo ;
 
-		if($reqMode=="insert")
-		{
-			$reqProjectNo=  $reqDistrikId.$reqBlokId.$reqUnitMesinId.$reqHistoryYearStart.$reqHistoryYearEnd.$reqPrediction.$reqProjectNo;
-		}
-		else
-		{
-			$reqProjectNo=  $reqProjectNo;
-		}
+
+		// if($reqMode=="insert")
+		// {
+		// 	$reqProjectNo=  $reqDistrikId.$reqBlokId.$reqUnitMesinId.$reqHistoryYearStart.$reqHistoryYearEnd.$reqPrediction.$reqProjectNo;
+		// }
+		// else
+		// {
+			// $reqProjectNo=  $reqProjectNo;
+		// }
 
 		
 		
 		// $reqProjectDesc= "DESC_".$reqProjectNo;
+
+		$checkprim= new T_Lccm_Prj();
+		$statement = " AND A.PROJECT_NAME = '".$reqProjectNo."' ";
+		$checkprim->selectByParams(array(), -1, -1, $statement);
+		$checkprim->firstRow();
+		$reqCheckPrim= $checkprim->getField("PROJECT_NAME");
+
+		if(!empty($reqCheckPrim))
+		{
+			echo "xxx*** Project No sudah ada";exit;
+		}
 		
 
 		$set = new T_Lccm_Prj();
@@ -274,11 +313,11 @@ class Lccm_json extends CI_Controller
 		$set->setField("LCCM_START_HIST_YEAR", $reqHistoryYearStart);
 		$set->setField("LCCM_END_HIST_YEAR", $reqHistoryYearEnd);
 		$set->setField("LCCM_PREDICT_YEAR", $reqPrediction);
-		$set->setField("DISC_RATE", $reqDiscount);
 		$set->setField("HIST_INFLASI_RATE", $reqHistoryInflasi);
 		$set->setField("ANNUAL_INFLASI_RATE", $reqAnnual);
 		$set->setField("PLANT_CAPITAL_COST",str_replace(',', '', $reqPlant));
 		$set->setField("SITEID", "");
+		$set->setField("DISC_RATE", str_replace(',', '.', $reqDiscount));
 		
 		$set->setField("PROJECT_NAME_OLD", $reqProjectNo);
 
@@ -487,6 +526,74 @@ class Lccm_json extends CI_Controller
 		}
 		return $rate;
 	}  
+
+
+	function filter_history()
+	{
+		$this->load->model("base-app/T_Preperation_Lccm");
+
+		$reqDistrikId =  $this->input->get('reqDistrikId');
+		$reqBlokId =  $this->input->get('reqBlokId');
+		$reqUnitMesinId =  $this->input->get('reqUnitMesinId');
+		$reqMode =  $this->input->get('reqMode');
+
+
+		$appdistrikid= $this->appdistrikid;
+		$appdistrikkode= $this->appdistrikkode;
+		$appblokunitid= $this->appblokunitid;
+		$appblokunitkode= $this->appblokunitkode;
+		
+
+		$statement=" AND A.KODE_DISTRIK = '".$reqDistrikId."' AND A.KODE_BLOK = '".$reqBlokId."' AND A.KODE_UNIT_M = '".$reqUnitMesinId."' ";
+
+		if($reqMode=='awal')
+		{
+
+			$set= new T_Preperation_Lccm();
+			$arrset= [];
+
+
+			$set->selectByParamsTahunHistory(array(), 1,-1,$statement);
+			// echo $set->query;exit;
+			$set->firstRow();
+			$reqTahunMin= $set->getField("YEAR_LCCM");
+			$reqTahunMax= $set->getField("YEAR_LCCM") + 30;
+
+			for ($x = $reqTahunMin; $x <= $reqTahunMax; $x++) 
+			{
+				$arrdata= array();
+				$arrdata["id"]= $x;
+				$arrdata["text"]= $x;
+				array_push($arrset, $arrdata);
+			}
+
+		}
+		else
+		{
+			$set= new T_Preperation_Lccm();
+			$arrset= [];
+
+			$set->selectByParamsTahunHistory(array(), 1,-1,$statement);
+			// echo $set->query;exit;
+			$set->firstRow();
+			$reqTahunMin= date("Y");
+			$reqTahunMax= $set->getField("YEAR_LCCM") + 30;
+
+			for ($x = $reqTahunMin; $x <= $reqTahunMax; $x++) 
+			{
+				$arrdata= array();
+				$arrdata["id"]= $x;
+				$arrdata["text"]= $x;
+				array_push($arrset, $arrdata);
+			}
+		}
+
+		
+
+		unset($set);
+		echo json_encode( $arrset, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);	
+
+	}
 
 
 	
