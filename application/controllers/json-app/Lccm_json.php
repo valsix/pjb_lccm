@@ -277,7 +277,7 @@ class Lccm_json extends CI_Controller
 			$reqAnnual=0;
 		}
 
-		$reqProjectNo=  $reqProjectNoR."-".$reqProjectNo ;
+		$reqProjectNo=  $reqProjectNoR.$reqProjectNo ;
 
 
 		// if($reqMode=="insert")

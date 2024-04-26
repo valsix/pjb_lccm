@@ -719,7 +719,7 @@ $('select').select2({
         var reqHistoryYearStart= $("#reqHistoryYearStart").val();
         var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
         var reqPrediction= $("#reqPrediction").val();
-        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction+'-';
         $("#reqProjectNoR").val(reqProjectNoR);
     
     });
@@ -751,7 +751,7 @@ $('select').select2({
     var reqHistoryYearStart= $("#reqHistoryYearStart").val();
     var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
     var reqPrediction= $("#reqPrediction").val();
-    var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+    var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction+'-';
     $("#reqProjectNoR").val(reqProjectNoR);
 
     
@@ -843,7 +843,7 @@ $('select').select2({
         var reqHistoryYearStart= $("#reqHistoryYearStart").val();
         var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
         var reqPrediction= $("#reqPrediction").val();
-        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction+'-';
         $("#reqProjectNoR").val(reqProjectNoR);
 
     
@@ -864,7 +864,7 @@ $('select').select2({
         var reqHistoryYearStart= $("#reqHistoryYearStart").val();
         var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
         var reqPrediction= $("#reqPrediction").val();
-        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction+'-';
         $("#reqProjectNoR").val(reqProjectNoR);
 
     });
@@ -876,7 +876,7 @@ $('select').select2({
         var reqHistoryYearStart= $("#reqHistoryYearStart").val();
         var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
         var reqPrediction= $("#reqPrediction").val();
-        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction+'-';
         $("#reqProjectNoR").val(reqProjectNoR);
 
     });
@@ -888,7 +888,7 @@ $('select').select2({
         var reqHistoryYearStart= $("#reqHistoryYearStart").val();
         var reqHistoryYearEnd= $("#reqHistoryYearEnd").val();
         var reqPrediction= $("#reqPrediction").val();
-        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction;
+        var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction+'-';
         $("#reqProjectNoR").val(reqProjectNoR);
 
     });
