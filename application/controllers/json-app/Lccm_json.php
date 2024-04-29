@@ -348,7 +348,7 @@ class Lccm_json extends CI_Controller
 		if(!empty($arrpesan))
 		{
 			$pesantahun= implode (", ", $arrpesan);
-			echo "xxx***Data gagal disimpan, data histori tidak lengkap pada tahun ".$pesantahun;exit;
+			echo "zzz***Data gagal disimpan, data histori tidak lengkap pada tahun *** ".$pesantahun;exit;
 		}
 				
 		$reqSimpan= "";

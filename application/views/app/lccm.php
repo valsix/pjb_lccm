@@ -241,6 +241,23 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
 </style>
 
+<style type="text/css">
+.mbox-wrapper .mbox {
+    /*max-width: 300px;*/
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+    background: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+}
+.txtsize {
+    width: 100%;
+    height: 50px;
+}
+</style>
+
 
 <div class="col-md-12">
     
@@ -969,15 +986,53 @@ function submitForm(){
             data = data.split("***");
             reqId= data[0];
             infoSimpan= data[1];
+            infoSimpan1= data[2];
+
+            tahun = infoSimpan1.replace(/\s/g, '');
+
+            var reqDistrikId= $("#reqDistrikId").val();
+            var reqBlokId= $("#reqBlokId").val();
+            var reqUnitMesinId= $("#reqUnitMesinId").val();
 
             if(reqId == 'xxx')
+            {
                 $.messager.alert('Info', infoSimpan, 'warning');
+            }
+            else if(reqId == 'zzz')
+            {
+                mbox.custom({
+                    message: infoSimpan+infoSimpan1,
+                    options: {},
+                    buttons: [
+                        {
+                            label: 'Lihat Data',
+                            color: 'btn-warning',
+                            callback: function() {
+                                window.open('app/index/prep_monitoring?reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId+'&reqTahun='+tahun, '_blank'); 
+                            }
+                        },
+                        {
+                            label: 'Tutup',
+                            color: 'btn-danger',
+                            callback: function() {
+                                mbox.close();
+                            }  
+                        }
+                    ]
+                    
+                })
+            }
             else
-                // $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>?reqStatus=edit&reqId="+reqId);
-            $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
+            {
+                 $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
+            }
+           
         }
     });
 }
+
+ 
+
 
 function clearForm(){
     $('#ff').form('clear');
