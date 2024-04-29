@@ -28,6 +28,29 @@ $tahunnow=date("Y");
 $tahunkedepan=date("Y") + 30;
 
 
+$readonlyunit="";
+
+if(empty($reqDistrikId))
+{
+    $reqDistrikId=$this->appdistrikkode;
+    if(!empty($reqDistrikId))
+    {
+        $readonlyunit="readonly";
+    }
+   
+}
+
+if(empty($reqBlokId))
+{
+    $reqBlokId=$this->appblokunitkode;
+    if(!empty($reqBlokId))
+    {
+        $readonlyunit="readonly";
+    }
+}
+
+
+
 $set= new T_Lccm_Prj();
 
 if($reqId == "")
@@ -280,7 +303,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11'>
-                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyblok?>  required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                                        <select class="form-control jscaribasicmultiple" <?=$readonlyunit?>  <?=$readonly?> <?=$readonlyblok?>  required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
                                             <option value="" >Pilih Distrik</option>
                                             <?
                                             foreach($arrdistrik as $item) 
@@ -310,7 +333,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11' id="blok">
-                                         <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> required  <?=$readonlyblok?> <?=$readonly?>  id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                         <select class="form-control jscaribasicmultiple"  <?=$readonlyunit?>  <?=$readonlyfilter?> required  <?=$readonlyblok?> <?=$readonly?>  id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
                                             <option value="" >Pilih Blok Unit</option>
                                             <?
                                             foreach($arrblok as $item) 

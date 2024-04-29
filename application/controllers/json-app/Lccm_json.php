@@ -22,6 +22,8 @@ class Lccm_json extends CI_Controller
 		$this->appusernama= $this->session->userdata("appusernama");
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
+		$this->appdistrikid= $this->session->userdata("appdistrikid");
+		$this->appblokunitid= $this->session->userdata("appblokunitid");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -73,6 +75,16 @@ class Lccm_json extends CI_Controller
 				$statement .= " AND A.STATUS ='".$reqStatus."'";
 			}
 			
+		}
+
+		if(!empty($this->appdistrikid))
+		{
+			$statement.= " AND C.DISTRIK_ID = ".$this->appdistrikid;
+		}
+
+		if(!empty($this->appblokunitid))
+		{
+			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
 		}
 		
 

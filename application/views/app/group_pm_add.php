@@ -23,6 +23,26 @@ $reqUnitId = $this->input->get("reqUnitId");
 $reqSiteId = $this->input->get("reqBlokId");
 
 
+if(empty($reqDistrikId))
+{
+    $reqDistrikId=$this->appdistrikkode;
+    if(!empty($reqDistrikId))
+    {
+        $readonlyunit="readonly";
+    }
+}
+
+if(empty($reqBlokId))
+{
+    $reqBlokId=$this->appblokunitkode;
+    if(!empty($reqBlokId))
+    {
+        $readonlyunit="readonly";
+    }
+}
+
+
+
 
 $set= new M_Group_Pm_Lccm();
 
@@ -61,6 +81,13 @@ if($reqLihat ==1)
 $set= new Distrik();
 $arrdistrik= [];
 $statement="  ";
+
+if(!empty($reqDistrikId))
+{
+    $statement = " AND A.KODE = '".$reqDistrikId."'";
+}
+
+
 $set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
@@ -76,14 +103,24 @@ unset($set);
 $set= new BlokUnit();
 $arrblok= [];
 
+
+
 if(empty($reqId))
 {
-    $statement=" AND 1=2 ";
+    if(empty($reqBlokId))
+    {
+        $statement=" AND 1=2 ";
+    }
+    else
+    {
+         $statement = " AND A.KODE = '".$reqBlokId."'";
+    }
 }
 else
 {
     $statement=" AND A.KODE <> ''  AND A.DISTRIK_ID = '".$reqDistrikIdInfo."' ";
 }
+
 
 
 $set->selectByParams(array(), -1,-1,$statement);
@@ -98,13 +135,22 @@ while($set->nextRow())
 }
 unset($set);
 
+// if(empty($reqBlokId))
+// {
+//     $statement=" AND 1=2";
+// }
+// else
+// {
+//     $statement=" AND A.KODE <> ''  AND A.BLOK_UNIT_ID = '".$reqBlokIdInfo."'  AND A.DISTRIK_ID = '".$reqDistrikIdInfo."' ";
+// }
+
 if(empty($reqBlokId))
 {
     $statement=" AND 1=2";
 }
 else
 {
-    $statement=" AND A.KODE <> ''  AND A.BLOK_UNIT_ID = '".$reqBlokIdInfo."'  AND A.DISTRIK_ID = '".$reqDistrikIdInfo."' ";
+    $statement=" AND C.KODE = '".$reqBlokId."' AND  B.KODE = '".$reqDistrikId."'   ";
 }
 
 $set= new UnitMesin();
@@ -210,7 +256,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                     <div class='col-md-6'>
                         <div class='form-group'>
                             <div class='col-md-11'>
-                                <select class="form-control jscaribasicmultiple"   <?=$readonly?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                                <select class="form-control jscaribasicmultiple"  <?=$readonlyunit?>  <?=$readonly?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
                                     <option value="" >Pilih Distrik</option>
                                     <?
                                     foreach($arrdistrik as $item) 
@@ -240,7 +286,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                     <div class='col-md-6'>
                         <div class='form-group'>
                             <div class='col-md-11' id="blok">
-                                <select class="form-control jscaribasicmultiple"  required  <?=$readonlyfilter?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                <select class="form-control jscaribasicmultiple" <?=$readonlyunit?>  required  <?=$readonlyfilter?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
                                     <option value="" >Pilih Blok Unit</option>
                                     <?
                                     foreach($arrblok as $item) 
