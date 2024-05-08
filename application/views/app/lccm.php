@@ -919,6 +919,15 @@ $('select').select2({
         var reqProjectNoR= reqDistrikId +'-'+ reqBlokId +'-'+ reqUnitMesinId +'-'+ reqHistoryYearStart +'-'+ reqHistoryYearEnd +'-'+reqPrediction+'-';
         $("#reqProjectNoR").val(reqProjectNoR);
 
+        $.ajax({
+              type: "GET",
+              url: "json-app/inflasi_json/kalkulasi?reqTahunAwal="+reqHistoryYearStart+"&reqTahunAkhir="+reqPrediction,
+              cache: false,
+              success: function(data){
+                $("#reqAnnual").val(data);
+            }
+         });
+
     });
 
     $('#reqProjectNo').on('change', function() {
@@ -1009,9 +1018,6 @@ function submitForm(){
             data = data.split("***");
             reqId= data[0];
             infoSimpan= data[1];
-            infoSimpan1= data[2];
-
-            tahun = infoSimpan1.replace(/\s/g, '');
 
             var reqDistrikId= $("#reqDistrikId").val();
             var reqBlokId= $("#reqBlokId").val();
@@ -1023,6 +1029,9 @@ function submitForm(){
             }
             else if(reqId == 'zzz')
             {
+                infoSimpan1= data[2];
+                tahun = infoSimpan1.replace(/\s/g, '');
+
                 mbox.custom({
                     message: infoSimpan+infoSimpan1,
                     options: {},
