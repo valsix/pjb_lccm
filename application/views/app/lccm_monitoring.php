@@ -29,7 +29,7 @@ $arrtabledata= array(
     , array("label"=>"Discount Rate %", "field"=> "DISC_RATE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Plant Capital Cost", "field"=> "PLANT_CAPITAL_COST", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"History Inflation Rate", "field"=> "HIST_INFLASI_RATE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"History Inflation Rate", "field"=> "ANNUAL_INFLASI_RATE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Annual Inflation Rate", "field"=> "ANNUAL_INFLASI_RATE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
     , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
