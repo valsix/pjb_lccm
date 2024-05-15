@@ -296,9 +296,9 @@ var ajaxserverselectsingle = function() {
 
                                 if(aData["WO_CR_INFO"])
                                 {
-                                    infocolor = 5;
+                                    infocolor = 2;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["WO_CR_INFO"];
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
@@ -311,9 +311,9 @@ var ajaxserverselectsingle = function() {
                                 }
                                 if(aData["WO_STANDING_INFO"])
                                 {
-                                    infocolor = 6;
+                                    infocolor = 3;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["WO_STANDING_INFO"];
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
@@ -322,14 +322,14 @@ var ajaxserverselectsingle = function() {
                                     {
                                         color= "f5f82f";
                                     }
-                                     console.log(infocolor);
+                                     // console.log(infocolor);
                                     $(nRow).find('td:eq('+kolom+')').attr('style', 'font-weight:'+bold+'; background-color:#'+color);
                                 }
                                 if(aData["WO_PM_INFO"])
                                 {
-                                    infocolor = 7;
+                                    infocolor = 4;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["WO_PM_INFO"];
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
@@ -342,9 +342,9 @@ var ajaxserverselectsingle = function() {
                                 }
                                 if(aData["WO_PDM_INFO"])
                                 {
-                                    infocolor = 8;
+                                    infocolor = 5;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["WO_PDM_INFO"];
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
@@ -357,9 +357,9 @@ var ajaxserverselectsingle = function() {
                                 }
                                 if(aData["WO_OH_INFO"])
                                 {
-                                    infocolor = 9;
+                                    infocolor = 6;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["WO_OH_INFO"];
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
@@ -372,9 +372,9 @@ var ajaxserverselectsingle = function() {
                                 }
                                 if(aData["PRK_INFO"])
                                 {
-                                    infocolor = 10;
+                                    infocolor = 7;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["PRK_INFO"];
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
@@ -387,9 +387,9 @@ var ajaxserverselectsingle = function() {
                                 }
                                 if(aData["LOSS_OUTPUT_INFO"])
                                 {
-                                    infocolor = 11;
+                                    infocolor = 8;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["LOSS_OUTPUT_INFO"];
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
@@ -402,9 +402,10 @@ var ajaxserverselectsingle = function() {
                                 }
                                 if(aData["ENERGY_PRICE_INFO"])
                                 {
-                                    infocolor = 12;
+                                    infocolor = 9;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["ENERGY_PRICE_INFO"];
+                                    console.log(vcolor);
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
@@ -417,9 +418,10 @@ var ajaxserverselectsingle = function() {
                                 }
                                 if(aData["OPERATION_INFO"])
                                 {
-                                    infocolor = 13;
+                                    infocolor = 10;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["OPERATION_INFO"];
+                                    // console.log(vcolor);
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
@@ -432,9 +434,9 @@ var ajaxserverselectsingle = function() {
                                 }
                                 if(aData["STATUS_COMPLETE_INFO"])
                                 {
-                                    infocolor = 14;
+                                    infocolor = 11;
                                     kolom= infocolor;
-                                    vcolor= aData[valarrdata[infocolor]["field"]];
+                                    vcolor= aData["STATUS_COMPLETE_INFO"];
                                     if( vcolor == '&#10004')
                                     {
                                         color= "35f82f";
