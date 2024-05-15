@@ -996,70 +996,76 @@ $('select').select2({
    }
 
 function submitForm(){
-   
-    $('#ff').form('submit',{
-        url:'json-app/lccm_json/add',
-        onSubmit:function(){
+    $.messager.confirm('Konfirmasi',"Apakah data yang anda isi sudah valid?",function(r)
+    {
+        if (r)
+        {
+            $('#ff').form('submit',{
+                url:'json-app/lccm_json/add',
+                onSubmit:function(){
 
-            if($(this).form('validate'))
-            {
-                var win = $.messager.progress({
-                    title:'<?=$this->configtitle["progres"]?>',
-                    msg:'proses data...'
-                });
-            }
+                    if($(this).form('validate'))
+                    {
+                        var win = $.messager.progress({
+                            title:'<?=$this->configtitle["progres"]?>',
+                            msg:'proses data...'
+                        });
+                    }
 
-            return $(this).form('enableValidation').form('validate');
-        },
-        success:function(data){
-            $.messager.progress('close');
-            // console.log(data);return false;
+                    return $(this).form('enableValidation').form('validate');
+                },
+                success:function(data){
+                    $.messager.progress('close');
+                    // console.log(data);return false;
 
-            data = data.split("***");
-            reqId= data[0];
-            infoSimpan= data[1];
+                    data = data.split("***");
+                    reqId= data[0];
+                    infoSimpan= data[1];
 
-            var reqDistrikId= $("#reqDistrikId").val();
-            var reqBlokId= $("#reqBlokId").val();
-            var reqUnitMesinId= $("#reqUnitMesinId").val();
+                    var reqDistrikId= $("#reqDistrikId").val();
+                    var reqBlokId= $("#reqBlokId").val();
+                    var reqUnitMesinId= $("#reqUnitMesinId").val();
 
-            if(reqId == 'xxx')
-            {
-                $.messager.alert('Info', infoSimpan, 'warning');
-            }
-            else if(reqId == 'zzz')
-            {
-                infoSimpan1= data[2];
-                tahun = infoSimpan1.replace(/\s/g, '');
+                    if(reqId == 'xxx')
+                    {
+                        $.messager.alert('Info', infoSimpan, 'warning');
+                    }
+                    else if(reqId == 'zzz')
+                    {
+                        infoSimpan1= data[2];
+                        tahun = infoSimpan1.replace(/\s/g, '');
 
-                mbox.custom({
-                    message: infoSimpan+infoSimpan1,
-                    options: {},
-                    buttons: [
-                        {
-                            label: 'Lihat Data',
-                            color: 'btn-warning',
-                            callback: function() {
-                                window.open('app/index/prep_monitoring?reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId+'&reqTahun='+tahun, '_blank'); 
-                            }
-                        },
-                        {
-                            label: 'Tutup',
-                            color: 'btn-danger',
-                            callback: function() {
-                                mbox.close();
-                            }  
-                        }
-                    ]
-                    
-                })
-            }
-            else
-            {
-                 $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
-            }
-           
+                        mbox.custom({
+                            message: infoSimpan+infoSimpan1,
+                            options: {},
+                            buttons: [
+                                {
+                                    label: 'Lihat Data',
+                                    color: 'btn-warning',
+                                    callback: function() {
+                                        window.open('app/index/prep_monitoring?reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId+'&reqTahun='+tahun, '_blank'); 
+                                    }
+                                },
+                                {
+                                    label: 'Tutup',
+                                    color: 'btn-danger',
+                                    callback: function() {
+                                        mbox.close();
+                                    }  
+                                }
+                            ]
+                            
+                        })
+                    }
+                    else
+                    {
+                         $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
+                    }
+                   
+                }
+            });
         }
+
     });
 }
 
