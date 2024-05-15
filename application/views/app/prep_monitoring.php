@@ -4,6 +4,10 @@ include_once("functions/date.func.php");
 $this->load->model("base-app/Crud");
 $this->load->model("base-app/PerusahaanEksternal");
 $this->load->model("base-app/Distrik");
+$this->load->model("base-app/BlokUnit");
+$this->load->model("base-app/UnitMesin");
+
+
 $this->load->model("base-app/T_Energy_Price_Lccm");
 
 
@@ -21,21 +25,21 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 // YEAR_LCCM, WO_CR, WO_STANDING, WO_PM, WO_PDM, WO_OH, PRK, LOSS_OUTPUT, ENERGY_PRICE, OPERATION, STATUS_COMPLETE
 
 $arrtabledata= array(
-    array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"20", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Distrik", "field"=> "NAMA_DISTRIK", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Blok", "field"=> "BLOK_UNIT_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Unit", "field"=> "UNIT_MESIN_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Year Lccm ", "field"=> "YEAR_LCCM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Wo Cr", "field"=> "WO_CR_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Wo Standing", "field"=> "WO_STANDING_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Wo PM", "field"=> "WO_PM_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Wo PDM", "field"=> "WO_PDM_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Wo OH", "field"=> "WO_OH_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"PRK", "field"=> "PRK_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Loss Output", "field"=> "LOSS_OUTPUT_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Energy Price", "field"=> "ENERGY_PRICE_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Operation", "field"=> "OPERATION_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Status Complete", "field"=> "STATUS_COMPLETE_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    array("label"=>"No", "field"=> "NO", "display"=>"",  "width"=>"80", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Distrik", "field"=> "NAMA_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Blok", "field"=> "BLOK_UNIT_NAMA", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Unit", "field"=> "UNIT_MESIN_NAMA", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Year Lccm ", "field"=> "YEAR_LCCM", "display"=>"",  "width"=>"50", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Wo Cr", "field"=> "WO_CR_INFO", "display"=>"",  "width"=>"200", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Wo Standing", "field"=> "WO_STANDING_INFO", "display"=>"",  "width"=>"200", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Wo PM", "field"=> "WO_PM_INFO", "display"=>"",  "width"=>"200", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Wo PDM", "field"=> "WO_PDM_INFO", "display"=>"",  "width"=>"200", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Wo OH", "field"=> "WO_OH_INFO", "display"=>"",  "width"=>"200", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"PRK", "field"=> "PRK_INFO", "display"=>"",  "width"=>"200", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Loss Output", "field"=> "LOSS_OUTPUT_INFO", "display"=>"",  "width"=>"200", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Energy Price", "field"=> "ENERGY_PRICE_INFO", "display"=>"",  "width"=>"200", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Operation", "field"=> "OPERATION_INFO", "display"=>"",  "width"=>"200", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Status Complete", "field"=> "STATUS_COMPLETE_INFO", "display"=>"200",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
     // , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     // , array("label"=>"fieldid", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
@@ -57,7 +61,7 @@ $reqDelete= $set->getField("MODUL_D");
 
 $set= new Distrik();
 $arrdistrik= [];
-$statement="  ";
+$statement=" AND A.KODE =  '".$reqDistrikId."'";
 $set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
 // echo $set->query;exit;
 while($set->nextRow())
@@ -69,6 +73,38 @@ while($set->nextRow())
     array_push($arrdistrik, $arrdata);
 }
 unset($set);
+
+$set= new BlokUnit();
+$arrblok= [];
+$statement=" AND A.KODE =  '".$reqBlokId."' AND B.KODE =  '".$reqDistrikId."'";
+$set->selectByParams(array(), -1,-1,$statement);
+// echo $set->query;exit;
+while($set->nextRow())
+{
+    $arrdata= array();
+    $arrdata["id"]= $set->getField("BLOK_UNIT_ID");
+    $arrdata["text"]= $set->getField("NAMA");
+    $arrdata["KODE"]= $set->getField("KODE");
+    array_push($arrblok, $arrdata);
+}
+unset($set);
+
+
+$set= new UnitMesin();
+$arrunit= [];
+$statement=" AND A.KODE =  '".$reqUnitMesinId."' AND B.KODE =  '".$reqDistrikId."'  AND C.KODE =  '".$reqBlokId."'";
+$set->selectByParams(array(), -1,-1,$statement);
+// echo $set->query;exit;
+while($set->nextRow())
+{
+    $arrdata= array();
+    $arrdata["id"]= $set->getField("UNIT_MESIN_ID");
+    $arrdata["text"]= $set->getField("NAMA");
+    $arrdata["KODE"]= $set->getField("KODE");
+    array_push($arrunit, $arrdata);
+}
+unset($set);
+
 
 
 
@@ -146,18 +182,17 @@ $(document).ready(function() {
         <br>
         <br> -->
 
-        <div  style=" border: none;  padding: 4px 5px; top: 90px;
-        z-index: 10;clear: both;display: none">
-            <div class="col-md-12" style="margin-bottom: 20px; border: none;">
+        <div  >
+            <!-- <div class="col-md-12" style="margin-bottom: 20px; border: none;">
                 <button id="btnfilter" class="filter btn btn-default pull-left">Filter <i class="fa fa-caret-down" aria-hidden="true"></i></button>
-            </div>
-            <div class="divfilter filterbaru"  >
+            </div> -->
+            <div class=""  >
                 <div class="col-md-12" style="margin-bottom: 20px;" >
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-1 control-label">Distrik</label>
-                        <div class="col-sm-4">
-                            <select class="form-control jscaribasicmultiple"  <?=$readonly?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
-                                    <option value="" >Pilih Distrik</option>
+                        <div class="col-sm-2">
+                            <select class="form-control "  <?=$readonly?> disabled id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                                    <!-- <option value="" >Pilih Distrik</option> -->
                                     <?
                                     foreach($arrdistrik as $item) 
                                     {
@@ -175,17 +210,50 @@ $(document).ready(function() {
                             </select>
                         </div>
                         <label for="inputEmail3" class="col-sm-1 control-label">Blok Unit</label>
-                        <div class="col-sm-4">
-                                <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
-                                    <option value="" >Pilih Blok Unit</option>
+                        <div class="col-sm-2">
+                                <select class="form-control jscaribasicmultiple"  disabled  <?=$readonlyfilter?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                   
+                                    <?
+                                    foreach($arrblok as $item) 
+                                    {
+                                        $selectvalid= $item["id"];
+                                        $selectvaltext= $item["text"];
+                                        $selectvalkode= $item["KODE"];
+
+                                        $selected="";
+
+                                        ?>
+                                        <option value="<?=$selectvalkode?>" <?=$selected?>><?=$selectvaltext?></option>
+                                        <?
+                                    }
+                                    ?>
+                                </select>
+                        </div>
+                        <label for="inputEmail3" class="col-sm-1 control-label">Unit Mesin</label>
+                        <div class="col-sm-2"> 
+                                <select class="form-control jscaribasicmultiple" disabled   <?=$readonlyfilter?> <?=$readonly?> id="reqUnitMesinId"   name="reqUnitMesinId"  style="width:100%;"  >
+                                    <?
+                                    foreach($arrunit as $item) 
+                                    {
+                                        $selectvalid= $item["id"];
+                                        $selectvaltext= $item["text"];
+                                        $selectvalkode= $item["KODE"];
+
+                                        $selected="";
+
+                                        ?>
+                                        <option value="<?=$selectvalkode?>" <?=$selected?>><?=$selectvaltext?></option>
+                                        <?
+                                    }
+                                    ?>
                                     
                                 </select>
                         </div>
                     </div>
                 </div>
-                <div class="text-center ">
+                <!-- <div class="text-center ">
                   <button class="btn btn-primary btn-sm" onclick="setCariInfo()" ><i class="fas fa-search"></i> Cari</button>
-                </div>
+                </div> -->
                 <br>
             </div>
         </div>
@@ -246,12 +314,12 @@ $(document).ready(function() {
 
     });
 
-    $(document).ready(function(){
-        $(".divfilter").hide();
-        $("#btnfilter").click(function(){
-           $(".divfilter").toggle();
-       });
-    });
+    // $(document).ready(function(){
+    //     $(".divfilter").hide();
+    //     $("#btnfilter").click(function(){
+    //        $(".divfilter").toggle();
+    //    });
+    // });
 
 
 	var datanewtable;
