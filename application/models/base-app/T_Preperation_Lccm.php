@@ -251,72 +251,72 @@
 		 ,CASE 
 		 WHEN WO_CR = 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END WO_CR_INFO
 		 ,CASE 
 		 WHEN WO_STANDING = 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END WO_STANDING_INFO
 		 ,CASE 
 		 WHEN WO_PM = 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END WO_PM_INFO
 		 ,CASE 
 		 WHEN WO_PDM = 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END WO_PDM_INFO
 		 ,CASE 
 		 WHEN WO_OH = 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END WO_OH_INFO
 		 ,CASE 
 		 WHEN PRK = 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END PRK_INFO
 		 ,CASE 
 		 WHEN LOSS_OUTPUT = 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END LOSS_OUTPUT_INFO
 		 ,CASE 
 		 WHEN ENERGY_PRICE = 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END ENERGY_PRICE_INFO
 		  ,CASE 
 		 WHEN OPERATION = 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END OPERATION_INFO
 		 ,CASE 
 		 WHEN STATUS_COMPLETE= 'false' 
 		 THEN 
-			'&#10005'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\"><i style=\"float:right;\" class=\"fa fa-times\" aria-hidden=\"true\"></i></button>'
 		 ELSE 
-		 '&#10004'
+		 '<button type=\"button\" class=\"btn btn-success\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\"><i style=\"float:right;\" class=\"fa fa-check\" aria-hidden=\"true\"></i></button>'
 		 END STATUS_COMPLETE_INFO
 		FROM 
 		t_preperation_lccm a

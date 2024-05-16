@@ -137,6 +137,7 @@ $(document).ready(function() {
 <style>
 	thead.stick-datatable th:nth-child(1){	width:440px !important; *border:1px solid cyan;}
 	thead.stick-datatable ~ tbody td:nth-child(1){	width:440px !important; *border:1px solid yellow;}
+    th.dt-center, td.dt-center { text-align: center; }
 </style>
 
 <div class="col-md-12">
