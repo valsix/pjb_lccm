@@ -86,6 +86,15 @@ if(empty($searchthn))
     array_push($arrtahun, $arrdata);
 }
 
+usort($arrtahun, function($a, $b) {
+    if ($a['id'] > $b['id']) {
+        return 1;
+    } elseif ($a['id'] < $b['id']) {
+        return -1;
+    }
+    return 0;
+});
+
 // print_r($arrtahun);exit;
 
 
