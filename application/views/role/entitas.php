@@ -250,7 +250,8 @@ body{
 			foreach ($query1->result_array() as $row1)
 			{?>
 
-	            <li style="padding-left: 20px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="reqBlokUnitId" value="<?=$row1["blok_unit_id"]?>-<?=$row1["unit_mesin_id"]?>" <? if( $this->appblokunitid == $row1["blok_unit_id"].'-'.$row1["unit_mesin_id"]) { ?> checked <? } ?>> <?=$row1["nama"]?></label></li>
+	            <!-- <li style="padding-left: 20px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="reqBlokUnitId" value="<?=$row1["blok_unit_id"]?>-<?=$row1["unit_mesin_id"]?>" <? if( $this->appblokunitid == $row1["blok_unit_id"].'-'.$row1["unit_mesin_id"]) { ?> checked <? } ?>> <?=$row1["nama"]?></label></li> -->
+	            <li style="padding-left: 30px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<!-- <input type="radio" name="reqBlokUnitId" value="<?=$row1["blok_unit_id"]?>-<?=$row1["unit_mesin_id"]?>" <? if( $this->appblokunitid == $row1["blok_unit_id"].'-'.$row1["unit_mesin_id"]) { ?> checked <? } ?>> --> <?=$row1["nama"]?></label></li>
         	<?
         	}
         	$distrik = $row["distrik_nama"];
