@@ -185,7 +185,8 @@
 	{
 		$str = "
 		SELECT 
-			A1.*
+			-- A1.*
+			A.*
 			, CASE WHEN A1.ASSET_LCCM = false THEN 'NO' ELSE 'YES' END ASSET_INFO
 			, CASE WHEN A1.ASSET_OH = false THEN 'NO' ELSE 'YES' END ASSET_OH_INFO
 			, B.NAMA DISTRIK_INFO

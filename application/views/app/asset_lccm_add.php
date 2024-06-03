@@ -37,7 +37,8 @@ else
 {
     $reqMode = "update";
 
-    $statement = " AND A1.ASSETNUM = '".$reqId."' AND A1.KODE_DISTRIK = '".$reqDistrikId."' AND A1.KODE_BLOK = '".$reqBlokId."' AND A1.KODE_UNIT_M = '".$reqUnitMesinId."'   ";
+    // $statement = " AND A1.ASSETNUM = '".$reqId."' AND A1.KODE_DISTRIK = '".$reqDistrikId."' AND A1.KODE_BLOK = '".$reqBlokId."' AND A1.KODE_UNIT_M = '".$reqUnitMesinId."'   ";
+    $statement = " AND A.ASSETNUM = '".$reqId."'";
     $set->selectByParams(array(), -1, -1, $statement);
     // echo $set->query;exit;
     $set->firstRow();

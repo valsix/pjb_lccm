@@ -163,7 +163,7 @@ body{
 </head>
 
 <body>
-<div class="pilihan-wrapper">
+<div class="pilihan-wrapper" style=" height: 500px">
 	
     <div class="logo"><img src="images/logo-pln-np.png" height="50"></div>
     <div class="judul">Silahkan pilih Entitas</div>
@@ -237,7 +237,22 @@ body{
 				echo "<li>".$row["distrik_nama"]."</li>";
 			?>
             <li><label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="reqBlokUnitId" value="<?=$row["blok_unit_id"]?>" <? if($row["blok_unit_id"] == $this->appblokunitid) { ?> checked <? } ?>> <?=$row["blok_unit_nama"]?></label></li>
+            <?
+            $querydetil= "
+	        	SELECT 
+	        	*
+				FROM Unit_mesin a
+				where 1=1
+				and blok_unit_id =".$row["blok_unit_id"];
+
+				$query1 = $this->db->query($querydetil);
+
+			foreach ($query1->result_array() as $row1)
+			{?>
+
+	            <li style="padding-left: 20px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="reqBlokUnitId" value="<?=$row1["blok_unit_id"]?>-<?=$row1["unit_mesin_id"]?>" <? if( $this->appblokunitid == $row1["blok_unit_id"].'-'.$row1["unit_mesin_id"]) { ?> checked <? } ?>> <?=$row1["nama"]?></label></li>
         	<?
+        	}
         	$distrik = $row["distrik_nama"];
         	$i++;
 		}

@@ -26,6 +26,7 @@ class Asset_lccm_json extends CI_Controller
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
+		// print_r($this->session->userdata);exit;
 	}
 
 	function json()
@@ -76,8 +77,8 @@ class Asset_lccm_json extends CI_Controller
 			$statement .= " AND A1.KODE_UNIT_M='".$reqUnitMesinId."'";
 		}
 
-		if(!empty($this->appblokunitid))
-		{
+		// if(!empty($this->appblokunitid))
+		// {
 			$statementnew= " AND A.BLOK_UNIT_ID = ".$this->appblokunitid;
 
 			$setcheck= new BlokUnit();
@@ -85,11 +86,11 @@ class Asset_lccm_json extends CI_Controller
 			$setcheck->firstRow();
 			$reqKodeEam= $setcheck->getField("KODE_EAM");
 
-			if(!empty($reqKodeEam))
-			{
-				$statement .= " AND ( C.BLOK_UNIT_ID = ".$this->appblokunitid." OR C.KODE_EAM = '".$reqKodeEam."'  )";
-			}
-		}
+			// if(!empty($reqKodeEam))
+			// {
+				$statement .= " AND ( C.BLOK_UNIT_ID = ".$this->appblokunitid." or a.siteid = '".$reqKodeEam."'  )";
+			// }
+		// }
 
 
 
