@@ -188,6 +188,7 @@
 			A.*
 			,a1.PARENT_CHILD
 			, a.RBD_ID rbd_id_muncul
+			, a1. group_pm group_pm_nama 
 			, CASE WHEN A1.ASSET_LCCM = false THEN 'NO' ELSE 'YES' END ASSET_INFO
 			, CASE WHEN A1.ASSET_OH = false THEN 'NO' ELSE 'YES' END ASSET_OH_INFO
 			, B.NAMA DISTRIK_INFO
@@ -205,7 +206,7 @@
 			, A2.CAPITAL
 			, A2.CAPITAL_DATE
 			, CASE WHEN COALESCE(mcl.ASSETNUM_TOTAL,0) < 1 THEN 'NO' ELSE 'YES' END MCL_INFO
-			, case when A1.ASSETNUM is null then 'fdd6d6' end KODE_WARNA
+			, case when A1.ASSETNUM is null then 'fdd6d6' else '' end KODE_WARNA
 		FROM M_ASSET A 
 		LEFT JOIN M_ASSET_LCCM A1 ON trim(A1.ASSETNUM) = trim(A.ASSETNUM)
 		LEFT JOIN M_CAPITAL_LCCM A2 ON trim(A2.ASSETNUM) = trim(A1.ASSETNUM)
@@ -225,7 +226,8 @@
 			$str .= " AND $key = '$val' ";
 		}
 		
-		$str .= $statement." ".$sOrder;
+		// $str .= $statement." ".$sOrder;
+		$str .= $statement." order by mcl.assetnum desc";
 		$this->query = $str;
 				
 		return $this->selectLimit($str,$limit,$from); 

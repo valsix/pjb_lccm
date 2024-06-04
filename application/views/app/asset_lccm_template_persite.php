@@ -57,12 +57,14 @@ $statementnew= " AND A.BLOK_UNIT_ID = ".$this->appblokunitid;
 
 $setcheck= new BlokUnit();
 $setcheck->selectByParams(array(), $dsplyRange, $dsplyStart, $statementnew, $sOrder);
+// echo $setcheck->query;exit; 
 $setcheck->firstRow();
-$reqKodeEam= $setcheck->getField("KODE_EAM");// if(!empty($reqKodeEam))
+$reqDistrikId= $setcheck->getField("DISTRIK_ID");// if(!empty($reqKodeEam))
+$reqKodeEam= $setcheck->getField("KODE_EAM");
 
 $statement .=" AND A.siteid='".$reqKodeEam."'";
 
-
+// echo $reqDistrikId;exit;
 
 $set = new Asset_Lccm();
 $sOrder=" ORDER BY A1.ASSETNUM ASC";
@@ -109,12 +111,13 @@ $statement=" AND A.STATUS IS NULL";
 
 if(!empty($reqDistrikId))
 {
-	$statement .=" AND A.KODE='".$reqDistrikId."'";
+	$statement .=" AND A.DISTRIK_ID='".$reqDistrikId."'";
 }
 
 $set = new Distrik();
 $sOrder=" ORDER BY A.DISTRIK_ID ASC ";
 $set->selectByParams(array(), -1,-1, $statement,$sOrder);
+
 while($set->nextRow())
 {
 	$index_kolom= 1;
@@ -154,7 +157,7 @@ $statement=" AND A.STATUS IS NULL";
 
 if(!empty($reqDistrikId))
 {
-	$statement .=" AND B.KODE='".$reqDistrikId."'";
+	$statement .=" AND B.DISTRIK_ID='".$reqDistrikId."'";
 }
 if(!empty($reqBlokId))
 {
@@ -206,7 +209,7 @@ $statement=" AND A.STATUS IS NULL";
 
 if(!empty($reqDistrikId))
 {
-	$statement .=" AND B.KODE='".$reqDistrikId."'";
+	$statement .=" AND B.DISTRIK_ID='".$reqDistrikId."'";
 }
 if(!empty($reqBlokId))
 {
@@ -254,7 +257,7 @@ $statement="";
 
 if(!empty($reqDistrikId))
 {
-	$statement .=" AND B.KODE='".$reqDistrikId."'";
+	$statement .=" AND B.DISTRIK_ID='".$reqDistrikId."'";
 }
 if(!empty($reqBlokId))
 {

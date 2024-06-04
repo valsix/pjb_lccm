@@ -473,10 +473,10 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <label class="control-label col-md-2">Project No </label>
                             <div class='col-md-10'>
                                 <div class='form-group'>
-                                    <div class='col-md-2'>
+                                    <div class='col-md-3'>
                                         <input  <?=$readonly?> readonly  class="easyui-validatebox textbox form-control"   type="text" name="reqProjectNoR"  id="reqProjectNoR" value="<?=$reqProjectNoR?>" <?=$disabled?>  />
                                     </div>
-                                    <div class='col-md-2'>
+                                    <div class='col-md-1'>
                                         <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> class="prono"   id="reqProjectNo" <?=$disabled?> name="reqProjectNo"  style="width:100%;" >
                                             <?
                                             foreach (range('A', 'Z') as $column)
@@ -1035,27 +1035,29 @@ function submitForm(){
                         infoSimpan1= data[2];
                         tahun = infoSimpan1.replace(/\s/g, '');
 
-                        mbox.custom({
-                            message: infoSimpan+infoSimpan1,
-                            options: {},
-                            buttons: [
-                                {
-                                    label: 'Lihat Data',
-                                    color: 'btn-warning',
-                                    callback: function() {
-                                        window.open('app/index/prep_monitoring?reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId+'&reqTahun='+tahun, '_blank'); 
-                                    }
-                                },
-                                {
-                                    label: 'Tutup',
-                                    color: 'btn-danger',
-                                    callback: function() {
-                                        mbox.close();
-                                    }  
-                                }
-                            ]
+                        // mbox.custom({
+                        //     message: infoSimpan+infoSimpan1,
+                        //     options: {},
+                        //     buttons: [
+                        //         {
+                        //             label: 'Lihat Data',
+                        //             color: 'btn-warning',
+                        //             callback: function() {
+                        //                 window.open('app/index/prep_monitoring?reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId+'&reqTahun='+tahun, '_blank'); 
+                        //             }
+                        //         },
+                        //         {
+                        //             label: 'Tutup',
+                        //             color: 'btn-danger',
+                        //             callback: function() {
+                        //                 mbox.close();
+                        //             }  
+                        //         }
+                        //     ]
                             
-                        })
+                        // })
+
+                        $.messager.alert('Info', infoSimpan+infoSimpan1, 'warning');
                     }
                     else
                     {

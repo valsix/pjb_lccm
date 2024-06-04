@@ -137,10 +137,6 @@ class Asset_lccm_json extends CI_Controller
 				{
 					$row[$valkey]= $set->getField($valkey);
 				}
-				else
-				{
-					$row[$valkey]= $set->getField($valkey);
-				}
 			}
 			array_push($arrinfodata, $row);
 		}

@@ -66,24 +66,24 @@ class Login extends CI_Controller
 		$configwsdl= $this->config;
 		$configwsdl= $configwsdl->config["ldap"];
 
-		// $payload = array(
-		// 	'username' => '9015051zjy',
-		// 	'password' => 'password123!@#"}\n))'
-		// );
+		$payload = array(
+			'username' => '9015051zjy',
+			'password' => 'password123!@#"}\n))'
+		);
 
-		// $postdata = http_build_query($payload);
-		// $opts = array('http' =>
-		// 			array(
-		// 				'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
-		// 							"Content-Length: ".strlen($postdata)."\r\n".
-		// 							"User-Agent:MyAgent/1.0\r\n",
-		// 				'method'  => 'POST',
-		// 				'content' => $postdata
-		// 			)
-		// 		);
-		// $context  = stream_context_create($opts);
-		// $result = file_get_contents($configwsdl, false, $context);
-		// $check = json_decode($result,true);
+		$postdata = http_build_query($payload);
+		$opts = array('http' =>
+					array(
+						'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
+									"Content-Length: ".strlen($postdata)."\r\n".
+									"User-Agent:MyAgent/1.0\r\n",
+						'method'  => 'POST',
+						'content' => $postdata
+					)
+				);
+		$context  = stream_context_create($opts);
+		$result = file_get_contents($configwsdl, false, $context);
+		$check = json_decode($result,true);
 		
 
 		// var_dump($payload);exit;
@@ -98,81 +98,81 @@ class Login extends CI_Controller
 		if(!empty($reqUser) AND !empty($reqPasswd))
 		{
 
-			// $payload = array(
-			// 	'username' => $reqUser,
-			// 	'password' => $reqPasswd
-			// );
+			$payload = array(
+				'username' => $reqUser,
+				'password' => $reqPasswd
+			);
 
-			// $postdata = http_build_query($payload);
-			// $opts = array('http' =>
-			// 			array(
-			// 				'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
-			// 							"Content-Length: ".strlen($postdata)."\r\n".
-			// 							"User-Agent:MyAgent/1.0\r\n",
-			// 				'method'  => 'POST',
-			// 				'content' => $postdata
-			// 			)
-			// 		);
-			// $context  = stream_context_create($opts);
-			// $result = file_get_contents($configwsdl, false, $context);
-			// $hasil = json_decode($result,true);
-			// // print_r($hasil["userdetail"]);exit;
-			// $valid = $hasil["valid"];
-			// $arrphoto=$hasil["userdetail"];
+			$postdata = http_build_query($payload);
+			$opts = array('http' =>
+						array(
+							'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
+										"Content-Length: ".strlen($postdata)."\r\n".
+										"User-Agent:MyAgent/1.0\r\n",
+							'method'  => 'POST',
+							'content' => $postdata
+						)
+					);
+			$context  = stream_context_create($opts);
+			$result = file_get_contents($configwsdl, false, $context);
+			$hasil = json_decode($result,true);
+			// print_r($hasil["userdetail"]);exit;
+			$valid = $hasil["valid"];
+			$arrphoto=$hasil["userdetail"];
 
-			// $linkfoto =$arrphoto["jpegphoto"][0];
+			$linkfoto =$arrphoto["jpegphoto"][0];
 
 
-			// if($valid == 1)
-			// {
-			// 	$reqUser =  $hasil["nid"];
-			// 	$reqPasswd=  $hasil["password"];
-			// 	$this->load->model("base/Users");
+			if($valid == 1)
+			{
+				$reqUser =  $hasil["nid"];
+				$reqPasswd=  $hasil["password"];
+				$this->load->model("base/Users");
 
-			// 	$credential =  md5($reqPasswd);
-			// 	$users = new Users();
-			// 	$users->selectByCheckUser($reqUser, $credential);
-			// 	// echo $users->query;exit;
-			// 	if($users->firstRow())
-			// 	{
-			// 		$update = new Users();
-			// 		$update->setField("USERNAME", $reqUser);
-			// 		$update->setField("PASS", md5($reqPasswd));
-			// 		$update->setField("FOTO", $linkfoto);
-			// 		$reqSimpan="";
-			// 		if($update->update())
-			// 		{
-			// 			$reqSimpan=1;
-			// 		}	
-			// 	}
-			// 	else
-			// 	{
-			// 		$check = new Users();
-			// 		$check->selectByInternal($reqUser);
-			// 		$check->firstRow();
-			// 		// echo $check->query;exit;
-			// 		$reqInternalId= $check->getField("PENGGUNA_INTERNAL_ID");
-			// 		$reqNamaLengkap= $check->getField("NAMA_LENGKAP");
-			// 		unset($check);
+				$credential =  md5($reqPasswd);
+				$users = new Users();
+				$users->selectByCheckUser($reqUser, $credential);
+				// echo $users->query;exit;
+				if($users->firstRow())
+				{
+					$update = new Users();
+					$update->setField("USERNAME", $reqUser);
+					$update->setField("PASS", md5($reqPasswd));
+					$update->setField("FOTO", $linkfoto);
+					$reqSimpan="";
+					if($update->update())
+					{
+						$reqSimpan=1;
+					}	
+				}
+				else
+				{
+					$check = new Users();
+					$check->selectByInternal($reqUser);
+					$check->firstRow();
+					// echo $check->query;exit;
+					$reqInternalId= $check->getField("PENGGUNA_INTERNAL_ID");
+					$reqNamaLengkap= $check->getField("NAMA_LENGKAP");
+					unset($check);
 
-			// 		$insert = new Users();
-			// 		$insert->setField("USERNAME", $reqUser);
-			// 		$insert->setField("PASS", md5($reqPasswd));
-			// 		$insert->setField("PENGGUNA_INTERNAL_ID", ValToNullDB($reqInternalId));
-			// 		$insert->setField("NAMA", $reqNamaLengkap);
-			// 		$insert->setField("FOTO", $linkfoto);
-			// 		$reqSimpan="";
-			// 		if($insert->insert())
-			// 		{
-			// 			$reqSimpan=1;
-			// 		}	
-			// 	}
-			// }
+					$insert = new Users();
+					$insert->setField("USERNAME", $reqUser);
+					$insert->setField("PASS", md5($reqPasswd));
+					$insert->setField("PENGGUNA_INTERNAL_ID", ValToNullDB($reqInternalId));
+					$insert->setField("NAMA", $reqNamaLengkap);
+					$insert->setField("FOTO", $linkfoto);
+					$reqSimpan="";
+					if($insert->insert())
+					{
+						$reqSimpan=1;
+					}	
+				}
+			}
 			// print_r($reqSimpan);exit;
 			$respon = $this->kauth->cekuserapp($reqUser,$reqPasswd);
 			if($respon == "1")
 			{
-				redirect('app/index/preparation');
+				redirect('app/index/preparation/');
 			}
 			else if($respon == "multi")
 			{
@@ -182,7 +182,7 @@ class Login extends CI_Controller
 			{
 				$this->session->set_userdata('sessappinfouser', $reqUser);
 				$this->session->set_userdata('sessappinfopass', $reqPasswd);
-				$this->session->set_userdata('sessappinfopesan', "Username dan password tidak sesuai / User tidak aktif");
+				$this->session->set_userdata('sessappinfopesan', "Username dan password tidak sesuai / User tidak aktif.");
 				redirect ('login');
 			}
 		}
@@ -314,9 +314,8 @@ class Login extends CI_Controller
 		$csrf = new crfs_protect('_crfs_role');
 		if (!$csrf->isTokenValid($_POST['_crfs_role']))
 			exit();
-
-		$reqBlokUnitId = $this->input->post("reqBlokUnitId");
 		$pgold = $this->input->get("pgold");
+		$reqBlokUnitId = $this->input->post("reqBlokUnitId");
 
 		
 		// if (trim($this->kauth->getInstance()->getIdentity()->USER_TYPE) == "")
@@ -326,7 +325,6 @@ class Login extends CI_Controller
 
 		if ($respon == "1")
 		{
-			// redirect('app');
 			redirect('app/index/'.$pgold);
 
 			// $USER_TYPE = $this->kauth->getInstance()->getIdentity()->USER_TYPE;

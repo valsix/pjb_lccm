@@ -3918,9 +3918,16 @@ class Import_json extends CI_Controller
 					$tempValBlok= $data->val($i,3);
 					$tempValUnitMesin= $data->val($i,4);
 
+					$checkSite = new Import();
+					$checkSite->selectByParamsCheckSiteId(array(), -1, -1, $tempValBlok, $tempValDistrik);
+						// echo $checkSite->query;exit;
+					$checkSite->firstRow();
+					$reqSiteId=$checkSite->getField("KODE_EAM");
+					$set->setField("SITEID",$reqSiteId);
+
 					if (!empty($tempValue))
 					{
-						$statement =" AND A.ASSETNUM = '".$tempValNum."'  AND A.KODE_DISTRIK = '".$tempValDistrik."'  AND A.KODE_BLOK = '".$tempValBlok."'  AND A.KODE_UNIT_M = '".$tempValUnitMesin."'  ";
+						$statement =" AND A.ASSETNUM = '".$tempValNum."'  AND A.SITEID = '".$reqSiteId."'";
 						$check = new Import();
 						$check->selectByParamsCheckAssetLccm(array(), -1, -1, $statement);
 						// echo $check->query;exit;
@@ -3941,12 +3948,12 @@ class Import_json extends CI_Controller
 				$colIndex++;
 			}
 
-			$set->setField("SITEID","PT");
 
 			if(empty($reqId))
 			{
 				$set->setField("LAST_CREATE_DATE", "NOW()");
 				$set->setField("LAST_CREATE_USER", $this->appusernama);
+				
 				if($set->insertassetlccm())
 				{
 					$reqSimpan = 1;
@@ -3974,7 +3981,8 @@ class Import_json extends CI_Controller
 			$set->setField("KODE_BLOK", $tempValBlok);
 			$set->setField("KODE_UNIT_M", $tempValUnitMesin);
 
-			$statement=" AND A.ASSETNUM =  '".$tempValNum."' AND A.CAPITAL_DATE =  '".$reqCapitalDate."' AND A.KODE_DISTRIK =  '".$tempValDistrik."' AND A.KODE_BLOK =  '".$tempValBlok."' AND A.KODE_UNIT_M =  '".$tempValUnitMesin."' ";
+			$statement =" AND A.ASSETNUM = '".$tempValNum."'  AND A.SITEID = '".$reqSiteId."'";
+
 			$check = new Import();
 			$check->selectByParamsCapital(array(), -1, -1, $statement);
 			// echo $check->query;exit;

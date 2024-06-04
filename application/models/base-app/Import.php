@@ -645,6 +645,23 @@
 		return $this->selectLimit($str,$limit,$from); 
     }
 
+    function selectByParamsCheckSiteId($paramsArray=array(),$limit=-1,$from=-1, $tempValBlok='', $tempValDistrik='')
+		{
+		$str = "
+		select KODE_EAM from blok_unit where kode='".$tempValBlok."' and DISTRIK_ID =(select DISTRIK_ID from distrik where kode='".$tempValDistrik."')
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $distrikment." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
     function insertwopm()
     {
 
@@ -888,7 +905,7 @@
     		 '".$this->getField("KODE_DISTRIK")."'
     		, '".$this->getField("KODE_BLOK")."'
 	    	, '".$this->getField("KODE_UNIT_M")."'
-	    	, '".$this->getField("KODE_BLOK")."'
+	    	, '".$this->getField("SITEID")."'
 	    	, '".$this->getField("ASSETNUM")."'
 	    	, ".$this->getField("ASSET_LCCM")."
 	    	, '".$this->getField("PARENT_CHILD")."'
@@ -921,7 +938,7 @@
 		, KODE_BLOK='".$this->getField("KODE_BLOK")."'
 		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
 		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
-		WHERE ASSETNUM = '".$this->getField("ASSETNUM")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."'
+		WHERE ASSETNUM = '".$this->getField("ASSETNUM")."'  AND SITEID = '".$this->getField("SITEID")."' 
 		"; 
 		$this->query = $str;
 		// echo $str;exit;
@@ -940,7 +957,7 @@
     	)
     	VALUES 
     	(
-	    	 '".$this->getField("KODE_BLOK")."'
+				'".$this->getField("SITEID")."'
 	    	, '".$this->getField("ASSETNUM")."'
 	    	, ".$this->getField("STATUS")."
 	    	, ".$this->getField("CAPITAL")."
@@ -972,7 +989,7 @@
 		, KODE_DISTRIK='".$this->getField("KODE_DISTRIK")."'
 		, KODE_BLOK='".$this->getField("KODE_BLOK")."'
 		, KODE_UNIT_M='".$this->getField("KODE_UNIT_M")."'
-		WHERE ASSETNUM = '".$this->getField("ASSETNUM")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."' AND CAPITAL_DATE = '".$this->getField("CAPITAL_DATE_UP")."'
+		WHERE ASSETNUM = '".$this->getField("ASSETNUM")."' AND SITEID = '".$this->getField("SITEID")."'
 		"; 
 		$this->query = $str;
 		// echo $str;exit;
