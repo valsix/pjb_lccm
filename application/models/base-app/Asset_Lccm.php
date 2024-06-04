@@ -186,6 +186,7 @@
 		$str = "
 		SELECT 
 			A.*
+			, a.RBD_ID rbd_id_muncul
 			, CASE WHEN A1.ASSET_LCCM = false THEN 'NO' ELSE 'YES' END ASSET_INFO
 			, CASE WHEN A1.ASSET_OH = false THEN 'NO' ELSE 'YES' END ASSET_OH_INFO
 			, B.NAMA DISTRIK_INFO

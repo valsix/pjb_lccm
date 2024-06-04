@@ -20,7 +20,7 @@ $arrtabledata= array(
     , array("label"=>"Asset Num", "field"=> "ASSETNUM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"KKS No", "field"=> "KKSNUM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Description", "field"=> "M_DESCRIPTION", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"RBD ID", "field"=> "RBDID", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"RBD ID", "field"=> "rbd_id_muncul", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Parent Asset", "field"=> "M_PARENT", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Install Date", "field"=> "INSTALLDATE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Asset Status", "field"=> "M_STATUS", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
