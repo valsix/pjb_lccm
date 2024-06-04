@@ -3640,7 +3640,7 @@ class Import_json extends CI_Controller
 					{
 						if ( preg_match('/\s/',$tempValueCheck) )
 						{
-							echo "xxx***Kolom Asset No baris ke ".$z." tidak boleh terdapat spasi";exit;
+							// echo "xxx***Kolom Asset No baris ke ".$z." tidak boleh terdapat spasi";exit;
 						}
 
 						$statement =" AND A.ASSETNUM = '".$tempValueCheck."'";
