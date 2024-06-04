@@ -202,7 +202,7 @@
 			, A.STATUS M_STATUS
 			, A2.CAPITAL
 			, A2.CAPITAL_DATE
-			, CASE WHEN mcl.assetnum is null THEN 'NO' ELSE 'YES' END MCL_INFO
+			, CASE WHEN mcl.assetnum < 1  THEN 'NO' ELSE 'YES' END MCL_INFO
 			, case when A1.ASSETNUM is null then 'fdd6d6' end KODE_WARNA
 		FROM M_ASSET A 
 		LEFT JOIN M_ASSET_LCCM A1 ON trim(A1.ASSETNUM) = trim(A.ASSETNUM)
