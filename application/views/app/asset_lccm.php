@@ -40,6 +40,7 @@ $arrtabledata= array(
     , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "KODE_UNIT_M", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "ASSETNUM", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "KODE_WARNA", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 );
 
 $set= new Crud();

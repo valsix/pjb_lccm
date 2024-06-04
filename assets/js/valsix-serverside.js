@@ -285,6 +285,12 @@ var ajaxserverselectsingle = function() {
                             }
                         $($(nRow).children()).attr('style', 'font-weight:'+bold+'; background-color:#'+color);
                     }
+                    
+                    else{
+                        color= aData["KODE_WARNA"];
+                        $($(nRow).children()).attr('style', 'font-weight:'+bold+'; background-color:#'+color);
+
+                    }
 
                     if(aData["WO_CR_INFO"] || aData["WO_STANDING_INFO"] || aData["WO_PM_INFO"] || aData["WO_PDM_INFO"] || aData["WO_OH_INFO"] || aData["PRK_INFO"]
                      || aData["LOSS_OUTPUT_INFO"] || aData["ENERGY_PRICE_INFO"] || aData["OPERATION_INFO"] || aData["STATUS_COMPLETE_INFO"])
