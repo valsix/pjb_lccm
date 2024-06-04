@@ -16,6 +16,8 @@ $this->load->library("crfs_protect"); $csrf = new crfs_protect('_crfs_role');
 // print_r($arrpilihanmulti);exit;
 $appuserkodehak= $this->appuserkodehak;
 
+$pgold = $this->input->get("pgold");
+
 ?>
 <!doctype html>
 <html>
@@ -168,7 +170,7 @@ body{
     <div class="logo"><img src="images/logo-pln-np.png" height="50"></div>
     <div class="judul">Silahkan pilih Entitas</div>
     <div class="pilihan">
-		<form id="myForm" action="login/multi_entitas" method="post">
+		<form id="myForm" action="login/multi_entitas?pgold=<?=$pgold?>" method="post">
         <ul>
         <?
 

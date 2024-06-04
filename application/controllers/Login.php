@@ -316,6 +316,7 @@ class Login extends CI_Controller
 			exit();
 
 		$reqBlokUnitId = $this->input->post("reqBlokUnitId");
+		$pgold = $this->input->get("pgold");
 
 		
 		// if (trim($this->kauth->getInstance()->getIdentity()->USER_TYPE) == "")
@@ -325,7 +326,8 @@ class Login extends CI_Controller
 
 		if ($respon == "1")
 		{
-			redirect('app');
+			// redirect('app');
+			redirect('app/index/'.$pgold);
 
 			// $USER_TYPE = $this->kauth->getInstance()->getIdentity()->USER_TYPE;
 			// if($USER_TYPE == "ADMINHAR" || $USER_TYPE == "SPVHAR" || $USER_TYPE == "SPVOPR" || $USER_TYPE == "SPVK3" || $USER_TYPE == "HAR" || stristr($USER_TYPE, "RENDAL"))

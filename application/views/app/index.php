@@ -202,7 +202,7 @@ unset($foto);
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link logout" style="background:#235A81; margin-top: 10px;" href="role/entitas"><i class="fa fa-map-marker fa-xs"></i> <?=coalesce($this->appdistrikblokunitnama, "ENTITAS BELUM DITENTUKAN")?></a>
+                    <a class="nav-link logout" style="background:#235A81; margin-top: 10px;" href="role/entitas?pgold=<?=$pg?>"><i class="fa fa-map-marker fa-xs"></i> <?=coalesce($this->appdistrikblokunitnama, "ENTITAS BELUM DITENTUKAN")?></a>
                 </li>
                 &nbsp;
                 &nbsp;
