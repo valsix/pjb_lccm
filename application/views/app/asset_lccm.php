@@ -31,7 +31,7 @@ $arrtabledata= array(
     , array("label"=>"Asset LCCM", "field"=> "ASSET_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Parent / Child", "field"=> "PARENT_CHILD", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Parent Asset", "field"=> "PARENT", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
-    , array("label"=>"Group PM", "field"=> "GROUP_PM", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Group PM", "field"=> "group_pm_nama", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"OH", "field"=> "ASSET_OH_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Capital Date", "field"=> "CAPITAL_DATE", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"Capital", "field"=> "CAPITAL", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
