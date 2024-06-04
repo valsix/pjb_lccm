@@ -117,7 +117,25 @@ class Asset_lccm_json extends CI_Controller
 				}
 				else if ($valkey == "CAPITAL")
 				{
-					$row[$valkey]= toThousandComma($set->getField($valkey));
+					if ($set->getField('MCL_INFO')=='YES'){
+						$row[$valkey]= '<span style="background-color:green;min-width:30px;color:white; padding: 10px">'. toThousandComma($set->getField($valkey)).'</span>';
+					}
+					else{
+						$row[$valkey]=toThousandComma($set->getField($valkey));
+					}
+				}
+				else if ($valkey == "CAPITAL_DATE")
+				{
+					if ($set->getField('MCL_INFO')=='YES'){
+						$row[$valkey]= '<span style="background-color:green;min-width:30px;color:white; padding: 10px">'. $set->getField($valkey).'</span>';
+					}
+					else{
+						$row[$valkey]=$set->getField($valkey);
+					}
+				}
+				else
+				{
+					$row[$valkey]= $set->getField($valkey);
 				}
 				else
 				{
