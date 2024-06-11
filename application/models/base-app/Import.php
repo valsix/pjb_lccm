@@ -690,6 +690,27 @@
 		return $this->execQuery($str);
 	}
 
+	function updatewopm()
+	{
+		$str = "
+		UPDATE t_wo_pm_lccm
+		SET
+		 ASSETNUM= '".$this->getField("ASSETNUM")."'
+		, PM_YEAR= ".$this->getField("PM_YEAR")."
+		, PMNUM='".$this->getField("PMNUM")."'
+		, JPNUM='".$this->getField("JPNUM")."'
+		, NO_PERSONAL=".$this->getField("NO_PERSONAL")."
+		, DURATION_HOURS=".$this->getField("DURATION_HOURS")."
+		, PM_IN_YEAR=".$this->getField("PM_IN_YEAR")."
+		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
+		WHERE ASSETNUM = '".$this->getField("ASSETNUM")."' AND PM_YEAR = '".$this->getField("PM_YEAR")."' AND PMNUM = '".$this->getField("PMNUM")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 	function insertwopdm()
     {
 
@@ -1301,6 +1322,27 @@
 		}
 		
 		$str .= $distrikment." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
+    function selectByParamsCheckWoPm($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.ASSETNUM ASC")
+	{
+		$str = "
+		SELECT 
+			A.*
+		FROM t_wo_pm_lccm A 
+		WHERE 1=1
+				
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
 		$this->query = $str;
 				
 		return $this->selectLimit($str,$limit,$from); 

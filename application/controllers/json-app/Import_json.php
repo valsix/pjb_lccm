@@ -2177,17 +2177,43 @@ class Import_json extends CI_Controller
 				$tempValue= $data->val($i,$colIndex);
 				$arrData[$arrField[$row]]['VALUE']= $data->val($i,$colIndex);
 				$set->setField($arrField[$row],$tempValue);
+
+				$pmyear=$data->val($i,7);
+				$assetnum=$data->val($i,1);
+				$pmnum=$data->val($i,2);
+
+				$statement =" AND A.ASSETNUM = '".$assetnum."' AND A.PM_YEAR = '".$pmyear."'  AND A.PMNUM = '".$pmnum."'";
+				$check = new Import();
+				$check->selectByParamsCheckWoPm(array(), -1, -1, $statement);
+					// echo $check->query;
+				$check->firstRow();
+				$reqCheckAsset=$check->getField("ASSETNUM");
+
 				$colIndex++;
 			}
 
-			$set->setField("LAST_CREATE_DATE", "NOW()");
-			$set->setField("LAST_CREATE_USER", $this->appusernama);
-			if($set->insertwopm())
+			if(empty($reqCheckAsset))
 			{
-				$reqSimpan = 1;
-
+				$set->setField("LAST_CREATE_DATE", "NOW()");
+				$set->setField("LAST_CREATE_USER", $this->appusernama);
+				if($set->insertwopm())
+				{
+					$reqSimpan = 1;
+				}
 			}
+			else
+			{
+				$set->setField("LAST_UPDATE_DATE", "NOW()");
+				$set->setField("LAST_UPDATE_USER", $this->appusernama);
+
+				if($set->updatewopm())
+				{
+					$reqSimpan = 1;
+				}
+			}
+
 		}
+
 
 		if($reqSimpan == 1 )
 		{
