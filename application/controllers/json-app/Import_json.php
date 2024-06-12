@@ -2376,15 +2376,39 @@ class Import_json extends CI_Controller
 				$tempValue= $data->val($i,$colIndex);
 				$arrData[$arrField[$row]]['VALUE']= $data->val($i,$colIndex);
 				$set->setField($arrField[$row],$tempValue);
+
+				$pdmyear=$data->val($i,7);
+				$assetnum=$data->val($i,1);
+				$pdmnum=$data->val($i,2);
+
+				$statement =" AND A.ASSETNUM = '".$assetnum."' AND A.PDM_YEAR = '".$pdmyear."'  AND A.PDMNUM = '".$pdmnum."'";
+				$check = new Import();
+				$check->selectByParamsCheckWoPdm(array(), -1, -1, $statement);
+					// echo $check->query;
+				$check->firstRow();
+				$reqCheckAsset=$check->getField("ASSETNUM");
+
 				$colIndex++;
 			}
 
-			$set->setField("LAST_CREATE_DATE", "NOW()");
-			$set->setField("LAST_CREATE_USER", $this->appusernama);
-			if($set->insertwopdm())
+			if(empty($reqCheckAsset))
 			{
-				$reqSimpan = 1;
+				$set->setField("LAST_CREATE_DATE", "NOW()");
+				$set->setField("LAST_CREATE_USER", $this->appusernama);
+				if($set->insertwopdm())
+				{
+					$reqSimpan = 1;
+				}
+			}
+			else
+			{
+				$set->setField("LAST_UPDATE_DATE", "NOW()");
+				$set->setField("LAST_UPDATE_USER", $this->appusernama);
 
+				if($set->updatewopdm())
+				{
+					$reqSimpan = 1;
+				}
 			}
 		}
 

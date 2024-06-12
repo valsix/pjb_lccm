@@ -740,6 +740,28 @@
 		return $this->execQuery($str);
 	}
 
+	function updatewopdm()
+	{
+		$str = "
+		UPDATE t_wo_pdm_lccm
+		SET
+		 ASSETNUM= '".$this->getField("ASSETNUM")."'
+		, PDM_YEAR= ".$this->getField("PDM_YEAR")."
+		, PDM_DESC='".$this->getField("PDM_DESC")."'
+		, PDMNUM='".$this->getField("PDMNUM")."'
+		, NO_PERSONAL=".$this->getField("NO_PERSONAL")."
+		, DURATION_HOURS=".$this->getField("DURATION_HOURS")."
+		, PDM_IN_YEAR=".$this->getField("PDM_IN_YEAR")."
+		, LAST_UPDATE_USER='".$this->getField("LAST_UPDATE_USER")."'
+		, LAST_UPDATE_DATE=".$this->getField("LAST_UPDATE_DATE")."
+		WHERE ASSETNUM = '".$this->getField("ASSETNUM_OLD")."' AND PDM_YEAR = '".$this->getField("PDM_YEAR")."' AND PDMNUM = '".$this->getField("PDMNUM_OLD")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
+
 	function insertloss()
     {
 
@@ -1333,6 +1355,26 @@
 		SELECT 
 			A.*
 		FROM t_wo_pm_lccm A 
+		WHERE 1=1
+				
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+     function selectByParamsCheckWoPdm($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.ASSETNUM ASC")
+	{
+		$str = "
+		SELECT 
+			A.*
+		FROM t_wo_pdm_lccm A 
 		WHERE 1=1
 				
 		"; 
