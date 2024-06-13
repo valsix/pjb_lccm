@@ -230,7 +230,7 @@ body{
 			$checked= 'checked';
 		}
 
-		echo '<li><label><input type="checkbox" name="reqBlokUnitId" value="all" '.$checked.'> All</label></li>';
+		echo '<li><input class="parent" type="checkbox" name="reqBlokUnitId" value="all" '.$checked.'> All</li>';
 
 		foreach ($query->result_array() as $row)
 		{
