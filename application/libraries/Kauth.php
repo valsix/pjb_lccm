@@ -190,9 +190,11 @@ class kauth {
         $CI->session->set_userdata("capchalogin", $kode);
     }
 
-    public function multiAksesCabang($reqBlokUnitId) {
+    public function multiAksesCabang($reqBlokUnitId,$reqUnitMesinId) {
         $CI =& get_instance();
         $CI->load->model("base-app/BlokUnit");
+        $CI->load->model("base-app/UnitMesin");
+
 
         // $reqBlokUnitId= $CI->db->escape($reqBlokUnitId);
         // echo $reqBlokUnitId;exit;
@@ -202,6 +204,7 @@ class kauth {
         if ($reqBlokUnitId!='all') 
         {
             $arr= array("BLOK_UNIT_ID"=>$reqBlokUnitId);
+            $arr1= array("UNIT_MESIN_ID"=>$reqUnitMesinId);
 
             $blokunit = new BlokUnit();
             // $blokunit->selectByIdPersonal($username, md5($credential));
@@ -218,26 +221,26 @@ class kauth {
                 $CI->session->set_userdata("appdistrikblokunitnama", $blokunit->getField("DISTRIK_NAMA")." - ".$blokunit->getField("NAMA"));
                 // $CI->session->set_userdata("appuserroleid", $users->getField("ROLE_ID"));
 
+                $unitmesin = new UnitMesin();
+                // $blokunit->selectByIdPersonal($username, md5($credential));
+                $unitmesin->selectByParams($arr1);
+                // echo $unitmesin->query;exit;
+                if($unitmesin->firstRow())
+                {
+                    $CI->session->set_userdata("appunitmesinid", $unitmesin->getField("UNIT_MESIN_ID"));
+                    $CI->session->set_userdata("appunitmesinkode", $unitmesin->getField("KODE"));
+                    $CI->session->set_userdata("appdistrikblokunitmesinnama", $blokunit->getField("DISTRIK_NAMA")." - ".$blokunit->getField("NAMA")." - ".$unitmesin->getField("NAMA"));
+                }
+                else
+                {
+                   $CI->session->unset_userdata("appunitmesinid");
+                   $CI->session->unset_userdata("appunitmesinkode");
+                   $CI->session->unset_userdata("appdistrikblokunitmesinnama");
+                }
+
                 return "1";
 
 
-                // if($users->getField("PENGGUNA_ID") == "" || $users->getField("PENGGUNA_ID") == $username)
-                //     return "Username atau password salah.";
-                // else
-                // {
-                //     $pilihanmulti= $this->penggunahak($penggunaid);
-                //     $CI->session->set_userdata("appuserpilihankodehak", $pilihanmulti);
-                //     $arrpilihanmulti= explode(",", $pilihanmulti);
-                //     if(count($arrpilihanmulti) > 1)
-                //     {
-                //         return "multi";
-                //     }
-                //     else
-                //     {
-                //         $CI->session->set_userdata("appuserkodehak", $pilihanmulti);
-                //         return "1";
-                //     }
-                // }
             }
         }
         else
@@ -247,6 +250,9 @@ class kauth {
             $CI->session->unset_userdata("appdistrikid");
             $CI->session->unset_userdata("appdistrikkode");
             $CI->session->unset_userdata("appdistrikblokunitnama");
+            $CI->session->unset_userdata("appunitmesinid");
+            $CI->session->unset_userdata("appunitmesinkode");
+            $CI->session->unset_userdata("appdistrikblokunitmesinnama");
             // $CI->session->set_userdata("appblokunitid", $blokunit->getField("BLOK_UNIT_ID"));
             // $CI->session->set_userdata("appdistrikid", $blokunit->getField("DISTRIK_ID"));
             // $CI->session->set_userdata("appdistrikblokunitnama", $blokunit->getField("DISTRIK_NAMA")." - ".$blokunit->getField("NAMA"));

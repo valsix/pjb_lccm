@@ -26,6 +26,9 @@ class Login extends CI_Controller
 		$this->appdistrikid= $this->session->userdata("appdistrikid");
 		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
 		$this->appdistrikblokunitnama= $this->session->userdata("appdistrikblokunitnama");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
+		$this->appunitmesinkode= $this->session->userdata("appunitmesinkode");
+		$this->appdistrikblokunitmesinnama= $this->session->userdata("appdistrikblokunitmesinnama");
 	}
 
 	public function index()
@@ -316,12 +319,21 @@ class Login extends CI_Controller
 			exit();
 		$pgold = $this->input->get("pgold");
 		$reqBlokUnitId = $this->input->post("reqBlokUnitId");
+		$reqUnitMesinId = $this->input->post("reqUnitMesinId");
+		$reqBlokUnitParent = $this->input->post("reqBlokUnitParent");
+
+		// if(empty($reqBlokUnitId))
+		// {
+		// 	$reqBlokUnitId=$reqBlokUnitParent;
+		// }
+
+		// print_r($reqBlokUnitId);exit;
 
 		
 		// if (trim($this->kauth->getInstance()->getIdentity()->USER_TYPE) == "")
 		// 	redirect("app");
 
-		$respon = $this->kauth->multiAksesCabang($reqBlokUnitId);
+		$respon = $this->kauth->multiAksesCabang($reqBlokUnitId,$reqUnitMesinId);
 
 		if ($respon == "1")
 		{
@@ -333,6 +345,10 @@ class Login extends CI_Controller
 			// elseif($USER_TYPE == "ADMIN" || $USER_TYPE == "SUPERVISOR" || $USER_TYPE == "ADMINAPP" || $USER_TYPE == "OPERATOR" || $USER_TYPE == "OPR" || $USER_TYPE == "REVIEW" || stristr($USER_TYPE, "VIEWER"))
 			// 	redirect('app');
 			
+		}
+		else
+		{
+
 		}
 	}
 }

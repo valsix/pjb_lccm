@@ -13,8 +13,8 @@ $this->load->library("crfs_protect"); $csrf = new crfs_protect('_crfs_role');
 // {}
 // else
 // 	redirect("app");
-// print_r($arrpilihanmulti);exit;
 $appuserkodehak= $this->appuserkodehak;
+
 
 $pgold = $this->input->get("pgold");
 
@@ -162,6 +162,8 @@ body{
 
 </style>
 
+ <script type='text/javascript' src="assets/bootstrap/js/jquery-1.12.4.min.js"></script>
+
 </head>
 
 <body>
@@ -228,17 +230,16 @@ body{
 			$checked= 'checked';
 		}
 
-		echo '<li><label><input type="radio" name="reqBlokUnitId" value="all" '.$checked.'> All</label></li>';
+		echo '<li><label><input type="checkbox" name="reqBlokUnitId" value="all" '.$checked.'> All</label></li>';
 
 		foreach ($query->result_array() as $row)
 		{
 			if($distrik == $row["distrik_nama"])
 			{}
 			else
-				// echo '<li><label><input type="radio" name="reqBlokUnitId" value="'.$row["distrik_id"].'" > '.$row["distrik_nama"].'</label></li>';
 				echo "<li>".$row["distrik_nama"]."</li>";
 			?>
-            <li><label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="reqBlokUnitId" value="<?=$row["blok_unit_id"]?>" <? if($row["blok_unit_id"] == $this->appblokunitid) { ?> checked <? } ?>> <?=$row["blok_unit_nama"]?></label></li>
+            <li><input type="checkbox" class="parent" name="reqBlokUnitId" value="<?=$row["blok_unit_id"]?>" <? if($row["blok_unit_id"] == $this->appblokunitid) { ?> checked <? } ?>> <?=$row["blok_unit_nama"]?>
             <?
             $querydetil= "
 	        	SELECT 
@@ -251,13 +252,17 @@ body{
 
 			foreach ($query1->result_array() as $row1)
 			{?>
+				<ul><li style="padding-left: 30px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<input class="anak" type="checkbox" name="reqUnitMesinId" value="<?=$row1["unit_mesin_id"]?>" <? if($row1["unit_mesin_id"] == $this->appunitmesinid) { ?> checked <? } ?>> <?=$row1["nama"]?></label>
+				</li></ul>
 
-	            <!-- <li style="padding-left: 20px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="reqBlokUnitId" value="<?=$row1["blok_unit_id"]?>-<?=$row1["unit_mesin_id"]?>" <? if( $this->appblokunitid == $row1["blok_unit_id"].'-'.$row1["unit_mesin_id"]) { ?> checked <? } ?>> <?=$row1["nama"]?></label></li> -->
-	            <li style="padding-left: 30px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<!-- <input type="radio" name="reqBlokUnitId" value="<?=$row1["blok_unit_id"]?>-<?=$row1["unit_mesin_id"]?>" <? if( $this->appblokunitid == $row1["blok_unit_id"].'-'.$row1["unit_mesin_id"]) { ?> checked <? } ?>> --> <?=$row1["nama"]?></label></li>
+	           
         	<?
         	}
         	$distrik = $row["distrik_nama"];
         	$i++;
+        	?>
+        	</li>
+        	<?
 		}
 		?>	
         </ul>
@@ -269,5 +274,23 @@ body{
     </div>
 
 </div>
+<script type="text/javascript">
+$(function () {
+    // $("input[type='checkbox']").change(function () {
+    //     $(this).siblings('ul')
+    //         .find("input[type='checkbox']")
+    //         .prop('checked', this.checked);
+    // });
+
+    $(document).on('change','.anak',function(){
+    	$('input[name="' + this.name + '"]').not(this).prop('checked', false);
+    });
+
+     $(document).on('change','.parent',function(){
+    	$('input[name="' + this.name + '"]').not(this).prop('checked', false);
+    });
+
+});
+</script>
 </body>
 </html>

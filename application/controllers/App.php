@@ -27,6 +27,9 @@ class App extends CI_Controller {
 		$this->appdistrikid= $this->session->userdata("appdistrikid");
 		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
 		$this->appdistrikblokunitnama= $this->session->userdata("appdistrikblokunitnama");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
+		$this->appunitmesinkode= $this->session->userdata("appunitmesinkode");
+		$this->appdistrikblokunitmesinnama= $this->session->userdata("appdistrikblokunitmesinnama");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -124,6 +127,8 @@ class App extends CI_Controller {
 		$this->session->unset_userdata("appdistrikid");
 		$this->session->unset_userdata("appdistrikkode");
 		$this->session->unset_userdata("appdistrikblokunitnama");
+		$this->session->unset_userdata("appunitmesinid");
+		$this->session->unset_userdata("appunitmesinkode");
 		redirect('app');
 	}
 

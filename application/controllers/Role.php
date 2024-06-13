@@ -25,6 +25,9 @@ class Role extends CI_Controller {
 		$this->appblokunitid= $this->session->userdata("appblokunitid");
 		$this->appdistrikid= $this->session->userdata("appdistrikid");
 		$this->appdistrikblokunitnama= $this->session->userdata("appdistrikblokunitnama");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
+		$this->appunitmesinkode= $this->session->userdata("appunitmesinkode");
+		$this->appdistrikblokunitmesinnama= $this->session->userdata("appdistrikblokunitmesinnama");
 
 		// $this->CABANG = $this->kauth->getInstance()->getIdentity()->CABANG; 
 		// print_r($this->configtitle);exit;
