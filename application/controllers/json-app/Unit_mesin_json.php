@@ -26,6 +26,8 @@ class unit_mesin_json extends CI_Controller
 		$this->appdistrikid= $this->session->userdata("appdistrikid");
 		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
 		$this->appblokunitkode= $this->session->userdata("appblokunitkode");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
+		$this->appunitmesinkode= $this->session->userdata("appunitmesinkode");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -331,12 +333,15 @@ class unit_mesin_json extends CI_Controller
 
 		$reqDistrikId =  $this->input->get('reqDistrikId');
 		$reqBlokId =  $this->input->get('reqBlokId');
+		$reqUnitMesinId =  $this->input->get('reqUnitMesinId');
 
 
 		$appdistrikid= $this->appdistrikid;
 		$appdistrikkode= $this->appdistrikkode;
 		$appblokunitid= $this->appblokunitid;
 		$appblokunitkode= $this->appblokunitkode;
+		$appunitmesinid= $this->appunitmesinid;
+		$appunitmesinkode= $this->appunitmesinkode;
 		
 		
 		$statement=" AND 1=2 ";
@@ -372,6 +377,18 @@ class unit_mesin_json extends CI_Controller
 		if(empty($reqBlokId) && empty($appblokunitid))
 		{
 			 $statementnew=" AND 1=2  ";
+		}
+
+		if(empty($reqUnitMesinId))
+		{
+			if(!empty($appunitmesinid))
+			{
+			 	$statementnew .=" AND A.UNIT_MESIN_ID  = ".$appunitmesinid;
+			}
+		}
+		else
+		{
+			$statementnew .=" AND A.KODE  = '".$reqUnitMesinId."'";	
 		}
 
 

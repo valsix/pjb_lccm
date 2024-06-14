@@ -23,6 +23,7 @@ class wo_standing_json extends CI_Controller
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
 		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -249,6 +250,11 @@ class wo_standing_json extends CI_Controller
 			{
 				$statement.= " AND B.BLOK_UNIT_ID = ".$this->appblokunitid;
 			}
+
+			if(!empty($this->appunitmesinid))
+			{
+				$statement.= " AND E.UNIT_MESIN_ID = ".$this->appunitmesinid;
+			}
 			$set= new WoStanding();
 			$result["total"] = 0;
 			$set->selectByParamsGroup(array(), -1, -1, $statement.$statementunit, $sorder);
@@ -325,6 +331,11 @@ class wo_standing_json extends CI_Controller
 						$statement.= " AND B.BLOK_UNIT_ID = ".$this->appblokunitid;
 					}
 
+					if(!empty($this->appunitmesinid))
+					{
+						$statement.= " AND E.UNIT_MESIN_ID = ".$this->appunitmesinid;
+					}
+
 					$sOrder=" ";
 					$set= new WoStanding();
 					$set->selectByParamsGroup(array(), -1, -1, $statement, $sOrder);
@@ -370,6 +381,11 @@ class wo_standing_json extends CI_Controller
 					if(!empty($this->appblokunitid))
 					{
 						$statement.= " AND B.BLOK_UNIT_ID = ".$this->appblokunitid;
+					}
+
+					if(!empty($this->appunitmesinid))
+					{
+						$statement.= " AND E.UNIT_MESIN_ID = ".$this->appunitmesinid;
 					}
 
 					$sOrder=" ORDER BY A.PM_YEAR ASC ";

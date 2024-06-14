@@ -47,6 +47,19 @@ if(empty($reqDistrikId))
     }
 }
 
+if(empty($reqUnitMesinId))
+{
+    $reqUnitMesinId=$this->appunitmesinkode;
+    if(!empty($reqUnitMesinId))
+    {
+      $readonlyu="readonly";
+    }
+    else
+    {
+        $readonlyu=""; 
+    }
+}
+
 $set= new WoStanding();
 
 if($reqMode == "insert")
@@ -260,7 +273,14 @@ if($reqMode=="update")
 }
 else
 {
-    $statement="  AND B.KODE= '".$reqDistrikId."' AND C.KODE= '".$reqBlokId."'    ";
+    if(empty($reqUnitMesinId))
+    {
+        $statement="  AND B.KODE= '".$reqDistrikId."' AND C.KODE= '".$reqBlokId."'    ";
+    }
+    else
+    {
+        $statement="  AND B.KODE= '".$reqDistrikId."' AND C.KODE= '".$reqBlokId."'   AND A.KODE= '".$reqUnitMesinId."'  ";
+    }
 }
 
 $arrunitmesin= [];
@@ -1147,6 +1167,21 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
        
     });
+
+    var reqDistrikId= $("#reqDistrikId").val();
+    var reqBlokId=  $("#reqBlokId").val();
+    var reqUnitMesinId= $("#reqUnitMesinId").val();
+
+    $.getJSON("json-app/group_pm_json/filter_group?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId,
+        function(data)
+        {
+            $("#reqGroupPm option").remove();
+            $("#reqGroupPm").attr("readonly", false); 
+            $("#reqGroupPm").append('<option value="" >Pilih Group Pm</option>');
+            jQuery(data).each(function(i, item){
+                $("#reqGroupPm").append('<option value="'+item.text+'" >'+item.text+'</option>');
+            });            
+        });
 
     $('#reqUnitMesinId').on('change', function() {
         var reqDistrikId= $("#reqDistrikId").val();
