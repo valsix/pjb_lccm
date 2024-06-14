@@ -23,6 +23,7 @@ class Loss_output_json extends CI_Controller
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
 		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -86,6 +87,11 @@ class Loss_output_json extends CI_Controller
 			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
 		}
 
+		if(!empty($this->appunitmesinid))
+		{
+			$statement.= " AND E.UNIT_MESIN_ID = ".$this->appunitmesinid;
+		}
+
 		if(!empty($reqStatus))
 		{
 			$statement .= " AND A.loss_output='".$reqStatus."'";
@@ -95,6 +101,11 @@ class Loss_output_json extends CI_Controller
 		if(!empty($this->appblokunitid))
 		{
 			$statementblok.= " AND X4.BLOK_UNIT_ID  = ".$this->appblokunitid;
+		}
+
+		if(!empty($this->appunitmesinid))
+		{
+			$statementblok.= " AND X5.UNIT_MESIN_ID  = ".$this->appunitmesinid;
 		}
 
 		$statement .="  AND EXISTS
