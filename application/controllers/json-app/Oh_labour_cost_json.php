@@ -23,6 +23,7 @@ class oh_labour_cost_json extends CI_Controller
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
 		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -67,6 +68,12 @@ class oh_labour_cost_json extends CI_Controller
 		if(!empty($this->appblokunitid))
 		{
 			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
+		}
+
+
+		if(!empty($this->appunitmesinid))
+		{
+			$statement.= " AND E.UNIT_MESIN_ID = ".$this->appunitmesinid;
 		}
 
 
