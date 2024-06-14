@@ -18,6 +18,8 @@ $appdistrikkode= $this->appdistrikkode;
 $appblokunitid= $this->appblokunitid;
 $appblokunitkode= $this->appblokunitkode;
 
+$appunitmesinid= $this->appunitmesinid;
+
 
 $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
@@ -158,6 +160,39 @@ while($set->nextRow())
     array_push($arrblok, $arrdata);
 }
 unset($set);
+
+
+$set= new UnitMesin();
+$arrunitmesin= [];
+
+$statement=" AND 1=2 ";
+
+if(!empty($appblokunitid))
+{
+    $statement=" AND A.BLOK_UNIT_ID IN (".$appblokunitid.") AND A.STATUS IS NULL AND A.NAMA IS NOT NULL 
+    ";
+}
+
+if(!empty($appunitmesinid))
+{
+    $statement=" AND A.UNIT_MESIN_ID IN (".$appunitmesinid.") AND A.STATUS IS NULL AND A.NAMA IS NOT NULL 
+    ";
+}
+
+
+
+$set->selectByParams(array(), -1,-1,$statement);
+    // echo $set->query;exit;
+while($set->nextRow())
+{
+    $arrdata= array();
+    $arrdata["id"]= $set->getField("UNIT_MESIN_ID");
+    $arrdata["text"]= $set->getField("KODE")." - ".$set->getField("NAMA");
+    $arrdata["KODE"]= $set->getField("KODE");
+    array_push($arrunitmesin, $arrdata);
+}
+unset($set);
+
 
 
 
@@ -397,16 +432,16 @@ $(document).ready(function() {
    var reqDistrikId= $("#reqDistrikId").val();
    var reqBlokId= $("#reqBlokId").val();
    
-   $.getJSON("json-app/unit_mesin_json/filter_unit_dash?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
-    function(data)
-    {
-        $("#reqUnitMesinId option").remove();
-        $("#reqUnitMesinId").attr("readonly", false); 
-        $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
-        jQuery(data).each(function(i, item){
-            $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
-        });
-    });
+   // $.getJSON("json-app/unit_mesin_json/filter_unit_dash?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+   //  function(data)
+   //  {
+   //      $("#reqUnitMesinId option").remove();
+   //      $("#reqUnitMesinId").attr("readonly", false); 
+   //      $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+   //      jQuery(data).each(function(i, item){
+   //          $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+   //      });
+   //  });
 
 
     $('#reqDistrikId').on('change', function() {
