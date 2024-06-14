@@ -34,6 +34,12 @@ if(empty($reqBlokId))
     $reqBlokId=$this->appblokunitkode;
 }
 
+if(empty($reqUnitMesinId))
+{
+    $reqUnitMesinId=$this->appunitmesinkode;
+}
+
+
 
 
 $set= new ScheduleOh();
@@ -135,7 +141,15 @@ if(empty($reqBlokId))
 }
 else
 {
-    $statement=" AND C.KODE = '".$reqBlokId."' AND  B.KODE = '".$reqDistrikId."'   ";
+    if(empty($reqUnitMesinId))
+    {
+        $statement=" AND C.KODE = '".$reqBlokId."' AND  B.KODE = '".$reqDistrikId."'   ";
+    }
+    else
+    {
+        $statement=" AND C.KODE = '".$reqBlokId."' AND  B.KODE = '".$reqDistrikId."' AND  A.KODE = '".$reqUnitMesinId."'   ";
+    }
+   
 }
 
 $set->selectByParams(array(), -1,-1,$statement);
@@ -149,6 +163,13 @@ while($set->nextRow())
     array_push($arrunitmesin, $arrdata);
 }
 unset($set);
+
+$readonlyunit="";
+if(!empty($reqUnitMesinId))
+{
+    $readonlyunit="readonly";
+
+}
 
 
 $readonly="";
@@ -322,7 +343,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                    <div class='col-md-6'>
                     <div class='form-group'>
                         <div class='col-md-11'  id="unit">
-                            <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
+                            <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> <?=$readonlyunit?> id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
                                 <option value="" >Pilih Unit Mesin</option>
                                 <?
                                 foreach($arrunitmesin as $item) 
