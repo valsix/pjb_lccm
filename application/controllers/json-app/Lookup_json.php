@@ -22,6 +22,8 @@ class Lookup_json extends CI_Controller
 		$this->appusernama= $this->session->userdata("appusernama");
 		$this->personaluserlogin= $this->session->userdata("personaluserlogin");
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
+		$this->appblokunitid= $this->session->userdata("appblokunitid");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -743,6 +745,16 @@ class Lookup_json extends CI_Controller
 		if(!empty($reqUnitMesinId))
 		{
 			$statement .= " AND A1.KODE_UNIT_M='".$reqUnitMesinId."'";
+		}
+
+		if(!empty($this->appblokunitid))
+		{
+			$statement.= " AND C.BLOK_UNIT_ID = ".$this->appblokunitid;
+		}
+
+		if(!empty($this->appunitmesinid))
+		{
+			$statement.= " AND D.UNIT_MESIN_ID = ".$this->appunitmesinid;
 		}
 
 		$searchJson= "";
