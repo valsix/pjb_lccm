@@ -26,6 +26,8 @@ class Operation_json extends CI_Controller
 		$this->appdistrikid= $this->session->userdata("appdistrikid");
 		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
 		$this->appblokunitkode= $this->session->userdata("appblokunitkode");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
+		$this->appunitmesinkode= $this->session->userdata("appunitmesinkode");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -62,6 +64,7 @@ class Operation_json extends CI_Controller
 		$appdistrikkode= $this->appdistrikkode;
 		$appblokunitid= $this->appblokunitid;
 		$appblokunitkode= $this->appblokunitkode;
+		$appunitmesinkode= $this->appunitmesinkode;
 
 		$searchJson= "";
 
@@ -98,6 +101,11 @@ class Operation_json extends CI_Controller
 		if(!empty($appblokunitkode))
 		{
 			$statement2 .= " AND A.KODE_BLOK='".$appblokunitkode."'";
+		}
+
+		if(!empty($appunitmesinkode))
+		{
+			$statement2 .= " AND A.KODE_UNIT_M='".$appunitmesinkode."'";
 		}
 
 		$sOrder = " ORDER BY A.OPR_YEAR ASC ";
