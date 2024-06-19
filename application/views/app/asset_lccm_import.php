@@ -57,7 +57,7 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 
 function submitForm(){
     $('#ff').form('submit',{
-        url:'json-app/import_json/asset_lccm',
+        url:'json-app/import_asset_lccm_json/asset_lccm',
         onSubmit:function(){
 
             if($(this).form('validate'))
