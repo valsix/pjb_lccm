@@ -9,6 +9,8 @@ $pgreturn= str_replace("_add", "", $pg);
 
 $reqBlokId=$this->appblokunitkode;
 $reqDistrikId=$this->appdistrikkode;
+$reqUnitMesinId=$this->appunitmesinkode;
+
 
 
 $pgtitle= $pgreturn;
@@ -46,6 +48,17 @@ else
 {
     $readonlyblok="readonly";
 }
+
+if(empty($reqUnitMesinId))
+{
+
+    $readonlymesin="";
+}
+else
+{
+    $readonlymesin="readonly";
+}
+
 
 
 
@@ -146,7 +159,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class="form-group" >
                                 <label class="control-label col-sm-2">Unit Mesin </label>
                                 <div class='col-md-4'>
-                                    <select class="form-control jscaribasicmultiple"  id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
+                                    <select class="form-control jscaribasicmultiple"  id="reqUnitMesinId" <?=$readonlymesin?> <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
                                         <option value="" >Pilih Unit Mesin</option>
                                     </select>
                                 </div>
@@ -170,11 +183,11 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 <script>
 
 $(document).ready(function(){
-      blok('<?=$reqDistrikId?>','<?=$reqBlokId?>');
+      blok('<?=$reqDistrikId?>','<?=$reqBlokId?>','<?=$reqUnitMesinId?>');
 
 });
 
-function blok(reqDistrikId,reqBlokId)
+function blok(reqDistrikId,reqBlokId,reqUnitMesinId)
 {
     $.getJSON("json-app/blok_unit_json/filter_blok?reqDistrikId="+reqDistrikId,
         function(data)
@@ -199,6 +212,7 @@ function blok(reqDistrikId,reqBlokId)
 
         var reqDistrikId= reqDistrikId;
         var reqBlokId= reqBlokId;
+        var reqUnitMesinId= reqUnitMesinId;
 
         $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
             function(data)
@@ -206,14 +220,23 @@ function blok(reqDistrikId,reqBlokId)
                 // console.log(data);
                 // $("#reqUnitMesinId option").remove();
                 // $("#reqUnitMesinId").attr("readonly", false); 
+
+                var selected='';
+
+                if(reqUnitMesinId)
+                {
+                  selected='selected';
+                }
+
+
                 jQuery(data).each(function(i, item){
-                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" '+selected+' >'+item.text+'</option>');
                 });
             });
 
 }
 
-$('#reqDistrikId').on('change', function() {
+    $('#reqDistrikId').on('change', function() {
         var reqDistrikId= this.value;
 
         $.getJSON("json-app/blok_unit_json/filter_blok?reqDistrikId="+reqDistrikId,
