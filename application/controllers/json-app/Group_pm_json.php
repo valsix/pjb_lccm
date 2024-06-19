@@ -53,6 +53,8 @@ class Group_pm_json extends CI_Controller
 		$reqTahun= $this->input->get("reqTahun");
 		$reqDistrikId= $this->input->get("reqDistrikId");
 		$reqBlokId= $this->input->get("reqBlokId");
+
+		$reqUnitMesinId= $this->input->get("reqUnitMesinId");
 		$searchJson= "";
 
 		$statement="";
@@ -66,6 +68,11 @@ class Group_pm_json extends CI_Controller
 		if(!empty($reqBlokId))
 		{
 			$statement .= " AND A.KODE_BLOK='".$reqBlokId."'";
+		}
+
+		if(!empty($reqUnitMesinId))
+		{
+			$statement .= " AND A.KODE_UNIT='".$reqUnitMesinId."'";
 		}
 
 		if(!empty($this->appblokunitid))

@@ -13,6 +13,11 @@ $this->load->model("base/Users");
 $appuserkodehak= $this->appuserkodehak;
 $reqPenggunaid= $this->appuserid;
 
+$reqBlokId=$this->appblokunitkode;
+$reqDistrikId=$this->appdistrikkode;
+$reqUnitMesinId=$this->appunitmesinkode;
+
+
 
 $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
@@ -42,29 +47,19 @@ $reqRead= $set->getField("MODUL_R");
 $reqUpdate= $set->getField("MODUL_U");
 $reqDelete= $set->getField("MODUL_D");
 
-$arridDistrik=[];
-$usersdistrik = new Users();
-$usersdistrik->selectByPenggunaDistrik($reqPenggunaid);
-while($usersdistrik->nextRow())
+$statement= " ";
+
+if(!empty($reqDistrikId))
 {
-    $arridDistrik[]= $usersdistrik->getField("DISTRIK_ID"); 
-   
+    $statement = " AND A.KODE = '".$reqDistrikId."'";
 }
 
-$idDistrik = implode(",",$arridDistrik);  
 
+$sOrder=" ";
 $set= new Distrik();
+$set->selectByParams(array(), -1, -1, $statement, $sOrder);
 $arrdistrik= [];
 
-if(!empty($idDistrik))
-{
-    $statement=" AND A.DISTRIK_ID IN (".$idDistrik.") AND A.STATUS IS NULL AND A.NAMA IS NOT NULL 
-    ";
-}
-
-
-$set->selectByParamsAreaDistrik(array(), -1,-1,$statement);
-// echo $set->query;exit;
 while($set->nextRow())
 {
     $arrdata= array();
@@ -73,7 +68,27 @@ while($set->nextRow())
     $arrdata["KODE"]= $set->getField("KODE");
     array_push($arrdistrik, $arrdata);
 }
-unset($set);
+
+if(empty($reqBlokId))
+{
+
+   $readonlyblok="";
+}
+else
+{
+    $readonlyblok="readonly";
+}
+
+if(empty($reqUnitMesinId))
+{
+
+    $readonlymesin="";
+}
+else
+{
+    $readonlymesin="readonly";
+}
+
 
 
 
@@ -106,6 +121,49 @@ $(document).ready(function() {
 <style>
 	thead.stick-datatable th:nth-child(1){	width:440px !important; *border:1px solid cyan;}
 	thead.stick-datatable ~ tbody td:nth-child(1){	width:440px !important; *border:1px solid yellow;}
+</style>
+
+<style type="text/css">
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+      color: #000000;
+  }
+  .select2-container--default .select2-search--inline .select2-search__field:focus {
+      outline: 0;
+      border: 1px solid #ffff;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+      cursor: default;
+      padding-left: 6px;
+      padding-right: 5px;
+  }
+
+  .select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
+    background: #eee;
+    box-shadow: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow, select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+    display: none;
+}
+
+
+
 </style>
 
 <div class="col-md-12">
@@ -161,7 +219,7 @@ $(document).ready(function() {
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-1 control-label">Distrik</label>
                         <div class="col-sm-4">
-                            <select class="form-control jscaribasicmultiple"  <?=$readonly?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
+                            <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyblok?> required id="reqDistrikId" <?=$disabled?> name="reqDistrikId"  style="width:100%;" >
                                     <option value="" >Pilih Distrik</option>
                                     <?
                                     foreach($arrdistrik as $item) 
@@ -172,6 +230,12 @@ $(document).ready(function() {
 
                                         $selected="";
 
+                                        $selected="";
+                                        if($selectvalkode==$reqDistrikId)
+                                        {
+                                            $selected="selected";
+                                        }
+
                                         ?>
                                         <option value="<?=$selectvalkode?>" <?=$selected?>><?=$selectvaltext?></option>
                                         <?
@@ -181,10 +245,20 @@ $(document).ready(function() {
                         </div>
                         <label for="inputEmail3" class="col-sm-1 control-label">Blok Unit</label>
                         <div class="col-sm-4">
-                                <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
-                                    <option value="" >Pilih Blok Unit</option>
-                                    
-                                </select>
+                            <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> <?=$readonlyblok?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                <option value="" >Pilih Blok Unit</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="margin-bottom: 20px;" >
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-1 control-label">Unit Mesin</label>
+                        <div class="col-sm-4">
+                            <select class="form-control jscaribasicmultiple" id="reqUnitMesinId" <?=$disabled?> <?=$readonlymesin?> name="reqUnitMesinId"  style="width:100%;" >
+                                <option value="" >Pilih Unit Mesin</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -234,6 +308,61 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 
+
+
+    $(document).ready(function(){
+      blok('<?=$reqDistrikId?>','<?=$reqBlokId?>','<?=$reqUnitMesinId?>');
+
+    });
+
+    function blok(reqDistrikId,reqBlokId,reqUnitMesinId)
+    {
+        $.getJSON("json-app/blok_unit_json/filter_blok?reqDistrikId="+reqDistrikId,
+            function(data)
+            {
+                $("#reqBlokId option").remove();
+                // $("#reqUnitMesinId option").remove();
+
+                // $("#reqBlokId").attr("readonly", false); 
+                $("#reqBlokId").append('<option value="" >Pilih Blok Unit</option>');
+                // $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+                var selected='';
+
+                if('<?=$reqBlokId?>')
+                {
+                    selected='selected';
+                }
+                // console.log(selected);
+                jQuery(data).each(function(i, item){
+                    $("#reqBlokId").append('<option value="'+item.KODE+'" '+selected+' >'+item.text+'</option>');
+                });
+            });
+
+            var reqDistrikId= reqDistrikId;
+            var reqBlokId= reqBlokId;
+            var reqUnitMesinId= reqUnitMesinId;
+
+            $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId,
+                function(data)
+                {
+
+                    var selected='';
+
+                    if('<?=$reqUnitMesinId?>')
+                    {
+                        selected='selected';
+                    }
+                    // console.log(data);
+                    // $("#reqUnitMesinId option").remove();
+                    // $("#reqUnitMesinId").attr("readonly", false); 
+                    jQuery(data).each(function(i, item){
+                        $("#reqUnitMesinId").append('<option value="'+item.KODE+'" '+selected+' >'+item.text+'</option>');
+                    });
+                });
+
+    }
+
+
     $('#reqDistrikId').on('change', function() {
         var reqDistrikId= this.value;
 
@@ -249,6 +378,38 @@ $(document).ready(function() {
                 });
             });
 
+    });
+
+    $('#reqBlokId').on('change', function() {
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= this.value;
+
+        if(reqBlokId)
+        {
+
+            $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+            function(data)
+            {
+                // console.log(data);
+                $("#reqUnitMesinId option").remove();
+                $("#reqUnitMesinId").attr("readonly", false); 
+                $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+                jQuery(data).each(function(i, item){
+                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+                });
+            });
+
+           
+
+        }
+        else
+        {
+            $("#reqUnitMesinId option").remove();
+            $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+            
+        }
+
+       
     });
 
     $(document).ready(function(){
@@ -373,8 +534,9 @@ $(document).ready(function() {
         var reqDistrikId=$('#reqDistrikId').val();
 
         var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
 
-        jsonurl= "json-app/group_pm_json/json?reqPencarian="+reqPencarian+"&reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId;
+        jsonurl= "json-app/group_pm_json/json?reqPencarian="+reqPencarian+"&reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId;
         datanewtable.DataTable().ajax.url(jsonurl).load();
 	});
 
