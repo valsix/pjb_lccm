@@ -26,6 +26,8 @@ class Iframe extends CI_Controller {
 		$this->appdistrikid= $this->session->userdata("appdistrikid");
 		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
 		$this->appdistrikblokunitnama= $this->session->userdata("appdistrikblokunitnama");
+		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
+		$this->appunitmesinkode= $this->session->userdata("appunitmesinkode");
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
