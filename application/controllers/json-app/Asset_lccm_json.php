@@ -32,7 +32,7 @@ class Asset_lccm_json extends CI_Controller
 	function json()
 	{
 
-		ini_set("memory_limit","256M");
+		ini_set("memory_limit","512M");
 		$this->load->model("base-app/Asset_Lccm");
 		$this->load->model("base-app/BlokUnit");
 
@@ -77,8 +77,8 @@ class Asset_lccm_json extends CI_Controller
 			$statement .= " AND A1.KODE_UNIT_M='".$reqUnitMesinId."'";
 		}
 
-		// if(!empty($this->appblokunitid))
-		// {
+		if(!empty($this->appblokunitid))
+		{
 			$statementnew= " AND A.BLOK_UNIT_ID = ".$this->appblokunitid;
 
 			$setcheck= new BlokUnit();
@@ -90,7 +90,7 @@ class Asset_lccm_json extends CI_Controller
 			// {
 				$statement .= " AND ( C.BLOK_UNIT_ID = ".$this->appblokunitid." or a.siteid = '".$reqKodeEam."'  )";
 			// }
-		// }
+		}
 
 
 
