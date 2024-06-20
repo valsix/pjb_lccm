@@ -172,3 +172,30 @@ CREATE TRIGGER tpreparation_status_info
 
     ALTER TABLE pengguna ALTER COLUMN foto TYPE text;
 
+
+    INSERT INTO public.m_oh_type_lccm(
+    oh_type, description)
+    VALUES ('CI', 'Combustor Inspection');
+    
+    INSERT INTO public.m_oh_type_lccm(
+    oh_type, description)
+    VALUES ('TI', 'Turbine Inspection');
+    
+    INSERT INTO public.m_oh_type_lccm(
+    oh_type, description)
+    VALUES ('MI', 'Major Inspection');
+    
+    INSERT INTO public.m_oh_type_lccm(
+    oh_type, description)
+    VALUES ('TO', 'Top Overhaul');
+    
+    INSERT INTO public.m_oh_type_lccm(
+    oh_type, description)
+    VALUES ('SO', 'Semi Overhaul');
+    
+    INSERT INTO public.m_oh_type_lccm(
+    oh_type, description)
+    VALUES ('MO', 'Major Overhaul');
+    
+    
+
