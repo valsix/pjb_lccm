@@ -13,6 +13,8 @@ $appdistrikid= $this->appdistrikid;
 $appdistrikkode= $this->appdistrikkode;
 $appblokunitid= $this->appblokunitid;
 $appblokunitkode= $this->appblokunitkode;
+$appunitmesinkode= $this->appunitmesinkode;
+
 
 $pgtitle= $pg;
 $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
@@ -96,6 +98,28 @@ $reqJmlAssetWo= $set->getField("JUMLAH");
 unset($set);
 
 
+if(empty($appblokunitkode))
+{
+
+   $readonlyblok="";
+}
+else
+{
+    $readonlyblok="readonly";
+}
+
+if(empty($appunitmesinkode))
+{
+
+    $readonlymesin="";
+}
+else
+{
+    $readonlymesin="readonly";
+}
+
+
+
 
 ?>
 <script type="text/javascript" language="javascript" class="init">  
@@ -109,6 +133,50 @@ unset($set);
     thead.stick-datatable th:nth-child(1){  width:440px !important; *border:1px solid cyan;}
     thead.stick-datatable ~ tbody td:nth-child(1){  width:440px !important; *border:1px solid yellow;}
 </style>
+
+<style type="text/css">
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+      color: #000000;
+  }
+  .select2-container--default .select2-search--inline .select2-search__field:focus {
+      outline: 0;
+      border: 1px solid #ffff;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+      cursor: default;
+      padding-left: 6px;
+      padding-right: 5px;
+  }
+
+  .select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
+    background: #eee;
+    box-shadow: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow, select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+    display: none;
+}
+
+
+
+</style>
+
 
 <div class="col-md-12">
     <div class="judul-halaman"> Data  Work Order</div>
@@ -152,7 +220,7 @@ unset($set);
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11' id="blok">
-                                        <select class="form-control jscaribasicmultiple"   <?=$readonlyfilter?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
+                                        <select class="form-control jscaribasicmultiple" <?=$readonlyblok?>  <?=$readonlyfilter?> <?=$readonly?> id="reqBlokId"   name="reqBlokId"  style="width:100%;"  >
                                             <option value="" >Pilih Blok Unit</option>
                                            
                                         </select>
@@ -166,7 +234,7 @@ unset($set);
                                <div class='col-md-6'>
                                     <div class='form-group'>
                                         <div class='col-md-11'  id="unit">
-                                            <select class="form-control jscaribasicmultiple "  <?=$readonly?> <?=$readonlyfilter?> id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
+                                            <select class="form-control jscaribasicmultiple " <?=$readonlymesin?>   <?=$readonly?> <?=$readonlyfilter?> id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
                                                 <option value="" >Pilih Unit Mesin</option>
                                                
                                             </select>
@@ -343,13 +411,16 @@ unset($set);
             datanewtable.DataTable().ajax.url(jsonurl).load();
         });
     });
-        var reqDistrikId= $("#reqDistrikId").val();
-        var reqBlokId= $("#reqBlokId").val();
+        
         // console.log(reqBlokId);
         var selectednew="";
+        var selected="";
         var appblokunitkode='<?=$appblokunitkode?>';
+        var appunitmesinkode='<?=$appunitmesinkode?>';
 
         $(document).ready(function(){
+            var reqDistrikId= $("#reqDistrikId").val();
+            var reqBlokId= $("#reqBlokId").val();
              rekapwo();
             $.getJSON("json-app/blok_unit_json/filter_blok?reqDistrikId="+reqDistrikId,
                 function(data)
@@ -378,7 +449,13 @@ unset($set);
                 $("#reqUnitMesinId").attr("readonly", false); 
                 $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
                 jQuery(data).each(function(i, item){
-                    $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+
+                   if(item.KODE==appunitmesinkode)
+                    {
+                        var selected="selected";
+                    }
+
+                    $("#reqUnitMesinId").append('<option  value="'+item.KODE+'"  '+selected+' >'+item.text+'</option>');
                 });
             });
        });
@@ -405,21 +482,26 @@ unset($set);
     });
 
     $('#reqBlokId').on('change', function() {
-    var reqDistrikId= $("#reqDistrikId").val();
-    var reqBlokId= this.value;
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= this.value;
 
-    $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
-        function(data)
-        {
-            // console.log(data);
-            $("#reqUnitMesinId option").remove();
-            $("#reqUnitMesinId").attr("readonly", false); 
-            $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
-            jQuery(data).each(function(i, item){
-                $("#reqUnitMesinId").append('<option value="'+item.KODE+'" >'+item.text+'</option>');
+        $.getJSON("json-app/unit_mesin_json/filter_unit?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId,
+            function(data)
+            {
+                // console.log(data);
+                $("#reqUnitMesinId option").remove();
+                $("#reqUnitMesinId").attr("readonly", false); 
+                $("#reqUnitMesinId").append('<option value="" >Pilih Unit Mesin</option>');
+                jQuery(data).each(function(i, item){
+                   if(item.KODE==appunitmesinkode)
+                   {
+                       var selectednew="selected";
+                   }
+
+                    $("#reqUnitMesinId").append('<option  value="'+item.KODE+'"  >'+item.text+'</option>');
+                });
             });
-        });
-     rekapwo();
+         rekapwo();
 
     });
 
