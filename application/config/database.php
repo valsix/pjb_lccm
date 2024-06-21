@@ -77,12 +77,13 @@ $active_record = TRUE;
 
 $db['default'] = array(
 	//'dsn'	   => 'pgsql:host=localhost;port=5432;dbname=db_icarla;user=postgres;password=root',
-	'port' => '5433',
+	'port' => '5432',
 	'username' => 'postgres',
 	'hostname' => '192.168.88.100',
 	'password' => 'root',
 	// 'database' => 'db_icarla_online_13122022',
-	'database' => 'lccm_26012024_online',
+	// 'database' => 'lccm_26012024_online',
+	'database' => 'lccm',
 	
 	'dbdriver' => 'postgre',
 	'dbprefix' => '',
