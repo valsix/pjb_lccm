@@ -17,6 +17,8 @@ $appdistrikid= $this->appdistrikid;
 $appdistrikkode= $this->appdistrikkode;
 $appblokunitid= $this->appblokunitid;
 $appblokunitkode= $this->appblokunitkode;
+$appunitmesinkode= $this->appunitmesinkode;
+
 
 $appunitmesinid= $this->appunitmesinid;
 
@@ -362,7 +364,7 @@ $(document).ready(function() {
                         $selectvaltext= $item["text"];
                         $selectvalkode= $item["KODE"];
                         $selected="";
-                        if($selectvalkode == $reqUnitMesinId)
+                        if($selectvalkode == $appunitmesinkode)
                         {
                             $selected="selected";
                         }
