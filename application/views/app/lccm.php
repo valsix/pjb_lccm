@@ -29,6 +29,7 @@ $tahunkedepan=date("Y") + 30;
 
 
 $readonlyunit="";
+$readonlymesin="";
 
 if(empty($reqDistrikId))
 {
@@ -48,6 +49,18 @@ if(empty($reqBlokId))
         $readonlyunit="readonly";
     }
 }
+
+
+
+if(empty($reqUnitMesinId))
+{
+    $reqUnitMesinId=$this->appunitmesinkode;
+    if(!empty($reqUnitMesinId))
+    {
+        $readonlymesin="readonly";
+    }
+}
+
 
 
 
@@ -365,7 +378,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                             <div class='col-md-6'>
                                 <div class='form-group'>
                                     <div class='col-md-11'  id="unit">
-                                        <select class="form-control jscaribasicmultiple"  <?=$readonly?> <?=$readonlyfilter?> required   id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
+                                        <select class="form-control jscaribasicmultiple" <?=$readonlymesin?> <?=$readonly?> <?=$readonlyfilter?> required   id="reqUnitMesinId" <?=$disabled?> name="reqUnitMesinId"  style="width:100%;" >
                                             <option value="" >Pilih Unit Mesin</option>
                                             <?
                                             foreach($arrunitmesin as $item) 
