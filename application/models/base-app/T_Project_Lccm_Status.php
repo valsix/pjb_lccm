@@ -1,11 +1,11 @@
 <? 
   include_once(APPPATH.'/models/Entity.php');
 
-  class T_project_lccm_status extends Entity{ 
+  class T_Project_Lccm_Status extends Entity{ 
 
 	var $query;
 
-    function T_project_lccm_status()
+    function T_Project_Lccm_Status()
 	{
       $this->Entity(); 
     }

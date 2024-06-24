@@ -35,9 +35,9 @@ class project_json extends CI_Controller
 
 	function json()
 	{
-		$this->load->model("base-app/T_project_lccm_status");
+		$this->load->model("base-app/T_Project_Lccm_Status");
 
-		$set= new T_project_lccm_status();
+		$set= new T_Project_Lccm_Status();
 
 		$reqDistrikId= $this->input->get("reqDistrikId");
 
