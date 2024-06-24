@@ -565,7 +565,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             <div style="text-align:center;padding:5px">
                 <!-- <a href="javascript:void(0)" class="btn btn-warning" id="new" onclick="formnew('new')">New</a> -->
                 <!-- <a href="javascript:void(0)" class="btn btn-success"  id="edit" onclick="formnew('edit')">Edit</a> -->
-                <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Simpan</a>
+                <a href="javascript:void(0)" class="btn btn-primary" id="simpan" onclick="submitForm()">Next</a>
                 
                 <?
                 if(!empty($reqStatus))
