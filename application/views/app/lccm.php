@@ -1038,6 +1038,9 @@ function submitForm(){
                     var reqDistrikId= $("#reqDistrikId").val();
                     var reqBlokId= $("#reqBlokId").val();
                     var reqUnitMesinId= $("#reqUnitMesinId").val();
+                    var reqProjectNo= $("#reqProjectNo").val();
+                    var reqProjectNoR= $("#reqProjectNoR").val();
+                    var freqProjectNoR=reqProjectNoR+reqProjectNo;
 
                     if(reqId == 'xxx')
                     {
@@ -1074,7 +1077,7 @@ function submitForm(){
                     }
                     else
                     {
-                         $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
+                        $.messager.alertLink('Info', infoSimpan, 'info', "app/index/lccm_add_asset?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId+"&reqProjectNo="+freqProjectNoR);
                     }
                    
                 }

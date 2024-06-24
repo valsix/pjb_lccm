@@ -473,6 +473,357 @@ class Asset_lccm_json extends CI_Controller
 
 	}
 
+
+	function tree_multi()
+	{
+		$this->load->model("base-app/Asset_Lccm");
+
+		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+		$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
+		$offset = ($page-1)*$rows;//
+		$id = isset($_POST['id']) ? $_POST['id'] : 0;//
+
+		// print_r($id);exit;
+
+		$result = array();
+		
+		$reqId= $this->input->get('reqId');
+		$reqSearch= $this->input->get('reqSearch');
+		$reqDistrikId= $this->input->get('reqDistrikId');
+		$reqBlokId= $this->input->get('reqBlokId');
+		$reqUnitMesinId= $this->input->get('reqUnitMesinId');
+		
+		// print_r($reqPositionId);exit;
+		$reqPeriode= $reqBulan.$reqTahun;
+		
+		$statementunit= "";
+
+		$statement= $statementperiode= "";
+
+		if(empty($reqSearch))
+		{
+
+			if ($id == "0")
+			{
+				$sorder= "";
+				$statement= " AND A.ASSETNUM ='NP' AND A.PARENT IS NULL";
+
+				if(!empty($reqDistrikId))
+				{
+					$statement .= " AND A1.KODE_DISTRIK ='".$reqDistrikId."'";
+				}
+
+				if(!empty($reqBlokId))
+				{
+					$statement .= " AND A1.KODE_BLOK ='".$reqBlokId."'";
+				}
+
+				if(!empty($reqUnitMesinId))
+				{
+					$statement .= " AND A1.KODE_UNIT_M ='".$reqUnitMesinId."'";
+				}
+				
+				$set= new Asset_Lccm();
+				$result["total"] = 0;
+				$set->selectByParamstree(array(), -1, -1, $statement.$statementunit, $sorder);
+				// echo $set->query;exit;
+				$i=0;
+				while($set->nextRow())
+				{
+					$valinfoid= trim($set->getField("ASSETNUM"));
+					$items[$i]['ID'] = $valinfoid;
+					$items[$i]['NAMA'] = $set->getField("ASSETNUM");
+					$items[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+					$items[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
+					$items[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
+					$i++;
+				}
+				$result["rows"] = $items;
+			} 
+			else 
+			{
+				$statementperiode= "";
+				$statement= "  AND TRIM(A.PARENT) = TRIM('".$id."')";
+				// if(!empty($reqPositionId))
+				// {
+				// 	$statement .= " AND A.POSITION_ID NOT IN (".$reqPositionId.")";
+				// }
+
+
+				if(!empty($reqDistrikId))
+				{
+					$statement .= " AND A1.KODE_DISTRIK ='".$reqDistrikId."'";
+				}
+
+				if(!empty($reqBlokId))
+				{
+					$statement .= " AND A1.KODE_BLOK ='".$reqBlokId."'";
+				}
+
+				if(!empty($reqUnitMesinId))
+				{
+					$statement .= " AND A1.KODE_UNIT_M ='".$reqUnitMesinId."'";
+				}
+				
+				$sOrder=" ORDER BY A.ASSETNUM";
+				$set= new Asset_Lccm();
+				$set->selectByParamstree(array(), -1, -1, $statement, $sOrder);
+				// echo $set->query;exit;
+				$i=0;
+				while($set->nextRow())
+				{
+					$valinfoid= trim($set->getField("ASSETNUM"));
+					$result[$i]['ID'] = $valinfoid;
+					$result[$i]['NAMA'] = $set->getField("ASSETNUM");
+					$result[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+					$result[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
+					$result[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
+					$i++;
+				}
+			}
+
+		}
+		else
+		{
+			if ($id == "0")
+			{
+				$sorder= "";
+				$statement= " ";
+				if(!empty($reqSearch))
+				{
+					$statement.= " AND lower(A.ASSETNUM) like lower('%".$reqSearch."%') ";
+				}
+
+
+				if(!empty($reqDistrikId))
+				{
+					$statement .= " AND A1.KODE_DISTRIK ='".$reqDistrikId."'";
+				}
+
+				if(!empty($reqBlokId))
+				{
+					$statement .= " AND A1.KODE_BLOK ='".$reqBlokId."'";
+				}
+
+				if(!empty($reqUnitMesinId))
+				{
+					$statement .= " AND A1.KODE_UNIT_M ='".$reqUnitMesinId."'";
+				}
+				$set= new Asset_Lccm();
+				$result["total"] = 0;
+				$set->selectByParamstree(array(), -1, -1, $statement.$statementunit, $sorder);
+				// echo $set->query;exit;
+
+				$i=0;
+				while($set->nextRow())
+				{
+					$valinfoid= trim($set->getField("ASSETNUM"));
+					$items[$i]['ID'] = $valinfoid;
+					$items[$i]['NAMA'] = $set->getField("ASSETNUM");
+					$items[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+					$items[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
+					$items[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
+					$i++;
+				}
+				$result["rows"] = $items;
+			}
+			else
+			{
+				$statementperiode= "";
+				$statement= "  AND TRIM(A.PARENT) = TRIM('".$id."')";
+				// if(!empty($reqPositionId))
+				// {
+				// 	$statement .= " AND A.POSITION_ID NOT IN (".$reqPositionId.")";
+				// }
+
+				
+				if(!empty($reqDistrikId))
+				{
+					$statement .= " AND A1.KODE_DISTRIK ='".$reqDistrikId."'";
+				}
+
+				if(!empty($reqBlokId))
+				{
+					$statement .= " AND A1.KODE_BLOK ='".$reqBlokId."'";
+				}
+
+				if(!empty($reqUnitMesinId))
+				{
+					$statement .= " AND A1.KODE_UNIT_M ='".$reqUnitMesinId."'";
+				}
+				
+				$sOrder=" ORDER BY A.ASSETNUM";
+				$set= new Asset_Lccm();
+				$set->selectByParamstree(array(), -1, -1, $statement, $sOrder);
+				// echo $set->query;exit;
+				$i=0;
+				while($set->nextRow())
+				{
+					$valinfoid= trim($set->getField("ASSETNUM"));
+					$result[$i]['ID'] = $valinfoid;
+					$result[$i]['NAMA'] = $set->getField("ASSETNUM");
+					$result[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+					$result[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
+					$result[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
+					$i++;
+				}
+			} 
+
+		}
+		
+		
+		echo json_encode($result);
+	}
+
+	// function tree()
+	// {
+	// 	$this->load->model("base-app/Asset_Lccm");
+
+	// 	$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+	// 	$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
+	// 	$offset = ($page-1)*$rows;//
+	// 	$id = isset($_POST['id']) ? $_POST['id'] : 0;//
+
+	// 	// print_r($id);exit;
+
+	// 	$result = array();
+		
+	// 	$reqId= $this->input->get('reqId');
+	// 	$reqSearch= $this->input->get('reqSearch');
+	// 	// print_r($reqSearch);exit;
+	// 	$reqPeriode= $reqBulan.$reqTahun;
+	// 	$reqStatus= $this->input->get('reqStatus');
+		
+	// 	$statementunit= "";
+
+	// 	$statement= $statementperiode= "";
+
+	// 	if(empty($reqSearch))
+	// 	{
+
+	// 		if ($id == "0")
+	// 		{
+	// 			$sOrder="";
+				
+
+	// 			$statement= " AND A. ='TOP'";
+				
+	// 			$set= new Asset_Lccm();
+	// 			$result["total"] = 0;
+	// 			$set->selectByParamstree(array(), -1, -1, $statement.$statementunit, $sorder);
+	// 			// echo $set->query;exit;
+	// 			$i=0;
+	// 			while($set->nextRow())
+	// 			{
+	// 				$valinfoid= trim($set->getField("ASSETNUM"));
+	// 				$items[$i]['ID'] = $valinfoid;
+	// 				$items[$i]['NAMA'] = $set->getField("ASSETNUM");
+	// 				$items[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+	// 				$items[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
+	// 				$i++;
+	// 			}
+	// 			$result["rows"] = $items;
+	// 		} 
+	// 		else 
+	// 		{
+	// 			$statementperiode= "";
+	// 			$statement= " AND TRIM(A.PARENT) = TRIM('".$id."')";
+				
+	// 			$sOrder=" ORDER BY A.ASSETNUM";
+	// 			$set= new Asset_Lccm();
+	// 			$set->selectByParamstree(array(), -1, -1, $statement, $sOrder);
+	// 		// echo $set->query;exit;
+	// 			$i=0;
+	// 			while($set->nextRow())
+	// 			{
+	// 				$valinfoid= trim($set->getField("ASSETNUM"));
+	// 				$result[$i]['ID'] = $valinfoid;
+	// 				$result[$i]['NAMA'] = $set->getField("ASSETNUM");
+	// 				$result[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+	// 				$result[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
+	// 				$i++;
+	// 			}
+	// 		}
+
+	// 	}
+	// 	else
+	// 	{
+	// 		if ($id == "0")
+	// 		{
+	// 			$sorder= "";
+	// 			$statement= " ";
+				
+	// 			if(!empty($reqSearch))
+	// 			{
+	// 				$statement.= " AND lower(A.ASSETNUM) like lower('%".$reqSearch."%')  ";
+	// 			}
+				
+	// 			$items=array();
+	// 			$set= new Asset_Lccm();
+	// 			$result["total"] = 0;
+	// 			$set->selectByParamstree(array(), -1, -1, $statement.$statementunit, $sorder);
+	// 			// echo $set->query;exit;
+	// 			$i=0;
+	// 			while($set->nextRow())
+	// 			{
+	// 				$valinfoid= trim($set->getField("ASSETNUM"));
+	// 				$items[$i]['ID'] = $valinfoid;
+	// 				$items[$i]['NAMA'] = $set->getField("ASSETNUM");
+	// 				$items[$i]['UNIT'] = $set->getField("DESCRIPTION");
+	// 				$items[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
+	// 				$i++;
+	// 			}
+	// 			$result["rows"] = $items;
+	// 		}
+	// 		else
+	// 		{
+	// 			$statementperiode= "";
+	// 			$statement= " AND TRIM(A.PARENT) = TRIM('".$id."')";
+				
+	// 			$sOrder=" ORDER BY A.ASSETNUM";
+	// 			$set= new Asset_Lccm();
+	// 			$set->selectByParamstree(array(), -1, -1, $statement, $sOrder);
+	// 			// echo $set->query;exit;
+	// 			$i=0;
+	// 			while($set->nextRow())
+	// 			{
+	// 				$valinfoid= trim($set->getField("ASSETNUM"));
+	// 				$result[$i]['ID'] = $valinfoid;
+	// 				$result[$i]['NAMA'] = $set->getField("ASSETNUM");
+	// 				$result[$i]['UNIT'] = $set->getField("DESCRIPTION");
+	// 				$result[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
+	// 				$i++;
+	// 			}
+	// 		} 
+
+	// 	}
+		
+		
+	// 	echo json_encode($result);
+	// }
+
+	
+	function hasunitchild($id)
+	{
+	
+		$infosuperiorid= trim($id);
+
+		$statement= " AND TRIM(A.PARENT) = TRIM('".$infosuperiorid."')";
+			
+		$child = new Asset_Lccm();
+		$child->selectByParamstree(array(), -1,-1, $statement);
+		// echo $child->query;exit;
+		$child->firstRow();
+		$tempId= $child->getField("PARENT");
+		// echo $tempId;exit;
+		if($tempId == "")
+		return false;
+		else
+		return true;
+		unset($child);
+	}
+
+
 	
 
 }

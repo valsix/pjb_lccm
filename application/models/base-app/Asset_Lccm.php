@@ -296,6 +296,29 @@
 		return $this->selectLimit($str,$limit,$from); 
     }
 
+    function selectByParamstree($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY trim(A.PARENT) ASC")
+	{
+		$str = "
+		SELECT 
+			trim(A.PARENT) PARENT,A.ASSETNUM,A.DESCRIPTION
+
+		FROM M_ASSET A 
+		LEFT JOIN M_ASSET_LCCM A1 ON trim(A1.ASSETNUM) = trim(A.ASSETNUM) 
+		WHERE 1=1
+		
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
     
   } 
 ?>
