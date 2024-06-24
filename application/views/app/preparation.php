@@ -197,6 +197,27 @@ unset($set);
 
 
 
+if(empty($appblokunitid))
+{
+    $readonlyblok="";
+}
+else
+{
+    $readonlyblok="readonly";
+}
+
+if(empty($appunitmesinid))
+{
+    $readonlymesin="";
+}
+else
+{
+    $readonlymesin="readonly";
+}
+
+
+
+
 
 
 ?>
@@ -305,6 +326,50 @@ $(document).ready(function() {
     thead.stick-datatable ~ tbody td:nth-child(1){  width:440px !important; *border:1px solid yellow;}
 </style>
 
+<style type="text/css">
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+      color: #000000;
+  }
+  .select2-container--default .select2-search--inline .select2-search__field:focus {
+      outline: 0;
+      border: 1px solid #ffff;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+      cursor: default;
+      padding-left: 6px;
+      padding-right: 5px;
+  }
+
+  .select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 35px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
+    background: #eee;
+    box-shadow: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow, select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+    display: none;
+}
+
+
+
+</style>
+
+
 <div class="col-md-12">
     <div class="judul-halaman"> Dashboard Preparation</div>
     <div class="konten-area">
@@ -312,7 +377,7 @@ $(document).ready(function() {
             <div class="filter">
                 
                 <label style="margin-top: 30px">Distrik :</label>
-                <select class="select-css form-control jscaribasicmultiple"  id="reqDistrikId"  name="reqDistrikId">
+                <select class="select-css form-control jscaribasicmultiple" <?=$readonlyblok?>  id="reqDistrikId"  name="reqDistrikId">
                     <option value="" >Pilih Distrik</option>
                     <?
                     foreach($arrdistrik as $item) 
@@ -333,7 +398,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>Blok :</label>
-                <select class="select-css form-control jscaribasicmultiple"   id="reqBlokId"   name="reqBlokId" >
+                <select class="select-css form-control jscaribasicmultiple"  <?=$readonlyblok?>  id="reqBlokId"   name="reqBlokId" >
                     <option value="" >Pilih Blok Unit</option>
                     <?
                     foreach($arrblok as $item) 
@@ -355,7 +420,7 @@ $(document).ready(function() {
                     ?>
                 </select>
                 <label>Unit :</label>
-                <select class="select-css form-control jscaribasicmultiple"  id="reqUnitMesinId"  name="reqUnitMesinId">
+                <select class="select-css form-control jscaribasicmultiple" <?=$readonlymesin?>  id="reqUnitMesinId"  name="reqUnitMesinId">
                     <option value="" >Pilih Unit Mesin</option>
                     <?
                     foreach($arrunitmesin as $item) 
