@@ -201,6 +201,34 @@ CREATE TRIGGER tpreparation_status_info
     INSERT INTO public.pengguna_modul(
     kode_modul, menu_modul, link_modul, group_modul, order_modul, level_modul)
     VALUES ('0902', 'Project', 'project', 'DASHBOARD', 3, '09');
+
+
+
+    CREATE FUNCTION public.pr_lccm_status_p()
+        RETURNS trigger
+        LANGUAGE 'plpgsql'
+        COST 100
+        VOLATILE NOT LEAKPROOF
+    AS $BODY$
+    BEGIN 
+       INSERT INTO
+            t_project_lccm_status(kode_distrik,kode_blok,kode_unit_m,siteid,project_name,project_param)
+            VALUES(new.kode_distrik,new.kode_blok,new.kode_unit_m,new.siteid,new.project_name,2);
+
+               RETURN new;
+    END;
+    $BODY$;
+
+    ALTER FUNCTION public.pr_lccm_status_p()
+        OWNER TO postgres;
+
+
+    CREATE TRIGGER pr_lccm_status_t
+    AFTER INSERT
+    ON public.t_lccm_prj
+    FOR EACH ROW
+    EXECUTE PROCEDURE public.pr_lccm_status_p();
+
     
     
 
