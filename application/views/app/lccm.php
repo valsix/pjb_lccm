@@ -1063,27 +1063,27 @@ function submitForm(){
                         infoSimpan1= data[2];
                         tahun = infoSimpan1.replace(/\s/g, '');
 
-                        // mbox.custom({
-                        //     message: infoSimpan+infoSimpan1,
-                        //     options: {},
-                        //     buttons: [
-                        //         {
-                        //             label: 'Lihat Data',
-                        //             color: 'btn-warning',
-                        //             callback: function() {
-                        //                 window.open('app/index/prep_monitoring?reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId+'&reqTahun='+tahun, '_blank'); 
-                        //             }
-                        //         },
-                        //         {
-                        //             label: 'Tutup',
-                        //             color: 'btn-danger',
-                        //             callback: function() {
-                        //                 mbox.close();
-                        //             }  
-                        //         }
-                        //     ]
+                        mbox.custom({
+                            message: infoSimpan+infoSimpan1,
+                            options: {},
+                            buttons: [
+                                {
+                                    label: 'Lihat Data',
+                                    color: 'btn-warning',
+                                    callback: function() {
+                                        window.open('app/index/prep_monitoring?reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId+'&reqTahun='+tahun, '_blank'); 
+                                    }
+                                },
+                                {
+                                    label: 'Tutup',
+                                    color: 'btn-danger',
+                                    callback: function() {
+                                        mbox.close();
+                                    }  
+                                }
+                            ]
                             
-                        // })
+                        })
 
                         $.messager.alert('Info', infoSimpan+infoSimpan1, 'warning');
                     }
