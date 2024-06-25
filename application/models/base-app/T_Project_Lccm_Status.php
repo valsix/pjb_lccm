@@ -92,65 +92,65 @@
 		 ,CASE 
 		 	WHEN PROJECT_PARAM = '0' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;\">Uncomplete</button>'
+		 	'<button  type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;margin:auto;display:block;\">Uncomplete</button>'
 			WHEN PROJECT_PARAM = '1' 
 		 THEN 
-			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\">Onprogres</button>'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;margin:auto;display:block;\">Onprogres</button>'
 			WHEN PROJECT_PARAM = '2' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\">Complete</button>'
+		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;margin:auto;display:block;\">Complete</button>'
 		 ELSE 
 		 'Data Kosong'
 		 END PROJECT_PARAM_INFO
 		 ,CASE 
 		 	WHEN ASSET_PARAM = '0' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;\">Uncomplete</button>'
+		 	'<button  type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;margin:auto;display:block;\">Uncomplete</button>'
 			WHEN ASSET_PARAM = '1' 
 		 THEN 
-			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\">Onprogres</button>'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;margin:auto;display:block;\">Onprogres</button>'
 			WHEN ASSET_PARAM = '2' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\">Complete</button>'
+		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;margin:auto;display:block;\">Complete</button>'
 		 ELSE 
 		 'Data Kosong'
 		 END ASSET_PARAM_INFO
 		 ,CASE 
 		 	WHEN CALCULATION = '0' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;\">Uncomplete</button>'
+		 	'<button  type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;margin:auto;display:block;\">Uncomplete</button>'
 			WHEN CALCULATION = '1' 
 		 THEN 
-			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\">Onprogres</button>'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;margin:auto;display:block;\">Onprogres</button>'
 			WHEN CALCULATION = '2' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\">Complete</button>'
+		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;margin:auto;display:block;\">Complete</button>'
 		 ELSE 
 		 'Data Kosong'
 		 END CALCULATION_INFO
 		 ,CASE 
 		 	WHEN EAC = '0' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;\">Uncomplete</button>'
+		 	'<button  type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;margin:auto;display:block;\">Uncomplete</button>'
 			WHEN EAC = '1' 
 		 THEN 
-			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\">Onprogres</button>'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;margin:auto;display:block;\">Onprogres</button>'
 			WHEN EAC = '2' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\">Complete</button>'
+		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;margin:auto;display:block;\">Complete</button>'
 		 ELSE 
 		 'Data Kosong'
 		 END EAC_INFO
 		 ,CASE 
 		 	WHEN MIN_EAC = '0' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;\">Uncomplete</button>'
+		 	'<button  type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;margin:auto;display:block;\">Uncomplete</button>'
 			WHEN MIN_EAC = '1' 
 		 THEN 
-			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #ee5d9e;border: 1px solid #df3974;\">Onprogres</button>'
+			'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #c7de25;border: 1px solid #bcd123;margin:auto;display:block;\">Onprogres</button>'
 			WHEN MIN_EAC = '2' 
 		 THEN 
-		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;\">Complete</button>'
+		 	'<button type=\"button\" class=\"btn btn-danger\" style=\"background-color: #2bcfa9;border: 1px solid #4ea684;margin:auto;display:block;\">Complete</button>'
 		 ELSE 
 		 'Data Kosong'
 		 END MIN_EAC_INFO
