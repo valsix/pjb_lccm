@@ -606,24 +606,36 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 </div>
 
 <script>
-$('select').select2({
-  placeholder: 'This is my placeholder',
-  allowClear: false
-});
-    $('#reqPlant').keyup(function(event) {
-      if (event.which >= 37 && event.which <= 40) return;
-      $(this).val(function(index, value) {
-        return value
-          // Keep only digits and decimal points:
-          .replace(/[^\d.]/g, "")
-          // Remove duplicated decimal point, if one exists:
-          .replace(/^(\d*\.)(.*)\.(.*)$/, '$1$2$3')
-          // Keep only two digits past the decimal point:
-          .replace(/\.(\d{2})\d+/, '.$1')
-          // Add thousands separators:
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      });
+
+    var checkmesin= '<?=$reqUnitMesinId?>';
+
+    if(checkmesin)
+    {
+         $(function() {
+
+            $('#reqUnitMesinId').trigger('change');
+         });
+    }
+
+
+    $('select').select2({
+      placeholder: 'This is my placeholder',
+      allowClear: false
     });
+        $('#reqPlant').keyup(function(event) {
+          if (event.which >= 37 && event.which <= 40) return;
+          $(this).val(function(index, value) {
+            return value
+              // Keep only digits and decimal points:
+              .replace(/[^\d.]/g, "")
+              // Remove duplicated decimal point, if one exists:
+              .replace(/^(\d*\.)(.*)\.(.*)$/, '$1$2$3')
+              // Keep only two digits past the decimal point:
+              .replace(/\.(\d{2})\d+/, '.$1')
+              // Add thousands separators:
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          });
+        });
 
 
     // $('#simpan').hide();
