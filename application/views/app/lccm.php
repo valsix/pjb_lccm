@@ -1085,7 +1085,7 @@ function submitForm(){
                             
                         })
 
-                        $.messager.alert('Info', infoSimpan+infoSimpan1, 'warning');
+                        // $.messager.alert('Info', infoSimpan+infoSimpan1, 'warning');
                     }
                     else
                     {
