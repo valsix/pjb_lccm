@@ -82,7 +82,7 @@ while($set->nextRow())
         if($WO_CR=='false' || $WO_CR=='f' || $WO_CR=='0' )
         {
             $WO_CR='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscompwocr="Incomplete";
+            $statuscompwocr="Uncomplete";
         }
         else
         {
@@ -94,7 +94,7 @@ while($set->nextRow())
         if($WO_STANDING=='false' || $WO_STANDING=='f' || $WO_STANDING=='0' )
         {
             $WO_STANDING='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscompwostand="Incomplete";
+            $statuscompwostand="Uncomplete";
         }
         else
         {
@@ -107,7 +107,7 @@ while($set->nextRow())
         if($WO_PM=='false' || $WO_PM=='f' || $WO_PM=='0' )
         {
             $WO_PM='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscompwopm="Incomplete";
+            $statuscompwopm="Uncomplete";
         }
         else
         {
@@ -120,7 +120,7 @@ while($set->nextRow())
         if($WO_PDM=='false' || $WO_PDM=='f' || $WO_PDM=='0' )
         {
             $WO_PDM='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscompwopdm="Incomplete";
+            $statuscompwopdm="Uncomplete";
         }
         else
         {
@@ -133,7 +133,7 @@ while($set->nextRow())
         if($WO_OH=='false' || $WO_OH=='f' || $WO_OH=='0' )
         {
             $WO_OH='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscompwooh="Incomplete";
+            $statuscompwooh="Uncomplete";
         }
         else
         {
@@ -145,7 +145,7 @@ while($set->nextRow())
         if($PRK=='false' || $PRK=='f' || $PRK=='0' )
         {
             $PRK='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscompwoprk="Incomplete";
+            $statuscompwoprk="Uncomplete";
         }
         else
         {
@@ -157,7 +157,7 @@ while($set->nextRow())
         if($LOSS_OUTPUT=='false' || $LOSS_OUTPUT=='f' || $LOSS_OUTPUT=='0' )
         {
             $LOSS_OUTPUT='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscomploss="Incomplete";
+            $statuscomploss="Uncomplete";
         }
         else
         {
@@ -169,7 +169,7 @@ while($set->nextRow())
         if($ENERGY_PRICE=='false' || $ENERGY_PRICE=='f' || $ENERGY_PRICE=='0' )
         {
             $ENERGY_PRICE='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscompenergy="Incomplete";
+            $statuscompenergy="Uncomplete";
         }
         else
         {
@@ -181,7 +181,7 @@ while($set->nextRow())
         if($OPERATION=='false' || $OPERATION=='f' || $OPERATION=='0' )
         {
             $OPERATION='<i style="float:right;" class="fa fa-times" aria-hidden="true"></i>';
-            $statuscompoperation="Incomplete";
+            $statuscompoperation="Uncomplete";
         }
         else
         {
