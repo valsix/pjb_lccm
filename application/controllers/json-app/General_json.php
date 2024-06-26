@@ -124,6 +124,10 @@ class General_json extends CI_Controller
 				}
 				unset($setdetil);
 			}
+			else
+			{
+				$arrJson["PESAN"] = "Data tidak ditemukan.";	
+			}
 		}
 		else
 		{

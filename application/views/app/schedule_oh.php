@@ -24,10 +24,12 @@ $arrtabledata= array(
     , array("label"=>"Unit Mesin", "field"=> "UNIT_INFO", "display"=>"",  "width"=>"300", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"OH Year", "field"=> "OH_YEAR", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"OH Type", "field"=> "OH_TYPE_INFO", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"Status", "field"=> "INFO_NAMA", "display"=>"",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 
     , array("label"=>"fieldid", "field"=> "KODE_UNIT_M", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "KODE_BLOK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "KODE_DISTRIK", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
+    , array("label"=>"fieldid", "field"=> "WO_OH", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
     , array("label"=>"fieldid", "field"=> "OH_YEAR", "display"=>"1",  "width"=>"", "colspan"=>"", "rowspan"=>"")
 );
 
@@ -211,6 +213,19 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             <?
             }
             ?>
+
+            <span style="display: none;" id="spanValid">
+                <a id="btnValid"><i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    Set Valid Tahun 
+                    <label class="labeltahun"></label>
+                </a>
+            </span>
+            <span style="display: none;" id="spanNotValid">
+                <a id="btnNotValid"><i class="fa fa-circle-o fa-lg" aria-hidden="true"></i> 
+                    Set Not Valid Tahun 
+                    <label class="labeltahun"></label>
+                </a>
+            </span>
 
         </div>
         <br>
@@ -396,15 +411,27 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
        });
     });
 
+    var elselect='<select id="reqStatus"  class="statusgen" style="color: #000000;" ><option value="">Semua</option><option value="TRUE">Valid</option><option value="FALSE">Tidak Valid</option></select>';
 
-	var datanewtable;
-	var infotableid= "example";
-	var carijenis= "";
-	var arrdata= <?php echo json_encode($arrtabledata); ?>;
-	var indexfieldid= arrdata.length - 1;
-    var indexfielddistrik= arrdata.length - 2;
-    var indexfieldblok= arrdata.length - 3;
-    var indexfieldunit= arrdata.length - 4;
+    $('.table').on('init.dt', function() {
+        $('.selectstatus ').html(elselect);
+        $('#reqStatus').on('change', function() {
+            reqStatus=$('#reqStatus').val();
+            jsonurl= "json-app/schedule_oh_json/json?reqStatus="+reqStatus;
+            datanewtable.DataTable().ajax.url(jsonurl).load();
+        });
+    });
+
+
+    var datanewtable;
+    var infotableid= "example";
+    var carijenis= "";
+    var arrdata= <?php echo json_encode($arrtabledata); ?>;
+    var indexfieldid= arrdata.length - 1;
+    var indexfieldstatus= arrdata.length - 2;
+    var indexfielddistrik= arrdata.length - 3;
+    var indexfieldblok= arrdata.length - 4;
+    var indexfieldunit= arrdata.length - 5;
 
     var valinfoid= valinforowid= valinfodistrik=valinfoblok=valinfounit='';
 	var datainforesponsive= "1";
@@ -520,7 +547,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
 	jQuery(document).ready(function() {
 		var jsonurl= "json-app/schedule_oh_json/json";
-	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata);
+	    ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',6);
 	});
 
 	function calltriggercari()
@@ -537,6 +564,8 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 		});
 	}
 
+    var dataselected= "";
+
     $(document).ready(function() {
         var table = $('#example').DataTable();
 
@@ -548,7 +577,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                 table.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
 
-                var dataselected= datanewtable.DataTable().row(this).data();
+                dataselected= datanewtable.DataTable().row(this).data();
                 fieldinfoid= arrdata[indexfieldid]["field"];
                 fieldinfodistrik= arrdata[indexfielddistrik]["field"];
                 fieldinfoblok= arrdata[indexfieldblok]["field"];
@@ -557,6 +586,21 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                 valinfodistrik= dataselected[fieldinfodistrik];
                 valinfoblok= dataselected[fieldinfoblok];
                 valinfounit= dataselected[fieldinfounit];
+
+                fieldinfostatus= arrdata[indexfieldstatus]["field"];
+                valinfostatus= dataselected[fieldinfostatus];
+
+
+                $("#spanValid, #spanNotValid").hide();
+                if(valinfostatus == "t")
+                {
+                    $("#spanNotValid").show();
+                }
+                else
+                {
+                    $("#spanValid").show();
+                }
+                $(".labeltahun").text(dataselected['OH_YEAR']);
                 
             }
         } );
@@ -568,5 +612,44 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
         $('#button').click( function () {
             table.row('.selected').remove().draw( false );
         } );
+
+        $("#btnValid, #btnNotValid").on("click", function () {
+            btnid= $(this).attr('id');
+
+            // console.log(dataselected);
+            vtahun= dataselected['OH_YEAR'];
+            vdistrik= dataselected['KODE_DISTRIK'];
+            vblok= dataselected['KODE_BLOK'];
+            vunit= dataselected['KODE_UNIT_M'];
+            if(vunit==null)
+            {
+                vunit="";
+            }
+            vinfo= "";
+            if(btnid=="btnValid")
+            {
+                value= 1;
+                vinfo= "Apakah Anda yakin validasi data yang dipilih ?";
+            }
+            else if(btnid=="btnNotValid")
+            {
+                value= 0;
+                vinfo= "Apakah Anda yakin non validasi data yang dipilih ?";
+            }
+
+            $.messager.confirm('Konfirmasi',vinfo,function(r){
+                if (r){
+                    $.getJSON("json-app/general_json/preperation_lccm_new?m=WO_OH&t="+vtahun+"&value="+value+"&vdistrik="+vdistrik+"&vblok="+vblok+"&vunit="+vunit,
+                        function(data){
+                            $.messager.alert('Info', data.PESAN, 'info');
+                            valinfoid= "";
+                            setCariInfo();
+                    });
+
+                }
+            });
+
+        });
+
     } );
 </script>

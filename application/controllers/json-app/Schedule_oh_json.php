@@ -53,6 +53,7 @@ class Schedule_oh_json extends CI_Controller
 		$reqTahun= $this->input->get("reqTahun");
 		$reqDistrikId= $this->input->get("reqDistrikId");
 		$reqBlokId= $this->input->get("reqBlokId");
+		$reqStatus= $this->input->get("reqStatus");
 		$searchJson= "";
 
 		$statement="";
@@ -83,10 +84,15 @@ class Schedule_oh_json extends CI_Controller
 		{
 			$statement.= " AND E.UNIT_MESIN_ID = ".$this->appunitmesinid;
 		}
+
+		if(!empty($reqStatus))
+		{
+			$statement2 .= " AND PC.WO_OH='".$reqStatus."'";
+		}
 		
 
-		$sOrder = " ORDER BY A.OH_YEAR ASC ";
-		$set->selectByParams(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
+		$sOrder = "  ";
+		$set->selectByParamsMonitoring(array(), $dsplyRange, $dsplyStart, $statement.$searchJson,$statement2, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];
