@@ -160,6 +160,20 @@ body{
 	}
 }
 
+
+#table-wrapper {
+	position:relative;
+}
+#table-scroll {
+	height:500px;
+	overflow:auto;  
+	margin-top:20px;
+}
+#table-wrapper table {
+	width:100%;
+
+}
+
 </style>
 
  <script type='text/javascript' src="assets/bootstrap/js/jquery-1.12.4.min.js"></script>
@@ -173,99 +187,103 @@ body{
     <div class="judul">Silahkan pilih Entitas</div>
     <div class="pilihan">
 		<form id="myForm" action="login/multi_entitas?pgold=<?=$pgold?>" method="post">
-        <ul>
-        <?
+			<div id="table-wrapper">
+				<div id="table-scroll">
+			        <ul>
+			        <?
 
-		// if($this->USER_TYPE == "ADMINAPP" || $this->USER_TYPE == "VIEWER_ALL" || $this->USER_TYPE == "REVIEW")
-		// {}
-		// else
-		// 	$statement .= "AND A.DISTRIK_ID = '".$this->DISTRIK_ID."' ";
+					// if($this->USER_TYPE == "ADMINAPP" || $this->USER_TYPE == "VIEWER_ALL" || $this->USER_TYPE == "REVIEW")
+					// {}
+					// else
+					// 	$statement .= "AND A.DISTRIK_ID = '".$this->DISTRIK_ID."' ";
 
-        if (!empty($this->appuserkodehak)) 
-        {
-        	$statement= " AND d.kode_hak = '".$this->appuserkodehak."'";
-        }
-        
-        $querynya= "
-        	SELECT 
-        		a.pengguna_hak_distrik_id, a.pengguna_hak_id, b.distrik_id, b.nama distrik_nama, c.blok_unit_id, c.nama blok_unit_nama
-			FROM pengguna_hak_distrik a
-			left join distrik b on b.distrik_id = a.distrik_id
-			left join blok_unit c on c.distrik_id = b.distrik_id
-			inner join pengguna_hak d on d.pengguna_hak_id = a.pengguna_hak_id
-			where 1=1
-			".$statement."
-			ORDER BY pengguna_hak_id ASC 
-        ";
+			        if (!empty($this->appuserkodehak)) 
+			        {
+			        	$statement= " AND d.kode_hak = '".$this->appuserkodehak."'";
+			        }
+			        
+			        $querynya= "
+			        	SELECT 
+			        		a.pengguna_hak_distrik_id, a.pengguna_hak_id, b.distrik_id, b.nama distrik_nama, c.blok_unit_id, c.nama blok_unit_nama
+						FROM pengguna_hak_distrik a
+						left join distrik b on b.distrik_id = a.distrik_id
+						left join blok_unit c on c.distrik_id = b.distrik_id
+						inner join pengguna_hak d on d.pengguna_hak_id = a.pengguna_hak_id
+						where 1=1
+						".$statement."
+						ORDER BY pengguna_hak_id ASC 
+			        ";
 
-			$distrik = "";
-			$query = $this->db->query($querynya);
+						$distrik = "";
+						$query = $this->db->query($querynya);
 
-		
-		$i = 0;
+					
+					$i = 0;
 
-		if(empty($query->result_array()))
-		{
-			$statement= " AND a.pengguna_id = '".$this->appuserid."'";
-			$querynya= "
-        	SELECT 
-        		a.pengguna_id, b.distrik_id, b.nama distrik_nama, c.blok_unit_id, c.nama blok_unit_nama
-			FROM pengguna a
-			inner join distrik b on b.kode = a.kode_distrik
-			inner join blok_unit c on c.kode = a.kode_blok
-			where 1=1
-			".$statement."
-			ORDER BY pengguna_id ASC 
-        ";
+					if(empty($query->result_array()))
+					{
+						$statement= " AND a.pengguna_id = '".$this->appuserid."'";
+						$querynya= "
+			        	SELECT 
+			        		a.pengguna_id, b.distrik_id, b.nama distrik_nama, c.blok_unit_id, c.nama blok_unit_nama
+						FROM pengguna a
+						inner join distrik b on b.kode = a.kode_distrik
+						inner join blok_unit c on c.kode = a.kode_blok
+						where 1=1
+						".$statement."
+						ORDER BY pengguna_id ASC 
+			        ";
 
-			$distrik = "";
-			$query = $this->db->query($querynya);
-		}
+						$distrik = "";
+						$query = $this->db->query($querynya);
+					}
 
-		// print_r($querynya);exit;
+					// print_r($querynya);exit;
 
-		$checked='';
-		if ($this->appblokunitid=='') 
-		{
-			$checked= 'checked';
-		}
+					$checked='';
+					if ($this->appblokunitid=='') 
+					{
+						$checked= 'checked';
+					}
 
-		echo '<li><input class="parentall" type="checkbox" name="reqBlokUnitId" value="all" '.$checked.'> All</li>';
+					echo '<li><input class="parentall" type="checkbox" name="reqBlokUnitId" value="all" '.$checked.'> All</li>';
 
-		foreach ($query->result_array() as $row)
-		{
-			if($distrik == $row["distrik_nama"])
-			{}
-			else
-				echo "<li>".$row["distrik_nama"]."</li>";
-			?>
-            <li><input type="checkbox" class="parent" name="reqBlokUnitId" value="<?=$row["blok_unit_id"]?>" <? if($row["blok_unit_id"] == $this->appblokunitid) { ?> checked <? } ?>> <?=$row["blok_unit_nama"]?>
-            <?
-            $querydetil= "
-	        	SELECT 
-	        	*
-				FROM Unit_mesin a
-				where 1=1
-				and blok_unit_id =".$row["blok_unit_id"];
+					foreach ($query->result_array() as $row)
+					{
+						if($distrik == $row["distrik_nama"])
+						{}
+						else
+							echo "<li>".$row["distrik_nama"]."</li>";
+						?>
+			            <li><input type="checkbox" class="parent" name="reqBlokUnitId" value="<?=$row["blok_unit_id"]?>" <? if($row["blok_unit_id"] == $this->appblokunitid) { ?> checked <? } ?>> <?=$row["blok_unit_nama"]?>
+			            <?
+			            $querydetil= "
+				        	SELECT 
+				        	*
+							FROM Unit_mesin a
+							where 1=1
+							and blok_unit_id =".$row["blok_unit_id"];
 
-				$query1 = $this->db->query($querydetil);
+							$query1 = $this->db->query($querydetil);
 
-			foreach ($query1->result_array() as $row1)
-			{?>
-				<ul><li style="padding-left: 30px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<input class="anak" type="checkbox" name="reqUnitMesinId" value="<?=$row1["unit_mesin_id"]?>" <? if($row1["unit_mesin_id"] == $this->appunitmesinid) { ?> checked <? } ?>> <?=$row1["nama"]?></label>
-				</li></ul>
+						foreach ($query1->result_array() as $row1)
+						{?>
+							<ul><li style="padding-left: 30px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<input class="anak" type="checkbox" name="reqUnitMesinId" value="<?=$row1["unit_mesin_id"]?>" <? if($row1["unit_mesin_id"] == $this->appunitmesinid) { ?> checked <? } ?>> <?=$row1["nama"]?></label>
+							</li></ul>
 
-	           
-        	<?
-        	}
-        	$distrik = $row["distrik_nama"];
-        	$i++;
-        	?>
-        	</li>
-        	<?
-		}
-		?>	
-        </ul>
+				           
+			        	<?
+			        	}
+			        	$distrik = $row["distrik_nama"];
+			        	$i++;
+			        	?>
+			        	</li>
+			        	<?
+					}
+					?>	
+			        </ul>
+    			</div>
+			</div>
         <div class="aksi">
         	<input type="submit" value="Pilih">
             <?=$csrf->echoInputField();?>
