@@ -25,7 +25,7 @@ $arrtabledata= array(
     ,array("type"=>"text", "title"=> "Work Order", "width"=>"100", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "WO Description", "width"=>"200", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "Work Type", "width"=>"100", "readOnly"=>true)
-    ,array("type"=>"text", "title"=> "WO Group", "width"=>"100", "readOnly"=>true)
+    ,array("type"=>"text", "title"=> "Job Plant ", "width"=>"100", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "Need Downtime", "width"=>"100", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "Reported Date", "width"=>"110", "readOnly"=>true)
     ,array("type"=>"numeric", "title"=> "Downtime", "width"=>"100",  "maxlength"=>1)
@@ -288,7 +288,7 @@ unset($set);
              <div class="area-filter">
                  
              </div>
-             <div class="loading" id='vlsxloading' >Loading&#8230;</div>
+             <!-- <div class="loading" id='vlsxloading' >Loading&#8230;</div> -->
 
             <div id="spreadsheet"   style="width: 100%;height: 100%"></div>
 
@@ -523,7 +523,7 @@ function jexcelcall(reqStatus)
 
     var loaded = function(instance) {
 
-        $('#vlsxloading').hide();
+        // $('#vlsxloading').hide();
     }
 
 
@@ -554,6 +554,8 @@ function jexcelcall(reqStatus)
         columnResize: true,
         onselection: selectionActive,
         onload: loaded,
+        // lazyLoading:true,
+        loadingSpin:true,
         oncreateeditor: function(el, cell, x, y) {
            if (x == 8 || x == 9) {
             var config = el.jexcel.options.columns[x].maxlength;
