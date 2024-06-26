@@ -97,6 +97,9 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
                             <span>Pencarian </span> 
                             <input type="text" name="reqPencarian" class="easyui-validatebox textbox form-control" id="reqPencarian" style="width:300px"> 
                             </label>
+
+                            <span><a id="btnExpandAll"><i class="fa fa-expand fa-lg" aria-hidden="true"></i> Expand All</a></span>
+                            <span><a id="btnCollapsedAll"><i class="fa fa-expand fa-lg" aria-hidden="true"></i> Collapsed All</a></span>
                         </div>
                         
                     </div>
@@ -112,7 +115,9 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
                                 idField: 'ID',
                                 treeField: 'NAMA',
                                 fitColumns: true,
-                                pageSize:1,
+                                pageSize:1
+                                , onLoadSuccess: function(row, data){
+                                },
                                 onBeforeLoad: function(row,param){
                                     if (!row) {    // load top level rows
                                         param.id = 0;    // set id=0, indicate to load new page rows
@@ -134,6 +139,34 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
     </div>
     
 <script>
+
+    $(function(){
+
+    $.extend($.fn.tree.methods,{
+        getAllData: function(jq){
+            var data = [];
+            var roots = jq.tree('getRoots');
+            for(var i=0; i<roots.length; i++){
+                data.push(jq.tree('getData', roots[i].target))
+            }
+            return data;
+        }
+    })
+
+
+    $('#btnCollapsedAll').on('click', function () {
+        $('#treeSatker').treegrid('collapseAll');
+    });
+
+    $('#btnExpandAll').on('click', function () {
+        $('#treeSatker').treegrid({
+            onLoadSuccess: function(row, data){
+                $('#treeSatker').treegrid('expandAll');
+            }
+        });
+    });
+ 
+});
 var infoid= [];
 var infonama= [];
 var infodesc= [];
