@@ -271,6 +271,7 @@ unset($set);
                 ?>
                 <span><a id="btnKembali"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i> Kembali</a></span>
                 <span><a id="btnUpdate"><i class="fa fa-edit fa-lg" aria-hidden="true"></i> Bulk Update</a></span>
+                <span id="detaildata" style="display: none"><a id="btnDetail"><i class="fas fa-database"></i>Detail Data</a></span>
 
                 
 
@@ -480,6 +481,18 @@ function jexcelcall(reqStatus)
         var cellVal =table1.getValueFromCoords([x1], [y1]);
 
         txta = cellVal;
+
+
+        if(x1==2 )
+        {
+            $("#detaildata").show();
+
+            detaildatawo(txta);
+        }
+        else
+        {
+           $("#detaildata").hide();
+        }
        
 
         if(x1==8 || x1==9 || x1==10)
@@ -519,6 +532,20 @@ function jexcelcall(reqStatus)
             } 
         }
 
+    }
+
+    function detaildatawo(data)
+    {
+
+        $("#btnDetail").on("click", function () {
+
+            openAdd('iframe/index/detail_wo?reqWoNum='+data);
+
+        });
+
+        
+
+        // console.log(arrvalue);
     }
 
     var loaded = function(instance) {
@@ -704,6 +731,7 @@ function jexcelcall(reqStatus)
        
         
 });
+
 
 
 
