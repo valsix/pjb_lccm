@@ -141,6 +141,32 @@ if(empty($reqStatus))
 <link rel="stylesheet" href="css/gaya-multifile.css" type="text/css">
 
 <style type="text/css">
+
+
+    #table-wrapper {
+      position:relative;
+    }
+    #table-scroll {
+      height:500px;
+      overflow:auto;  
+      margin-top:20px;
+    }
+    #table-wrapper table {
+      width:100%;
+
+    }
+    #table-wrapper table * {
+      /*background:yellow;*/
+     
+    }
+    /*#table-wrapper table thead th .text {
+      position:absolute;   
+      top:-20px;
+      z-index:2;
+      height:20px;
+      width:35%;
+      border:1px solid red;
+    }*/
     .select-css {
         /*display: block;*/
         /*font-size: 16px;*/
@@ -215,6 +241,129 @@ if(empty($reqStatus))
         background-position: right .7em top 50%, 0 0;
         background-size: .65em auto, 100%;}
 </style>
+
+<style type="text/css">
+    .loading {
+      position: fixed;
+      z-index: 999;
+      height: 2em;
+      width: 2em;
+      overflow: show;
+      margin: auto;
+      top: 0;
+      left:12%;
+      bottom: 0;
+      right: 0;
+    }
+
+    /* Transparent Overlay */
+    .loading:before {
+      content: '';
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0, .8));
+
+      background: -webkit-radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0,.8));
+    }
+
+    /* :not(:required) hides these rules from IE9 and below */
+    .loading:not(:required) {
+      /* hide "loading..." text */
+      font: 0/0 a;
+      color: transparent;
+      text-shadow: none;
+      background-color: transparent;
+      border: 0;
+    }
+
+    .loading:not(:required):after {
+      content: '';
+      display: block;
+      font-size: 10px;
+      width: 1em;
+      height: 1em;
+      margin-top: -0.5em;
+      -webkit-animation: spinner 150ms infinite linear;
+      -moz-animation: spinner 150ms infinite linear;
+      -ms-animation: spinner 150ms infinite linear;
+      -o-animation: spinner 150ms infinite linear;
+      animation: spinner 150ms infinite linear;
+      border-radius: 0.5em;
+      -webkit-box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
+      box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
+    }
+
+    /* Animation */
+
+    @-webkit-keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+    @-moz-keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+    @-o-keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes spinner {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 
 <style type="text/css">
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
@@ -352,7 +501,7 @@ if(empty($reqStatus))
                     }
                     ?>
                 </select>
-                <button class="btn btn-primary btn-sm" id="simpan" style="margin-left: 50px;margin-top: 0px" onclick="submitForm()" > Submit</button>
+                <button class="btn btn-primary btn-sm" id="simpan" style="margin-left: 50px;margin-top: 30px;float: right;" onclick="submitForm()" > Submit</button>
             </div>
         </div>
         <div class="konten-inner">
@@ -375,44 +524,48 @@ if(empty($reqStatus))
                     </div>
                     <div class="form-group">  
                         <label class="control-label col-md-2"> Asset </label>
-                        <div class='col-md-6'>
+                        <div class='col-md-10'>
                             <div class='form-group'>
-                                <div class='col-md-11'>
-                                    <table class="table table-bordered table-striped table-hovered" style="margin-top: 10px;max-width: 10000px !important;width: 125%;">
-                                        <thead>
-                                            <tr>
-                                              <th style="vertical-align : middle;text-align:center;" width="10%">Assetnum</th>
-                                              <th style="vertical-align : middle;text-align:center;" >Description</th>
-                                              <th style="vertical-align : middle;text-align:center;" width="10%">Hapus</th>
-                                          </tr>
-                                      </thead>
-                                      <tbody id="assetmulti">
-                                            <?
-                                            if(!empty($arrjabatandetil))
-                                            {
-                                                foreach ($arrjabatandetil as $key => $value) 
-                                                {
-                                            ?>
-                                                    <tr >
-                                                        <td style="display: none"><input type="hidden" name="reqAssetNum[]" id="reqAssetNum" value="<?=$value['ASSETNUM']?>" /></td>
-                                                        <td> <?=$value['NAMA']?></td>
-                                                        <td style="text-align: center;vertical-align: middle;"><span  class='hapustabel' style='background-color: red; padding: 10px; border-radius: 5px;top: 50%;position: relative;'><a onclick='HapusDetil("<?=$value['PENGGUNA_HAK_JABATAN_ID']?>","<?=$value['POSITION_ID']?>","<?=$reqId?>")'><i class='fa fa-trash fa-lg' style='color: white;' aria-hidden='true'></i></a></span>
-                                                        </td>  
-                                                    </tr>
+                                <div class='col-md-12'>
+                                    <div id="table-wrapper">
+                                        <div id="table-scroll">
+                                                <table class="table table-bordered table-striped table-hovered" style="margin-top: 10px;width: 100%">
+                                                    <thead>
+                                                        <tr>
+                                                          <th style="vertical-align : middle;text-align:center;" width="30%">Assetnum</th>
+                                                          <th style="vertical-align : middle;text-align:center;" >Description</th>
+                                                          <th style="vertical-align : middle;text-align:center;" width="10%">Hapus</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody id="assetmulti">
+                                                        <?
+                                                        if(!empty($arrjabatandetil))
+                                                        {
+                                                            foreach ($arrjabatandetil as $key => $value) 
+                                                            {
+                                                        ?>
+                                                                <tr >
+                                                                    <td style="display: none"><input type="hidden" name="reqAssetNum[]" id="reqAssetNum" value="<?=$value['ASSETNUM']?>" /></td>
+                                                                    <td> <?=$value['NAMA']?></td>
+                                                                    <td style="text-align: center;vertical-align: middle;"><span  class='hapustabel' style='background-color: red; padding: 10px; border-radius: 5px;top: 50%;position: relative;'><a onclick='HapusDetil("<?=$value['PENGGUNA_HAK_JABATAN_ID']?>","<?=$value['POSITION_ID']?>","<?=$reqId?>")'><i class='fa fa-trash fa-lg' style='color: white;' aria-hidden='true'></i></a></span>
+                                                                    </td>  
+                                                                </tr>
 
-                                            <?
-                                                }
-                                            }
-                                            ?>
+                                                        <?
+                                                            }
+                                                        }
+                                                        ?>
 
-                                      </tbody>
-                                    </table>
+                                                  </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="loading" style="display: none" id='vlsxloading' >Loading&#8230;</div>
                     <input type="hidden" name="reqId" value="<?=$reqId?>" />
                     <input type="hidden" name="reqMode" value="<?=$reqMode?>" />
                     <input type="hidden" name="reqProjectNoOld" value="<?=$reqProjectNo?>" />
@@ -432,7 +585,7 @@ if(empty($reqStatus))
 
     function removeall()
     {
-         $("#assetmulti").empty();
+        $('#assetmulti').children().remove()
     } 
     
     function openTreeAsset()
@@ -492,6 +645,27 @@ if(empty($reqStatus))
                        
                 //     }
                 // });
+            }
+
+        });
+    }
+
+    function addall() 
+    {
+        var reqDistrikId= $("#reqDistrikId").val();
+        var reqBlokId= $("#reqBlokId").val();
+        var reqUnitMesinId= $("#reqUnitMesinId").val();
+        urllink= 'app/loadUrl/app/template_asset_multi?reqMode=all&reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId;
+        $('#vlsxloading').show();
+
+        $("#assetmulti").load(urllink, function(responseTxt, statusTxt, xhr){
+            if(statusTxt == "success")
+            {
+               $('#vlsxloading').hide();
+            }
+            else
+            {
+                $('#vlsxloading').hide();
             }
 
         });

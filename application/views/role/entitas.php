@@ -230,7 +230,7 @@ body{
 			$checked= 'checked';
 		}
 
-		echo '<li><input class="parent" type="checkbox" name="reqBlokUnitId" value="all" '.$checked.'> All</li>';
+		echo '<li><input class="parentall" type="checkbox" name="reqBlokUnitId" value="all" '.$checked.'> All</li>';
 
 		foreach ($query->result_array() as $row)
 		{
@@ -276,19 +276,46 @@ body{
 </div>
 <script type="text/javascript">
 $(function () {
-    // $("input[type='checkbox']").change(function () {
-    //     $(this).siblings('ul')
-    //         .find("input[type='checkbox']")
-    //         .prop('checked', this.checked);
-    // });
 
-    $(document).on('change','.anak',function(){
+	$(document).on('change','.anak',function(){
     	$('input[name="' + this.name + '"]').not(this).prop('checked', false);
+    	$('.parentall').not(this).prop('checked', false);
+    	// $(this).closest('ul').siblings('input:checkbox').attr('checked', true);
+
+    	// var checked1= $('input[name="reqBlokUnitId"]').is(':checked');
+    	// if(checked1==true)
+    	// {
+    	// 	$('input[name="reqBlokUnitId"]').not(this).prop('checked', false);
+    	// }
     });
 
-     $(document).on('change','.parent',function(){
+    $(document).on('change','.parent',function(){
     	$('input[name="' + this.name + '"]').not(this).prop('checked', false);
+    	$('input[name="reqUnitMesinId"]').not(this).prop('checked', false);
+
     });
+
+   
+
+    $(':checkbox').on('change', function() {
+     	var $this = $(this),
+     	checked = $this.is(':checked');
+
+     	toggleParents($this, checked);
+     });
+
+	function toggleParents(checkbox, checked) {
+	  checkbox.parents('li').each(function() {
+	    var $parent = $(this);
+	    $parent.children(':checkbox').prop('checked', checked);
+	  });
+	}
+
+	function toggleChildren(checkbox, checked) {
+	  checkbox.siblings('ul').find(':checkbox').each(function() {
+	    $(this).prop('checked', checked);
+	  });
+	}
 
 });
 </script>
