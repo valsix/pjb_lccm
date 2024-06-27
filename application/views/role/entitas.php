@@ -296,7 +296,7 @@ body{
 $(function () {
 	var fruits = [];
 	var checkanak =$('.anak:checkbox:checked');
-	console.log(checkanak.length);
+	// console.log(checkanak.length);
 	if(checkanak.length > 0)
 	{
 		var idanak=checkanak[0].id;
@@ -317,9 +317,31 @@ $(function () {
     	$( '#'+idblok).prop('checked', true);
 
     	var checkedValue = $('#'+idblok+':checked').val();
-    	fruits.push(checkedValue); 
-    	console.log(fruits);
+    	
     	// console.log(fruits[0]);
+
+    	var checkblok =$('.parent:checkbox:checked');
+    	// console.log(checkblok);
+    	if(checkblok.length>1)
+    	{
+    		$('input:checkbox.parent').each(function () {
+    			var sThisVal = (this.checked ? $(this).val() : "");
+    			if(checkedValue==sThisVal)
+    			{
+    				// console.log(checkedValue);
+    			}
+    			else
+    			{
+    				$('#'+sThisVal).prop('checked', false);
+    			}
+    			
+    		});
+    	}
+    	else
+    	{
+    		fruits.push(checkedValue); 
+    	
+    	}
 
     	if(fruits[0]==idblok)
     	{
@@ -342,6 +364,7 @@ $(function () {
     	// console.log(this.value);
     	$('input[name="' + this.name + '"]').not(this).prop('checked', false);
     	$('input[name="reqUnitMesinId"]').not(this).prop('checked', false);
+
 
     });
 
