@@ -229,6 +229,78 @@ CREATE TRIGGER tpreparation_status_info
     FOR EACH ROW
     EXECUTE PROCEDURE public.pr_lccm_status_p();
 
+
+
+    create or replace function f_total_pm(KODE_DISTRIK_VAL varchar  = NULL, KODE_BLOK_VAL varchar  = NULL, KODE_UNIT_M_VAL varchar  = NULL, WO_PM_VAL integer default  NULL)
+  returns table (WO_PM boolean, INFO_NAMA text, KODE_DISTRIK varchar, DISTRIK_INFO varchar, KODE_BLOK varchar, BLOK_INFO varchar, KODE_UNIT varchar, UNIT_INFO varchar, PM_YEAR int, GROUP_PM varchar, TOTAL_TAHUN bigint)
+as
+$BODY$
+declare
+  check_distrik text; 
+  check_blok text;
+  check_unit text;
+  check_wo_pm text;
+  query_text text;
+  begin
+  IF KODE_DISTRIK_VAL IS NOT NULL  
+  THEN 
+    check_distrik := ' AND B1.KODE_DISTRIK='''||$1||'''';
+  END IF;
+  IF KODE_BLOK_VAL IS NOT NULL  
+  THEN 
+    check_blok := ' AND B1.KODE_BLOK='''||$2||'''';
+  END IF;
+  IF KODE_UNIT_M_VAL IS NOT NULL  
+  THEN 
+    check_unit := ' AND B1.KODE_UNIT_M='''||$3||'''';
+  END IF;
+  IF WO_PM_VAL < 2  
+  THEN 
+    IF WO_PM_VAL = 1
+    THEN 
+    check_wo_pm := ' AND PC.WO_PM=true';
+    elsif  WO_PM_VAL = 0
+    then
+    check_wo_pm := ' AND PC.WO_PM=false';
+    END IF;
+    else
+    check_wo_pm := ' AND 1=1';
+  END IF;
+  query_text := 'SELECT
+            PC.WO_PM
+            , CASE WHEN PC.WO_PM = TRUE THEN ''Valid'' WHEN PC.WO_PM = FALSE THEN ''Tidak Valid'' ELSE ''-'' END INFO_NAMA
+            , A.*
+        FROM
+        (
+            SELECT 
+                B.KODE_DISTRIK,C.NAMA DISTRIK_INFO,B.KODE_BLOK,D.NAMA BLOK_INFO,B.KODE_UNIT, D.NAMA UNIT_INFO,A.PM_YEAR,B.GROUP_PM, SUM(PM_IN_YEAR) TOTAL_TAHUN
+            FROM t_wo_pm_lccm A
+            LEFT JOIN M_ASSET_LCCM B1 ON trim(B1.ASSETNUM) = trim(A.ASSETNUM) 
+            LEFT JOIN DISTRIK C ON C.KODE = B1.KODE_DISTRIK
+            LEFT JOIN BLOK_UNIT D ON D.KODE = B1.KODE_BLOK AND D.DISTRIK_ID = C.DISTRIK_ID
+            LEFT JOIN UNIT_MESIN E ON E.KODE = B1.KODE_UNIT_M AND E.BLOK_UNIT_ID = D.BLOK_UNIT_ID AND E.DISTRIK_ID = C.DISTRIK_ID
+            LEFT JOIN m_group_pm__lccm B ON B.KODE_DISTRIK = C.KODE AND B.KODE_BLOK = D.KODE AND B.KODE_UNIT = E.KODE
+            where 1=1
+            '|| check_distrik || '
+            '|| check_blok || '
+            '|| check_unit || '
+         GROUP BY A.PM_YEAR, B.GROUP_PM,B.KODE_DISTRIK,B.KODE_BLOK,B.KODE_UNIT,C.NAMA,D.NAMA,D.NAMA
+        ) A
+        LEFT JOIN t_preperation_lccm PC ON PC.YEAR_LCCM = A.PM_YEAR AND PC.KODE_DISTRIK = A.KODE_DISTRIK AND PC.KODE_BLOK = A.KODE_BLOK AND PC.KODE_UNIT_M = A.KODE_UNIT
+        WHERE 1=1
+        '|| check_wo_pm || '
+        
+        ORDER BY A.PM_YEAR ASC 
+        ;';
+raise notice '%', query_text;
+RETURN QUERY EXECUTE query_text;
+   
+END;        
+$BODY$
+
+ LANGUAGE plpgsql VOLATILE
+  COST 100;
+
     
     
 
