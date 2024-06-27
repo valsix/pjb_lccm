@@ -24,6 +24,10 @@ class Wo_pm_json extends CI_Controller
 		$this->appusergroupid= $this->session->userdata("appusergroupid");
 		$this->appblokunitid= $this->session->userdata("appblokunitid");
 		$this->appunitmesinid= $this->session->userdata("appunitmesinid");
+		$this->appdistrikkode= $this->session->userdata("appdistrikkode");
+		$this->appblokunitkode= $this->session->userdata("appblokunitkode");
+		$this->appunitmesinkode= $this->session->userdata("appunitmesinkode");
+
 
 		$this->configtitle= $this->config->config["configtitle"];
 		// print_r($this->configtitle);exit;
@@ -59,48 +63,78 @@ class Wo_pm_json extends CI_Controller
 
 		$statement="";
 		$statement2="";
+		$statementdistrik="";
+		$statementblok="";
+		$statementunit="";
+		$statementwopm="";
+
 
 		
-		if(!empty($reqDistrikId))
-		{
-			$statement .= " AND A.KODE_DISTRIK='".$reqDistrikId."'";
-		}
+		// if(!empty($reqDistrikId))
+		// {
+		// 	$statement .= " AND A.KODE_DISTRIK='".$reqDistrikId."'";
+		// }
 
-		if(!empty($reqBlokId))
-		{
-			$statement .= " AND A.KODE_BLOK='".$reqBlokId."'";
-		}
+		// if(!empty($reqBlokId))
+		// {
+		// 	$statement .= " AND A.KODE_BLOK='".$reqBlokId."'";
+		// }
 
-		if(!empty($reqUnitMesinId))
-		{
-			$statement .= " AND A.KODE_UNIT_M='".$reqUnitMesinId."'";
-		}
+		// if(!empty($reqUnitMesinId))
+		// {
+		// 	$statement .= " AND A.KODE_UNIT_M='".$reqUnitMesinId."'";
+		// }
 
-		if(!empty($reqGroupPm))
-		{
-			$statement .= " AND B.GROUP_PM='".$reqGroupPm."'";
-		}
+		// if(!empty($reqGroupPm))
+		// {
+		// 	$statement .= " AND B.GROUP_PM='".$reqGroupPm."'";
+		// }
 
-		if(!empty($this->appblokunitid))
-		{
-			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
-		}
+
+		// if(!empty($this->appdistrikkode))
+		// {
+		// 	$statementdistrik.= " AND B1.KODE_DISTRIK = '".$this->appdistrikkode."'";
+		// }
+
+
+		// if(!empty($this->appblokunitkode))
+		// {
+		// 	$statement.= " AND B1.KODE_BLOK = '".$this->appblokunitkode."'";
+		// }
 
 		
-		if(!empty($this->appunitmesinid))
-		{
-			$statement.= " AND E.UNIT_MESIN_ID = ".$this->appunitmesinid;
-		}
+		// if(!empty($this->appunitmesinkode))
+		// {
+		// 	$statement.= " AND B1.KODE_UNIT_M = '".$this->appunitmesinkode."'";
+		// }
 
 
 		if(!empty($reqStatus))
 		{
-			$statement2 .= " AND PC.WO_PM='".$reqStatus."'";
+			
+			if($reqStatus=='TRUE')
+			{
+				$statementwopm .= 1;
+			}
+			else if($reqStatus=='FALSE')
+			{
+				$statementwopm .= 0;
+			}
+			else
+			{
+				$statementwopm .= 2;
+			}
+		}
+		else
+		{
+			$statementwopm = 2;
 		}
 
+		// var_dump($statementwopm);exit;
 
-		$sOrder = " ORDER BY A.PM_YEAR ASC ";
-		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson,$statement2, $sOrder);
+
+		$sOrder = "  ";
+		$set->selectByParamsMonitoringFunc(array(), $dsplyRange, $dsplyStart,$this->appdistrikkode,$this->appblokunitkode,$this->appunitmesinkode,$statementwopm, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];
