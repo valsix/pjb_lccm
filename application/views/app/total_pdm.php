@@ -308,9 +308,9 @@ $(document).ready(function() {
     var indexfieldgroup= arrdata.length - 2;
     var indexfieldstatus= arrdata.length - 3;
 
-    var indexfielddistrik= arrdata.length - 16;
-    var indexfieldblok= arrdata.length - 15;
-    var indexfieldunit= arrdata.length - 14;
+    var indexfielddistrik= arrdata.length - 15;
+    var indexfieldblok= arrdata.length - 14;
+    var indexfieldunit= arrdata.length - 13;
 
     
     var valinfoid= valinforowid= valinfoblok= valinfodistrik= valinfounit='';
@@ -514,7 +514,7 @@ $(document).ready(function() {
             vtahun= dataselected['PDM_YEAR'];
             vdistrik= dataselected['KODE_DISTRIK'];
             vblok= dataselected['KODE_BLOK'];
-            vunit= dataselected['KODE_UNIT_M'];
+            vunit= dataselected['KODE_UNIT'];
             vinfo= "";
             if(btnid=="btnValid")
             {
