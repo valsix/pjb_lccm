@@ -255,7 +255,7 @@ body{
 						else
 							echo "<li>".$row["distrik_nama"]."</li>";
 						?>
-			            <li><input type="checkbox" class="parent" name="reqBlokUnitId" value="<?=$row["blok_unit_id"]?>" <? if($row["blok_unit_id"] == $this->appblokunitid) { ?> checked <? } ?>> <?=$row["blok_unit_nama"]?>
+			            <li><input type="checkbox" class="parent" name="reqBlokUnitId" id="<?=$row["blok_unit_id"]?>" value="<?=$row["blok_unit_id"]?>" <? if($row["blok_unit_id"] == $this->appblokunitid) { ?> checked <? } ?>> <?=$row["blok_unit_nama"]?>
 			            <?
 			            $querydetil= "
 				        	SELECT 
@@ -268,7 +268,7 @@ body{
 
 						foreach ($query1->result_array() as $row1)
 						{?>
-							<ul><li style="padding-left: 30px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<input class="anak" type="checkbox" name="reqUnitMesinId" value="<?=$row1["unit_mesin_id"]?>" <? if($row1["unit_mesin_id"] == $this->appunitmesinid) { ?> checked <? } ?>> <?=$row1["nama"]?></label>
+							<ul><li style="padding-left: 30px"><label>&nbsp;&nbsp;&nbsp;&nbsp;<input class="anak" id="<?=$row1["unit_mesin_id"].'-'.$row["blok_unit_id"]?>" type="checkbox" name="reqUnitMesinId" value="<?=$row1["unit_mesin_id"]?>" <? if($row1["unit_mesin_id"] == $this->appunitmesinid) { ?> checked <? } ?>> <?=$row1["nama"]?></label>
 							</li></ul>
 
 				           
@@ -294,26 +294,49 @@ body{
 </div>
 <script type="text/javascript">
 $(function () {
-
+	var fruits = [];
 	$(document).on('change','.anak',function(){
     	$('input[name="' + this.name + '"]').not(this).prop('checked', false);
     	$('.parentall').not(this).prop('checked', false);
     	// $(this).closest('ul').siblings('input:checkbox').attr('checked', true);
+    	var arr = this.id.split('-');
+    	var idblok=arr[1];
+    	$( '#'+idblok).prop('checked', true);
 
-    	// var checked1= $('input[name="reqBlokUnitId"]').is(':checked');
-    	// if(checked1==true)
-    	// {
-    	// 	$('input[name="reqBlokUnitId"]').not(this).prop('checked', false);
-    	// }
+    	var checkedValue = $('#'+idblok+':checked').val();
+    	fruits.push(checkedValue); 
+    	// console.log(checkedValue+' - '+idblok);
+    	// console.log(fruits[0]);
+
+    	if(fruits[0]==idblok)
+    	{
+    		// console.log(1);
+    		fruits.splice(1, 2);
+    	}
+    	else
+    	{
+    		$('#'+fruits[0]).prop('checked', false);
+    		fruits.splice(fruits.indexOf(fruits[0]), 1);
+    		// $('#'+idblok).not(this).prop('checked', false);
+    		// $('input:checkbox').not('#' + idblok).prop('checked', this.checked);
+    	}
+    	// console.log(fruits);
+
+    	
     });
 
     $(document).on('change','.parent',function(){
+    	// console.log(this.value);
     	$('input[name="' + this.name + '"]').not(this).prop('checked', false);
     	$('input[name="reqUnitMesinId"]').not(this).prop('checked', false);
 
     });
 
-   
+     $(document).on('change','.parentall',function(){
+    	// console.log(this.value);
+    	$(':checkbox:not(.parentall)').prop('checked', false);
+
+    });
 
     $(':checkbox').on('change', function() {
      	var $this = $(this),
