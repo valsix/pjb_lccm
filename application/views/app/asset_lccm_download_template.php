@@ -175,6 +175,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
             <div style="text-align:center;padding:5px">
                 <br>
                 <a href="javascript:void(0)" class="btn btn-success" onclick="downloadfile()">Download Template</a>
+                <a href="javascript:void(0)" class="btn btn-success" onclick="downloadfilePersite()">Download Template Persite</a>
             </div>
         </div>
     </div>
@@ -287,6 +288,47 @@ function downloadfile(){
        alert("Pilih Distrik terlebih dahulu");return false; 
     }
     varurl= "app/loadUrl/app/asset_lccm_template?reqDistrikId="+reqDistrikId+"&reqBlokId="+reqBlokId+"&reqUnitMesinId="+reqUnitMesinId
+
+    $.messager.confirm('Konfirmasi',"Download Template?",function(r){
+        $.messager.progress({
+            title:'Please waiting',
+            msg:'Loading data...'
+        });
+        if (r){
+            $.ajax({
+                url: varurl,
+                cache: false,
+                success: function(data){
+                        if(data=="xxx")
+                        {
+                            $.messager.alert('Info', "Data asset tidak ditemukan, silahkan pilih Distrik/Blok/Unit lain.", 'info');
+                            $.messager.progress('close');
+                            return false;
+                        }
+                        else
+                        {
+                           $.messager.progress('close');
+                           window.location =varurl;
+                        }
+                    }
+                });
+        }
+    }); 
+
+
+
+    
+}
+
+
+function downloadfilePersite(){
+    var reqDistrikId=reqBlokId=reqUnitMesinId="";
+
+    var reqDistrikId=$("#reqDistrikId").val();
+    var reqBlokId=$("#reqBlokId").val();
+    var reqUnitMesinId=$("#reqUnitMesinId").val();
+
+    varurl= "app/loadUrl/app/asset_lccm_template_persite?reqDistrikId=<?=$reqDistrikId?>&reqBlokId=<?=$reqBlokId?>&reqUnitMesinId=<?=$reqUnitMesinId?>";
 
     $.messager.confirm('Konfirmasi',"Download Template?",function(r){
         $.messager.progress({
