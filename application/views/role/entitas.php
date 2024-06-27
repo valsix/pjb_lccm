@@ -295,6 +295,17 @@ body{
 <script type="text/javascript">
 $(function () {
 	var fruits = [];
+	var checkanak =$('.anak:checkbox:checked');
+
+	var idanak=checkanak[0].id;
+	var arr = idanak.split('-');
+	var idblok=arr[1];
+	$( '#'+idblok).prop('checked', true);
+	var checkedValue = idblok;
+	fruits.push(checkedValue); 
+
+
+	
 	$(document).on('change','.anak',function(){
     	$('input[name="' + this.name + '"]').not(this).prop('checked', false);
     	$('.parentall').not(this).prop('checked', false);
@@ -305,7 +316,7 @@ $(function () {
 
     	var checkedValue = $('#'+idblok+':checked').val();
     	fruits.push(checkedValue); 
-    	// console.log(checkedValue+' - '+idblok);
+    	// console.log(fruits);
     	// console.log(fruits[0]);
 
     	if(fruits[0]==idblok)
