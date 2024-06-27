@@ -342,7 +342,7 @@ unset($foto);
                             // echo str_replace("loss_", "total_", $infolinkmodul).'-'.$infolink ;
 
                 ?>
-                    <a class=" <?=$infoactive?>" href="app/index/<?=$infolink?>"><?=$infonama?></a>
+                    <a style="text-indent:1em;" class="<?=$infoactive?>" href="app/index/<?=$infolink?>"><?=$infonama?></a>
                 <?
                     }
                 }
