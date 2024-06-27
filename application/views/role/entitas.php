@@ -294,15 +294,15 @@ body{
 </div>
 <script type="text/javascript">
 $(function () {
-	var fruits = [];
-	var checkanak =$('.anak:checkbox:checked');
+	// var fruits = [];
+	// var checkanak =$('.anak:checkbox:checked');
 
-	var idanak=checkanak[0].id;
-	var arr = idanak.split('-');
-	var idblok=arr[1];
-	$( '#'+idblok).prop('checked', true);
-	var checkedValue = idblok;
-	fruits.push(checkedValue); 
+	// var idanak=checkanak[0].id;
+	// var arr = idanak.split('-');
+	// var idblok=arr[1];
+	// $( '#'+idblok).prop('checked', true);
+	// var checkedValue = idblok;
+	// fruits.push(checkedValue); 
 
 
 	
