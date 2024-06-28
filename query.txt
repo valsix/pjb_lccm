@@ -235,9 +235,9 @@ CREATE OR REPLACE VIEW public.v_total_wo_pm
  AS
  SELECT pc.wo_pm,
         CASE
-            WHEN pc.wo_pm = true THEN 'Valid'::text
-            WHEN pc.wo_pm = false THEN 'Tidak Valid'::text
-            ELSE '-'::text
+            WHEN pc.wo_pm = true THEN 'Valid'
+            WHEN pc.wo_pm = false THEN 'Tidak Valid'
+            ELSE '-'
         END AS info_nama,
     a.kode_distrik,
     a.distrik_info,
@@ -258,17 +258,59 @@ CREATE OR REPLACE VIEW public.v_total_wo_pm
             b.group_pm,
             sum(a_1.pm_in_year) AS total_tahun
            FROM t_wo_pm_lccm a_1
-             LEFT JOIN m_asset_lccm b1 ON btrim(b1.assetnum::text) = btrim(a_1.assetnum::text)
-             LEFT JOIN distrik c ON c.kode::text = b1.kode_distrik::text
-             LEFT JOIN blok_unit d ON d.kode::text = b1.kode_blok::text AND d.distrik_id::numeric = c.distrik_id
-             LEFT JOIN unit_mesin e ON e.kode::text = b1.kode_unit_m::text AND e.blok_unit_id = d.blok_unit_id AND e.distrik_id::numeric = c.distrik_id
-             LEFT JOIN m_group_pm__lccm b ON b.kode_distrik::text = c.kode::text AND b.kode_blok::text = d.kode::text AND b.kode_unit::text = e.kode::text
+             LEFT JOIN m_asset_lccm b1 ON btrim(b1.assetnum) = btrim(a_1.assetnum)
+             LEFT JOIN distrik c ON c.kode = b1.kode_distrik
+             LEFT JOIN blok_unit d ON d.kode = b1.kode_blok AND d.distrik_id = c.distrik_id
+             LEFT JOIN unit_mesin e ON e.kode = b1.kode_unit_m AND e.blok_unit_id = d.blok_unit_id AND e.distrik_id = c.distrik_id
+             LEFT JOIN m_group_pm__lccm b ON b.kode_distrik = c.kode AND b.kode_blok = d.kode AND b.kode_unit = e.kode
           WHERE 1 = 1
           GROUP BY a_1.pm_year, b.group_pm, b.kode_distrik, b.kode_blok, b.kode_unit, c.nama, d.nama) a
-     LEFT JOIN t_preperation_lccm pc ON pc.year_lccm = a.pm_year AND pc.kode_distrik::text = a.kode_distrik::text AND pc.kode_blok::text = a.kode_blok::text AND pc.kode_unit_m::text = a.kode_unit::text
+     LEFT JOIN t_preperation_lccm pc ON pc.year_lccm = a.pm_year AND pc.kode_distrik = a.kode_distrik AND pc.kode_blok = a.kode_blok AND pc.kode_unit_m = a.kode_unit
   WHERE 1 = 1;
 
 ALTER TABLE public.v_total_wo_pm
+    OWNER TO postgres;
+
+
+
+CREATE OR REPLACE VIEW public.v_total_wo_pdm
+ AS
+ SELECT pc.wo_pdm,
+        CASE
+            WHEN pc.wo_pdm = true THEN 'Valid'
+            WHEN pc.wo_pdm = false THEN 'Tidak Valid'
+            ELSE '-'
+        END AS info_nama,
+    a.kode_distrik,
+    a.distrik_info,
+    a.kode_blok,
+    a.blok_info,
+    a.kode_unit,
+    a.unit_info,
+    a.pdm_year,
+    a.group_pm,
+    a.total_tahun
+   FROM ( SELECT b.kode_distrik,
+            c.nama AS distrik_info,
+            b.kode_blok,
+            d.nama AS blok_info,
+            b.kode_unit,
+            d.nama AS unit_info,
+            a_1.pdm_year,
+            b.group_pm,
+            sum(a_1.pdm_in_year) AS total_tahun
+           FROM t_wo_pdm_lccm a_1
+             LEFT JOIN m_asset_lccm b1 ON btrim(b1.assetnum) = btrim(a_1.assetnum)
+             LEFT JOIN distrik c ON c.kode = b1.kode_distrik
+             LEFT JOIN blok_unit d ON d.kode = b1.kode_blok AND d.distrik_id = c.distrik_id
+             LEFT JOIN unit_mesin e ON e.kode = b1.kode_unit_m AND e.blok_unit_id = d.blok_unit_id AND e.distrik_id = c.distrik_id
+             LEFT JOIN m_group_pm__lccm b ON b.kode_distrik = c.kode AND b.kode_blok = d.kode AND b.kode_unit = e.kode
+          WHERE 1 = 1
+          GROUP BY a_1.pdm_year, b.group_pm, b.kode_distrik, b.kode_blok, b.kode_unit, c.nama, d.nama) a
+     LEFT JOIN t_preperation_lccm pc ON pc.year_lccm = a.pdm_year AND pc.kode_distrik = a.kode_distrik AND pc.kode_blok = a.kode_blok AND pc.kode_unit_m = a.kode_unit
+  WHERE 1 = 1;
+
+ALTER TABLE public.v_total_wo_pdm
     OWNER TO postgres;
     
     

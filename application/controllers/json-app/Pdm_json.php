@@ -81,24 +81,29 @@ class Pdm_json extends CI_Controller
 		}
 
 
-		if(!empty($this->appblokunitid))
+		if(!empty($this->appdistrikkode))
 		{
-			$statement.= " AND D.BLOK_UNIT_ID = ".$this->appblokunitid;
+			$statement.= " AND A.KODE_DISTRIK = '".$this->appdistrikkode."'";
 		}
 
-		
-		if(!empty($this->appunitmesinid))
+		if(!empty($this->appblokunitkode))
 		{
-			$statement.= " AND E.UNIT_MESIN_ID = ".$this->appunitmesinid;
+			$statement.= " AND A.KODE_BLOK = '".$this->appblokunitkode."'";
+		}
+
+		if(!empty($this->appunitmesinkode))
+		{
+			$statement.= " AND A.KODE_UNIT = '".$this->appunitmesinkode."'";
 		}
 
 		if(!empty($reqStatus))
 		{
-			$statement2 .= " AND PC.WO_PDM='".$reqStatus."'";
+			
+			$statement .= " AND A.WO_PDM=".$reqStatus."";
 		}
 
 		$sOrder = " ORDER BY A.PDM_YEAR ASC ";
-		$set->selectByParamsTahun(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $statement2, $sOrder);
+		$set->selectByParamsMonitoringView(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $statement2, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];

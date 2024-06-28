@@ -109,7 +109,7 @@ class Wo_pm_json extends CI_Controller
 		if(!empty($reqStatus))
 		{
 			
-			$statement .= " AND A.WO_PM='".$reqStatus."'";
+			$statement .= " AND A.WO_PM=".$reqStatus."";
 		}
 		
 		// var_dump($statementwopm);exit;

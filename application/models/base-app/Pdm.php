@@ -168,6 +168,27 @@
 		return $this->selectLimit($str,$limit,$from); 
     }
 
+
+    function selectByParamsMonitoringView($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.PM_YEAR ASC")
+	{
+		$str = "
+		SELECT * FROM 
+		V_TOTAL_WO_PDM  A
+		WHERE 1=1
+				
+		"; 
+		
+		while(list($key,$val) = each($paramsArray))
+		{
+			$str .= " AND $key = '$val' ";
+		}
+		
+		$str .= $statement." ".$sOrder;
+		$this->query = $str;
+				
+		return $this->selectLimit($str,$limit,$from); 
+    }
+
     
   } 
 ?>

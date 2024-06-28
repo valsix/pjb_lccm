@@ -438,7 +438,7 @@ $(document).ready(function() {
 
     jQuery(document).ready(function() {
         var jsonurl= "json-app/pdm_json/json";
-        ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',2);
+        ajaxserverselectsingle.init(infotableid, jsonurl, arrdata,'',8);
     });
 
     function calltriggercari()
