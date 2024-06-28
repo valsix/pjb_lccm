@@ -73,6 +73,25 @@
 		return $this->execQuery($str);
 	}
 
+
+	function updatestatusparam()
+	{
+		$str = "
+		UPDATE t_project_lccm_status
+		SET
+	    	KODE_DISTRIK ='".$this->getField("KODE_DISTRIK")."'
+	    	, KODE_BLOK='".$this->getField("KODE_BLOK")."'
+	    	, KODE_UNIT_M='".$this->getField("KODE_UNIT_M")."'
+	    	, SITEID='".$this->getField("SITEID")."'
+	    	, ASSET_PARAM='".$this->getField("ASSET_PARAM")."'
+
+		WHERE PROJECT_NAME = '".$this->getField("PROJECT_NAME")."' AND KODE_DISTRIK = '".$this->getField("KODE_DISTRIK")."' AND KODE_BLOK = '".$this->getField("KODE_BLOK")."' AND KODE_UNIT_M = '".$this->getField("KODE_UNIT_M")."'
+		"; 
+		$this->query = $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 	function delete()
 	{
 		$str = "

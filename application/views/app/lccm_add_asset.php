@@ -22,6 +22,8 @@ $reqDistrikId = $this->input->get("reqDistrikId");
 $reqBlokId = $this->input->get("reqBlokId");
 $reqUnitMesinId = $this->input->get("reqUnitMesinId");
 $reqDelete = $this->input->get("reqDelete");
+$reqProjectNo = $this->input->get("reqProjectNo");
+
 
 $tahunnow=date("Y");
 $tahunkedepan=date("Y") + 30;
@@ -568,7 +570,11 @@ if(empty($reqStatus))
                     <div class="loading" style="display: none" id='vlsxloading' >Loading&#8230;</div>
                     <input type="hidden" name="reqId" value="<?=$reqId?>" />
                     <input type="hidden" name="reqMode" value="<?=$reqMode?>" />
-                    <input type="hidden" name="reqProjectNoOld" value="<?=$reqProjectNo?>" />
+                    <input type="hidden" name="reqProjectNo" id="reqProjectNo" value="<?=$reqProjectNo?>" />
+                    <input type="hidden" name="reqDistrikId" value="<?=$reqDistrikId?>" />
+                    <input type="hidden" name="reqBlokId" value="<?=$reqBlokId?>" />
+                    <input type="hidden" name="reqUnitMesinId" value="<?=$reqUnitMesinId?>" />
+
                 </form>
             </div>
         </div>
@@ -601,50 +607,50 @@ if(empty($reqStatus))
         {
             if (r)
             {
-                // $('#ff').form('submit',{
-                //     url:'json-app/lccm_json/add',
-                //     onSubmit:function(){
+                $('#ff').form('submit',{
+                    url:'json-app/lccm_json/addasset',
+                    onSubmit:function(){
 
-                //         if($(this).form('validate'))
-                //         {
-                //             var win = $.messager.progress({
-                //                 title:'<?=$this->configtitle["progres"]?>',
-                //                 msg:'proses data...'
-                //             });
-                //         }
+                        if($(this).form('validate'))
+                        {
+                            var win = $.messager.progress({
+                                title:'<?=$this->configtitle["progres"]?>',
+                                msg:'proses data...'
+                            });
+                        }
 
-                //         return $(this).form('enableValidation').form('validate');
-                //     },
-                //     success:function(data){
-                //         $.messager.progress('close');
-                //         // console.log(data);return false;
+                        return $(this).form('enableValidation').form('validate');
+                    },
+                    success:function(data){
+                        $.messager.progress('close');
+                        // console.log(data);return false;
 
-                //         data = data.split("***");
-                //         reqId= data[0];
-                //         infoSimpan= data[1];
+                        data = data.split("***");
+                        reqId= data[0];
+                        infoSimpan= data[1];
 
-                //         var reqDistrikId= $("#reqDistrikId").val();
-                //         var reqBlokId= $("#reqBlokId").val();
-                //         var reqUnitMesinId= $("#reqUnitMesinId").val();
+                        // var reqDistrikId= $("#reqDistrikId").val();
+                        // var reqBlokId= $("#reqBlokId").val();
+                        // var reqUnitMesinId= $("#reqUnitMesinId").val();
 
-                //         if(reqId == 'xxx')
-                //         {
-                //             $.messager.alert('Info', infoSimpan, 'warning');
-                //         }
-                //         else if(reqId == 'zzz')
-                //         {
-                //             infoSimpan1= data[2];
-                //             tahun = infoSimpan1.replace(/\s/g, '');
+                        if(reqId == 'xxx')
+                        {
+                            $.messager.alert('Info', infoSimpan, 'warning');
+                        }
+                        else if(reqId == 'zzz')
+                        {
+                            infoSimpan1= data[2];
+                            tahun = infoSimpan1.replace(/\s/g, '');
 
-                //             $.messager.alert('Info', infoSimpan+infoSimpan1, 'warning');
-                //         }
-                //         else
-                //         {
-                //              $.messager.alertLink('Info', infoSimpan, 'info', "app/index/<?=$pgreturn?>");
-                //         }
+                            $.messager.alert('Info', infoSimpan+infoSimpan1, 'warning');
+                        }
+                        else
+                        {
+                             $.messager.alertLink('Info', infoSimpan, 'info', "app/index/lccm");
+                        }
                        
-                //     }
-                // });
+                    }
+                });
             }
 
         });
@@ -655,7 +661,8 @@ if(empty($reqStatus))
         var reqDistrikId= $("#reqDistrikId").val();
         var reqBlokId= $("#reqBlokId").val();
         var reqUnitMesinId= $("#reqUnitMesinId").val();
-        urllink= 'app/loadUrl/app/template_asset_multi?reqMode=all&reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId;
+        var reqProjectNo= $("#reqProjectNo").val();
+        urllink= 'app/loadUrl/app/template_asset_multi?reqMode=all&reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId+'&reqProjectNo='+reqProjectNo;
         $('#vlsxloading').show();
 
         $("#assetmulti").load(urllink, function(responseTxt, statusTxt, xhr){
@@ -678,14 +685,16 @@ if(empty($reqStatus))
 
         if(batas > 0)
         {
+            var jumlah = id.length;
+            console.log(jumlah);
             $("#jabatan").show();
-            rekursivemultiarea(0, id,multiinfonama,multiinfodesc,IDFIELD);
+            rekursivemultiarea(0, id,multiinfonama,multiinfodesc,IDFIELD,jumlah);
         }
     }
 
-    function rekursivemultiarea(index, id, multiinfonama, multiinfodesc, IDFIELD) 
+    function rekursivemultiarea(index, id, multiinfonama, multiinfodesc, IDFIELD,jumlah) 
     {
-        urllink= "app/loadUrl/app/template_asset_multi";
+        urllink= "app/loadUrl/app/template_asset_multi?reqJumlah="+jumlah;
         method= "POST";
         batas= id.length;
         if(index < batas)
@@ -711,7 +720,7 @@ if(empty($reqStatus))
                         $("#"+IDFIELD+"").append(response);
 
                         index= parseInt(index) + 1;
-                        rekursivemultiarea(index,id, multiinfonama, multiinfodesc,IDFIELD);
+                        rekursivemultiarea(index,id, multiinfonama, multiinfodesc,IDFIELD,jumlah);
                     },
                     error: function (response) {
                     },
@@ -722,7 +731,7 @@ if(empty($reqStatus))
             else
             {
                 index= parseInt(index) + 1;
-                rekursivemultiarea(index,id,multiinfonama,multiinfodesc, IDFIELD);
+                rekursivemultiarea(index,id,multiinfonama,multiinfodesc, IDFIELD,jumlah);
             }
         }
     }

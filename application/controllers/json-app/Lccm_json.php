@@ -399,6 +399,63 @@ class Lccm_json extends CI_Controller
 				
 	}
 
+	function addasset()
+	{
+		$this->load->model("base-app/T_Lccm_Prj");
+
+
+		$reqId= $this->input->post("reqId");
+
+		// print_r($reqId);exit;
+		$reqMode= $this->input->post("reqMode");
+		$reqProjectNo= $this->input->post("reqProjectNo");
+		$reqDistrikId= $this->input->post("reqDistrikId");
+		$reqBlokId= $this->input->post("reqBlokId");
+		$reqUnitMesinId= $this->input->post("reqUnitMesinId");
+
+		// print_r($reqUnitMesinId);exit;
+
+		$reqJumlah= $this->input->post("reqJumlah");
+
+		$reqSimpan="";
+
+		if($reqJumlah > 0 )
+		{
+			$set = new T_Lccm_Prj();
+			$set->setField("KODE_DISTRIK", $reqDistrikId);
+			$set->setField("KODE_BLOK", $reqBlokId);
+			$set->setField("KODE_UNIT_M", $reqUnitMesinId);
+			$set->setField("PROJECT_NAME", $reqProjectNo);
+			$set->setField("ASSET_PARAM", 1);
+
+			if($set->updatestatusparam())
+			{
+				$reqSimpan= 1;
+			}
+
+			if($reqSimpan == 1 )
+			{
+				echo $reqId."***Data berhasil disimpan";
+			}
+			else
+			{
+				echo "xxx***Data gagal disimpan";
+			}
+
+				
+
+		}
+		else
+		{
+
+			echo "xxx***Pilih Asset terlebih dahulu";
+		}
+					
+		
+		
+				
+	}
+
 	
 
 	function delete()

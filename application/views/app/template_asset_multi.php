@@ -2,6 +2,12 @@
 
 
 $reqMode = $this->input->get("reqMode");
+$reqProjectNo = $this->input->get("reqProjectNo");
+$reqDistrikId = $this->input->get("reqDistrikId");
+$reqBlokId = $this->input->get("reqBlokId");
+$reqUnitMesinId = $this->input->get("reqUnitMesinId");
+
+
 
 if($reqMode=='all')
 {
@@ -29,14 +35,19 @@ if($reqMode=='all')
 
     $set->selectByParamstree(array(), -1,-1,$statement);
     // echo $set->query;exit;
+    $jml=0;
     while($set->nextRow())
     {
         $arrdata= array();
         $arrdata["id"]=  trim($set->getField("ASSETNUM"));
         $arrdata["ASSETNUM"]= $set->getField("ASSETNUM");
         $arrdata["DESCRIPTION"]= $set->getField("DESCRIPTION");
+        $jml++;
         array_push($arrset, $arrdata);
     }
+
+    $reqJumlah = $jml;
+
     unset($set);
 
 }
@@ -46,6 +57,7 @@ else
     $reqAssetNum = $this->input->post("reqAssetNum");
     $reqNama = $this->input->post("reqNama");
     $reqDescription = $this->input->post("reqDescription");
+    $reqJumlah = $this->input->get("reqJumlah");
 }
 
 
@@ -66,6 +78,11 @@ if($reqMode=='all')
         <td> <?=$reqNama?></td>
         <td> <?=$reqDescription?></td>
         <td style="text-align: center;vertical-align: middle;"><span style='background-color: red; padding: 10px; border-radius: 5px;top: 50%;position: relative;'><a class='btn-remove' ><i class='fa fa-trash fa-lg' style='color: white;' aria-hidden='true'></i></a></span></td>
+        <td style="display: none"><input type="hidden" name="reqJumlah" id="reqJumlah" value="<?=$reqJumlah?>" /></td>
+        <input type="hidden" name="reqProjectNo" value="<?=$reqProjectNo?>" />
+        <input type="hidden" name="reqDistrikId" value="<?=$reqDistrikId?>" />
+        <input type="hidden" name="reqBlokId" value="<?=$reqBlokId?>" />
+        <input type="hidden" name="reqUnitMesinId" value="<?=$reqUnitMesinId?>" />
     </tr>
 <?
     }
@@ -78,6 +95,11 @@ else
         <td> <?=$reqNama?></td>
         <td> <?=$reqDescription?></td>
         <td style="text-align: center;vertical-align: middle;"><span style='background-color: red; padding: 10px; border-radius: 5px;top: 50%;position: relative;'><a class='btn-remove' ><i class='fa fa-trash fa-lg' style='color: white;' aria-hidden='true'></i></a></span></td>
+        <td style="display: none"><input type="hidden" name="reqJumlah" id="reqJumlah" value="<?=$reqJumlah?>" /></td>
+        <input type="hidden" name="reqProjectNo" value="<?=$reqProjectNo?>" />
+        <input type="hidden" name="reqDistrikId" value="<?=$reqDistrikId?>" />
+        <input type="hidden" name="reqBlokId" value="<?=$reqBlokId?>" />
+        <input type="hidden" name="reqUnitMesinId" value="<?=$reqUnitMesinId?>" />
     </tr>
 <?
 }
