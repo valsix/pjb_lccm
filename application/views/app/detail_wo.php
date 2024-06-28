@@ -22,10 +22,23 @@ $set->selectByParamsDetail(array(), -1, -1, $statement);
 $set->firstRow();
 $reqWoNum= $set->getField("WONUM");
 $reqWoDesc= $set->getField("WO_DESC");
-$reqTaskDesc= $set->getField("TASK_DESC");
-$reqTaskWork= $set->getField("TASK_WORK_GROUP");
-$reqTaskComp= $set->getField("TASK_COMPLETION_COMMENTS");
 $reqTaskStatus= $set->getField("WO_TASK_STATUS");
+$reqLongDesc= $set->getField("LONG_DESCRIPTION");
+$reqWorkLog= $set->getField("WORKLOG");
+$reqCompletion= $set->getField("WO_COMPLT_COMMENT");
+$reqTaskDesc= $set->getField("TASK_DESC");
+$reqTaskComp= $set->getField("TASK_COMPLETION_COMMENTS");
+$reqWoGroup= $set->getField("WORK_GROUP");
+$reqTaskWoGroup= $set->getField("TASK_WORK_GROUP");
+$reqReportDate= $set->getField("REPORTDATE");
+$reqActStart= $set->getField("ACTSTART");
+$reqActFinish= $set->getField("ACTFINISH");
+$reqServiceCost= $set->getField("SERV_COST");
+$reqMaterialCost= $set->getField("MAT_COST");
+$reqTotalCost= $set->getField("TOTAL_COST");
+
+
+
 
 
 
@@ -98,8 +111,8 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
              
                 <div class="form-group" id="parentname"> 
-                    <label class="control-label col-md-2">Wo Num</label>
-                    <div class='col-md-10'>
+                    <label class="control-label col-md-2">WO Num</label>
+                    <div class='col-md-2'>
                         <div class='form-group'>
                             <div class='col-md-11'>
                                 <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqWoNum"  id="reqWoNum" value="<?=$reqWoNum?>" <?=$disabled?> style="width:100%" />
@@ -109,7 +122,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                 </div>
 
                 <div class="form-group" id="parentname"> 
-                    <label class="control-label col-md-2">Description</label>
+                    <label class="control-label col-md-2">WO Description</label>
                     <div class='col-md-10'>
                         <div class='form-group'>
                             <div class='col-md-11'>
@@ -120,7 +133,40 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                 </div>
 
                 <div class="form-group" id="parentname"> 
-                    <label class="control-label col-md-2">Task Desc</label>
+                    <label class="control-label col-md-2">Long Description</label>
+                    <div class='col-md-10'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <textarea autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" name="reqLongDesc"  id="reqLongDesc" ><?=$reqLongDesc?></textarea>
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">Work log</label>
+                    <div class='col-md-10'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <textarea autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" name="reqWorkLog"  id="reqWorkLog" ><?=$reqWorkLog?></textarea>
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">Completion Comment</label>
+                    <div class='col-md-10'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <textarea autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" name="reqCompletion"  id="reqCompletion" ><?=$reqCompletion?></textarea>
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">Task Description</label>
                     <div class='col-md-10'>
                         <div class='form-group'>
                             <div class='col-md-11'>
@@ -130,23 +176,13 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
                    </div>
                 </div>
 
-                <div class="form-group" id="parentname"> 
-                    <label class="control-label col-md-2">Task Work Group</label>
-                    <div class='col-md-10'>
-                        <div class='form-group'>
-                            <div class='col-md-11'>
-                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqTaskWork"  id="reqTaskWork" value="<?=$reqTaskWork?>" <?=$disabled?> style="width:100%" />
-                            </div>
-                       </div>
-                   </div>
-                </div>
-
+               
                 <div class="form-group" id="parentname"> 
                     <label class="control-label col-md-2">Task Completion Comments</label>
                     <div class='col-md-10'>
                         <div class='form-group'>
                             <div class='col-md-11'>
-                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqTaskComp"  id="reqTaskComp" value="<?=$reqTaskComp?>" <?=$disabled?> style="width:100%" />
+                                <textarea autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" name="reqTaskComp"  id="reqTaskComp" ><?=$reqTaskComp?></textarea>
                             </div>
                        </div>
                    </div>
@@ -154,15 +190,94 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
 
                 <div class="form-group" id="parentname"> 
-                    <label class="control-label col-md-2">Task Status</label>
-                    <div class='col-md-10'>
+                    <label class="control-label col-md-2">WO Group</label>
+                    <div class='col-md-4'>
                         <div class='form-group'>
                             <div class='col-md-11'>
-                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqTaskStatus"  id="reqTaskStatus" value="<?=$reqTaskStatus?>" <?=$disabled?> style="width:100%" />
+                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqWoGroup"  id="reqWoGroup" value="<?=$reqWoGroup?>" <?=$disabled?> style="width:100%" />
                             </div>
                        </div>
                    </div>
                 </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">Task WO Group</label>
+                    <div class='col-md-4'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqTaskWoGroup"  id="reqTaskWoGroup" value="<?=$reqTaskWoGroup?>" <?=$disabled?> style="width:100%" />
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">Report Date</label>
+                    <div class='col-md-2'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqReportDate"  id="reqReportDate" value="<?=$reqReportDate?>" <?=$disabled?> style="width:100%" />
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">ActStart</label>
+                    <div class='col-md-2'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqActStart"  id="reqActStart" value="<?=$reqActStart?>" <?=$disabled?> style="width:100%" />
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">ActFinish</label>
+                    <div class='col-md-2'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqActFinish"  id="reqActFinish" value="<?=$reqActFinish?>" <?=$disabled?> style="width:100%" />
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">Service Cost</label>
+                    <div class='col-md-1'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqServiceCost"  id="reqServiceCost" value="<?=$reqServiceCost?>" <?=$disabled?> style="width:100%" />
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">Material Cost</label>
+                    <div class='col-md-1'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqMaterialCost"  id="reqMaterialCost" value="<?=$reqMaterialCost?>" <?=$disabled?> style="width:100%" />
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+                <div class="form-group" id="parentname"> 
+                    <label class="control-label col-md-2">Total Cost</label>
+                    <div class='col-md-1'>
+                        <div class='form-group'>
+                            <div class='col-md-11'>
+                                <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqTotalCost"  id="reqTotalCost" value="<?=$reqTotalCost?>" <?=$disabled?> style="width:100%" />
+                            </div>
+                       </div>
+                   </div>
+                </div>
+
+
 
 
    </form>
