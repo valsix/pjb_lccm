@@ -207,10 +207,12 @@
     }
 
 
-    function selectByParamsMonitoringFunc($paramsArray=array(),$limit=-1,$from=-1, $statementdistrik='',$statementblok='',$statementunit='',$statementwopm=null, $sOrder="ORDER BY A.ASSETNUM ASC")
+    function selectByParamsMonitoringView($paramsArray=array(),$limit=-1,$from=-1, $statement='', $sOrder="ORDER BY A.PM_YEAR ASC")
 	{
 		$str = "
-		select * from f_total_pm ('".$statementdistrik."','".$statementblok."','".$statementunit."',".$statementwopm.");
+		SELECT * FROM 
+		V_TOTAL_WO_PM  A
+		WHERE 1=1
 				
 		"; 
 		

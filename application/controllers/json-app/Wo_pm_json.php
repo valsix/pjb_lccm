@@ -90,51 +90,33 @@ class Wo_pm_json extends CI_Controller
 		// 	$statement .= " AND B.GROUP_PM='".$reqGroupPm."'";
 		// }
 
+		if(!empty($this->appdistrikkode))
+		{
+			$statement.= " AND A.KODE_DISTRIK = '".$this->appdistrikkode."'";
+		}
 
-		// if(!empty($this->appdistrikkode))
-		// {
-		// 	$statementdistrik.= " AND B1.KODE_DISTRIK = '".$this->appdistrikkode."'";
-		// }
+		if(!empty($this->appblokunitkode))
+		{
+			$statement.= " AND A.KODE_BLOK = '".$this->appblokunitkode."'";
+		}
 
-
-		// if(!empty($this->appblokunitkode))
-		// {
-		// 	$statement.= " AND B1.KODE_BLOK = '".$this->appblokunitkode."'";
-		// }
-
-		
-		// if(!empty($this->appunitmesinkode))
-		// {
-		// 	$statement.= " AND B1.KODE_UNIT_M = '".$this->appunitmesinkode."'";
-		// }
+		if(!empty($this->appunitmesinkode))
+		{
+			$statement.= " AND A.KODE_UNIT = '".$this->appunitmesinkode."'";
+		}
 
 
 		if(!empty($reqStatus))
 		{
 			
-			if($reqStatus=='TRUE')
-			{
-				$statementwopm .= 1;
-			}
-			else if($reqStatus=='FALSE')
-			{
-				$statementwopm .= 0;
-			}
-			else
-			{
-				$statementwopm .= 2;
-			}
+			$statement .= " AND A.WO_PM='".$reqStatus."'";
 		}
-		else
-		{
-			$statementwopm = 2;
-		}
-
+		
 		// var_dump($statementwopm);exit;
 
 
-		$sOrder = "  ";
-		$set->selectByParamsMonitoringFunc(array(), $dsplyRange, $dsplyStart,$this->appdistrikkode,$this->appblokunitkode,$this->appunitmesinkode,$statementwopm, $sOrder);
+		$sOrder = " ORDER BY A.PM_YEAR ASC ";
+		$set->selectByParamsMonitoringView(array(), $dsplyRange, $dsplyStart, $statement.$searchJson, $sOrder);
 
 		// echo $set->query;exit;
 		$infobatasdetil= $_REQUEST['start'] + $_REQUEST['length'];
