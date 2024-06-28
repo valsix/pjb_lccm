@@ -246,7 +246,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
                 <div class="form-group" id="parentname"> 
                     <label class="control-label col-md-2">Service Cost</label>
-                    <div class='col-md-1'>
+                    <div class='col-md-2'>
                         <div class='form-group'>
                             <div class='col-md-11'>
                                 <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqServiceCost"  id="reqServiceCost" value="<?=$reqServiceCost?>" <?=$disabled?> style="width:100%" />
@@ -257,7 +257,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
                 <div class="form-group" id="parentname"> 
                     <label class="control-label col-md-2">Material Cost</label>
-                    <div class='col-md-1'>
+                    <div class='col-md-2'>
                         <div class='form-group'>
                             <div class='col-md-11'>
                                 <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqMaterialCost"  id="reqMaterialCost" value="<?=$reqMaterialCost?>" <?=$disabled?> style="width:100%" />
@@ -268,7 +268,7 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
 
                 <div class="form-group" id="parentname"> 
                     <label class="control-label col-md-2">Total Cost</label>
-                    <div class='col-md-1'>
+                    <div class='col-md-2'>
                         <div class='form-group'>
                             <div class='col-md-11'>
                                 <input autocomplete="off"  readonly   class="easyui-validatebox textbox form-control" type="text" name="reqTotalCost"  id="reqTotalCost" value="<?=$reqTotalCost?>" <?=$disabled?> style="width:100%" />
