@@ -27,7 +27,7 @@ $arrtabledata= array(
     ,array("type"=>"text", "title"=> "Work Type", "width"=>"100", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "Job Plant ", "width"=>"100", "readOnly"=>true)
     ,array("type"=>"text", "title"=> "Need Downtime", "width"=>"180", "readOnly"=>true)
-    ,array("type"=>"text", "title"=> "Reported Date", "width"=>"150", "readOnly"=>true)
+    ,array("type"=>"hidden", "title"=> "Reported Date", "width"=>"150", "readOnly"=>true)
     ,array("type"=>"numeric", "title"=> "Downtime", "width"=>"100",  "maxlength"=>1)
     ,array("type"=>"numeric", "title"=> "Not Downtime & Not OH", "width"=>"250", "maxlength"=>1)
     ,array("type"=>"text", "title"=> "On Hand Repair", "width"=>"140")
