@@ -603,7 +603,7 @@ if(empty($reqStatus))
     } 
 
     function submitForm(){
-        $.messager.confirm('Konfirmasi',"Apakah data yang anda isi sudah valid?",function(r)
+        $.messager.confirm('Konfirmasi',"Apakah anda yakin akan memproses data tersebut?",function(r)
         {
             if (r)
             {
@@ -613,10 +613,11 @@ if(empty($reqStatus))
 
                         if($(this).form('validate'))
                         {
-                            var win = $.messager.progress({
-                                title:'<?=$this->configtitle["progres"]?>',
-                                msg:'proses data...'
-                            });
+                            // var win = $.messager.progress({
+                            //     title:'<?=$this->configtitle["progres"]?>',
+                            //     msg:'proses data...'
+                            // });
+                            $.messager.alertLink('Info', 'Data Diproses Oleh Sistem', 'info', "app/index/lccm");
                         }
 
                         return $(this).form('enableValidation').form('validate');
@@ -642,11 +643,11 @@ if(empty($reqStatus))
                             infoSimpan1= data[2];
                             tahun = infoSimpan1.replace(/\s/g, '');
 
-                            $.messager.alert('Info', infoSimpan+infoSimpan1, 'warning');
+                            // $.messager.alert('Info', infoSimpan+infoSimpan1, 'warning');
                         }
                         else
                         {
-                             $.messager.alertLink('Info', infoSimpan, 'info', "app/index/lccm");
+                             // $.messager.alertLink('Info', infoSimpan, 'info', "app/index/lccm");
                         }
                        
                     }
