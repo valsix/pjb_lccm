@@ -272,6 +272,7 @@ unset($set);
                 <span><a id="btnKembali"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i> Kembali</a></span>
                 <span><a id="btnUpdate"><i class="fa fa-edit fa-lg" aria-hidden="true"></i> Bulk Update</a></span>
                 <span id="detaildata" style="display: none"><a id="btnDetail"><i class="fas fa-database"></i>Detail Data</a></span>
+                <span><a id="checkAll"><i class="fas fa-check"></i> Check All</a></span>
 
                 
 
@@ -322,6 +323,12 @@ $('#reqStatus').on('change', function() {
     jexcelcall(reqStatus);
 });
 
+var clicked = false;
+$("#checkAll").on("click", function() {
+  $("input[name='c12']").prop("checked", !clicked);
+  clicked = !clicked;
+  this.innerHTML = clicked ? '<i class="fa fa-close"></i> Uncheck All' : ' <i class="fas fa-check"></i> Check All';
+});
 
 $(document).ready(function(){  
   jexcelcall('');
