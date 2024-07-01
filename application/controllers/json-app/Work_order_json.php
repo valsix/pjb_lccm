@@ -547,6 +547,11 @@ class Work_order_json extends CI_Controller
 				$VALIDATION_DOWNTIME='0-1';
 			}
 
+			if($NEEDDOWNTIME==1 && ($WORKTYPE=="CM" || $WORKTYPE=="PM" || $WORKTYPE=="EM" || $WORKTYPE=="PAM" || $WORKTYPE=="PDM" || $WORKTYPE=="OH") )
+			{
+				$VALIDATION_DOWNTIME='1-2';
+			}
+
 			$VALIDATION_DOWNTIME_KON=explode('-', $VALIDATION_DOWNTIME);
 			$VALIDATION_DOWNTIME_KON=$VALIDATION_DOWNTIME[0];
 			// print_r($VALIDATION_DOWNTIME_KON);exit;
@@ -609,7 +614,7 @@ class Work_order_json extends CI_Controller
 			$arrdata["WO_DESC"]= $set->getField("WO_DESC");
 			$arrdata["WORKTYPE"]= $set->getField("WORKTYPE");
 			$arrdata["JPNUM"]= $set->getField("JPNUM");
-			$arrdata["NEEDDOWNTIME"]= $set->getField("NEEDDOWNTIME");
+			$arrdata["NEEDDOWNTIME"]= $NEEDDOWNTIME;
 			$arrdata["REPORTDATE"]= $set->getField("REPORTDATE");
 			$arrdata["DOWNTIME_INFO"]= $VALIDATION_DOWNTIME;
 			$arrdata["DOWN_NOT_INFO"]= $STATUS_NOT_OH_NOT_DOWNTIME;

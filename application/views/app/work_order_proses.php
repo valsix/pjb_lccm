@@ -414,6 +414,21 @@ function jexcelcall(reqStatus)
                     // console.log(txt0);
                     table1.setValue(setdown0, txt0);
                 }
+                // else
+                // {
+                    // console.log(txt);
+                    if(txt==0)
+                    {
+                         // console.log(txt);
+                         table1.setStyle(setdown0, 'background-color', '#f5f82f');
+                    }
+                    else
+                    {
+                        table1.setValue(setdown0, 1);
+                    }
+                // }
+
+                // console.log(txt);
                
                 table1.ignoreEvents = false;
                 // rumus down 0 not end
@@ -511,7 +526,7 @@ function jexcelcall(reqStatus)
                 // }
 
                 table1.ignoreEvents = true;
-                check = txta.split('-');
+                check = txta.toString().split('-');
                 // console.log(check);
                 table1.setValue(cellName,  check[0]);
                 table1.ignoreEvents = false;
@@ -612,7 +627,7 @@ function jexcelcall(reqStatus)
                     {
                         cell.style.backgroundColor = '#35f82f';
                     }
-                    if(txt1=="0")
+                    if(txt1=="0" ||  txt1=="2")
                     {
                        cell.style.backgroundColor = '#f5f82f';
                     }
