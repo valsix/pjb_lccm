@@ -416,12 +416,11 @@ class Lccm_json extends CI_Controller
 		$reqCapital= $this->input->post("reqCapital");
 		$reqCapitalDate= $this->input->post("reqCapitalDate");
 
-		// print_r($reqAssetNum);exit;
+		// print_r($reqCapitalDate);exit;
 
 		$reqJumlah= $this->input->post("reqJumlah");
 
 		$reqSimpan="";
-
 		if($reqJumlah > 0 )
 		{
 			$set = new T_Lccm_Prj();
@@ -433,24 +432,48 @@ class Lccm_json extends CI_Controller
 
 			if($set->updatestatusparam())
 			{	
-				for($i=0;$i<count($reqJumlah);$i++){
-					$set->setField("KODE_DISTRIK", $reqDistrikId);
-					$set->setField("KODE_BLOK", $reqBlokId);
-					$set->setField("KODE_UNIT_M", $reqUnitMesinId);
-					$set->setField("PROJECT_NAME", $reqProjectNo);
-					$set->setField("ASSETNUM", $reqAssetNum[$i]);
-					$set->setField("CAPITAL", $reqCapital[$i]);
-					$set->setField("CAPITAL_DATE", $reqCapitalDate[$i]);
-					$set->setField("LAST_CREATE_USER", $this->appusernama);
-					$set->setField("LAST_CREATE_DATE", 'NOW()');
-					$set->insertlccmassetparam();
-				}
+				// for($i=0;$i<count($reqJumlah);$i++){
+				// 	$set->setField("KODE_DISTRIK", $reqDistrikId);
+				// 	$set->setField("KODE_BLOK", $reqBlokId);
+				// 	$set->setField("KODE_UNIT_M", $reqUnitMesinId);
+				// 	$set->setField("PROJECT_NAME", $reqProjectNo);
+				// 	$set->setField("ASSETNUM", $reqAssetNum[$i]);
+				// 	$set->setField("CAPITAL", $reqCapital[$i]);
+				// 	$set->setField("CAPITAL_DATE", $reqCapitalDate[$i]);
+				// 	$set->setField("LAST_CREATE_USER", $this->appusernama);
+				// 	$set->setField("LAST_CREATE_DATE", 'NOW()');
+				// 	$set->insertlccmassetparam();
+				// }
 				$reqSimpan= 1;
 			}
 
 			if($reqSimpan == 1 )
 			{
-				echo $reqId."***Data berhasil disimpan";
+				// echo $reqId."***Data berhasil disimpan";
+				$dataArray = [1, 2, 3, 4, 5];
+
+				// Encode array ke dalam format JSON untuk kemudian dikirim ke Python
+				$reqAssetNum = json_encode($reqAssetNum);
+				$reqCapital = json_encode($reqCapital);
+				$reqCapitalDate = json_encode($reqCapitalDate);
+
+				$pythonPath = 'C:/Users/DELL/AppData/Local/Programs/Python/Python312/python.exe'; 
+
+				// Sesuaikan dengan lokasi Python di komputer Anda C:\Users\DELL\AppData\Local\Programs\Python\Python312
+
+				$pythonScript = 'D:/wampp/www/pjb_lccm/py/saveasset.py';
+
+				$command='"'.$pythonPath.'" "'.$pythonScript.' " '.addslashes($reqAssetNum).' '.addslashes($reqCapital).' '.addslashes($reqCapitalDate).' '.date("Y-m-d").' '.$this->appusernama.' '.$reqDistrikId.' '.$reqBlokId.' '.$reqUnitMesinId.' '.$reqProjectNo  ;
+				exec($command, $output, $returnCode);
+				if ($returnCode === 0) {
+				    echo "Python script executed successfully.\n";
+				    foreach ($output as $line) {
+				        echo $line . "\n";
+				    }
+				} else {
+				    echo "Python script execution failed.\n";
+				}
+
 			}
 			else
 			{

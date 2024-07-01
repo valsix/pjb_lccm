@@ -42,8 +42,8 @@ if($reqMode=='all')
         $arrdata["id"]=  trim($set->getField("ASSETNUM"));
         $arrdata["ASSETNUM"]= $set->getField("ASSETNUM");
         $arrdata["DESCRIPTION"]= $set->getField("DESCRIPTION");
-        $reqCapitalDate= $set->getField("CAPITAL_DATE");
-        $reqCapital= $set->getField("CAPITAL");
+        $arrdata["CAPITAL_DATE"]= $set->getField("CAPITAL_DATE");
+        $arrdata["CAPITAL"]= $set->getField("CAPITAL");
         $jml++;
         array_push($arrset, $arrdata);
     }
