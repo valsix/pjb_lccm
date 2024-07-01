@@ -44,6 +44,34 @@
 		return $this->execQuery($str);
 	}
 
+	function insertlccmassetparam()
+    {
+
+    	$str = "
+    	INSERT INTO t_lccm_asset_param
+    	(
+    		KODE_DISTRIK,KODE_BLOK,KODE_UNIT_M, PROJECT_NAME, ASSETNUM, CAPITAL_DATE, CAPITAL,CAPITAL_LCCM,LAST_CREATE_USER, LAST_CREATE_DATE
+    	)
+    	VALUES 
+    	(
+	    	 '".$this->getField("KODE_DISTRIK")."'
+	    	,'".$this->getField("KODE_BLOK")."'
+	    	, '".$this->getField("KODE_UNIT_M")."'
+	    	, '".$this->getField("PROJECT_NAME")."'
+	    	, '".$this->getField("ASSETNUM")."'
+	    	, '".$this->getField("CAPITAL_DATE")."'
+	    	, '".$this->getField("CAPITAL")."'
+	    	, '".$this->getField("CAPITAL")."'
+	    	, '".$this->getField("LAST_CREATE_USER")."'
+	    	, ".$this->getField("LAST_CREATE_DATE")."
+	    )"; 
+
+		$this->id= $this->getField("PROJECT_NAME");
+		$this->query= $str;
+		// echo $str;exit;
+		return $this->execQuery($str);
+	}
+
 	function update()
 	{
 		$str = "

@@ -42,6 +42,8 @@ if($reqMode=='all')
         $arrdata["id"]=  trim($set->getField("ASSETNUM"));
         $arrdata["ASSETNUM"]= $set->getField("ASSETNUM");
         $arrdata["DESCRIPTION"]= $set->getField("DESCRIPTION");
+        $reqCapitalDate= $set->getField("CAPITAL_DATE");
+        $reqCapital= $set->getField("CAPITAL");
         $jml++;
         array_push($arrset, $arrdata);
     }
@@ -57,9 +59,10 @@ else
     $reqAssetNum = $this->input->post("reqAssetNum");
     $reqNama = $this->input->post("reqNama");
     $reqDescription = $this->input->post("reqDescription");
+    $reqCapitalDate = $this->input->post("reqCapitalDate");
+    $reqCapital = $this->input->post("reqCapital");
     $reqJumlah = $this->input->get("reqJumlah");
 }
-
 
 ?>
 
@@ -71,10 +74,14 @@ if($reqMode=='all')
         $reqAssetNum= $item["id"];
         $reqNama= $item["ASSETNUM"];
         $reqDescription= $item["DESCRIPTION"];
+        $reqCapitalDate= $item["CAPITAL_DATE"];
+        $reqCapital= $item["CAPITAL"];
 
 ?>
     <tr >
         <td style="display: none"><input type="hidden" name="reqAssetNum[]" id="reqAssetNum" value="<?=$reqAssetNum?>" /></td>
+        <td style="display: none"><input type="hidden" name="reqCapital[]" id="reqCapital" value="<?=$reqCapital?>" /></td>
+        <td style="display: none"><input type="hidden" name="reqCapitalDate[]" id="reqCapitalDate" value="<?=$reqCapitalDate?>" /></td>
         <td> <?=$reqNama?></td>
         <td> <?=$reqDescription?></td>
         <td style="text-align: center;vertical-align: middle;"><span style='background-color: red; padding: 10px; border-radius: 5px;top: 50%;position: relative;'><a class='btn-remove' ><i class='fa fa-trash fa-lg' style='color: white;' aria-hidden='true'></i></a></span></td>
@@ -92,6 +99,8 @@ else
 ?>
     <tr >
         <td style="display: none"><input type="hidden" name="reqAssetNum[]" id="reqAssetNum" value="<?=$reqAssetNum?>" /></td>
+        <td style="display: none"><input type="hidden" name="reqCapital[]" id="reqCapital" value="<?=$reqCapital?>" /></td>
+        <td style="display: none"><input type="hidden" name="reqCapitalDate[]" id="reqCapitalDate" value="<?=$reqCapitalDate?>" /></td>
         <td> <?=$reqNama?></td>
         <td> <?=$reqDescription?></td>
         <td style="text-align: center;vertical-align: middle;"><span style='background-color: red; padding: 10px; border-radius: 5px;top: 50%;position: relative;'><a class='btn-remove' ><i class='fa fa-trash fa-lg' style='color: white;' aria-hidden='true'></i></a></span></td>

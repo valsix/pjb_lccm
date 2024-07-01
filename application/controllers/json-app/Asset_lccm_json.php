@@ -534,6 +534,8 @@ class Asset_lccm_json extends CI_Controller
 					$items[$i]['ID'] = $valinfoid;
 					$items[$i]['NAMA'] = $set->getField("ASSETNUM");
 					$items[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+					$items[$i]['CAPITAL_DATE'] = $set->getField("CAPITAL_DATE");
+					$items[$i]['CAPITAL'] = $set->getField("CAPITAL");
 					$items[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
 					$items[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
 					$i++;
@@ -576,6 +578,8 @@ class Asset_lccm_json extends CI_Controller
 					$result[$i]['ID'] = $valinfoid;
 					$result[$i]['NAMA'] = $set->getField("ASSETNUM");
 					$result[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+					$result[$i]['CAPITAL_DATE'] = $set->getField("CAPITAL_DATE");
+					$result[$i]['CAPITAL'] = $set->getField("CAPITAL");
 					$result[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
 					$result[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
 					$i++;
@@ -621,6 +625,8 @@ class Asset_lccm_json extends CI_Controller
 					$items[$i]['ID'] = $valinfoid;
 					$items[$i]['NAMA'] = $set->getField("ASSETNUM");
 					$items[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+					$items[$i]['CAPITAL_DATE'] = $set->getField("CAPITAL_DATE");
+					$items[$i]['CAPITAL'] = $set->getField("CAPITAL");
 					$items[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
 					$items[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
 					$i++;
@@ -663,6 +669,8 @@ class Asset_lccm_json extends CI_Controller
 					$result[$i]['ID'] = $valinfoid;
 					$result[$i]['NAMA'] = $set->getField("ASSETNUM");
 					$result[$i]['DESCRIPTION'] = $set->getField("DESCRIPTION");
+					$result[$i]['CAPITAL_DATE'] = $set->getField("CAPITAL_DATE");
+					$result[$i]['CAPITAL'] = $set->getField("CAPITAL");
 					$result[$i]['LINK_URL_INFO'] = $set->getField("LINK_URL_INFO");
 					$result[$i]['state'] = $this->hasunitchild($valinfoid) ? 'closed' : 'open';
 					$i++;

@@ -679,20 +679,20 @@ if(empty($reqStatus))
     }
 
 
-    function addmultiarea(id, multiinfonama, multiinfodesc,IDFIELD) 
+    function addmultiarea(id, multiinfonama, multiinfodesc, infocapitaldate, infocapital,IDFIELD) 
     {
         batas= id.length;
 
         if(batas > 0)
         {
             var jumlah = id.length;
-            console.log(jumlah);
+            // console.log(jumlah);
             $("#jabatan").show();
-            rekursivemultiarea(0, id,multiinfonama,multiinfodesc,IDFIELD,jumlah);
+            rekursivemultiarea(0, id,multiinfonama,multiinfodesc, infocapitaldate, infocapital,IDFIELD,jumlah);
         }
     }
 
-    function rekursivemultiarea(index, id, multiinfonama, multiinfodesc, IDFIELD,jumlah) 
+    function rekursivemultiarea(index, id, multiinfonama, multiinfodesc, infocapitaldate, infocapital, IDFIELD,jumlah) 
     {
         urllink= "app/loadUrl/app/template_asset_multi?reqJumlah="+jumlah;
         method= "POST";
@@ -702,6 +702,8 @@ if(empty($reqStatus))
             ASSETNUM= id[index];
             NAMA= multiinfonama[index];
             DESC= multiinfodesc[index];
+            CAPITAL_DATE= infocapitaldate[index];
+            CAPITAL= infocapital[index];
 
             var rv = true;
 
@@ -713,14 +715,16 @@ if(empty($reqStatus))
                     data: {
                         reqAssetNum: ASSETNUM,
                         reqNama: NAMA,
-                        reqDescription: DESC
+                        reqDescription: DESC,
+                        reqCapitalDate: CAPITAL_DATE,
+                        reqCapital: CAPITAL
 
                     },
                     success: function (response) {
                         $("#"+IDFIELD+"").append(response);
 
                         index= parseInt(index) + 1;
-                        rekursivemultiarea(index,id, multiinfonama, multiinfodesc,IDFIELD,jumlah);
+                        rekursivemultiarea(index,id, multiinfonama, multiinfodesc, infocapitaldate, infocapital,IDFIELD,jumlah);
                     },
                     error: function (response) {
                     },
@@ -731,7 +735,7 @@ if(empty($reqStatus))
             else
             {
                 index= parseInt(index) + 1;
-                rekursivemultiarea(index,id,multiinfonama,multiinfodesc, IDFIELD,jumlah);
+                rekursivemultiarea(index,id,multiinfonama,multiinfodesc, infocapitaldate, infocapital, IDFIELD,jumlah);
             }
         }
     }

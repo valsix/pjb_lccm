@@ -170,6 +170,8 @@ $pgtitle= churuf(str_replace("_", " ", str_replace("master_", "", $pgtitle)));
 var infoid= [];
 var infonama= [];
 var infodesc= [];
+var infocapitaldate= [];
+var infocapital= [];
 var infoidareaunit= [];
 var infoidareaunitdetil= [];
 
@@ -192,16 +194,17 @@ function setsatuankerjapilih()
             arritem= item.split('_');
             // console.log(arritem[0]);
             // console.log(arritem[1]);
-            // console.log(arritem);
+            console.log(infonama);
+            // return false;
             vkelompokequipmentid.push(String(item));
         });
 
         // console.log(vkelompokequipmentid);
         // console.log(infoidareaunitdetil);
 
-        console.log(vkelompokequipmentid);
+        // console.log(vkelompokequipmentid);
         var divIdField = "assetmulti";
-        top.addmultiarea(vkelompokequipmentid, infonama,infodesc, divIdField);
+        top.addmultiarea(vkelompokequipmentid, infonama,infodesc,infocapitaldate,infocapital, divIdField);
         top.closePopup();
     }
 }
@@ -221,6 +224,8 @@ function show(checkid)
     
     nama= nodes.NAMA;
     description= nodes.DESCRIPTION;
+    capitaldate= nodes.CAPITAL_DATE;
+    capital= nodes.CAPITAL;
     positionid= nodes.ID;
     var tujuan= positionid;
 
@@ -237,6 +242,8 @@ function show(checkid)
                 infoid.splice(elementRow, 1);
                 infonama.splice(elementRow, 1);
                 infodesc.splice(elementRow, 1);
+                infocapitaldate.splice(elementRow, 1);
+                infocapital.splice(elementRow, 1);
             }
         }
         else
@@ -244,6 +251,8 @@ function show(checkid)
             infoid.push(String(checkid));
             infonama.push(String(tujuan));
             infodesc.push(String(description));
+            infocapitaldate.push(String(capitaldate));
+            infocapital.push(String(capital));
         }
         // setinfo(ujiid);
 

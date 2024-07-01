@@ -83,7 +83,7 @@ $db['default'] = array(
 	'password' => 'root',
 	// 'database' => 'db_icarla_online_13122022',
 	// 'database' => 'lccm_26012024_online',
-	'database' => 'lccm',
+	'database' => 'lccm2',
 	
 	'dbdriver' => 'postgre',
 	'dbprefix' => '',

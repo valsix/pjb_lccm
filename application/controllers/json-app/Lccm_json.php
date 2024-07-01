@@ -412,8 +412,11 @@ class Lccm_json extends CI_Controller
 		$reqDistrikId= $this->input->post("reqDistrikId");
 		$reqBlokId= $this->input->post("reqBlokId");
 		$reqUnitMesinId= $this->input->post("reqUnitMesinId");
+		$reqAssetNum= $this->input->post("reqAssetNum");
+		$reqCapital= $this->input->post("reqCapital");
+		$reqCapitalDate= $this->input->post("reqCapitalDate");
 
-		// print_r($reqUnitMesinId);exit;
+		// print_r($reqAssetNum);exit;
 
 		$reqJumlah= $this->input->post("reqJumlah");
 
@@ -429,7 +432,19 @@ class Lccm_json extends CI_Controller
 			$set->setField("ASSET_PARAM", 1);
 
 			if($set->updatestatusparam())
-			{
+			{	
+				for($i=0;$i<count($reqJumlah);$i++){
+					$set->setField("KODE_DISTRIK", $reqDistrikId);
+					$set->setField("KODE_BLOK", $reqBlokId);
+					$set->setField("KODE_UNIT_M", $reqUnitMesinId);
+					$set->setField("PROJECT_NAME", $reqProjectNo);
+					$set->setField("ASSETNUM", $reqAssetNum[$i]);
+					$set->setField("CAPITAL", $reqCapital[$i]);
+					$set->setField("CAPITAL_DATE", $reqCapitalDate[$i]);
+					$set->setField("LAST_CREATE_USER", $this->appusernama);
+					$set->setField("LAST_CREATE_DATE", 'NOW()');
+					$set->insertlccmassetparam();
+				}
 				$reqSimpan= 1;
 			}
 
@@ -441,9 +456,6 @@ class Lccm_json extends CI_Controller
 			{
 				echo "xxx***Data gagal disimpan";
 			}
-
-				
-
 		}
 		else
 		{
