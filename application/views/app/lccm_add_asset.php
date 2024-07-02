@@ -664,9 +664,33 @@ if(empty($reqStatus))
         var reqUnitMesinId= $("#reqUnitMesinId").val();
         var reqProjectNo= $("#reqProjectNo").val();
         urllink= 'app/loadUrl/app/template_asset_multi?reqMode=all&reqDistrikId='+reqDistrikId+'&reqBlokId='+reqBlokId+'&reqUnitMesinId='+reqUnitMesinId+'&reqProjectNo='+reqProjectNo;
-        $('#vlsxloading').show();
+        // console.log(urllink);return false;
+        // $('#vlsxloading').show();
 
-        $("#assetmulti").load(urllink, function(responseTxt, statusTxt, xhr){
+        $.ajax({
+          // cache: false,
+          url: urllink
+          // processData: false,
+          // contentType: false,
+          // type: 'GET',
+          // dataType: 'json'
+          , beforeSend: function () {
+            $('#vlsxloading').show();
+          }
+          , success: function (response) {
+            // console.log(response);return false;
+            $('#assetmulti').children().remove()
+            $('#assetmulti').append(response);
+            
+          }
+          , error: function(xhr, status, error) {
+          }
+          , complete: function () {
+            $('#vlsxloading').hide();
+          }
+        });
+
+        /*$("#assetmulti").load(urllink, function(responseTxt, statusTxt, xhr){
             if(statusTxt == "success")
             {
                $('#vlsxloading').hide();
@@ -676,7 +700,7 @@ if(empty($reqStatus))
                 $('#vlsxloading').hide();
             }
 
-        });
+        });*/
     }
 
 
