@@ -798,7 +798,7 @@ function jexcelcall(reqStatus)
             },
             success:function(data){
                 $.messager.progress('close');
-                // console.log(data);return false;
+                console.log(data);return false;
 
                 data = data.split("***");
                 reqId= data[0];

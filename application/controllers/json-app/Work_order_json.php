@@ -789,6 +789,8 @@ class Work_order_json extends CI_Controller
 		$reqArrValueCheck=$reqArrValue;
 		$checkstatus="";
 		$baris="";
+
+		print_r($reqArrValue);exit;
 		foreach ($reqArrValue as $key => $value) {
 			$reqJumlahLabor=$value[11];
 			$reqOnHandRepair = explode("-", $value[10])[0];
