@@ -328,6 +328,23 @@ $("#checkAll").on("click", function() {
   $("input[name='c12']").prop("checked", !clicked);
   clicked = !clicked;
   this.innerHTML = clicked ? '<i class="fa fa-close"></i> Uncheck All' : ' <i class="fas fa-check"></i> Check All';
+
+  var data = $('#spreadsheet').jexcel('getData', false);
+  // console.log(clicked);
+  if(clicked==true)
+  {
+     $("#checkubah").val(1);
+     var data = JSON.stringify(data);
+     $("#reqArrValue").val(data);
+  }
+  else
+  {
+    $("#reqArrValue").val('');
+    $("#checkubah").val('');
+  }
+
+  // console.log(data);
+  
 });
 
 $(document).ready(function(){  
@@ -345,11 +362,54 @@ function jexcelcall(reqStatus)
     var changecheck=0;
     var onchanged = function(instance, cell, x, y, value) {
         var data = $('#spreadsheet').jexcel('getData', false);
-        var val2=table1.getRowData([y]);
-        arrvalue.push(val2);
+        
         // console.log(val2);
         $("#checkubah").val(1);
         // cell.style.backgroundColor = '#ffffff';
+
+      
+        var checkboxes = $('input[name=c12]:checked');
+        var checkboxes1 = $('input[name=c12]:not(:checked)');
+
+        var jmlcheck=checkboxes.length;
+        // console.log(jmlcheck);
+
+        $('input[name="c12"]').each(function(idx, elem) {
+         var is_checked = $(this).prop("checked");
+            // console.log(is_checked +'-'+idx+'-'+y);
+            if(is_checked==true && idx == y)
+            {
+
+                // console.log('ok');
+                
+                var arrada = $("#reqArrValue").val();
+                var val2=table1.getRowData([y]);
+                var found = jQuery.inArray(arrvalue, arrada);
+                if (found >= 0) {
+                    // console.log('ada');
+                    arrvalue.splice(found, 1);
+                } 
+                else 
+                {
+                   arrvalue[y] = val2;
+                }
+
+             
+               // console.log(arrada);
+                           
+            }
+             if(is_checked==false && idx == y)
+            {
+
+                arrvalue.splice(y,1);
+                
+            }
+        });
+       
+        // console.log(arrvalue);
+
+        
+        
 
         txt = cell.innerText;
 
